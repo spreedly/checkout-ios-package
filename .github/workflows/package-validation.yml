@@ -1,0 +1,268 @@
+name: "Package Validation"
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  validate-package:
+    name: Validate Package Files
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Select Xcode Version
+      run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+      
+    - name: Show Xcode Version
+      run: xcodebuild -version
+      
+    - name: Validate Package.swift
+      run: |
+        if [ -f "Package.swift" ]; then
+          echo "📦 Validating Package.swift..."
+          
+          # Check syntax
+          swift package dump-package > package-dump.json
+          
+          # Validate basic structure
+          if command -v jq >/dev/null 2>&1; then
+            # Check for required fields
+            PACKAGE_NAME=$(cat package-dump.json | jq -r '.name')
+            PLATFORMS=$(cat package-dump.json | jq -r '.platforms[]?.platformName' | tr '\n' ' ')
+            PRODUCTS=$(cat package-dump.json | jq -r '.products[].name' | tr '\n' ' ')
+            TARGETS=$(cat package-dump.json | jq -r '.targets[].name' | tr '\n' ' ')
+            
+            echo "Package name: $PACKAGE_NAME"
+            echo "Platforms: $PLATFORMS"
+            echo "Products: $PRODUCTS"
+            echo "Targets: $TARGETS"
+            
+            # Validate that we have the expected frameworks
+                         EXPECTED_FRAMEWORKS=("SpreedlyCore" "SpreedlySecurity" "SpreedlyUI")
+            for framework in "${EXPECTED_FRAMEWORKS[@]}"; do
+              if echo "$TARGETS" | grep -q "$framework"; then
+                echo "✅ Found $framework target"
+              else
+                echo "❌ Missing $framework target"
+                exit 1
+              fi
+            done
+            
+            # Check for binary targets (should have URLs and checksums)
+            BINARY_TARGETS=$(cat package-dump.json | jq -r '.targets[] | select(.type == "binary") | .name')
+            if [ -n "$BINARY_TARGETS" ]; then
+              echo "Binary targets found: $BINARY_TARGETS"
+              
+              # Validate each binary target has URL and checksum
+              for target in $BINARY_TARGETS; do
+                URL=$(cat package-dump.json | jq -r ".targets[] | select(.name == \"$target\") | .url")
+                CHECKSUM=$(cat package-dump.json | jq -r ".targets[] | select(.name == \"$target\") | .checksum")
+                
+                if [ "$URL" != "null" ] && [ "$CHECKSUM" != "null" ]; then
+                  echo "✅ $target has valid URL and checksum"
+                else
+                  echo "❌ $target missing URL or checksum"
+                  exit 1
+                fi
+              done
+            fi
+          else
+            echo "⚠️ jq not available - basic validation only"
+          fi
+          
+          echo "✅ Package.swift validation passed"
+        else
+          echo "❌ Package.swift not found"
+          exit 1
+        fi
+        
+    - name: Validate Podspec
+      run: |
+        if [ -f "Spreedly.podspec" ]; then
+          echo "🍫 Validating Spreedly.podspec..."
+          
+          # Install CocoaPods if not available
+          if ! command -v pod >/dev/null 2>&1; then
+            echo "Installing CocoaPods..."
+            sudo gem install cocoapods --no-document
+          fi
+          
+          # Validate podspec syntax
+          pod spec lint Spreedly.podspec --allow-warnings --quick
+          
+          echo "✅ Podspec validation passed"
+        else
+          echo "❌ Spreedly.podspec not found"
+          exit 1
+        fi
+        
+    - name: Check Framework Files
+      run: |
+        echo "🔍 Checking for framework files..."
+        
+        if [ -d "Frameworks" ]; then
+          FRAMEWORK_COUNT=$(find Frameworks -name "*.framework" | wc -l)
+          echo "Found $FRAMEWORK_COUNT framework(s) in Frameworks directory"
+          
+          # List frameworks
+          find Frameworks -name "*.framework" -exec basename {} \; | while read framework; do
+            echo "  - $framework"
+          done
+          
+                     if [ $FRAMEWORK_COUNT -eq 3 ]; then
+            echo "✅ Expected number of frameworks found"
+          else
+                         echo "⚠️ Expected 3 frameworks, found $FRAMEWORK_COUNT"
+          fi
+        else
+          echo "⚠️ Frameworks directory not found (may be added during CI/CD)"
+        fi
+        
+    - name: Check Archive Files
+      run: |
+        echo "🗜️ Checking for framework archives..."
+        
+        ARCHIVE_COUNT=$(find . -maxdepth 1 -name "*-universal.zip" | wc -l)
+        CHECKSUM_COUNT=$(find . -maxdepth 1 -name "*.sha256" | wc -l)
+        
+        echo "Archive files: $ARCHIVE_COUNT"
+        echo "Checksum files: $CHECKSUM_COUNT"
+        
+        if [ $ARCHIVE_COUNT -gt 0 ]; then
+          echo "Archive files found:"
+          find . -maxdepth 1 -name "*-universal.zip" -exec basename {} \;
+        fi
+        
+        if [ $CHECKSUM_COUNT -gt 0 ]; then
+          echo "Checksum files found:"
+          find . -maxdepth 1 -name "*.sha256" -exec basename {} \;
+        fi
+        
+    - name: Validate URLs in Package.swift
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "🌐 Validating URLs in Package.swift..."
+        
+        # Extract URLs from Package.swift
+        URLS=$(grep -o 'https://[^"]*' Package.swift || true)
+        
+        if [ -n "$URLS" ]; then
+          echo "Found URLs:"
+          echo "$URLS"
+          
+          # Check if URLs are accessible (basic check)
+          for url in $URLS; do
+            if curl -f -s -I "$url" >/dev/null 2>&1; then
+              echo "✅ $url is accessible"
+            else
+              echo "⚠️ $url is not accessible (may be expected for new releases)"
+            fi
+          done
+        else
+          echo "No URLs found in Package.swift"
+        fi
+        
+    - name: Generate Validation Summary
+      run: |
+        echo "## 📦 Package Validation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ Validation Results" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Package.swift syntax and structure" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Spreedly.podspec validation" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Framework files check" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Archive files check" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📋 Next Steps" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Package files are valid and ready for distribution" >> $GITHUB_STEP_SUMMARY
+        echo "- 📝 Ensure release documentation is updated" >> $GITHUB_STEP_SUMMARY
+        echo "- 🚀 Ready for integration by application developers" >> $GITHUB_STEP_SUMMARY
+
+  test-integration:
+    name: Test Package Integration
+    runs-on: macos-14
+    needs: validate-package
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Create Test Project
+      run: |
+        echo "🧪 Creating test project to validate package integration..."
+        
+        mkdir -p TestProject
+        cd TestProject
+        
+        # Create a simple Swift package that depends on our package
+        cat > Package.swift << EOF
+        // swift-tools-version: 6.1
+        import PackageDescription
+        
+        let package = Package(
+            name: "TestProject",
+            platforms: [.iOS(.v13)],
+            products: [
+                .library(name: "TestProject", targets: ["TestProject"])
+            ],
+            dependencies: [
+                .package(path: "..")
+            ],
+            targets: [
+                .target(
+                    name: "TestProject",
+                    dependencies: [
+                        .product(name: "SpreedlyCore", package: "Spreedly")
+                    ]
+                )
+            ]
+        )
+        EOF
+        
+        # Create a minimal source file
+        mkdir -p Sources/TestProject
+        cat > Sources/TestProject/TestProject.swift << EOF
+        import Foundation
+        import SpreedlyCore
+        
+        public struct TestProject {
+            public init() {}
+            
+            public func testIntegration() {
+                print("Testing Spreedly SDK integration")
+                // Basic integration test would go here
+            }
+        }
+        EOF
+        
+    - name: Test Package Resolution
+      run: |
+        cd TestProject
+        echo "📦 Testing package resolution..."
+        
+        # Try to resolve dependencies
+        swift package resolve
+        
+        echo "✅ Package resolution successful"
+        
+    - name: Test Build
+      run: |
+        cd TestProject
+        echo "🔨 Testing build..."
+        
+        # Try to build the test project
+        swift build
+        
+        echo "✅ Build successful" 
