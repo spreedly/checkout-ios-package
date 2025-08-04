@@ -33,17 +33,17 @@ let package = Package(
         // Binary targets for pre-built frameworks
         .binaryTarget(
             name: "SpreedlyCore",
-            url: "https://github.com/spreedly/checkout-ios-package/releases/download/v1.0.0/SpreedlyCore-universal.zip",
+            url: "https://github.com/spreedly/checkout-ios-package/releases/download/v0.0.1/SpreedlyCore-universal.zip",
             checksum: "replace-with-actual-checksum"
         ),
         .binaryTarget(
             name: "SpreedlySecurity",
-            url: "https://github.com/spreedly/checkout-ios-package/releases/download/v1.0.0/SpreedlySecurity-universal.zip",
+            url: "https://github.com/spreedly/checkout-ios-package/releases/download/v0.0.1/SpreedlySecurity-universal.zip",
             checksum: "replace-with-actual-checksum"
         ),
         .binaryTarget(
             name: "SpreedlyUI",
-            url: "https://github.com/spreedly/checkout-ios-package/releases/download/v1.0.0/SpreedlyUI-universal.zip",
+            url: "https://github.com/spreedly/checkout-ios-package/releases/download/v0.0.1/SpreedlyUI-universal.zip",
             checksum: "replace-with-actual-checksum"
         )
     ]
