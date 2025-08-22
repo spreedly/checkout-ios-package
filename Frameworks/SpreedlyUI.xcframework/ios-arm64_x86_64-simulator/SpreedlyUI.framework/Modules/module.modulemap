@@ -1,0 +1,4 @@
+framework module SpreedlyUI {
+  header "SpreedlyUI-Swift.h"
+  requires objc
+}

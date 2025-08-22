@@ -1,0 +1,4 @@
+framework module SpreedlyCore {
+  header "SpreedlyCore-Swift.h"
+  requires objc
+}

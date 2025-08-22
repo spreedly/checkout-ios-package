@@ -1,0 +1,1778 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "SpreedlySecurity",
+    "printedName": "SpreedlySecurity",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlySecurity"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SPLSecureContainerKey",
+        "printedName": "SPLSecureContainerKey",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "number",
+            "printedName": "number",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO6numberSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO6numberSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO6numberSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO6numberSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "firstName",
+            "printedName": "firstName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO9firstNameSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO9firstNameSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO9firstNameSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO9firstNameSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "lastName",
+            "printedName": "lastName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO8lastNameSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO8lastNameSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO8lastNameSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO8lastNameSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "fullName",
+            "printedName": "fullName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO8fullNameSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO8fullNameSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO8fullNameSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO8fullNameSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "expirationMonth",
+            "printedName": "expirationMonth",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO15expirationMonthSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO15expirationMonthSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO15expirationMonthSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO15expirationMonthSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "expirationYear",
+            "printedName": "expirationYear",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO14expirationYearSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO14expirationYearSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO14expirationYearSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO14expirationYearSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "expirationDate",
+            "printedName": "expirationDate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO14expirationDateSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO14expirationDateSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO14expirationDateSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO14expirationDateSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "securityCode",
+            "printedName": "securityCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO12securityCodeSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO12securityCodeSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO12securityCodeSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO12securityCodeSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "addressLine1",
+            "printedName": "addressLine1",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO12addressLine1SSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO12addressLine1SSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO12addressLine1SSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO12addressLine1SSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "addressLine2",
+            "printedName": "addressLine2",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO12addressLine2SSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO12addressLine2SSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO12addressLine2SSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO12addressLine2SSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "city",
+            "printedName": "city",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO4citySSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO4citySSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO4citySSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO4citySSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "state",
+            "printedName": "state",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO5stateSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO5stateSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO5stateSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO5stateSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "zipCode",
+            "printedName": "zipCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO7zipCodeSSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO7zipCodeSSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO7zipCodeSSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO7zipCodeSSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "country",
+            "printedName": "country",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO7countrySSvpZ",
+            "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO7countrySSvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO7countrySSvgZ",
+                "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO7countrySSvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:16SpreedlySecurity21SPLSecureContainerKeyO",
+        "mangledName": "$s16SpreedlySecurity21SPLSecureContainerKeyO",
+        "moduleName": "SpreedlySecurity",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SecureValueContainer",
+        "printedName": "SecureValueContainer",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SecureValueContainer",
+                "printedName": "SpreedlySecurity.SecureValueContainer",
+                "usr": "s:16SpreedlySecurity20SecureValueContainerC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC6sharedACvpZ",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC6sharedACvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SecureValueContainer",
+                    "printedName": "SpreedlySecurity.SecureValueContainer",
+                    "usr": "s:16SpreedlySecurity20SecureValueContainerC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity20SecureValueContainerC6sharedACvgZ",
+                "mangledName": "$s16SpreedlySecurity20SecureValueContainerC6sharedACvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "registerValue",
+            "printedName": "registerValue(fieldId:value:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC08registerD07fieldId5valueySS_SStF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC08registerD07fieldId5valueySS_SStF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "removeValue",
+            "printedName": "removeValue(for:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC06removeD03forySS_tF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC06removeD03forySS_tF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "startCollection",
+            "printedName": "startCollection()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC15startCollectionyyF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC15startCollectionyyF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopCollection",
+            "printedName": "stopCollection()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC14stopCollectionyyF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC14stopCollectionyyF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getValue",
+            "printedName": "getValue(for:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC03getD03forSSSgSS_tF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC03getD03forSSSgSS_tF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "collectAllValues",
+            "printedName": "collectAllValues()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Swift.String]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Swift.String]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC16collectAllValuesSDyS2SGSgyF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC16collectAllValuesSDyS2SGSgyF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "isCollectionActive",
+            "printedName": "isCollectionActive",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC18isCollectionActiveSbvp",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC18isCollectionActiveSbvp",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity20SecureValueContainerC18isCollectionActiveSbvg",
+                "mangledName": "$s16SpreedlySecurity20SecureValueContainerC18isCollectionActiveSbvg",
+                "moduleName": "SpreedlySecurity",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "clearValues",
+            "printedName": "clearValues()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity20SecureValueContainerC11clearValuesyyF",
+            "mangledName": "$s16SpreedlySecurity20SecureValueContainerC11clearValuesyyF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:16SpreedlySecurity20SecureValueContainerC",
+        "mangledName": "$s16SpreedlySecurity20SecureValueContainerC",
+        "moduleName": "SpreedlySecurity",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlySecurity",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CommonCrypto",
+        "printedName": "CommonCrypto",
+        "declKind": "Import",
+        "moduleName": "SpreedlySecurity"
+      },
+      {
+        "kind": "Import",
+        "name": "CryptoKit",
+        "printedName": "CryptoKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlySecurity"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SpreedlyEncryptionProtocol",
+        "printedName": "SpreedlyEncryptionProtocol",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "isValidSHA256Hash",
+            "printedName": "isValidSHA256Hash(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity0A18EncryptionProtocolP17isValidSHA256HashySbSSF",
+            "mangledName": "$s16SpreedlySecurity0A18EncryptionProtocolP17isValidSHA256HashySbSSF",
+            "moduleName": "SpreedlySecurity",
+            "genericSig": "<τ_0_0 where τ_0_0 : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "sugared_genericSig": "<Self where Self : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "encryptAES",
+            "printedName": "encryptAES(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity0A18EncryptionProtocolP10encryptAESyS2SF",
+            "mangledName": "$s16SpreedlySecurity0A18EncryptionProtocolP10encryptAESyS2SF",
+            "moduleName": "SpreedlySecurity",
+            "genericSig": "<τ_0_0 where τ_0_0 : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "sugared_genericSig": "<Self where Self : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "decryptAES",
+            "printedName": "decryptAES(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity0A18EncryptionProtocolP10decryptAESySSSgSSF",
+            "mangledName": "$s16SpreedlySecurity0A18EncryptionProtocolP10decryptAESySSSgSSF",
+            "moduleName": "SpreedlySecurity",
+            "genericSig": "<τ_0_0 where τ_0_0 : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "sugared_genericSig": "<Self where Self : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isValidAESEncryptedData",
+            "printedName": "isValidAESEncryptedData(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity0A18EncryptionProtocolP23isValidAESEncryptedDataySbSSF",
+            "mangledName": "$s16SpreedlySecurity0A18EncryptionProtocolP23isValidAESEncryptedDataySbSSF",
+            "moduleName": "SpreedlySecurity",
+            "genericSig": "<τ_0_0 where τ_0_0 : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "sugared_genericSig": "<Self where Self : SpreedlySecurity.SpreedlyEncryptionProtocol>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:16SpreedlySecurity0A18EncryptionProtocolP",
+        "mangledName": "$s16SpreedlySecurity0A18EncryptionProtocolP",
+        "moduleName": "SpreedlySecurity",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SPLSecurity",
+        "printedName": "SPLSecurity",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPLSecurity",
+                "printedName": "SpreedlySecurity.SPLSecurity",
+                "usr": "s:16SpreedlySecurity11SPLSecurityC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC6sharedACvpZ",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC6sharedACvpZ",
+            "moduleName": "SpreedlySecurity",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPLSecurity",
+                    "printedName": "SpreedlySecurity.SPLSecurity",
+                    "usr": "s:16SpreedlySecurity11SPLSecurityC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16SpreedlySecurity11SPLSecurityC6sharedACvgZ",
+                "mangledName": "$s16SpreedlySecurity11SPLSecurityC6sharedACvgZ",
+                "moduleName": "SpreedlySecurity",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "isValidSHA256Hash",
+            "printedName": "isValidSHA256Hash(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC17isValidSHA256HashySbSSF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC17isValidSHA256HashySbSSF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "encryptAES",
+            "printedName": "encryptAES(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC10encryptAESyS2SF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC10encryptAESyS2SF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "decryptAES",
+            "printedName": "decryptAES(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC10decryptAESySSSgSSF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC10decryptAESySSSgSSF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isValidAESEncryptedData",
+            "printedName": "isValidAESEncryptedData(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC23isValidAESEncryptedDataySbSSF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC23isValidAESEncryptedDataySbSSF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "encryptAES",
+            "printedName": "encryptAES(_:withKey:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SymmetricKey",
+                "printedName": "CryptoKit.SymmetricKey",
+                "usr": "s:9CryptoKit12SymmetricKeyV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC10encryptAES_7withKeyS2S_9CryptoKit09SymmetricG0VtF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC10encryptAES_7withKeyS2S_9CryptoKit09SymmetricG0VtF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "decryptAES",
+            "printedName": "decryptAES(_:withKey:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SymmetricKey",
+                "printedName": "CryptoKit.SymmetricKey",
+                "usr": "s:9CryptoKit12SymmetricKeyV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC10decryptAES_7withKeySSSgSS_9CryptoKit09SymmetricG0VtF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC10decryptAES_7withKeySSSgSS_9CryptoKit09SymmetricG0VtF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "generateNewKey",
+            "printedName": "generateNewKey()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SymmetricKey",
+                "printedName": "CryptoKit.SymmetricKey",
+                "usr": "s:9CryptoKit12SymmetricKeyV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC14generateNewKey9CryptoKit09SymmetricF0VyF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC14generateNewKey9CryptoKit09SymmetricF0VyF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "secureStore",
+            "printedName": "secureStore(_:value:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC11secureStore_5valueySS_SStF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC11secureStore_5valueySS_SStF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "secureRetrieve",
+            "printedName": "secureRetrieve(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC14secureRetrieveySSSgSSF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC14secureRetrieveySSSgSSF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "clearSecureStorage",
+            "printedName": "clearSecureStorage()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC18clearSecureStorageyyF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC18clearSecureStorageyyF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "secureClear",
+            "printedName": "secureClear(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "paramValueOwnership": "InOut",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:16SpreedlySecurity11SPLSecurityC11secureClearyySSzF",
+            "mangledName": "$s16SpreedlySecurity11SPLSecurityC11secureClearyySSzF",
+            "moduleName": "SpreedlySecurity",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:16SpreedlySecurity11SPLSecurityC",
+        "mangledName": "$s16SpreedlySecurity11SPLSecurityC",
+        "moduleName": "SpreedlySecurity",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SpreedlyEncryptionProtocol",
+            "printedName": "SpreedlyEncryptionProtocol",
+            "usr": "s:16SpreedlySecurity0A18EncryptionProtocolP",
+            "mangledName": "$s16SpreedlySecurity0A18EncryptionProtocolP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 86,
+      "length": 8,
+      "value": "\"number\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 129,
+      "length": 12,
+      "value": "\"first_name\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 175,
+      "length": 11,
+      "value": "\"last_name\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 220,
+      "length": 11,
+      "value": "\"full_name\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 300,
+      "length": 7,
+      "value": "\"month\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 347,
+      "length": 6,
+      "value": "\"year\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 393,
+      "length": 17,
+      "value": "\"expiration_date\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 471,
+      "length": 20,
+      "value": "\"verification_value\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 529,
+      "length": 10,
+      "value": "\"address1\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 577,
+      "length": 10,
+      "value": "\"address2\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 617,
+      "length": 6,
+      "value": "\"city\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 654,
+      "length": 7,
+      "value": "\"state\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 694,
+      "length": 5,
+      "value": "\"zip\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 732,
+      "length": 9,
+      "value": "\"country\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "Dictionary",
+      "offset": 983,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1047,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SecureValueContainer.swift",
+      "kind": "StringLiteral",
+      "offset": 1098,
+      "length": 31,
+      "value": "\"com.spreedly.secure-container\""
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SpreedlySecurity.swift",
+      "kind": "Dictionary",
+      "offset": 1342,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/vinaynaikade\/Documents\/GitHub\/checkout-ios-sdk\/SpreedlySecurity\/SpreedlySecurity\/SpreedlySecurity.swift",
+      "kind": "StringLiteral",
+      "offset": 1442,
+      "length": 31,
+      "value": "\"com.spreedly.security.storage\""
+    }
+  ]
+}
