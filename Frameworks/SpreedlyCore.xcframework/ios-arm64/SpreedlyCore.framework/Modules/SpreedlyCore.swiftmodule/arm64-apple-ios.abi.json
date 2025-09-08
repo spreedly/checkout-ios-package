@@ -25540,175 +25540,175 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3775,
+      "offset": 3781,
       "length": 12,
       "value": "\"created_at\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3813,
+      "offset": 3819,
       "length": 12,
       "value": "\"updated_at\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3891,
+      "offset": 3897,
       "length": 15,
       "value": "\"storage_state\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3974,
+      "offset": 3980,
       "length": 14,
       "value": "\"callback_url\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4019,
+      "offset": 4025,
       "length": 18,
       "value": "\"last_four_digits\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4068,
+      "offset": 4074,
       "length": 18,
       "value": "\"first_six_digits\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4111,
+      "offset": 4117,
       "length": 11,
       "value": "\"card_type\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4148,
+      "offset": 4154,
       "length": 12,
       "value": "\"first_name\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4185,
+      "offset": 4191,
       "length": 11,
       "value": "\"last_name\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4380,
+      "offset": 4386,
       "length": 14,
       "value": "\"phone_number\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4440,
+      "offset": 4446,
       "length": 11,
       "value": "\"full_name\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4490,
+      "offset": 4496,
       "length": 27,
       "value": "\"eligible_for_card_updater\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4550,
+      "offset": 4556,
       "length": 19,
       "value": "\"shipping_address1\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4602,
+      "offset": 4608,
       "length": 19,
       "value": "\"shipping_address2\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4650,
+      "offset": 4656,
       "length": 15,
       "value": "\"shipping_city\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4695,
+      "offset": 4701,
       "length": 16,
       "value": "\"shipping_state\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4739,
+      "offset": 4745,
       "length": 14,
       "value": "\"shipping_zip\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4785,
+      "offset": 4791,
       "length": 18,
       "value": "\"shipping_country\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4839,
+      "offset": 4845,
       "length": 23,
       "value": "\"shipping_phone_number\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4905,
+      "offset": 4911,
       "length": 30,
       "value": "\"issuer_identification_number\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 4962,
+      "offset": 4968,
       "length": 14,
       "value": "\"click_to_pay\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 5025,
+      "offset": 5031,
       "length": 14,
       "value": "\"bin_metadata\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 5081,
+      "offset": 5087,
       "length": 30,
       "value": "\"subscribed_to_mastercard_abu\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 5145,
+      "offset": 5151,
       "length": 21,
       "value": "\"payment_method_type\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyCore\/SpreedlyCore\/Core\/API\/PaymentMethods\/Create\/Response\/CreatePaymentMethodResponse.swift",
       "kind": "StringLiteral",
-      "offset": 5245,
+      "offset": 5251,
       "length": 20,
       "value": "\"verification_value\""
     },
