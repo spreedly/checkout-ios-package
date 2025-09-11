@@ -308,6 +308,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if defined(__OBJC__)
 
 enum YearFormat : NSInteger;
+enum DropInNameDisplayMode : NSInteger;
 @class CheckoutResult;
 @class NSString;
 @class NSBundle;
@@ -318,195 +319,25 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @property (nonatomic) BOOL allowBlankName;
 @property (nonatomic) BOOL allowExpiredDate;
 @property (nonatomic) enum YearFormat yearFormat;
+@property (nonatomic) enum DropInNameDisplayMode nameDisplayMode;
 @property (nonatomic, copy) void (^ _Nullable onSubmit)(CheckoutResult * _Nonnull);
 @property (nonatomic, copy) void (^ _Nullable onError)(NSString * _Nonnull);
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat onSubmit:(void (^ _Nullable)(CheckoutResult * _Nonnull))onSubmit onError:(void (^ _Nullable)(NSString * _Nonnull))onError;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onSubmit:(void (^ _Nullable)(CheckoutResult * _Nonnull))onSubmit onError:(void (^ _Nullable)(NSString * _Nonnull))onError;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 @end
+
+typedef SWIFT_ENUM(NSInteger, DropInNameDisplayMode, open) {
+  DropInNameDisplayModeSingleField = 0,
+  DropInNameDisplayModeSeparateFields = 1,
+};
 
 SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 @interface FormField : NSObject
 - (nonnull instancetype)initWithId:(NSString * _Nonnull)id title:(NSString * _Nonnull)title type:(enum FormFieldType)type placeholder:(NSString * _Nullable)placeholder isRequired:(BOOL)isRequired OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI33SPLCreditCardNumberViewController")
-@interface SPLCreditCardNumberViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nonnull textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nonnull)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI31SPLExpirationDateViewController")
-@interface SPLExpirationDateViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nullable textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowExpiredDate;
-@property (nonatomic) enum YearFormat yearFormat;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI32SPLExpirationMonthViewController")
-@interface SPLExpirationMonthViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nullable textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowExpiredDate;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowExpiredDate:(BOOL)allowExpiredDate onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI31SPLExpirationYearViewController")
-@interface SPLExpirationYearViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nullable textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowExpiredDate;
-@property (nonatomic) enum YearFormat yearFormat;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI26SPLFirstNameViewController")
-@interface SPLFirstNameViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nonnull textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowBlankName;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nonnull)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowBlankName:(BOOL)allowBlankName onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI25SPLFullNameViewController")
-@interface SPLFullNameViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nonnull textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowBlankName;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nonnull)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowBlankName:(BOOL)allowBlankName onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
-@end
-
-SWIFT_CLASS("_TtC10SpreedlyUI25SPLLastNameViewController")
-@interface SPLLastNameViewController : UIViewController
-@property (nonatomic, copy) NSString * _Nullable fieldTitle;
-@property (nonatomic) BOOL isRequired;
-@property (nonatomic, copy) NSString * _Nullable placeholder;
-@property (nonatomic) UIKeyboardType keyboardType;
-@property (nonatomic) UITextContentType _Nonnull textContentType;
-@property (nonatomic) BOOL isSecure;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowBlankName;
-@property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
-@property (nonatomic, readonly) BOOL isValid;
-@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
-@property (nonatomic, readonly) BOOL hasValue;
-@property (nonatomic, readonly) NSInteger inputLength;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithTitle:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nonnull)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowBlankName:(BOOL)allowBlankName onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (void)clear;
-- (void)reset;
 @end
 
 SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
@@ -517,11 +348,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, copy) NSString * _Nullable placeholder;
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextContentType _Nullable textContentType;
-@property (nonatomic) BOOL isSecure;
 @property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
 @property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
-@property (nonatomic) BOOL allowBlankName;
-@property (nonatomic) BOOL allowExpiredDate;
 @property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
@@ -530,8 +358,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType isSecure:(BOOL)isSecure accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
