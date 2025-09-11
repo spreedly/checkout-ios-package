@@ -345,13 +345,17 @@ SWIFT_CLASS("_TtC12SpreedlyCore28SSLPinningURLSessionDelegate")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class SpreedlyParamsManager;
 @protocol SpreedlyConfigGenerator;
+enum ValidationParam : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
+@property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 + (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey;
 + (void)setupWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
+- (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
 - (void)reset;
 /// Performs a checkout operation with field values from different sources
 /// \param additionalFields Dictionary containing additional field values from application components
@@ -394,6 +398,17 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlyParamsManager")
+@interface SpreedlyParamsManager : NSObject
+- (BOOL)getParamWithParameter:(enum ValidationParam)parameter SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
+  ValidationParamAllowBlankName = 0,
+  ValidationParamAllowExpiredDate = 1,
+};
 
 #endif
 #if __has_attribute(external_source_symbol)
