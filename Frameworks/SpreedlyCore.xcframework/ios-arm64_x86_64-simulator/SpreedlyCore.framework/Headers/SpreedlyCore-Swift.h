@@ -405,6 +405,28 @@ SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlyParamsManager")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+SWIFT_CLASS("_TtC12SpreedlyCore17SpreedlyUIManager")
+@interface SpreedlyUIManager : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIManager * _Nonnull shared;)
++ (SpreedlyUIManager * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly) BOOL resetFields;
+@property (nonatomic, readonly) BOOL forceFieldErrorDisplay;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Unregister a field from tracking
+- (void)unregisterFieldWithType:(enum FormFieldType)type;
+/// Check if all registered SPLTextField instances are valid
+///
+/// returns:
+/// True if all registered fields are valid, false otherwise
+- (BOOL)areAllFieldsValid SWIFT_WARN_UNUSED_RESULT;
+/// Get count of registered fields
+///
+/// returns:
+/// Number of currently registered fields
+- (NSInteger)getRegisteredFieldCount SWIFT_WARN_UNUSED_RESULT;
+@end
+
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
   ValidationParamAllowBlankName = 0,
   ValidationParamAllowExpiredDate = 1,
@@ -823,6 +845,28 @@ SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlyParamsManager")
 @interface SpreedlyParamsManager : NSObject
 - (BOOL)getParamWithParameter:(enum ValidationParam)parameter SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+SWIFT_CLASS("_TtC12SpreedlyCore17SpreedlyUIManager")
+@interface SpreedlyUIManager : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIManager * _Nonnull shared;)
++ (SpreedlyUIManager * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly) BOOL resetFields;
+@property (nonatomic, readonly) BOOL forceFieldErrorDisplay;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Unregister a field from tracking
+- (void)unregisterFieldWithType:(enum FormFieldType)type;
+/// Check if all registered SPLTextField instances are valid
+///
+/// returns:
+/// True if all registered fields are valid, false otherwise
+- (BOOL)areAllFieldsValid SWIFT_WARN_UNUSED_RESULT;
+/// Get count of registered fields
+///
+/// returns:
+/// Number of currently registered fields
+- (NSInteger)getRegisteredFieldCount SWIFT_WARN_UNUSED_RESULT;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
