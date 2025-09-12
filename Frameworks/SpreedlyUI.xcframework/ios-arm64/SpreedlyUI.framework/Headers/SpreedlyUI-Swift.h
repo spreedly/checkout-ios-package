@@ -309,21 +309,19 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 enum YearFormat : NSInteger;
 enum DropInNameDisplayMode : NSInteger;
-@class CheckoutResult;
+@class PaymentProcessingResult;
 @class NSString;
 @class NSBundle;
 @class FormField;
 @class NSCoder;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @interface CardFormDropInViewController : UIViewController
-@property (nonatomic) BOOL allowBlankName;
-@property (nonatomic) BOOL allowExpiredDate;
 @property (nonatomic) enum YearFormat yearFormat;
 @property (nonatomic) enum DropInNameDisplayMode nameDisplayMode;
-@property (nonatomic, copy) void (^ _Nullable onSubmit)(CheckoutResult * _Nonnull);
+@property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
 @property (nonatomic, copy) void (^ _Nullable onError)(NSString * _Nonnull);
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onSubmit:(void (^ _Nullable)(CheckoutResult * _Nonnull))onSubmit onError:(void (^ _Nullable)(NSString * _Nonnull))onError;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult onError:(void (^ _Nullable)(NSString * _Nonnull))onError;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 @end
@@ -348,8 +346,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, copy) NSString * _Nullable placeholder;
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextContentType _Nullable textContentType;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityLabel;
-@property (nonatomic, copy) NSString * _Nullable fieldAccessibilityHint;
 @property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
@@ -358,7 +354,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType accessibilityLabel:(NSString * _Nullable)accessibilityLabel accessibilityHint:(NSString * _Nullable)accessibilityHint onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;

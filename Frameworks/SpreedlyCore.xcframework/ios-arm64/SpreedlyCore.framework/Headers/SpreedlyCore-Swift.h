@@ -305,15 +305,41 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+/// Categorizes the type of error that occurred.
+typedef SWIFT_ENUM(NSInteger, ErrorType, open) {
+/// Detailed API error with specific information from Spreedly
+  ErrorTypeApiError = 0,
+/// Network-related error (connection, IO, etc.)
+  ErrorTypeNetworkError = 1,
+/// Unknown or unexpected error
+  ErrorTypeUnknownError = 2,
+};
+
 @class NSString;
-SWIFT_CLASS("_TtC12SpreedlyCore14CheckoutResult")
-@interface CheckoutResult : NSObject
-@property (nonatomic, copy) NSString * _Nullable transactionToken;
-@property (nonatomic, copy) NSString * _Nullable paymentMethodToken;
-@property (nonatomic) BOOL success;
-@property (nonatomic, copy) NSString * _Nullable message;
-@property (nonatomic, copy) NSString * _Nullable error;
-- (nonnull instancetype)initWithTransactionToken:(NSString * _Nullable)transactionToken paymentMethodToken:(NSString * _Nullable)paymentMethodToken success:(BOOL)success message:(NSString * _Nullable)message error:(NSString * _Nullable)error OBJC_DESIGNATED_INITIALIZER;
+@class NSNumber;
+@class PaymentValidationError;
+/// Contains detailed information about a payment failure.
+/// Compatible with both Swift and Objective-C.
+SWIFT_CLASS("_TtC12SpreedlyCore13FailedDetails")
+@interface FailedDetails : NSObject
+/// The type of error that occurred.
+@property (nonatomic, readonly) enum ErrorType errorType;
+/// The primary error message.
+@property (nonatomic, readonly, copy) NSString * _Nullable message;
+/// The original error that caused the failure (for debugging).
+@property (nonatomic, readonly) NSError * _Nullable originalError;
+/// HTTP status code (only present for API errors).
+@property (nonatomic, readonly, strong) NSNumber * _Nullable statusCode;
+/// List of field-specific validation errors (only present for validation errors).
+@property (nonatomic, readonly, copy) NSArray<PaymentValidationError *> * _Nonnull validationErrors;
+/// The complete raw error response (for debugging purposes).
+@property (nonatomic, readonly, copy) NSString * _Nullable rawErrorResponse;
+/// Checks if this error contains validation errors.
+- (BOOL)hasValidationErrors SWIFT_WARN_UNUSED_RESULT;
+/// Gets validation errors for a specific field.
+- (NSArray<PaymentValidationError *> * _Nonnull)getValidationErrorsFor:(NSString * _Nonnull)fieldName SWIFT_WARN_UNUSED_RESULT;
+/// Gets a user-friendly description of the error.
+- (NSString * _Nonnull)getDescription SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -334,6 +360,165 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeZipCode = 12,
 };
 
+/// Represents the immediate result of a payment processing attempt.
+/// This class captures the synchronous result of calling processPayment(),
+/// while the actual payment completion, failure, or cancellation is communicated asynchronously
+/// through the PaymentResult flow.
+/// Compatible with both Swift and Objective-C.
+/// <h2>Usage Examples</h2>
+/// <h3>Swift Usage:</h3>
+/// \code
+/// let processingResult = viewModel.processPayment()
+///
+/// if processingResult.isProcessing {
+///     // Payment processing started successfully
+///     // Listen for PaymentResult updates
+///     showLoadingIndicator()
+/// } else if processingResult.isValidationFailed {
+///     // Handle validation errors
+///     for fieldType in processingResult.invalidFields {
+///         highlightInvalidField(fieldType)
+///     }
+/// }
+///
+/// \endcode<h3>Objective-C Usage:</h3>
+/// \code
+/// PaymentProcessingResult *result = [viewModel processPayment];
+///
+/// if (result.isProcessing) {
+///     // Payment processing started successfully
+///     [self showLoadingIndicator];
+/// } else if (result.isValidationFailed) {
+///     // Handle validation errors
+///     for (FormFieldType fieldType in result.invalidFields) {
+///         [self highlightInvalidField:fieldType];
+///     }
+/// }
+///
+/// \endcode
+SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
+@interface PaymentProcessingResult : NSObject
+/// Indicates that payment processing has started successfully.
+/// This means validation passed and the payment method creation request
+/// has been initiated. The actual result will be communicated through the
+/// PaymentResult flow.
+@property (nonatomic) BOOL isProcessing;
+/// Indicates that payment processing could not start due to validation failures.
+@property (nonatomic) BOOL isValidationFailed;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Creates a processing result indicating that payment processing has started successfully.
++ (PaymentProcessingResult * _Nonnull)processing SWIFT_WARN_UNUSED_RESULT;
+/// Returns true if validation was successful and processing started.
+@property (nonatomic, readonly) BOOL isSuccess;
+/// Returns true if there were any validation failures.
+@property (nonatomic, readonly) BOOL hasValidationErrors;
+/// Checks if a specific field type is in the invalid fields list.
+/// \param fieldType The field type to check
+///
+///
+/// returns:
+/// True if the field type failed validation
+- (BOOL)hasInvalidField:(enum FormFieldType)fieldType SWIFT_WARN_UNUSED_RESULT;
+/// Gets a user-friendly description of the result.
+- (NSString * _Nonnull)getDescription SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// Represents the various states and outcomes of a payment process.
+/// This class works seamlessly with both Swift and Objective-C, providing
+/// a unified API for payment result handling.
+/// <h2>Usage Examples</h2>
+/// <h3>Swift Usage:</h3>
+/// \code
+/// // Create from NetworkError (most common)
+/// let result = PaymentResult.failed(from: networkError)
+///
+/// // Handle the result
+/// if result.isSuccess, let token = result.token {
+///     print("Payment successful: \(token)")
+/// } else if result.isFailure, let failureDetails = result.failureDetails {
+///     switch failureDetails.errorType {
+///     case .apiError:
+///         if let apiError = failureDetails.apiError {
+///             switch apiError {
+///             case .accountInactive:
+///                 showError("Please use test card numbers")
+///             case .validationError:
+///                 // Handle validation errors
+///             default:
+///                 showError(failureDetails.getDescription())
+///             }
+///         }
+///     case .networkError:
+///         showError("Network error occurred")
+///     case .unknownError:
+///         showError("Unknown error occurred")
+///     }
+/// }
+///
+/// \endcode<h3>Objective-C Usage:</h3>
+/// \code
+/// if (result.isSuccess && result.token) {
+///     NSLog(@"Payment successful: %@", result.token);
+/// } else if (result.isFailure && result.failureDetails) {
+///     switch (result.failureDetails.errorType) {
+///         case ErrorTypeApiError:
+///             switch (result.failureDetails.apiError) {
+///                 case SpreedlyApiErrorAccountInactive:
+///                     [self showError:@"Please use test card numbers"];
+///                     break;
+///                 default:
+///                     [self showError:[result.failureDetails getDescription]];
+///                     break;
+///             }
+///             break;
+///         case ErrorTypeNetworkError:
+///             [self showError:@"Network error occurred"];
+///             break;
+///     }
+/// }
+///
+/// \endcode
+SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
+@interface PaymentResult : NSObject
+/// Indicates if this is the initial state (before processing begins).
+@property (nonatomic) BOOL isInitial;
+/// Indicates if the payment completed successfully.
+@property (nonatomic) BOOL isSuccess;
+/// Indicates if the payment was canceled by the user.
+@property (nonatomic) BOOL isCanceled;
+/// Indicates if the payment failed.
+@property (nonatomic) BOOL isFailure;
+/// The payment method token (only available for successful payments).
+@property (nonatomic, copy) NSString * _Nullable token;
+/// Detailed failure information (only available for failed payments).
+@property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Creates an initial state result.
++ (PaymentResult * _Nonnull)initial SWIFT_WARN_UNUSED_RESULT;
+/// Creates a successful payment result.
++ (PaymentResult * _Nonnull)successWithToken:(NSString * _Nonnull)token SWIFT_WARN_UNUSED_RESULT;
+/// Creates a canceled payment result.
++ (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// Creates a failed payment result.
++ (PaymentResult * _Nonnull)failureWithDetails:(FailedDetails * _Nonnull)details SWIFT_WARN_UNUSED_RESULT;
+/// Creates a Failed result from a generic Error.
++ (PaymentResult * _Nonnull)failedFrom:(NSError * _Nonnull)error SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// Represents a field-specific validation error.
+/// Compatible with both Swift and Objective-C.
+SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
+@interface PaymentValidationError : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull fieldName;
+@property (nonatomic, readonly, copy) NSString * _Nullable errorKey;
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
+- (nonnull instancetype)initWithFieldName:(NSString * _Nonnull)fieldName errorKey:(NSString * _Nullable)errorKey errorMessage:(NSString * _Nullable)errorMessage OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class NSURLSession;
 @class NSURLAuthenticationChallenge;
 @class NSURLCredential;
@@ -346,11 +531,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore28SSLPinningURLSessionDelegate")
 @end
 
 @class SpreedlyParamsManager;
+@protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
+/// Objective-C compatible delegate for payment result callbacks
+@property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
 + (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey;
 + (void)setupWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
@@ -367,15 +555,73 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// \param allowExpiredDate Optional flag to allow expired expiration dates
 ///
 ///
-/// throws:
-/// NetworkError if the request fails
-///
 /// returns:
-/// Checkout result
-- (void)createCreditCardWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate completionHandler:(void (^ _Nonnull)(CheckoutResult * _Nullable, NSError * _Nullable))completionHandler;
+/// Payment processing result indicating validation status. Actual payment result comes through error handler
+- (PaymentProcessingResult * _Nonnull)createCreditCardWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+/// Specific API error types that can be returned by the Spreedly API.
+/// This enum categorizes the various error conditions that can occur when making
+/// API requests to Spreedly, providing a type-safe way to handle specific error scenarios.
+/// Compatible with both Swift and Objective-C.
+/// <h2>Usage</h2>
+/// <h3>Creating from NetworkError (Preferred):</h3>
+/// \code
+/// let apiError = SpreedlyApiError.from(networkError: networkError)
+///
+/// \endcode<h3>Handling API Errors - Swift:</h3>
+/// \code
+/// switch apiError {
+/// case .accountInactive:
+///     // Handle test/production environment mismatch
+///     showError("Please use test card numbers in test environment")
+/// case .validationError:
+///     // Handle field validation errors
+///     showError("Please check required fields")
+/// case .paymentRequired:
+///     // Handle payment/billing issues
+///     showError("Account payment required")
+/// // ... other cases
+/// }
+///
+/// \endcode<h3>Handling API Errors - Objective-C:</h3>
+/// \code
+/// switch (apiError) {
+///     case SpreedlyApiErrorAccountInactive:
+///         [self showError:@"Please use test card numbers in test environment"];
+///         break;
+///     case SpreedlyApiErrorValidationError:
+///         [self showError:@"Please check required fields"];
+///         break;
+///     // ... other cases
+/// }
+///
+/// \endcode
+typedef SWIFT_ENUM(NSInteger, SpreedlyApiError, open) {
+/// Environment has not been activated for real transactions.
+/// Occurs when using real card numbers with a test gateway.
+  SpreedlyApiErrorAccountInactive = 0,
+/// Field validation errors (e.g., blank required fields, invalid formats).
+  SpreedlyApiErrorValidationError = 1,
+/// Payment required (402 status) - billing or account issues.
+  SpreedlyApiErrorPaymentRequired = 2,
+/// Unprocessable entity (422 status) - business logic validation failed.
+  SpreedlyApiErrorUnprocessableEntity = 3,
+/// Unauthorized access (401 status) - invalid credentials or tokens.
+  SpreedlyApiErrorUnauthorized = 4,
+/// Forbidden access (403 status) - insufficient permissions.
+  SpreedlyApiErrorForbidden = 5,
+/// Resource not found (404 status).
+  SpreedlyApiErrorNotFound = 6,
+/// Rate limiting (429 status) - too many requests.
+  SpreedlyApiErrorRateLimited = 7,
+/// Server error (5xx status codes).
+  SpreedlyApiErrorServerError = 8,
+/// Unknown or unrecognized error response.
+  SpreedlyApiErrorUnknown = 9,
+};
 
 /// Configuration for basic authentication
 SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
@@ -403,6 +649,15 @@ SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlyParamsManager")
 @interface SpreedlyParamsManager : NSObject
 - (BOOL)getParamWithParameter:(enum ValidationParam)parameter SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Objective-C compatible delegate for receiving payment result updates
+SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
+@protocol SpreedlyPaymentDelegate
+/// Called when a payment result is available
+/// \param result The payment result containing success/failure information
+///
+- (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
 SWIFT_CLASS("_TtC12SpreedlyCore17SpreedlyUIManager")
