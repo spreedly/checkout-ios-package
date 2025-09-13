@@ -281,6 +281,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreFoundation;
 @import Foundation;
 @import ObjectiveC;
 @import SpreedlyCore;
@@ -313,15 +314,16 @@ enum DropInNameDisplayMode : NSInteger;
 @class NSString;
 @class NSBundle;
 @class FormField;
+@class SPLThemeConfig;
 @class NSCoder;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @interface CardFormDropInViewController : UIViewController
 @property (nonatomic) enum YearFormat yearFormat;
 @property (nonatomic) enum DropInNameDisplayMode nameDisplayMode;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
-@property (nonatomic, copy) void (^ _Nullable onError)(NSString * _Nonnull);
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult onError:(void (^ _Nullable)(NSString * _Nonnull))onError;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 @end
@@ -355,10 +357,87 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
 - (void)reset;
+@end
+
+@class UIColor;
+/// Objective-C compatible theme configuration class
+/// Provides a bridge between UIKit colors and SwiftUI themes
+SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
+@interface SPLThemeConfig : NSObject
+@property (nonatomic, strong) UIColor * _Nullable primaryColor;
+@property (nonatomic, strong) UIColor * _Nullable secondaryColor;
+@property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+@property (nonatomic, strong) UIColor * _Nullable borderColor;
+@property (nonatomic, strong) UIColor * _Nullable borderFocusedColor;
+@property (nonatomic, strong) UIColor * _Nullable textColor;
+@property (nonatomic, strong) UIColor * _Nullable textSecondaryColor;
+@property (nonatomic, strong) UIColor * _Nullable errorColor;
+@property (nonatomic, strong) UIColor * _Nullable placeholderColor;
+@property (nonatomic) CGFloat borderRadius;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
+/// Convenience initializer using Android-style configuration
+/// \param primaryColorHex Primary brand color used for buttons and highlights (e.g., “#0077C8”)
+///
+/// \param secondaryColorHex Secondary brand color used for accents and borders (e.g., “#AFB4B5”)
+///
+/// \param formBorderColorHex Color for form field borders (e.g., “#D9D9D9”)
+///
+/// \param formBackgroundColorHex Background color for the form container (e.g., “#FFFFFF”)
+///
+/// \param fieldBackgroundColorHex Background color for individual input fields (e.g., “#F8F9FA”)
+///
+/// \param fieldLabelColorHex Color for field labels and placeholder text (e.g., “#6C757D”)
+///
+/// \param borderRadius Corner radius for form elements (default: 8.0)
+///
+- (nonnull instancetype)initWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
+@end
+
+/// Objective-C compatible theme manager
+/// This class provides Objective-C accessible methods for theme management
+SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
+@interface SpreedlyThemeManagerObjC : NSObject
+/// Set global theme using SPLThemeConfig
+/// \param themeConfig The theme configuration to set as global
+///
++ (void)setGlobalThemeWithConfig:(SPLThemeConfig * _Nonnull)themeConfig;
+/// Set global theme using Android-style hex color configuration
+/// \param primaryColorHex Primary brand color (e.g., “#0077C8”)
+///
+/// \param secondaryColorHex Secondary brand color (e.g., “#AFB4B5”)
+///
+/// \param formBorderColorHex Form field border color (e.g., “#D9D9D9”)
+///
+/// \param formBackgroundColorHex Form background color (e.g., “#FFFFFF”)
+///
+/// \param fieldBackgroundColorHex Field background color (e.g., “#F8F9FA”)
+///
+/// \param fieldLabelColorHex Field label color (e.g., “#6C757D”)
+///
+/// \param borderRadius Corner radius for form elements (default: 8.0)
+///
++ (void)setGlobalThemeWithHexColorsWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
+/// Set global theme using UIColor properties
+/// \param primaryColor Primary brand color
+///
+/// \param secondaryColor Secondary brand color (optional)
+///
+/// \param backgroundColor Background color (optional)
+///
+/// \param borderColor Border color (optional)
+///
+/// \param textColor Text color (optional)
+///
+/// \param borderRadius Corner radius (default: 8.0)
+///
++ (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 typedef SWIFT_ENUM(NSInteger, YearFormat, open) {
