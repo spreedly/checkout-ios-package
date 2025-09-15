@@ -666,6 +666,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 + (SpreedlyUIManager * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly) BOOL resetFields;
 @property (nonatomic, readonly) BOOL forceFieldErrorDisplay;
+@property (nonatomic, readonly) BOOL spreedlyParamsUpdated;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Unregister a field from tracking
@@ -680,6 +681,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// returns:
 /// Number of currently registered fields
 - (NSInteger)getRegisteredFieldCount SWIFT_WARN_UNUSED_RESULT;
+/// Triggers validation rules update for all registered fields
+/// This should be called when SpreedlyParamsManager parameters change
+- (void)notifySpreedlyParamsUpdated;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
