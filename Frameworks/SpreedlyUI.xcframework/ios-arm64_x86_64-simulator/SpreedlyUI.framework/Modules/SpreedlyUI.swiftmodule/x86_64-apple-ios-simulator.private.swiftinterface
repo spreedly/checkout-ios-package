@@ -12,250 +12,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public enum SPLAccessibilityIdentifiers {
-  public enum SPLHostedField {
-    public static let cardNumberField: Swift.String
-    public static let fullNameField: Swift.String
-    public static let firstNameField: Swift.String
-    public static let lastNameField: Swift.String
-    public static let expirationMonthField: Swift.String
-    public static let expirationYearField: Swift.String
-    public static let expirationDateField: Swift.String
-    public static let cvcField: Swift.String
-    public static let addressLine1Field: Swift.String
-    public static let addressLine2Field: Swift.String
-    public static let cityField: Swift.String
-    public static let stateField: Swift.String
-    public static let zipCodeField: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-    public static let formContainer: Swift.String
-    public static let validationMessage: Swift.String
-    public static let cardBrandIcon: Swift.String
-  }
-  public enum CardFormDropIn {
-    public static let header: Swift.String
-    public static let errorMessage: Swift.String
-    public static let submitButton: Swift.String
-    public static let footer: Swift.String
-  }
-  public enum Common {
-    public static let loadingIndicator: Swift.String
-    public static let successIcon: Swift.String
-    public static let errorIcon: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-}
-public enum SPLAccessibilityHints {
-  public enum SPLHostedField {
-    public static let cardNumberField: Swift.String
-    public static let fullNameField: Swift.String
-    public static let firstNameField: Swift.String
-    public static let lastNameField: Swift.String
-    public static let expirationMonthField: Swift.String
-    public static let expirationYearField: Swift.String
-    public static let expirationDateField: Swift.String
-    public static let cvcField: Swift.String
-    public static let addressLine1Field: Swift.String
-    public static let addressLine2Field: Swift.String
-    public static let cityField: Swift.String
-    public static let stateField: Swift.String
-    public static let zipCodeField: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-    public static let formContainer: Swift.String
-    public static let validationMessage: Swift.String
-    public static let cardBrandIcon: Swift.String
-  }
-  public enum CardFormDropIn {
-    public static let header: Swift.String
-    public static let errorMessage: Swift.String
-    public static let submitButton: Swift.String
-    public static let footer: Swift.String
-  }
-  public enum Common {
-    public static let loadingIndicator: Swift.String
-    public static let successIcon: Swift.String
-    public static let errorIcon: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-}
-public enum SPLAccessibilityLabels {
-  public enum CardFormDropIn {
-    public static let header: Swift.String
-    public static let submitButton: Swift.String
-    public static let footer: Swift.String
-  }
-  public enum SPLHostedField {
-    public static let cardNumberField: Swift.String
-    public static let fullNameField: Swift.String
-    public static let firstNameField: Swift.String
-    public static let lastNameField: Swift.String
-    public static let expirationMonthField: Swift.String
-    public static let expirationYearField: Swift.String
-    public static let expirationDateField: Swift.String
-    public static let cvcField: Swift.String
-    public static let addressLine1Field: Swift.String
-    public static let addressLine2Field: Swift.String
-    public static let cityField: Swift.String
-    public static let stateField: Swift.String
-    public static let zipCodeField: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-    public static let formContainer: Swift.String
-    public static let validationMessage: Swift.String
-    public static let cardBrandIcon: Swift.String
-  }
-}
-public protocol SpreedlyTheme {
-  var colors: SpreedlyUI.SpreedlyColors { get }
-  var typography: SpreedlyUI.SpreedlyTypography { get }
-  var spacing: SpreedlyUI.SpreedlySpacing { get }
-  var borderRadius: SpreedlyUI.SpreedlyBorderRadius { get }
-  var shadows: SpreedlyUI.SpreedlyShadows { get }
-}
-public struct SpreedlyColors {
-  public let primary: SwiftUICore.Color
-  public let secondary: SwiftUICore.Color
-  public let accent: SwiftUICore.Color
-  public let background: SwiftUICore.Color
-  public let surface: SwiftUICore.Color
-  public let text: SwiftUICore.Color
-  public let textSecondary: SwiftUICore.Color
-  public let border: SwiftUICore.Color
-  public let borderFocused: SwiftUICore.Color
-  public let error: SwiftUICore.Color
-  public let success: SwiftUICore.Color
-  public let warning: SwiftUICore.Color
-  public let disabled: SwiftUICore.Color
-  public let placeholder: SwiftUICore.Color
-  public init(primary: SwiftUICore.Color = Color(hex:"#0077C8"), secondary: SwiftUICore.Color = Color(hex:"#AFB4B5"), accent: SwiftUICore.Color = Color(hex:"#FF9500"), background: SwiftUICore.Color = Color.clear, surface: SwiftUICore.Color = Color.clear, text: SwiftUICore.Color = Color(hex:"#000000"), textSecondary: SwiftUICore.Color = Color(hex:"#6C757D"), border: SwiftUICore.Color = Color(hex:"#D9D9D9"), borderFocused: SwiftUICore.Color? = nil, error: SwiftUICore.Color = Color(hex:"#DC3545"), success: SwiftUICore.Color = Color(hex:"#28A745"), warning: SwiftUICore.Color = Color(hex:"#FFC107"), disabled: SwiftUICore.Color = Color(hex:"#ADB5BD"), placeholder: SwiftUICore.Color = Color(hex:"#AFB4B5"))
-}
-public struct SpreedlyTypography {
-  public let titleFont: SwiftUICore.Font
-  public let subtitleFont: SwiftUICore.Font
-  public let bodyFont: SwiftUICore.Font
-  public let captionFont: SwiftUICore.Font
-  public let buttonFont: SwiftUICore.Font
-  public let fieldFont: SwiftUICore.Font
-  public init(titleFont: SwiftUICore.Font = .system(size: 32, weight: .bold, design: .rounded), subtitleFont: SwiftUICore.Font = .system(size: 18, weight: .semibold, design: .rounded), bodyFont: SwiftUICore.Font = .system(size: 16, weight: .regular, design: .rounded), captionFont: SwiftUICore.Font = .system(size: 12, weight: .regular, design: .rounded), buttonFont: SwiftUICore.Font = .system(size: 20, weight: .bold, design: .rounded), fieldFont: SwiftUICore.Font = .system(size: 18, design: .rounded))
-}
-public struct SpreedlySpacing {
-  public let xs: CoreFoundation.CGFloat
-  public let sm: CoreFoundation.CGFloat
-  public let md: CoreFoundation.CGFloat
-  public let lg: CoreFoundation.CGFloat
-  public let xl: CoreFoundation.CGFloat
-  public let xxl: CoreFoundation.CGFloat
-  public init(xs: CoreFoundation.CGFloat = 4, sm: CoreFoundation.CGFloat = 8, md: CoreFoundation.CGFloat = 16, lg: CoreFoundation.CGFloat = 24, xl: CoreFoundation.CGFloat = 32, xxl: CoreFoundation.CGFloat = 48)
-}
-public struct SpreedlyBorderRadius {
-  public let xs: CoreFoundation.CGFloat
-  public let sm: CoreFoundation.CGFloat
-  public let md: CoreFoundation.CGFloat
-  public let lg: CoreFoundation.CGFloat
-  public let xl: CoreFoundation.CGFloat
-  public init(xs: CoreFoundation.CGFloat = 4, sm: CoreFoundation.CGFloat = 6, md: CoreFoundation.CGFloat = 8, lg: CoreFoundation.CGFloat = 12, xl: CoreFoundation.CGFloat = 16)
-}
-public struct SpreedlyShadows {
-  public let small: SpreedlyUI.Shadow
-  public let medium: SpreedlyUI.Shadow
-  public let large: SpreedlyUI.Shadow
-  public init(small: SpreedlyUI.Shadow = Shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1), medium: SpreedlyUI.Shadow = Shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2), large: SpreedlyUI.Shadow = Shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4))
-}
-public struct Shadow {
-  public let color: SwiftUICore.Color
-  public let radius: CoreFoundation.CGFloat
-  public let x: CoreFoundation.CGFloat
-  public let y: CoreFoundation.CGFloat
-  public init(color: SwiftUICore.Color, radius: CoreFoundation.CGFloat, x: CoreFoundation.CGFloat, y: CoreFoundation.CGFloat)
-}
-public struct SpreedlyLightTheme : SpreedlyUI.SpreedlyTheme {
-  public let colors: SpreedlyUI.SpreedlyColors
-  public let typography: SpreedlyUI.SpreedlyTypography
-  public let spacing: SpreedlyUI.SpreedlySpacing
-  public let borderRadius: SpreedlyUI.SpreedlyBorderRadius
-  public let shadows: SpreedlyUI.SpreedlyShadows
-}
-public struct SpreedlyDarkTheme : SpreedlyUI.SpreedlyTheme {
-  public let colors: SpreedlyUI.SpreedlyColors
-  public let typography: SpreedlyUI.SpreedlyTypography
-  public let spacing: SpreedlyUI.SpreedlySpacing
-  public let borderRadius: SpreedlyUI.SpreedlyBorderRadius
-  public let shadows: SpreedlyUI.SpreedlyShadows
-}
-public struct SpreedlyCustomTheme : SpreedlyUI.SpreedlyTheme {
-  public let colors: SpreedlyUI.SpreedlyColors
-  public let typography: SpreedlyUI.SpreedlyTypography
-  public let spacing: SpreedlyUI.SpreedlySpacing
-  public let borderRadius: SpreedlyUI.SpreedlyBorderRadius
-  public let shadows: SpreedlyUI.SpreedlyShadows
-  public init(colors: SpreedlyUI.SpreedlyColors? = nil, typography: SpreedlyUI.SpreedlyTypography? = nil, spacing: SpreedlyUI.SpreedlySpacing? = nil, borderRadius: SpreedlyUI.SpreedlyBorderRadius? = nil, shadows: SpreedlyUI.SpreedlyShadows? = nil)
-}
-public struct SpreedlyThemeKey : SwiftUICore.EnvironmentKey {
-  public static var defaultValue: any SpreedlyUI.SpreedlyTheme
-  public typealias Value = any SpreedlyUI.SpreedlyTheme
-}
-extension SwiftUICore.EnvironmentValues {
-  public var spreedlyTheme: any SpreedlyUI.SpreedlyTheme {
-    get
-    set
-  }
-}
-extension SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public func spreedlyTheme(_ theme: any SpreedlyUI.SpreedlyTheme) -> some SwiftUICore.View
-  
-  @_Concurrency.MainActor @preconcurrency public func spreedlyShadow(_ shadow: SpreedlyUI.Shadow) -> some SwiftUICore.View
-  
-  @_Concurrency.MainActor @preconcurrency public func `if`<Content>(_ condition: Swift.Bool, transform: (Self) -> Content) -> some SwiftUICore.View where Content : SwiftUICore.View
-  
-}
-public struct ThemeAccess {
-  public var colors: SpreedlyUI.SpreedlyColors {
-    get
-  }
-  public var typography: SpreedlyUI.SpreedlyTypography {
-    get
-  }
-  public var spacing: SpreedlyUI.SpreedlySpacing {
-    get
-  }
-  public var borderRadius: SpreedlyUI.SpreedlyBorderRadius {
-    get
-  }
-  public var shadows: SpreedlyUI.SpreedlyShadows {
-    get
-  }
-}
-extension SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public var theme: SpreedlyUI.ThemeAccess {
-    get
-  }
-}
-@objc public enum YearFormat : Swift.Int, Swift.CaseIterable {
-  case twoDigit = 2
-  case fourDigit = 4
-  public var format: Swift.String {
-    get
-  }
-  public var placeholder: Swift.String {
-    get
-  }
-  public var maxLength: Swift.Int {
-    get
-  }
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [SpreedlyUI.YearFormat]
-  public typealias RawValue = Swift.Int
-  nonisolated public static var allCases: [SpreedlyUI.YearFormat] {
-    get
-  }
-  public var rawValue: Swift.Int {
-    get
-  }
-}
 @_Concurrency.MainActor @preconcurrency public struct CardBrandIcon : SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 40, showBackground: Swift.Bool = true)
   @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
@@ -718,9 +474,250 @@ extension SwiftUICore.Color {
     get
   }
 }
-extension SpreedlyUI.YearFormat : Swift.Equatable {}
-extension SpreedlyUI.YearFormat : Swift.Hashable {}
-extension SpreedlyUI.YearFormat : Swift.RawRepresentable {}
+public enum SPLAccessibilityIdentifiers {
+  public enum SPLHostedField {
+    public static let cardNumberField: Swift.String
+    public static let fullNameField: Swift.String
+    public static let firstNameField: Swift.String
+    public static let lastNameField: Swift.String
+    public static let expirationMonthField: Swift.String
+    public static let expirationYearField: Swift.String
+    public static let expirationDateField: Swift.String
+    public static let cvcField: Swift.String
+    public static let addressLine1Field: Swift.String
+    public static let addressLine2Field: Swift.String
+    public static let cityField: Swift.String
+    public static let stateField: Swift.String
+    public static let zipCodeField: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+    public static let formContainer: Swift.String
+    public static let validationMessage: Swift.String
+    public static let cardBrandIcon: Swift.String
+  }
+  public enum CardFormDropIn {
+    public static let header: Swift.String
+    public static let errorMessage: Swift.String
+    public static let submitButton: Swift.String
+    public static let footer: Swift.String
+  }
+  public enum Common {
+    public static let loadingIndicator: Swift.String
+    public static let successIcon: Swift.String
+    public static let errorIcon: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+}
+public enum SPLAccessibilityHints {
+  public enum SPLHostedField {
+    public static let cardNumberField: Swift.String
+    public static let fullNameField: Swift.String
+    public static let firstNameField: Swift.String
+    public static let lastNameField: Swift.String
+    public static let expirationMonthField: Swift.String
+    public static let expirationYearField: Swift.String
+    public static let expirationDateField: Swift.String
+    public static let cvcField: Swift.String
+    public static let addressLine1Field: Swift.String
+    public static let addressLine2Field: Swift.String
+    public static let cityField: Swift.String
+    public static let stateField: Swift.String
+    public static let zipCodeField: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+    public static let formContainer: Swift.String
+    public static let validationMessage: Swift.String
+    public static let cardBrandIcon: Swift.String
+  }
+  public enum CardFormDropIn {
+    public static let header: Swift.String
+    public static let errorMessage: Swift.String
+    public static let submitButton: Swift.String
+    public static let footer: Swift.String
+  }
+  public enum Common {
+    public static let loadingIndicator: Swift.String
+    public static let successIcon: Swift.String
+    public static let errorIcon: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+}
+public enum SPLAccessibilityLabels {
+  public enum CardFormDropIn {
+    public static let header: Swift.String
+    public static let submitButton: Swift.String
+    public static let footer: Swift.String
+  }
+  public enum SPLHostedField {
+    public static let cardNumberField: Swift.String
+    public static let fullNameField: Swift.String
+    public static let firstNameField: Swift.String
+    public static let lastNameField: Swift.String
+    public static let expirationMonthField: Swift.String
+    public static let expirationYearField: Swift.String
+    public static let expirationDateField: Swift.String
+    public static let cvcField: Swift.String
+    public static let addressLine1Field: Swift.String
+    public static let addressLine2Field: Swift.String
+    public static let cityField: Swift.String
+    public static let stateField: Swift.String
+    public static let zipCodeField: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+    public static let formContainer: Swift.String
+    public static let validationMessage: Swift.String
+    public static let cardBrandIcon: Swift.String
+  }
+}
+public protocol SpreedlyTheme {
+  var colors: SpreedlyUI.SpreedlyColors { get }
+  var typography: SpreedlyUI.SpreedlyTypography { get }
+  var spacing: SpreedlyUI.SpreedlySpacing { get }
+  var borderRadius: SpreedlyUI.SpreedlyBorderRadius { get }
+  var shadows: SpreedlyUI.SpreedlyShadows { get }
+}
+public struct SpreedlyColors {
+  public let primary: SwiftUICore.Color
+  public let secondary: SwiftUICore.Color
+  public let accent: SwiftUICore.Color
+  public let background: SwiftUICore.Color
+  public let surface: SwiftUICore.Color
+  public let text: SwiftUICore.Color
+  public let textSecondary: SwiftUICore.Color
+  public let border: SwiftUICore.Color
+  public let borderFocused: SwiftUICore.Color
+  public let error: SwiftUICore.Color
+  public let success: SwiftUICore.Color
+  public let warning: SwiftUICore.Color
+  public let disabled: SwiftUICore.Color
+  public let placeholder: SwiftUICore.Color
+  public init(primary: SwiftUICore.Color = Color(hex:"#0077C8"), secondary: SwiftUICore.Color = Color(hex:"#AFB4B5"), accent: SwiftUICore.Color = Color(hex:"#FF9500"), background: SwiftUICore.Color = Color.clear, surface: SwiftUICore.Color = Color.clear, text: SwiftUICore.Color = Color(hex:"#000000"), textSecondary: SwiftUICore.Color = Color(hex:"#6C757D"), border: SwiftUICore.Color = Color(hex:"#D9D9D9"), borderFocused: SwiftUICore.Color? = nil, error: SwiftUICore.Color = Color(hex:"#DC3545"), success: SwiftUICore.Color = Color(hex:"#28A745"), warning: SwiftUICore.Color = Color(hex:"#FFC107"), disabled: SwiftUICore.Color = Color(hex:"#ADB5BD"), placeholder: SwiftUICore.Color = Color(hex:"#AFB4B5"))
+}
+public struct SpreedlyTypography {
+  public let titleFont: SwiftUICore.Font
+  public let subtitleFont: SwiftUICore.Font
+  public let bodyFont: SwiftUICore.Font
+  public let captionFont: SwiftUICore.Font
+  public let buttonFont: SwiftUICore.Font
+  public let fieldFont: SwiftUICore.Font
+  public init(titleFont: SwiftUICore.Font = .system(size: 32, weight: .bold, design: .rounded), subtitleFont: SwiftUICore.Font = .system(size: 18, weight: .semibold, design: .rounded), bodyFont: SwiftUICore.Font = .system(size: 16, weight: .regular, design: .rounded), captionFont: SwiftUICore.Font = .system(size: 12, weight: .regular, design: .rounded), buttonFont: SwiftUICore.Font = .system(size: 20, weight: .bold, design: .rounded), fieldFont: SwiftUICore.Font = .system(size: 18, design: .rounded))
+}
+public struct SpreedlySpacing {
+  public let xs: CoreFoundation.CGFloat
+  public let sm: CoreFoundation.CGFloat
+  public let md: CoreFoundation.CGFloat
+  public let lg: CoreFoundation.CGFloat
+  public let xl: CoreFoundation.CGFloat
+  public let xxl: CoreFoundation.CGFloat
+  public init(xs: CoreFoundation.CGFloat = 4, sm: CoreFoundation.CGFloat = 8, md: CoreFoundation.CGFloat = 16, lg: CoreFoundation.CGFloat = 24, xl: CoreFoundation.CGFloat = 32, xxl: CoreFoundation.CGFloat = 48)
+}
+public struct SpreedlyBorderRadius {
+  public let xs: CoreFoundation.CGFloat
+  public let sm: CoreFoundation.CGFloat
+  public let md: CoreFoundation.CGFloat
+  public let lg: CoreFoundation.CGFloat
+  public let xl: CoreFoundation.CGFloat
+  public init(xs: CoreFoundation.CGFloat = 4, sm: CoreFoundation.CGFloat = 6, md: CoreFoundation.CGFloat = 8, lg: CoreFoundation.CGFloat = 12, xl: CoreFoundation.CGFloat = 16)
+}
+public struct SpreedlyShadows {
+  public let small: SpreedlyUI.Shadow
+  public let medium: SpreedlyUI.Shadow
+  public let large: SpreedlyUI.Shadow
+  public init(small: SpreedlyUI.Shadow = Shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1), medium: SpreedlyUI.Shadow = Shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2), large: SpreedlyUI.Shadow = Shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4))
+}
+public struct Shadow {
+  public let color: SwiftUICore.Color
+  public let radius: CoreFoundation.CGFloat
+  public let x: CoreFoundation.CGFloat
+  public let y: CoreFoundation.CGFloat
+  public init(color: SwiftUICore.Color, radius: CoreFoundation.CGFloat, x: CoreFoundation.CGFloat, y: CoreFoundation.CGFloat)
+}
+public struct SpreedlyLightTheme : SpreedlyUI.SpreedlyTheme {
+  public let colors: SpreedlyUI.SpreedlyColors
+  public let typography: SpreedlyUI.SpreedlyTypography
+  public let spacing: SpreedlyUI.SpreedlySpacing
+  public let borderRadius: SpreedlyUI.SpreedlyBorderRadius
+  public let shadows: SpreedlyUI.SpreedlyShadows
+}
+public struct SpreedlyDarkTheme : SpreedlyUI.SpreedlyTheme {
+  public let colors: SpreedlyUI.SpreedlyColors
+  public let typography: SpreedlyUI.SpreedlyTypography
+  public let spacing: SpreedlyUI.SpreedlySpacing
+  public let borderRadius: SpreedlyUI.SpreedlyBorderRadius
+  public let shadows: SpreedlyUI.SpreedlyShadows
+}
+public struct SpreedlyCustomTheme : SpreedlyUI.SpreedlyTheme {
+  public let colors: SpreedlyUI.SpreedlyColors
+  public let typography: SpreedlyUI.SpreedlyTypography
+  public let spacing: SpreedlyUI.SpreedlySpacing
+  public let borderRadius: SpreedlyUI.SpreedlyBorderRadius
+  public let shadows: SpreedlyUI.SpreedlyShadows
+  public init(colors: SpreedlyUI.SpreedlyColors? = nil, typography: SpreedlyUI.SpreedlyTypography? = nil, spacing: SpreedlyUI.SpreedlySpacing? = nil, borderRadius: SpreedlyUI.SpreedlyBorderRadius? = nil, shadows: SpreedlyUI.SpreedlyShadows? = nil)
+}
+public struct SpreedlyThemeKey : SwiftUICore.EnvironmentKey {
+  public static var defaultValue: any SpreedlyUI.SpreedlyTheme
+  public typealias Value = any SpreedlyUI.SpreedlyTheme
+}
+extension SwiftUICore.EnvironmentValues {
+  public var spreedlyTheme: any SpreedlyUI.SpreedlyTheme {
+    get
+    set
+  }
+}
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func spreedlyTheme(_ theme: any SpreedlyUI.SpreedlyTheme) -> some SwiftUICore.View
+  
+  @_Concurrency.MainActor @preconcurrency public func spreedlyShadow(_ shadow: SpreedlyUI.Shadow) -> some SwiftUICore.View
+  
+  @_Concurrency.MainActor @preconcurrency public func `if`<Content>(_ condition: Swift.Bool, transform: (Self) -> Content) -> some SwiftUICore.View where Content : SwiftUICore.View
+  
+}
+public struct ThemeAccess {
+  public var colors: SpreedlyUI.SpreedlyColors {
+    get
+  }
+  public var typography: SpreedlyUI.SpreedlyTypography {
+    get
+  }
+  public var spacing: SpreedlyUI.SpreedlySpacing {
+    get
+  }
+  public var borderRadius: SpreedlyUI.SpreedlyBorderRadius {
+    get
+  }
+  public var shadows: SpreedlyUI.SpreedlyShadows {
+    get
+  }
+}
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public var theme: SpreedlyUI.ThemeAccess {
+    get
+  }
+}
+@objc public enum YearFormat : Swift.Int, Swift.CaseIterable {
+  case twoDigit = 2
+  case fourDigit = 4
+  public var format: Swift.String {
+    get
+  }
+  public var placeholder: Swift.String {
+    get
+  }
+  public var maxLength: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyUI.YearFormat]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyUI.YearFormat] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 extension SpreedlyUI.CardBrandIcon : Swift.Sendable {}
 extension SpreedlyUI.AnimatedCardBrandIcon : Swift.Sendable {}
 extension SpreedlyUI.ValidatedCardBrandIcon : Swift.Sendable {}
@@ -739,3 +736,6 @@ extension SpreedlyUI.CardValidationError : Swift.RawRepresentable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.Equatable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.Hashable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.RawRepresentable {}
+extension SpreedlyUI.YearFormat : Swift.Equatable {}
+extension SpreedlyUI.YearFormat : Swift.Hashable {}
+extension SpreedlyUI.YearFormat : Swift.RawRepresentable {}
