@@ -3,159 +3,12 @@
 // swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyCore
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
 import Combine
-import CommonCrypto
 import Foundation
-import Security
 import SpreedlySecurity
 import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-@_hasMissingDesignatedInitializers public class APIErrorHandler : Foundation.ObservableObject, SpreedlyCore.SpreedlyErrorHandler {
-  public static let shared: SpreedlyCore.APIErrorHandler
-  @Combine.Published @_projectedValueProperty($fieldErrors) public var fieldErrors: [Swift.String : Swift.String] {
-    get
-    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    set
-    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    _modify
-  }
-  public var $fieldErrors: Combine.Published<[Swift.String : Swift.String]>.Publisher {
-    get
-    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
-    set
-  }
-  @Combine.Published @_projectedValueProperty($generalError) public var generalError: Swift.String? {
-    get
-    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    set
-    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    _modify
-  }
-  public var $generalError: Combine.Published<Swift.String?>.Publisher {
-    get
-    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
-    set
-  }
-  @Combine.Published @_projectedValueProperty($isLoading) public var isLoading: Swift.Bool {
-    get
-    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    set
-    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    _modify
-  }
-  public var $isLoading: Combine.Published<Swift.Bool>.Publisher {
-    get
-    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
-    set
-  }
-  public func setFieldErrors(_ errors: [Swift.String : Swift.String])
-  public func setGeneralError(_ error: Swift.String)
-  public func getGeneralError() -> Swift.String?
-  public func clearAllErrors()
-  public func processError(_ error: any Swift.Error)
-  public func clearFieldError(for fieldId: Swift.String)
-  public func clearGeneralError()
-  public func setLoading(_ loading: Swift.Bool)
-  public func getFieldError(for fieldId: Swift.String) -> Swift.String?
-  public var hasFieldErrors: Swift.Bool {
-    get
-  }
-  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
-  @objc deinit
-}
-extension SpreedlyCore.APIErrorHandler {
-  public func executeWithErrorHandling<T>(_ operation: @escaping () async throws -> T) async -> T?
-}
-@objc public enum FormFieldType : Swift.Int, Swift.CaseIterable {
-  case cardNumber = 0
-  case fullName
-  case firstName
-  case lastName
-  case expirationMonth
-  case expirationYear
-  case expirationDate
-  case cvc
-  case addressLine1
-  case addressLine2
-  case city
-  case state
-  case zipCode
-  public var identifier: Swift.String {
-    get
-  }
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [SpreedlyCore.FormFieldType]
-  public typealias RawValue = Swift.Int
-  nonisolated public static var allCases: [SpreedlyCore.FormFieldType] {
-    get
-  }
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@objc public enum ValidationParam : Swift.Int {
-  case allowBlankName = 0
-  case allowExpiredDate = 1
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public enum PaymentMethodAPIKeys {
-  public static let paymentMethod: Swift.String
-  public static let metadata: Swift.String
-  public static let email: Swift.String
-  public static let phoneNumber: Swift.String
-  public static let company: Swift.String
-  public static let fullName: Swift.String
-  public static let creditCard: Swift.String
-  public static let number: Swift.String
-  public static let firstName: Swift.String
-  public static let lastName: Swift.String
-  public static let expirationMonth: Swift.String
-  public static let expirationYear: Swift.String
-  public static let securityCode: Swift.String
-  public static let addressLine1: Swift.String
-  public static let addressLine2: Swift.String
-  public static let city: Swift.String
-  public static let state: Swift.String
-  public static let zipCode: Swift.String
-  public static let country: Swift.String
-  public static let allowBlankName: Swift.String
-  public static let allowExpiredDate: Swift.String
-  public static let bankAccount: Swift.String
-  public static let accountNumber: Swift.String
-  public static let routingNumber: Swift.String
-  public static let accountType: Swift.String
-  public static let accountHolderType: Swift.String
-  public static let applePay: Swift.String
-  public static let paymentData: Swift.String
-  public static let paymentMethodType: Swift.String
-  public static let billingContact: Swift.String
-  public static let shippingContact: Swift.String
-  public static let googlePay: Swift.String
-  public static let billingAddress: Swift.String
-  public static let shippingAddress: Swift.String
-  public static let paypal: Swift.String
-  public static let venmo: Swift.String
-  public static let alipay: Swift.String
-  public static let wechatPay: Swift.String
-  public static let bitcoin: Swift.String
-  public static let ethereum: Swift.String
-  public static let litecoin: Swift.String
-  public static let dogecoin: Swift.String
-  public static let ripple: Swift.String
-  public static let stellar: Swift.String
-  public static let card: Swift.String
-  public static let bank: Swift.String
-  public static let wallet: Swift.String
-  public static let crypto: Swift.String
-}
-public enum PaymentMethodAPIErrorKeys {
-  public static func apiFieldKey(fieldType type: SpreedlyCore.FormFieldType) -> Swift.String
-}
 @objc public protocol SpreedlyPaymentDelegate {
   @objc func paymentDidComplete(_ result: SpreedlyCore.PaymentResult)
 }
@@ -184,18 +37,6 @@ public enum PaymentMethodAPIErrorKeys {
   @objc public func createCreditCard(additionalFields: [Swift.String : Swift.String] = [:], metadata: [Swift.String : Swift.String]? = nil) -> SpreedlyCore.PaymentProcessingResult
   @discardableResult
   public func subscribeToPaymentResults(_ onPaymentResult: @escaping (SpreedlyCore.PaymentResult) -> Swift.Void) -> Combine.AnyCancellable
-  @objc deinit
-}
-@objc public class SSLPinningURLSessionDelegate : ObjectiveC.NSObject, Foundation.URLSessionDelegate {
-  public init(sslPinningValidator: any SpreedlyCore.SSLPinningValidator)
-  @objc public func urlSession(_ session: Foundation.URLSession, didReceive challenge: Foundation.URLAuthenticationChallenge, completionHandler: @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void)
-  @objc deinit
-}
-@_hasMissingDesignatedInitializers public class SSLPinningURLSessionFactory {
-  public static func createSession(configuration: Foundation.URLSessionConfiguration = .default, sslPinningValidator: any SpreedlyCore.SSLPinningValidator) -> Foundation.URLSession
-  public static func createSessionWithCertificatePinning(configuration: Foundation.URLSessionConfiguration = .default, certificatePaths: [Swift.String], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = []) -> Foundation.URLSession?
-  public static func createSessionWithPublicKeyPinning(configuration: Foundation.URLSessionConfiguration = .default, publicKeyPaths: [Swift.String], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = []) -> Foundation.URLSession?
-  public static func createSessionWithBase64CertificatePinning(configuration: Foundation.URLSessionConfiguration = .default, base64Certificates: [Swift.String], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = []) -> Foundation.URLSession?
   @objc deinit
 }
 public protocol SPLValidatableField : AnyObject {
@@ -231,49 +72,6 @@ public protocol SPLValidatableField : AnyObject {
   @objc public func notifySpreedlyParamsUpdated()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
-}
-public protocol SSLPinningValidator {
-  func validateServerTrust(_ serverTrust: Security.SecTrust, forDomain domain: Swift.String) -> Swift.Bool
-}
-public struct SSLPinningConfig {
-  public let pinningType: SpreedlyCore.SSLPinningType
-  public let pinnedData: [Foundation.Data]
-  public let validateCertificateChain: Swift.Bool
-  public let domains: Swift.Set<Swift.String>
-  public init(pinningType: SpreedlyCore.SSLPinningType, pinnedData: [Foundation.Data], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = [])
-}
-public enum SSLPinningType {
-  case certificate
-  case publicKey
-  public static func == (a: SpreedlyCore.SSLPinningType, b: SpreedlyCore.SSLPinningType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-public class DefaultSSLPinningValidator : SpreedlyCore.SSLPinningValidator {
-  public init(config: SpreedlyCore.SSLPinningConfig)
-  public func validateServerTrust(_ serverTrust: Security.SecTrust, forDomain domain: Swift.String) -> Swift.Bool
-  @objc deinit
-}
-extension SpreedlyCore.SSLPinningConfig {
-  public static func certificatePinning(certificatePaths: [Swift.String], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = []) -> SpreedlyCore.SSLPinningConfig?
-  public static func publicKeyPinning(publicKeyPaths: [Swift.String], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = []) -> SpreedlyCore.SSLPinningConfig?
-  public static func certificatePinning(base64Certificates: [Swift.String], validateCertificateChain: Swift.Bool = true, domains: Swift.Set<Swift.String> = []) -> SpreedlyCore.SSLPinningConfig?
-}
-public enum SSLPinningError : Foundation.LocalizedError {
-  case validationFailed
-  case noPinnedData
-  case invalidCertificate
-  case invalidPublicKey
-  public var errorDescription: Swift.String? {
-    get
-  }
-  public static func == (a: SpreedlyCore.SSLPinningError, b: SpreedlyCore.SSLPinningError) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
 }
 public struct CreditCardRequest : SpreedlyCore.PaymentMethodRequestProtocol {
   public init(cardData: any SpreedlyCore.CreditCardData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil)
@@ -866,16 +664,151 @@ public protocol SpreedlyErrorHandler {
   func getGeneralError() -> Swift.String?
   func clearFieldError(for fieldId: Swift.String)
 }
-extension SpreedlyCore.FormFieldType : Swift.Equatable {}
-extension SpreedlyCore.FormFieldType : Swift.Hashable {}
-extension SpreedlyCore.FormFieldType : Swift.RawRepresentable {}
-extension SpreedlyCore.ValidationParam : Swift.Equatable {}
-extension SpreedlyCore.ValidationParam : Swift.Hashable {}
-extension SpreedlyCore.ValidationParam : Swift.RawRepresentable {}
-extension SpreedlyCore.SSLPinningType : Swift.Equatable {}
-extension SpreedlyCore.SSLPinningType : Swift.Hashable {}
-extension SpreedlyCore.SSLPinningError : Swift.Equatable {}
-extension SpreedlyCore.SSLPinningError : Swift.Hashable {}
+@_hasMissingDesignatedInitializers public class APIErrorHandler : Foundation.ObservableObject, SpreedlyCore.SpreedlyErrorHandler {
+  public static let shared: SpreedlyCore.APIErrorHandler
+  @Combine.Published @_projectedValueProperty($fieldErrors) public var fieldErrors: [Swift.String : Swift.String] {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  public var $fieldErrors: Combine.Published<[Swift.String : Swift.String]>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published @_projectedValueProperty($generalError) public var generalError: Swift.String? {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  public var $generalError: Combine.Published<Swift.String?>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published @_projectedValueProperty($isLoading) public var isLoading: Swift.Bool {
+    get
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    set
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+    _modify
+  }
+  public var $isLoading: Combine.Published<Swift.Bool>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public func setFieldErrors(_ errors: [Swift.String : Swift.String])
+  public func setGeneralError(_ error: Swift.String)
+  public func getGeneralError() -> Swift.String?
+  public func clearAllErrors()
+  public func processError(_ error: any Swift.Error)
+  public func clearFieldError(for fieldId: Swift.String)
+  public func clearGeneralError()
+  public func setLoading(_ loading: Swift.Bool)
+  public func getFieldError(for fieldId: Swift.String) -> Swift.String?
+  public var hasFieldErrors: Swift.Bool {
+    get
+  }
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+extension SpreedlyCore.APIErrorHandler {
+  public func executeWithErrorHandling<T>(_ operation: @escaping () async throws -> T) async -> T?
+}
+@objc public enum FormFieldType : Swift.Int, Swift.CaseIterable {
+  case cardNumber = 0
+  case fullName
+  case firstName
+  case lastName
+  case expirationMonth
+  case expirationYear
+  case expirationDate
+  case cvc
+  case addressLine1
+  case addressLine2
+  case city
+  case state
+  case zipCode
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyCore.FormFieldType]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyCore.FormFieldType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ValidationParam : Swift.Int {
+  case allowBlankName = 0
+  case allowExpiredDate = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PaymentMethodAPIKeys {
+  public static let paymentMethod: Swift.String
+  public static let metadata: Swift.String
+  public static let email: Swift.String
+  public static let phoneNumber: Swift.String
+  public static let company: Swift.String
+  public static let fullName: Swift.String
+  public static let creditCard: Swift.String
+  public static let number: Swift.String
+  public static let firstName: Swift.String
+  public static let lastName: Swift.String
+  public static let expirationMonth: Swift.String
+  public static let expirationYear: Swift.String
+  public static let securityCode: Swift.String
+  public static let addressLine1: Swift.String
+  public static let addressLine2: Swift.String
+  public static let city: Swift.String
+  public static let state: Swift.String
+  public static let zipCode: Swift.String
+  public static let country: Swift.String
+  public static let allowBlankName: Swift.String
+  public static let allowExpiredDate: Swift.String
+  public static let bankAccount: Swift.String
+  public static let accountNumber: Swift.String
+  public static let routingNumber: Swift.String
+  public static let accountType: Swift.String
+  public static let accountHolderType: Swift.String
+  public static let applePay: Swift.String
+  public static let paymentData: Swift.String
+  public static let paymentMethodType: Swift.String
+  public static let billingContact: Swift.String
+  public static let shippingContact: Swift.String
+  public static let googlePay: Swift.String
+  public static let billingAddress: Swift.String
+  public static let shippingAddress: Swift.String
+  public static let paypal: Swift.String
+  public static let venmo: Swift.String
+  public static let alipay: Swift.String
+  public static let wechatPay: Swift.String
+  public static let bitcoin: Swift.String
+  public static let ethereum: Swift.String
+  public static let litecoin: Swift.String
+  public static let dogecoin: Swift.String
+  public static let ripple: Swift.String
+  public static let stellar: Swift.String
+  public static let card: Swift.String
+  public static let bank: Swift.String
+  public static let wallet: Swift.String
+  public static let crypto: Swift.String
+}
+public enum PaymentMethodAPIErrorKeys {
+  public static func apiFieldKey(fieldType type: SpreedlyCore.FormFieldType) -> Swift.String
+}
 extension SpreedlyCore.PaymentMethodType : Swift.Equatable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Hashable {}
 extension SpreedlyCore.PaymentMethodType : Swift.RawRepresentable {}
@@ -900,3 +833,9 @@ extension SpreedlyCore.ErrorType : Swift.RawRepresentable {}
 extension SpreedlyCore.HTTPMethod : Swift.Equatable {}
 extension SpreedlyCore.HTTPMethod : Swift.Hashable {}
 extension SpreedlyCore.HTTPMethod : Swift.RawRepresentable {}
+extension SpreedlyCore.FormFieldType : Swift.Equatable {}
+extension SpreedlyCore.FormFieldType : Swift.Hashable {}
+extension SpreedlyCore.FormFieldType : Swift.RawRepresentable {}
+extension SpreedlyCore.ValidationParam : Swift.Equatable {}
+extension SpreedlyCore.ValidationParam : Swift.Hashable {}
+extension SpreedlyCore.ValidationParam : Swift.RawRepresentable {}

@@ -519,17 +519,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class NSURLSession;
-@class NSURLAuthenticationChallenge;
-@class NSURLCredential;
-/// URLSessionDelegate that handles SSL pinning validation
-SWIFT_CLASS("_TtC12SpreedlyCore28SSLPinningURLSessionDelegate")
-@interface SSLPinningURLSessionDelegate : NSObject <NSURLSessionDelegate>
-- (void)URLSession:(NSURLSession * _Nonnull)session didReceiveChallenge:(NSURLAuthenticationChallenge * _Nonnull)challenge completionHandler:(void (^ _Nonnull)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyConfigGenerator;
