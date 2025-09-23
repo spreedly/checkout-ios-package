@@ -534,19 +534,15 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
 - (void)reset;
-/// Performs a checkout operation with field values from different sources
-/// \param additionalFields Dictionary containing additional field values from application components
+/// Performs a checkout operation with field values from different sources (Objective-C compatible version)
+/// \param additionalFields Dictionary containing additional field values from application components using string keys
 ///
 /// \param metadata Optional metadata for the transaction
-///
-/// \param allowBlankName Optional flag to allow blank name fields
-///
-/// \param allowExpiredDate Optional flag to allow expired expiration dates
 ///
 ///
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
-- (PaymentProcessingResult * _Nonnull)createCreditCardWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+- (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1224,19 +1220,15 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
 - (void)reset;
-/// Performs a checkout operation with field values from different sources
-/// \param additionalFields Dictionary containing additional field values from application components
+/// Performs a checkout operation with field values from different sources (Objective-C compatible version)
+/// \param additionalFields Dictionary containing additional field values from application components using string keys
 ///
 /// \param metadata Optional metadata for the transaction
-///
-/// \param allowBlankName Optional flag to allow blank name fields
-///
-/// \param allowExpiredDate Optional flag to allow expired expiration dates
 ///
 ///
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
-- (PaymentProcessingResult * _Nonnull)createCreditCardWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+- (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
