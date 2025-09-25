@@ -9,6 +9,149 @@ import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public protocol SPLValidatableField : AnyObject {
+  var isValid: Swift.Bool { get }
+  var type: SpreedlyCore.FormFieldType { get }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyUIManager : ObjectiveC.NSObject, Foundation.ObservableObject {
+  @objc public static let shared: SpreedlyCore.SpreedlyUIManager
+  @objc @Combine.Published @_projectedValueProperty($resetFields) public var resetFields: Swift.Bool {
+    @objc get
+  }
+  public var $resetFields: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc @Combine.Published @_projectedValueProperty($forceFieldErrorDisplay) public var forceFieldErrorDisplay: Swift.Bool {
+    @objc get
+  }
+  public var $forceFieldErrorDisplay: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc @Combine.Published @_projectedValueProperty($spreedlyParamsUpdated) public var spreedlyParamsUpdated: Swift.Bool {
+    @objc get
+  }
+  public var $spreedlyParamsUpdated: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  public func registerField(_ field: any SpreedlyCore.SPLValidatableField)
+  @objc public func unregisterField(withType type: SpreedlyCore.FormFieldType)
+  @objc public func areAllFieldsValid() -> Swift.Bool
+  public func getFieldValidationStatus() -> [SpreedlyCore.FormFieldType : Swift.Bool]
+  public func getInvalidFieldTypes() -> [SpreedlyCore.FormFieldType]
+  @objc public func getRegisteredFieldCount() -> Swift.Int
+  @objc public func notifySpreedlyParamsUpdated()
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class SpreedlyParamsManager : ObjectiveC.NSObject {
+  @objc public func getParam(parameter: SpreedlyCore.ValidationParam) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol NetworkSession {
+  func performRequest(_ request: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
+  func performRequest<T>(_ request: Foundation.URLRequest, with task: @escaping (Foundation.URLRequest) -> T) async throws -> (Foundation.Data, Foundation.URLResponse) where T : Foundation.URLSessionDataTask
+}
+public class URLSessionNetworkSession : SpreedlyCore.NetworkSession {
+  public init(session: Foundation.URLSession = .shared)
+  public func performRequest(_ request: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
+  public func performRequest<T>(_ request: Foundation.URLRequest, with task: @escaping (Foundation.URLRequest) -> T) async throws -> (Foundation.Data, Foundation.URLResponse) where T : Foundation.URLSessionDataTask
+  @objc deinit
+}
+public class MockNetworkSession : SpreedlyCore.NetworkSession {
+  public var mockResponse: SpreedlyCore.NetworkResponse?
+  public var mockError: SpreedlyCore.NetworkError?
+  public var requestCallCount: Swift.Int
+  public var lastRequest: Foundation.URLRequest?
+  public init(mockResponse: SpreedlyCore.NetworkResponse? = nil, mockError: SpreedlyCore.NetworkError? = nil)
+  public func performRequest(_ request: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
+  public func performRequest<T>(_ request: Foundation.URLRequest, with task: @escaping (Foundation.URLRequest) -> T) async throws -> (Foundation.Data, Foundation.URLResponse) where T : Foundation.URLSessionDataTask
+  public func reset()
+  public func setMockResponse(_ response: SpreedlyCore.NetworkResponse)
+  public func setMockError(_ error: SpreedlyCore.NetworkError)
+  @objc deinit
+}
+public struct NetworkResponse {
+  public let data: Foundation.Data
+  public let statusCode: Swift.Int
+  public let headers: [Swift.String : Swift.String]
+  public let urlResponse: Foundation.URLResponse?
+  public init(data: Foundation.Data, statusCode: Swift.Int, headers: [Swift.String : Swift.String], urlResponse: Foundation.URLResponse? = nil)
+  public init?(urlResponse: Foundation.URLResponse, data: Foundation.Data)
+  public var isSuccess: Swift.Bool {
+    get
+  }
+  public var isClientError: Swift.Bool {
+    get
+  }
+  public var isServerError: Swift.Bool {
+    get
+  }
+  public func decode<T>(_ type: T.Type, using decoder: Foundation.JSONDecoder = JSONDecoder()) throws -> T where T : Swift.Decodable
+  public var stringValue: Swift.String? {
+    get
+  }
+  public var jsonValue: [Swift.String : Any]? {
+    get
+  }
+}
+extension SpreedlyCore.NetworkResponse {
+  public static func empty(statusCode: Swift.Int = 200, headers: [Swift.String : Swift.String] = [:]) -> SpreedlyCore.NetworkResponse
+  public static func json(_ json: [Swift.String : Any], statusCode: Swift.Int = 200, headers: [Swift.String : Swift.String] = [:]) -> SpreedlyCore.NetworkResponse?
+}
+@objc public protocol SpreedlyConfigGenerator : ObjectiveC.NSObjectProtocol {
+  @objc var environmentKey: Swift.String? { get set }
+  @objc var certificateToken: Swift.String? { get set }
+  @objc var nonce: Swift.String? { get set }
+  @objc var signature: Swift.String? { get set }
+  @objc var timestamp: Swift.String? { get set }
+}
+public protocol NetworkRequest : Swift.Sendable {
+  var baseURL: Swift.String { get }
+  var endpoint: Swift.String { get }
+  var method: SpreedlyCore.HTTPMethod { get }
+  var headers: [Swift.String : Swift.String] { get }
+  var queryParameters: [Swift.String : Swift.String] { get }
+  var body: Foundation.Data? { get }
+  var timeoutInterval: Foundation.TimeInterval { get }
+  var shouldCache: Swift.Bool { get }
+  var cachePolicy: Foundation.URLRequest.CachePolicy { get }
+}
+extension SpreedlyCore.NetworkRequest {
+  public var headers: [Swift.String : Swift.String] {
+    get
+  }
+  public var queryParameters: [Swift.String : Swift.String] {
+    get
+  }
+  public var body: Foundation.Data? {
+    get
+  }
+  public var timeoutInterval: Foundation.TimeInterval {
+    get
+  }
+  public var shouldCache: Swift.Bool {
+    get
+  }
+  public var cachePolicy: Foundation.URLRequest.CachePolicy {
+    get
+  }
+  public var fullURL: Foundation.URL? {
+    get
+  }
+}
+public struct BasicNetworkRequest : SpreedlyCore.NetworkRequest, Swift.Sendable {
+  public let baseURL: Swift.String
+  public let endpoint: Swift.String
+  public let method: SpreedlyCore.HTTPMethod
+  public let headers: [Swift.String : Swift.String]
+  public let queryParameters: [Swift.String : Swift.String]
+  public let body: Foundation.Data?
+  public let timeoutInterval: Foundation.TimeInterval
+  public let shouldCache: Swift.Bool
+  public let cachePolicy: Foundation.URLRequest.CachePolicy
+  public init(baseURL: Swift.String, endpoint: Swift.String, method: SpreedlyCore.HTTPMethod, headers: [Swift.String : Swift.String] = [:], queryParameters: [Swift.String : Swift.String] = [:], body: Foundation.Data? = nil, timeoutInterval: Foundation.TimeInterval = 30.0, shouldCache: Swift.Bool = false, cachePolicy: Foundation.URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData)
+}
 public protocol PaymentMethodData : Swift.Sendable {
   var type: SpreedlyCore.PaymentMethodType { get }
 }
@@ -175,15 +318,6 @@ public struct GooglePayAddress : Swift.Sendable {
   public let phoneNumber: Swift.String?
   public init(name: Swift.String? = nil, address1: Swift.String? = nil, address2: Swift.String? = nil, address3: Swift.String? = nil, locality: Swift.String? = nil, administrativeArea: Swift.String? = nil, postalCode: Swift.String? = nil, countryCode: Swift.String? = nil, phoneNumber: Swift.String? = nil)
 }
-public struct CreditCardRequest : SpreedlyCore.PaymentMethodRequestProtocol {
-  public init(cardData: any SpreedlyCore.CreditCardData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil)
-  public var type: SpreedlyCore.PaymentMethodType {
-    get
-  }
-  public var body: Foundation.Data? {
-    get
-  }
-}
 public protocol NetworkInterceptor {
   func interceptRequest(_ request: Foundation.URLRequest) async throws -> Foundation.URLRequest
   func interceptResponse(_ response: SpreedlyCore.NetworkResponse, for request: Foundation.URLRequest) async throws -> SpreedlyCore.NetworkResponse
@@ -221,19 +355,73 @@ public class RetryInterceptor : SpreedlyCore.NetworkInterceptor {
   public func shouldRetryRequest(for error: SpreedlyCore.NetworkError) -> Swift.Bool
   @objc deinit
 }
-public struct BasePaymentMethodRequest : SpreedlyCore.PaymentMethodRequestProtocol {
-  public let environmentKey: Swift.String?
-  public let nonce: Swift.String?
-  public let timestamp: Swift.String?
-  public let signature: Swift.String?
-  public let certificateToken: Swift.String?
-  public let type: SpreedlyCore.PaymentMethodType
-  public let paymentMethodData: any SpreedlyCore.PaymentMethodData
-  public let metadata: [Swift.String : Swift.String]?
-  public let allowBlankName: Swift.Bool?
-  public let allowExpiredDate: Swift.Bool?
-  public init(paymentMethodData: any SpreedlyCore.PaymentMethodData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil)
-  public var body: Foundation.Data? {
+@objc public enum FormFieldType : Swift.Int, Swift.CaseIterable {
+  case cardNumber = 0
+  case fullName
+  case firstName
+  case lastName
+  case expirationMonth
+  case expirationYear
+  case expirationDate
+  case cvc
+  case addressLine1
+  case addressLine2
+  case city
+  case state
+  case zipCode
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyCore.FormFieldType]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyCore.FormFieldType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ValidationParam : Swift.Int {
+  case allowBlankName = 0
+  case allowExpiredDate = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum AdditionalField : Swift.String, Swift.CaseIterable {
+  case firstName
+  case lastName
+  case fullName
+  case addressLine1
+  case addressLine2
+  case city
+  case state
+  case zipCode
+  case country
+  case phoneNumber
+  case email
+  case shippingAddress1
+  case shippingAddress2
+  case shippingCity
+  case shippingState
+  case shippingZip
+  case shippingCountry
+  case shippingPhoneNumber
+  public var fieldName: Swift.String {
+    get
+  }
+  public static func fromFieldName(_ fieldName: Swift.String) -> SpreedlyCore.AdditionalField?
+  public static func mapToStringMap(_ additionalFields: [SpreedlyCore.AdditionalField : Swift.String]) -> [Swift.String : Swift.String]
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [SpreedlyCore.AdditionalField]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [SpreedlyCore.AdditionalField] {
+    get
+  }
+  public var rawValue: Swift.String {
     get
   }
 }
@@ -326,51 +514,58 @@ extension SpreedlyCore.NetworkError {
     get
   }
 }
-public enum PaymentMethodType : Swift.String, Swift.CaseIterable, Swift.Sendable {
-  case creditCard
-  case bankAccount
-  case applePay
-  case googlePay
-  case paypal
-  case venmo
-  case alipay
-  case wechatPay
-  case bitcoin
-  case ethereum
-  case litecoin
-  case dogecoin
-  case ripple
-  case stellar
-  case card
-  case bank
-  case wallet
-  case crypto
-  public init?(rawValue: Swift.String)
-  public typealias AllCases = [SpreedlyCore.PaymentMethodType]
-  public typealias RawValue = Swift.String
-  nonisolated public static var allCases: [SpreedlyCore.PaymentMethodType] {
-    get
-  }
-  public var rawValue: Swift.String {
-    get
-  }
+public enum PaymentMethodAPIKeys {
+  public static let paymentMethod: Swift.String
+  public static let metadata: Swift.String
+  public static let email: Swift.String
+  public static let phoneNumber: Swift.String
+  public static let company: Swift.String
+  public static let fullName: Swift.String
+  public static let creditCard: Swift.String
+  public static let number: Swift.String
+  public static let firstName: Swift.String
+  public static let lastName: Swift.String
+  public static let expirationMonth: Swift.String
+  public static let expirationYear: Swift.String
+  public static let securityCode: Swift.String
+  public static let addressLine1: Swift.String
+  public static let addressLine2: Swift.String
+  public static let city: Swift.String
+  public static let state: Swift.String
+  public static let zipCode: Swift.String
+  public static let country: Swift.String
+  public static let allowBlankName: Swift.String
+  public static let allowExpiredDate: Swift.String
+  public static let bankAccount: Swift.String
+  public static let accountNumber: Swift.String
+  public static let routingNumber: Swift.String
+  public static let accountType: Swift.String
+  public static let accountHolderType: Swift.String
+  public static let applePay: Swift.String
+  public static let paymentData: Swift.String
+  public static let paymentMethodType: Swift.String
+  public static let billingContact: Swift.String
+  public static let shippingContact: Swift.String
+  public static let googlePay: Swift.String
+  public static let billingAddress: Swift.String
+  public static let shippingAddress: Swift.String
+  public static let paypal: Swift.String
+  public static let venmo: Swift.String
+  public static let alipay: Swift.String
+  public static let wechatPay: Swift.String
+  public static let bitcoin: Swift.String
+  public static let ethereum: Swift.String
+  public static let litecoin: Swift.String
+  public static let dogecoin: Swift.String
+  public static let ripple: Swift.String
+  public static let stellar: Swift.String
+  public static let card: Swift.String
+  public static let bank: Swift.String
+  public static let wallet: Swift.String
+  public static let crypto: Swift.String
 }
-public protocol PaymentMethodRequestProtocol : SpreedlyCore.NetworkRequest {
-  var type: SpreedlyCore.PaymentMethodType { get }
-}
-extension SpreedlyCore.PaymentMethodRequestProtocol {
-  public var baseURL: Swift.String {
-    get
-  }
-  public var endpoint: Swift.String {
-    get
-  }
-  public var method: SpreedlyCore.HTTPMethod {
-    get
-  }
-  public var headers: [Swift.String : Swift.String] {
-    get
-  }
+public enum PaymentMethodAPIErrorKeys {
+  public static func apiFieldKey(fieldType type: SpreedlyCore.FormFieldType) -> Swift.String
 }
 public protocol NetworkClient {
   func performRequest(_ request: any SpreedlyCore.NetworkRequest) async throws -> SpreedlyCore.NetworkResponse
@@ -451,6 +646,22 @@ public class NetworkClientBuilder {
   public static func failed(errorType: SpreedlyCore.ErrorType, message: Swift.String? = nil, originalError: (any Swift.Error)? = nil, apiError: SpreedlyCore.SpreedlyApiError? = nil, statusCode: Foundation.NSNumber? = nil, validationErrors: [SpreedlyCore.PaymentValidationError] = [], rawErrorResponse: Swift.String? = nil) -> SpreedlyCore.PaymentResult
   @objc deinit
 }
+public struct BasePaymentMethodRequest : SpreedlyCore.PaymentMethodRequestProtocol {
+  public let environmentKey: Swift.String?
+  public let nonce: Swift.String?
+  public let timestamp: Swift.String?
+  public let signature: Swift.String?
+  public let certificateToken: Swift.String?
+  public let type: SpreedlyCore.PaymentMethodType
+  public let paymentMethodData: any SpreedlyCore.PaymentMethodData
+  public let metadata: [Swift.String : Swift.String]?
+  public let allowBlankName: Swift.Bool?
+  public let allowExpiredDate: Swift.Bool?
+  public init(paymentMethodData: any SpreedlyCore.PaymentMethodData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil)
+  public var body: Foundation.Data? {
+    get
+  }
+}
 public enum HTTPMethod : Swift.String, Swift.CaseIterable, Swift.Sendable {
   case get
   case post
@@ -494,6 +705,52 @@ public protocol SpreedlyErrorHandler {
   func getFieldError(for fieldId: Swift.String) -> Swift.String?
   func getGeneralError() -> Swift.String?
   func clearFieldError(for fieldId: Swift.String)
+}
+public enum PaymentMethodType : Swift.String, Swift.CaseIterable, Swift.Sendable {
+  case creditCard
+  case bankAccount
+  case applePay
+  case googlePay
+  case paypal
+  case venmo
+  case alipay
+  case wechatPay
+  case bitcoin
+  case ethereum
+  case litecoin
+  case dogecoin
+  case ripple
+  case stellar
+  case card
+  case bank
+  case wallet
+  case crypto
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [SpreedlyCore.PaymentMethodType]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [SpreedlyCore.PaymentMethodType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol PaymentMethodRequestProtocol : SpreedlyCore.NetworkRequest {
+  var type: SpreedlyCore.PaymentMethodType { get }
+}
+extension SpreedlyCore.PaymentMethodRequestProtocol {
+  public var baseURL: Swift.String {
+    get
+  }
+  public var endpoint: Swift.String {
+    get
+  }
+  public var method: SpreedlyCore.HTTPMethod {
+    get
+  }
+  public var headers: [Swift.String : Swift.String] {
+    get
+  }
 }
 @_hasMissingDesignatedInitializers public class APIErrorHandler : Foundation.ObservableObject, SpreedlyCore.SpreedlyErrorHandler {
   public static let shared: SpreedlyCore.APIErrorHandler
@@ -551,128 +808,14 @@ public protocol SpreedlyErrorHandler {
 extension SpreedlyCore.APIErrorHandler {
   public func executeWithErrorHandling<T>(_ operation: @escaping () async throws -> T) async -> T?
 }
-@objc public enum FormFieldType : Swift.Int, Swift.CaseIterable {
-  case cardNumber = 0
-  case fullName
-  case firstName
-  case lastName
-  case expirationMonth
-  case expirationYear
-  case expirationDate
-  case cvc
-  case addressLine1
-  case addressLine2
-  case city
-  case state
-  case zipCode
-  public var identifier: Swift.String {
+public struct CreditCardRequest : SpreedlyCore.PaymentMethodRequestProtocol {
+  public init(cardData: any SpreedlyCore.CreditCardData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil)
+  public var type: SpreedlyCore.PaymentMethodType {
     get
   }
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [SpreedlyCore.FormFieldType]
-  public typealias RawValue = Swift.Int
-  nonisolated public static var allCases: [SpreedlyCore.FormFieldType] {
+  public var body: Foundation.Data? {
     get
   }
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@objc public enum ValidationParam : Swift.Int {
-  case allowBlankName = 0
-  case allowExpiredDate = 1
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public enum AdditionalField : Swift.String, Swift.CaseIterable {
-  case firstName
-  case lastName
-  case fullName
-  case addressLine1
-  case addressLine2
-  case city
-  case state
-  case zipCode
-  case country
-  case phoneNumber
-  case email
-  case shippingAddress1
-  case shippingAddress2
-  case shippingCity
-  case shippingState
-  case shippingZip
-  case shippingCountry
-  case shippingPhoneNumber
-  public var fieldName: Swift.String {
-    get
-  }
-  public static func fromFieldName(_ fieldName: Swift.String) -> SpreedlyCore.AdditionalField?
-  public static func mapToStringMap(_ additionalFields: [SpreedlyCore.AdditionalField : Swift.String]) -> [Swift.String : Swift.String]
-  public init?(rawValue: Swift.String)
-  public typealias AllCases = [SpreedlyCore.AdditionalField]
-  public typealias RawValue = Swift.String
-  nonisolated public static var allCases: [SpreedlyCore.AdditionalField] {
-    get
-  }
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public enum PaymentMethodAPIKeys {
-  public static let paymentMethod: Swift.String
-  public static let metadata: Swift.String
-  public static let email: Swift.String
-  public static let phoneNumber: Swift.String
-  public static let company: Swift.String
-  public static let fullName: Swift.String
-  public static let creditCard: Swift.String
-  public static let number: Swift.String
-  public static let firstName: Swift.String
-  public static let lastName: Swift.String
-  public static let expirationMonth: Swift.String
-  public static let expirationYear: Swift.String
-  public static let securityCode: Swift.String
-  public static let addressLine1: Swift.String
-  public static let addressLine2: Swift.String
-  public static let city: Swift.String
-  public static let state: Swift.String
-  public static let zipCode: Swift.String
-  public static let country: Swift.String
-  public static let allowBlankName: Swift.String
-  public static let allowExpiredDate: Swift.String
-  public static let bankAccount: Swift.String
-  public static let accountNumber: Swift.String
-  public static let routingNumber: Swift.String
-  public static let accountType: Swift.String
-  public static let accountHolderType: Swift.String
-  public static let applePay: Swift.String
-  public static let paymentData: Swift.String
-  public static let paymentMethodType: Swift.String
-  public static let billingContact: Swift.String
-  public static let shippingContact: Swift.String
-  public static let googlePay: Swift.String
-  public static let billingAddress: Swift.String
-  public static let shippingAddress: Swift.String
-  public static let paypal: Swift.String
-  public static let venmo: Swift.String
-  public static let alipay: Swift.String
-  public static let wechatPay: Swift.String
-  public static let bitcoin: Swift.String
-  public static let ethereum: Swift.String
-  public static let litecoin: Swift.String
-  public static let dogecoin: Swift.String
-  public static let ripple: Swift.String
-  public static let stellar: Swift.String
-  public static let card: Swift.String
-  public static let bank: Swift.String
-  public static let wallet: Swift.String
-  public static let crypto: Swift.String
-}
-public enum PaymentMethodAPIErrorKeys {
-  public static func apiFieldKey(fieldType type: SpreedlyCore.FormFieldType) -> Swift.String
 }
 @objc public protocol SpreedlyPaymentDelegate {
   @objc func paymentDidComplete(_ result: SpreedlyCore.PaymentResult)
@@ -705,149 +848,6 @@ public enum PaymentMethodAPIErrorKeys {
   public func subscribeToPaymentResults(_ onPaymentResult: @escaping (SpreedlyCore.PaymentResult) -> Swift.Void) -> Combine.AnyCancellable
   @objc deinit
 }
-public protocol SPLValidatableField : AnyObject {
-  var isValid: Swift.Bool { get }
-  var type: SpreedlyCore.FormFieldType { get }
-}
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyUIManager : ObjectiveC.NSObject, Foundation.ObservableObject {
-  @objc public static let shared: SpreedlyCore.SpreedlyUIManager
-  @objc @Combine.Published @_projectedValueProperty($resetFields) public var resetFields: Swift.Bool {
-    @objc get
-  }
-  public var $resetFields: Combine.Published<Swift.Bool>.Publisher {
-    get
-  }
-  @objc @Combine.Published @_projectedValueProperty($forceFieldErrorDisplay) public var forceFieldErrorDisplay: Swift.Bool {
-    @objc get
-  }
-  public var $forceFieldErrorDisplay: Combine.Published<Swift.Bool>.Publisher {
-    get
-  }
-  @objc @Combine.Published @_projectedValueProperty($spreedlyParamsUpdated) public var spreedlyParamsUpdated: Swift.Bool {
-    @objc get
-  }
-  public var $spreedlyParamsUpdated: Combine.Published<Swift.Bool>.Publisher {
-    get
-  }
-  public func registerField(_ field: any SpreedlyCore.SPLValidatableField)
-  @objc public func unregisterField(withType type: SpreedlyCore.FormFieldType)
-  @objc public func areAllFieldsValid() -> Swift.Bool
-  public func getFieldValidationStatus() -> [SpreedlyCore.FormFieldType : Swift.Bool]
-  public func getInvalidFieldTypes() -> [SpreedlyCore.FormFieldType]
-  @objc public func getRegisteredFieldCount() -> Swift.Int
-  @objc public func notifySpreedlyParamsUpdated()
-  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
-  @objc deinit
-}
-@objc @_inheritsConvenienceInitializers @objcMembers public class SpreedlyParamsManager : ObjectiveC.NSObject {
-  @objc public func getParam(parameter: SpreedlyCore.ValidationParam) -> Swift.Bool
-  @objc override dynamic public init()
-  @objc deinit
-}
-public protocol NetworkSession {
-  func performRequest(_ request: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
-  func performRequest<T>(_ request: Foundation.URLRequest, with task: @escaping (Foundation.URLRequest) -> T) async throws -> (Foundation.Data, Foundation.URLResponse) where T : Foundation.URLSessionDataTask
-}
-public class URLSessionNetworkSession : SpreedlyCore.NetworkSession {
-  public init(session: Foundation.URLSession = .shared)
-  public func performRequest(_ request: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
-  public func performRequest<T>(_ request: Foundation.URLRequest, with task: @escaping (Foundation.URLRequest) -> T) async throws -> (Foundation.Data, Foundation.URLResponse) where T : Foundation.URLSessionDataTask
-  @objc deinit
-}
-public class MockNetworkSession : SpreedlyCore.NetworkSession {
-  public var mockResponse: SpreedlyCore.NetworkResponse?
-  public var mockError: SpreedlyCore.NetworkError?
-  public var requestCallCount: Swift.Int
-  public var lastRequest: Foundation.URLRequest?
-  public init(mockResponse: SpreedlyCore.NetworkResponse? = nil, mockError: SpreedlyCore.NetworkError? = nil)
-  public func performRequest(_ request: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
-  public func performRequest<T>(_ request: Foundation.URLRequest, with task: @escaping (Foundation.URLRequest) -> T) async throws -> (Foundation.Data, Foundation.URLResponse) where T : Foundation.URLSessionDataTask
-  public func reset()
-  public func setMockResponse(_ response: SpreedlyCore.NetworkResponse)
-  public func setMockError(_ error: SpreedlyCore.NetworkError)
-  @objc deinit
-}
-public struct NetworkResponse {
-  public let data: Foundation.Data
-  public let statusCode: Swift.Int
-  public let headers: [Swift.String : Swift.String]
-  public let urlResponse: Foundation.URLResponse?
-  public init(data: Foundation.Data, statusCode: Swift.Int, headers: [Swift.String : Swift.String], urlResponse: Foundation.URLResponse? = nil)
-  public init?(urlResponse: Foundation.URLResponse, data: Foundation.Data)
-  public var isSuccess: Swift.Bool {
-    get
-  }
-  public var isClientError: Swift.Bool {
-    get
-  }
-  public var isServerError: Swift.Bool {
-    get
-  }
-  public func decode<T>(_ type: T.Type, using decoder: Foundation.JSONDecoder = JSONDecoder()) throws -> T where T : Swift.Decodable
-  public var stringValue: Swift.String? {
-    get
-  }
-  public var jsonValue: [Swift.String : Any]? {
-    get
-  }
-}
-extension SpreedlyCore.NetworkResponse {
-  public static func empty(statusCode: Swift.Int = 200, headers: [Swift.String : Swift.String] = [:]) -> SpreedlyCore.NetworkResponse
-  public static func json(_ json: [Swift.String : Any], statusCode: Swift.Int = 200, headers: [Swift.String : Swift.String] = [:]) -> SpreedlyCore.NetworkResponse?
-}
-@objc public protocol SpreedlyConfigGenerator : ObjectiveC.NSObjectProtocol {
-  @objc var environmentKey: Swift.String? { get set }
-  @objc var certificateToken: Swift.String? { get set }
-  @objc var nonce: Swift.String? { get set }
-  @objc var signature: Swift.String? { get set }
-  @objc var timestamp: Swift.String? { get set }
-}
-public protocol NetworkRequest : Swift.Sendable {
-  var baseURL: Swift.String { get }
-  var endpoint: Swift.String { get }
-  var method: SpreedlyCore.HTTPMethod { get }
-  var headers: [Swift.String : Swift.String] { get }
-  var queryParameters: [Swift.String : Swift.String] { get }
-  var body: Foundation.Data? { get }
-  var timeoutInterval: Foundation.TimeInterval { get }
-  var shouldCache: Swift.Bool { get }
-  var cachePolicy: Foundation.URLRequest.CachePolicy { get }
-}
-extension SpreedlyCore.NetworkRequest {
-  public var headers: [Swift.String : Swift.String] {
-    get
-  }
-  public var queryParameters: [Swift.String : Swift.String] {
-    get
-  }
-  public var body: Foundation.Data? {
-    get
-  }
-  public var timeoutInterval: Foundation.TimeInterval {
-    get
-  }
-  public var shouldCache: Swift.Bool {
-    get
-  }
-  public var cachePolicy: Foundation.URLRequest.CachePolicy {
-    get
-  }
-  public var fullURL: Foundation.URL? {
-    get
-  }
-}
-public struct BasicNetworkRequest : SpreedlyCore.NetworkRequest, Swift.Sendable {
-  public let baseURL: Swift.String
-  public let endpoint: Swift.String
-  public let method: SpreedlyCore.HTTPMethod
-  public let headers: [Swift.String : Swift.String]
-  public let queryParameters: [Swift.String : Swift.String]
-  public let body: Foundation.Data?
-  public let timeoutInterval: Foundation.TimeInterval
-  public let shouldCache: Swift.Bool
-  public let cachePolicy: Foundation.URLRequest.CachePolicy
-  public init(baseURL: Swift.String, endpoint: Swift.String, method: SpreedlyCore.HTTPMethod, headers: [Swift.String : Swift.String] = [:], queryParameters: [Swift.String : Swift.String] = [:], body: Foundation.Data? = nil, timeoutInterval: Foundation.TimeInterval = 30.0, shouldCache: Swift.Bool = false, cachePolicy: Foundation.URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData)
-}
 extension SpreedlyCore.BankAccountType : Swift.Equatable {}
 extension SpreedlyCore.BankAccountType : Swift.Hashable {}
 extension SpreedlyCore.BankAccountType : Swift.RawRepresentable {}
@@ -860,18 +860,6 @@ extension SpreedlyCore.ApplePayPaymentMethod : Swift.RawRepresentable {}
 extension SpreedlyCore.GooglePayPaymentMethodType : Swift.Equatable {}
 extension SpreedlyCore.GooglePayPaymentMethodType : Swift.Hashable {}
 extension SpreedlyCore.GooglePayPaymentMethodType : Swift.RawRepresentable {}
-extension SpreedlyCore.SpreedlyApiError : Swift.Equatable {}
-extension SpreedlyCore.SpreedlyApiError : Swift.Hashable {}
-extension SpreedlyCore.SpreedlyApiError : Swift.RawRepresentable {}
-extension SpreedlyCore.PaymentMethodType : Swift.Equatable {}
-extension SpreedlyCore.PaymentMethodType : Swift.Hashable {}
-extension SpreedlyCore.PaymentMethodType : Swift.RawRepresentable {}
-extension SpreedlyCore.ErrorType : Swift.Equatable {}
-extension SpreedlyCore.ErrorType : Swift.Hashable {}
-extension SpreedlyCore.ErrorType : Swift.RawRepresentable {}
-extension SpreedlyCore.HTTPMethod : Swift.Equatable {}
-extension SpreedlyCore.HTTPMethod : Swift.Hashable {}
-extension SpreedlyCore.HTTPMethod : Swift.RawRepresentable {}
 extension SpreedlyCore.FormFieldType : Swift.Equatable {}
 extension SpreedlyCore.FormFieldType : Swift.Hashable {}
 extension SpreedlyCore.FormFieldType : Swift.RawRepresentable {}
@@ -881,3 +869,15 @@ extension SpreedlyCore.ValidationParam : Swift.RawRepresentable {}
 extension SpreedlyCore.AdditionalField : Swift.Equatable {}
 extension SpreedlyCore.AdditionalField : Swift.Hashable {}
 extension SpreedlyCore.AdditionalField : Swift.RawRepresentable {}
+extension SpreedlyCore.SpreedlyApiError : Swift.Equatable {}
+extension SpreedlyCore.SpreedlyApiError : Swift.Hashable {}
+extension SpreedlyCore.SpreedlyApiError : Swift.RawRepresentable {}
+extension SpreedlyCore.ErrorType : Swift.Equatable {}
+extension SpreedlyCore.ErrorType : Swift.Hashable {}
+extension SpreedlyCore.ErrorType : Swift.RawRepresentable {}
+extension SpreedlyCore.HTTPMethod : Swift.Equatable {}
+extension SpreedlyCore.HTTPMethod : Swift.Hashable {}
+extension SpreedlyCore.HTTPMethod : Swift.RawRepresentable {}
+extension SpreedlyCore.PaymentMethodType : Swift.Equatable {}
+extension SpreedlyCore.PaymentMethodType : Swift.Hashable {}
+extension SpreedlyCore.PaymentMethodType : Swift.RawRepresentable {}
