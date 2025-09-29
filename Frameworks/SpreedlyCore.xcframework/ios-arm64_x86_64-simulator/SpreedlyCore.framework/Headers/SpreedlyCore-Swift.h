@@ -666,6 +666,23 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// returns:
 /// Number of currently registered fields
 - (NSInteger)getRegisteredFieldCount SWIFT_WARN_UNUSED_RESULT;
+/// Get display text length for a specific field type
+/// \param fieldType The field type to get length for
+///
+///
+/// returns:
+/// The display text length, or 0 if field not found
+- (NSInteger)getDisplayTextLengthFor:(enum FormFieldType)fieldType SWIFT_WARN_UNUSED_RESULT;
+/// Check if both expiration month and year fields have valid values
+///
+/// returns:
+/// True if both fields have valid individual values, false otherwise
+- (BOOL)areExpirationFieldsIndividuallyValid SWIFT_WARN_UNUSED_RESULT;
+/// Check if the expiration date is in the past (only when both fields are individually valid)
+///
+/// returns:
+/// True if the date is expired, false otherwise
+- (BOOL)isExpirationDateExpired SWIFT_WARN_UNUSED_RESULT;
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
@@ -1352,6 +1369,23 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// returns:
 /// Number of currently registered fields
 - (NSInteger)getRegisteredFieldCount SWIFT_WARN_UNUSED_RESULT;
+/// Get display text length for a specific field type
+/// \param fieldType The field type to get length for
+///
+///
+/// returns:
+/// The display text length, or 0 if field not found
+- (NSInteger)getDisplayTextLengthFor:(enum FormFieldType)fieldType SWIFT_WARN_UNUSED_RESULT;
+/// Check if both expiration month and year fields have valid values
+///
+/// returns:
+/// True if both fields have valid individual values, false otherwise
+- (BOOL)areExpirationFieldsIndividuallyValid SWIFT_WARN_UNUSED_RESULT;
+/// Check if the expiration date is in the past (only when both fields are individually valid)
+///
+/// returns:
+/// True if the date is expired, false otherwise
+- (BOOL)isExpirationDateExpired SWIFT_WARN_UNUSED_RESULT;
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
