@@ -5,8 +5,8 @@ import PackageDescription
 
 let package = Package(
     name: "checkout-ios-package",
-    dependencies: [
-        .package(url: "https://github.com/DataDog/dd-sdk-ios", from: "3.1.0")
+    platforms: [
+        .iOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -28,6 +28,9 @@ let package = Package(
             name: "Spreedly",
             targets: ["SpreedlyCore", "SpreedlySecurity", "SpreedlyUI"]
         ),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/DataDog/dd-sdk-ios", from: "3.1.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
