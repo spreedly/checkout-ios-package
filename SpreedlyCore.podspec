@@ -9,5 +9,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '13.0'
   s.swift_version    = '5.10'
 
+  s.dependency 'DatadogSDK', '~> 3.1.0'
+
   s.vendored_frameworks = 'Frameworks/SpreedlyCore.xcframework'
 end
