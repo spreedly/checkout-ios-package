@@ -340,6 +340,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+enum SpreedlySubmitLabel : NSInteger;
 SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @interface SPLTextFieldViewController : UIViewController
 @property (nonatomic) enum FormFieldType field;
@@ -349,6 +350,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextContentType _Nullable textContentType;
 @property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
+@property (nonatomic, copy) void (^ _Nullable onSubmit)(void);
+@property (nonatomic) BOOL shouldFocus;
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
@@ -357,11 +360,16 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
 - (void)reset;
+/// Make this text field the first responder (focused)
+- (BOOL)becomeFirstResponder SWIFT_WARN_UNUSED_RESULT;
+/// Resign first responder (unfocus)
+- (BOOL)resignFirstResponder SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class UIColor;
@@ -398,6 +406,19 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 ///
 - (nonnull instancetype)initWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
 @end
+
+/// Custom submit label enum that maps to SubmitLabel on iOS 15+
+typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
+  SpreedlySubmitLabelReturn = 0,
+  SpreedlySubmitLabelDone = 1,
+  SpreedlySubmitLabelGo = 2,
+  SpreedlySubmitLabelSearch = 3,
+  SpreedlySubmitLabelSend = 4,
+  SpreedlySubmitLabelNext = 5,
+  SpreedlySubmitLabelJoin = 6,
+  SpreedlySubmitLabelRoute = 7,
+  SpreedlySubmitLabelContinue = 8,
+};
 
 /// Objective-C compatible theme manager
 /// This class provides Objective-C accessible methods for theme management
@@ -795,6 +816,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+enum SpreedlySubmitLabel : NSInteger;
 SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @interface SPLTextFieldViewController : UIViewController
 @property (nonatomic) enum FormFieldType field;
@@ -804,6 +826,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextContentType _Nullable textContentType;
 @property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
+@property (nonatomic, copy) void (^ _Nullable onSubmit)(void);
+@property (nonatomic) BOOL shouldFocus;
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
@@ -812,11 +836,16 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
 - (void)reset;
+/// Make this text field the first responder (focused)
+- (BOOL)becomeFirstResponder SWIFT_WARN_UNUSED_RESULT;
+/// Resign first responder (unfocus)
+- (BOOL)resignFirstResponder SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class UIColor;
@@ -853,6 +882,19 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 ///
 - (nonnull instancetype)initWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
 @end
+
+/// Custom submit label enum that maps to SubmitLabel on iOS 15+
+typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
+  SpreedlySubmitLabelReturn = 0,
+  SpreedlySubmitLabelDone = 1,
+  SpreedlySubmitLabelGo = 2,
+  SpreedlySubmitLabelSearch = 3,
+  SpreedlySubmitLabelSend = 4,
+  SpreedlySubmitLabelNext = 5,
+  SpreedlySubmitLabelJoin = 6,
+  SpreedlySubmitLabelRoute = 7,
+  SpreedlySubmitLabelContinue = 8,
+};
 
 /// Objective-C compatible theme manager
 /// This class provides Objective-C accessible methods for theme management

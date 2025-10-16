@@ -686,6 +686,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
+/// Triggers force validation change notification for a specific field type
+/// This should be called when multi-field validation state changes for specific fields
+/// \param fieldType The specific field type to trigger validation change for
+///
+- (void)notifyForceOnValidationChangeFor:(enum FormFieldType)fieldType;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
@@ -1389,6 +1394,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
+/// Triggers force validation change notification for a specific field type
+/// This should be called when multi-field validation state changes for specific fields
+/// \param fieldType The specific field type to trigger validation change for
+///
+- (void)notifyForceOnValidationChangeFor:(enum FormFieldType)fieldType;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
