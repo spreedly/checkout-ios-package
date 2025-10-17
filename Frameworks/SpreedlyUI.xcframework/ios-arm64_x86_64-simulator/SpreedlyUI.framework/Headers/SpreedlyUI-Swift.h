@@ -352,6 +352,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
 @property (nonatomic, copy) void (^ _Nullable onSubmit)(void);
 @property (nonatomic) BOOL shouldFocus;
+@property (nonatomic, copy) void (^ _Nullable onFocus)(void);
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
@@ -359,9 +360,9 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel onFocus:(void (^ _Nullable)(void))onFocus;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
@@ -828,6 +829,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, copy) void (^ _Nullable onValidationChange)(BOOL);
 @property (nonatomic, copy) void (^ _Nullable onSubmit)(void);
 @property (nonatomic) BOOL shouldFocus;
+@property (nonatomic, copy) void (^ _Nullable onFocus)(void);
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
@@ -835,9 +837,9 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel;
-- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel onFocus:(void (^ _Nullable)(void))onFocus;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
