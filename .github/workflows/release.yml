@@ -1,0 +1,37 @@
+name: Trigger TestFlight Build on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-sdk-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout SDK repository
+        uses: actions/checkout@v4
+        with:
+          repository: spreedly/checkout-ios-sdk
+          token: ${{ secrets.SDK_REPO_TOKEN }}
+          fetch-depth: 0
+
+      - name: Create tag for TestFlight build
+        run: |
+          # Set up git config
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          
+          # Create tag name from release tag
+          TAG_NAME="testflight-${{ github.event.release.tag_name }}"
+          echo "Creating tag: $TAG_NAME"
+          
+          # Check if tag already exists
+          if git show-ref --verify --quiet refs/tags/$TAG_NAME; then
+            echo "Tag $TAG_NAME already exists, skipping creation"
+          else
+            echo "Creating new tag $TAG_NAME on main branch"
+            git tag -a $TAG_NAME -m "TestFlight build for checkout-ios-package ${{ github.event.release.tag_name }}"
+            git push origin $TAG_NAME
+            echo "✅ Tag $TAG_NAME created and pushed successfully!"
+            echo "🚀 This will trigger your Xcode Cloud build for TestFlight!"
+          fi
