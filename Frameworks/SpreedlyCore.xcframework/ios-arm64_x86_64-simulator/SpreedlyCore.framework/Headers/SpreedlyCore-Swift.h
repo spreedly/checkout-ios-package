@@ -435,7 +435,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 ///
 /// // Handle the result
 /// if result.isSuccess, let token = result.token {
-///     print("Payment successful: \(token)")
 /// } else if result.isFailure, let failureDetails = result.failureDetails {
 ///     switch failureDetails.errorType {
 ///     case .apiError:
@@ -1143,7 +1142,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 ///
 /// // Handle the result
 /// if result.isSuccess, let token = result.token {
-///     print("Payment successful: \(token)")
 /// } else if result.isFailure, let failureDetails = result.failureDetails {
 ///     switch failureDetails.errorType {
 ///     case .apiError:
