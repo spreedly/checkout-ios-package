@@ -48,6 +48,11 @@ import _SwiftConcurrencyShims
   public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI20TooltipCardBrandIconV4bodyQrvp", 0) __
 }
 
+@_hasMissingDesignatedInitializers public class LocalizationHelper {
+  public static func localizedString(for key: Swift.String) -> Swift.String
+  public static func localizedString(for key: Swift.String, defaultValue: Swift.String) -> Swift.String
+  @objc deinit
+}
 @_Concurrency.MainActor @preconcurrency public struct ValidatedField<Content> : SwiftUICore.View where Content : SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public let fieldId: Swift.String
   @_Concurrency.MainActor @preconcurrency public let title: Swift.String?
@@ -122,11 +127,6 @@ import _SwiftConcurrencyShims
   public var rawValue: Swift.Int {
     get
   }
-}
-@_hasMissingDesignatedInitializers public class LocalizationHelper {
-  public static func localizedString(for key: Swift.String) -> Swift.String
-  public static func localizedString(for key: Swift.String, defaultValue: Swift.String) -> Swift.String
-  @objc deinit
 }
 @_Concurrency.MainActor @preconcurrency public struct CardFormDropIn : SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public let yearFormat: SpreedlyUI.YearFormat
@@ -489,6 +489,7 @@ extension SpreedlyCore.FormFieldType {
   public var contentType: UIKit.UITextContentType? {
     get
   }
+  public func canPerformAction(_ selector: ObjectiveC.Selector) -> Swift.Bool
   public func conditionalValidationRules(isRequired: Swift.Bool = true, yearFormat: SpreedlyUI.YearFormat = .fourDigit) -> [any SpreedlyUI.ValidationRule]
 }
 @objc public class FormField : ObjectiveC.NSObject {
