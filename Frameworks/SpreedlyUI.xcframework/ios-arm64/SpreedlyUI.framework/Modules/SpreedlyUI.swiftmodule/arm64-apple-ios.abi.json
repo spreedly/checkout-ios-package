@@ -5293,6 +5293,13 @@
           },
           {
             "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "UITraitChangeObservable",
             "printedName": "UITraitChangeObservable",
             "usr": "s:5UIKit23UITraitChangeObservableP",
@@ -9621,17 +9628,17 @@
           },
           {
             "kind": "Conformance",
-            "name": "UITraitChangeObservable",
-            "printedName": "UITraitChangeObservable",
-            "usr": "s:5UIKit23UITraitChangeObservableP",
-            "mangledName": "$s5UIKit23UITraitChangeObservableP"
-          },
-          {
-            "kind": "Conformance",
             "name": "Sendable",
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "UITraitChangeObservable",
+            "printedName": "UITraitChangeObservable",
+            "usr": "s:5UIKit23UITraitChangeObservableP",
+            "mangledName": "$s5UIKit23UITraitChangeObservableP"
           }
         ]
       },
@@ -27435,6 +27442,31 @@
           },
           {
             "kind": "Function",
+            "name": "canPerformAction",
+            "printedName": "canPerformAction(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Selector",
+                "printedName": "ObjectiveC.Selector",
+                "usr": "s:10ObjectiveC8SelectorV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12SpreedlyCore13FormFieldTypeO0A2UIE16canPerformActionySb10ObjectiveC8SelectorVF",
+            "mangledName": "$s12SpreedlyCore13FormFieldTypeO0A2UIE16canPerformActionySb10ObjectiveC8SelectorVF",
+            "moduleName": "SpreedlyUI",
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "conditionalValidationRules",
             "printedName": "conditionalValidationRules(isRequired:yearFormat:)",
             "children": [
@@ -28212,63 +28244,63 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15149,
+      "offset": 15191,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15167,
+      "offset": 15209,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15183,
+      "offset": 15225,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15203,
+      "offset": 15245,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15221,
+      "offset": 15263,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15239,
+      "offset": 15281,
       "length": 1,
       "value": "5"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15257,
+      "offset": 15299,
       "length": 1,
       "value": "6"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15276,
+      "offset": 15318,
       "length": 1,
       "value": "7"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Base\/ValidatedField.swift",
       "kind": "IntegerLiteral",
-      "offset": 15300,
+      "offset": 15342,
       "length": 1,
       "value": "8"
     },
@@ -28387,63 +28419,63 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 5794,
+      "offset": 5905,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 6184,
+      "offset": 6295,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 7134,
+      "offset": 7245,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 7479,
+      "offset": 7590,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 26455,
+      "offset": 27490,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 26891,
+      "offset": 27926,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 27089,
+      "offset": 28124,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "BooleanLiteral",
-      "offset": 27285,
+      "offset": 28320,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/SPLTextField.swift",
       "kind": "IntegerLiteral",
-      "offset": 27387,
+      "offset": 28422,
       "length": 1,
       "value": "0"
     },
@@ -28835,14 +28867,14 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/SpreedlyUI.swift",
       "kind": "BooleanLiteral",
-      "offset": 10011,
+      "offset": 10366,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/SpreedlyUI.swift",
       "kind": "BooleanLiteral",
-      "offset": 12637,
+      "offset": 12992,
       "length": 4,
       "value": "true"
     },

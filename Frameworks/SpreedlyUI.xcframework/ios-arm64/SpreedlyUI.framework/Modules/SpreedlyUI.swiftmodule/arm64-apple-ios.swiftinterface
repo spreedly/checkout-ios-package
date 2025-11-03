@@ -489,6 +489,7 @@ extension SpreedlyCore.FormFieldType {
   public var contentType: UIKit.UITextContentType? {
     get
   }
+  public func canPerformAction(_ selector: ObjectiveC.Selector) -> Swift.Bool
   public func conditionalValidationRules(isRequired: Swift.Bool = true, yearFormat: SpreedlyUI.YearFormat = .fourDigit) -> [any SpreedlyUI.ValidationRule]
 }
 @objc public class FormField : ObjectiveC.NSObject {
