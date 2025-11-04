@@ -408,6 +408,20 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 - (nonnull instancetype)initWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
 @end
 
+/// This is a public implementation that follows the same pattern as SecureView
+/// from the ScreenSecurity folder without directly depending on it
+SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
+@interface ScreenPreventionSecureView : UIView
+/// Toggle to enable or disable secure behavior
+@property (nonatomic) BOOL isSecure;
+/// Placeholder text to display in screenshots/recordings
+@property (nonatomic, copy) NSString * _Nonnull placeholderText;
+/// Content view where your views should be added
+@property (nonatomic, readonly, strong) UIView * _Null_unspecified contentView;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Custom submit label enum that maps to SubmitLabel on iOS 15+
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
@@ -460,6 +474,17 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 ///
 + (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface UIViewController (SWIFT_EXTENSION(SpreedlyUI))
+/// Wrap this view controller in a secure container (similar to SwiftUI’s .screenPrevention())
+/// Automatically starts manager protection for app switcher overlay
+/// \param placeholderText Optional text to display in screenshots/recordings (default: “”)
+///
+///
+/// returns:
+/// A container view controller with secure protection applied
+- (UIViewController * _Nonnull)wrapInSecureViewControllerWithPlaceholderText:(NSString * _Nonnull)placeholderText SWIFT_WARN_UNUSED_RESULT;
 @end
 
 typedef SWIFT_ENUM(NSInteger, YearFormat, open) {
@@ -885,6 +910,20 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 - (nonnull instancetype)initWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
 @end
 
+/// This is a public implementation that follows the same pattern as SecureView
+/// from the ScreenSecurity folder without directly depending on it
+SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
+@interface ScreenPreventionSecureView : UIView
+/// Toggle to enable or disable secure behavior
+@property (nonatomic) BOOL isSecure;
+/// Placeholder text to display in screenshots/recordings
+@property (nonatomic, copy) NSString * _Nonnull placeholderText;
+/// Content view where your views should be added
+@property (nonatomic, readonly, strong) UIView * _Null_unspecified contentView;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Custom submit label enum that maps to SubmitLabel on iOS 15+
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
@@ -937,6 +976,17 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 ///
 + (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface UIViewController (SWIFT_EXTENSION(SpreedlyUI))
+/// Wrap this view controller in a secure container (similar to SwiftUI’s .screenPrevention())
+/// Automatically starts manager protection for app switcher overlay
+/// \param placeholderText Optional text to display in screenshots/recordings (default: “”)
+///
+///
+/// returns:
+/// A container view controller with secure protection applied
+- (UIViewController * _Nonnull)wrapInSecureViewControllerWithPlaceholderText:(NSString * _Nonnull)placeholderText SWIFT_WARN_UNUSED_RESULT;
 @end
 
 typedef SWIFT_ENUM(NSInteger, YearFormat, open) {
