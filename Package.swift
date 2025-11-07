@@ -34,11 +34,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .binaryTarget(
             name: "SpreedlyCore", 
-            path: "./Frameworks/SpreedlyCore.xcframework",
-            dependencies: [
-                .product(name: "DatadogCore", package: "dd-sdk-ios"),
-                .product(name: "DatadogLogs", package: "dd-sdk-ios")
-            ]
+            path: "./Frameworks/SpreedlyCore.xcframework"
         ),
         .binaryTarget(name: "SpreedlySecurity", path: "./Frameworks/SpreedlySecurity.xcframework"),
         .binaryTarget(name: "SpreedlyUI", path: "./Frameworks/SpreedlyUI.xcframework"),
