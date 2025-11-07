@@ -324,6 +324,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 @end
@@ -363,6 +364,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onSubmit:(void (^ _Nullable)(void))onSubmit submitLabel:(enum SpreedlySubmitLabel)submitLabel onFocus:(void (^ _Nullable)(void))onFocus;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType themeConfig:(SPLThemeConfig * _Nullable)themeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
+- (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired placeholder:(NSString * _Nullable)placeholder keyboardType:(UIKeyboardType)keyboardType textContentType:(UITextContentType _Nullable)textContentType lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onValidationChange:(void (^ _Nullable)(BOOL))onValidationChange onFocus:(void (^ _Nullable)(void))onFocus;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
 - (void)clear;
@@ -408,6 +410,20 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 - (nonnull instancetype)initWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
 @end
 
+/// This is a public implementation that follows the same pattern as SecureView
+/// from the ScreenSecurity folder without directly depending on it
+SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
+@interface ScreenPreventionSecureView : UIView
+/// Toggle to enable or disable secure behavior
+@property (nonatomic) BOOL isSecure;
+/// Placeholder text to display in screenshots/recordings
+@property (nonatomic, copy) NSString * _Nonnull placeholderText;
+/// Content view where your views should be added
+@property (nonatomic, readonly, strong) UIView * _Null_unspecified contentView;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Custom submit label enum that maps to SubmitLabel on iOS 15+
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
@@ -425,11 +441,45 @@ typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
 /// This class provides Objective-C accessible methods for theme management
 SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 @interface SpreedlyThemeManagerObjC : NSObject
-/// Set global theme using SPLThemeConfig
-/// \param themeConfig The theme configuration to set as global
+/// Set global theme with separate light and dark themes using SPLThemeConfig
+/// \param lightThemeConfig The theme configuration for light mode
+///
+/// \param darkThemeConfig The theme configuration for dark mode
+///
++ (void)setGlobalThemeWithLightConfig:(SPLThemeConfig * _Nonnull)lightThemeConfig darkConfig:(SPLThemeConfig * _Nonnull)darkConfig;
+/// Set global theme using SPLThemeConfig (backward compatibility - uses same theme for both modes)
+/// \param themeConfig The theme configuration to set as global (used for both light and dark modes)
 ///
 + (void)setGlobalThemeWithConfig:(SPLThemeConfig * _Nonnull)themeConfig;
-/// Set global theme using Android-style hex color configuration
+/// Set global theme with separate light and dark themes using Android-style hex color configuration
+/// \param lightPrimaryColorHex Primary brand color for light mode (e.g., “#0077C8”)
+///
+/// \param lightSecondaryColorHex Secondary brand color for light mode (e.g., “#AFB4B5”)
+///
+/// \param lightFormBorderColorHex Form field border color for light mode (e.g., “#D9D9D9”)
+///
+/// \param lightFormBackgroundColorHex Form background color for light mode (e.g., “#FFFFFF”)
+///
+/// \param lightFieldBackgroundColorHex Field background color for light mode (e.g., “#F8F9FA”)
+///
+/// \param lightFieldLabelColorHex Field label color for light mode (e.g., “#6C757D”)
+///
+/// \param darkPrimaryColorHex Primary brand color for dark mode (e.g., “#00A0FF”)
+///
+/// \param darkSecondaryColorHex Secondary brand color for dark mode (e.g., “#6C757D”)
+///
+/// \param darkFormBorderColorHex Form field border color for dark mode (e.g., “#4A4A4A”)
+///
+/// \param darkFormBackgroundColorHex Form background color for dark mode (e.g., “#1C1C1E”)
+///
+/// \param darkFieldBackgroundColorHex Field background color for dark mode (e.g., “#2C2C2E”)
+///
+/// \param darkFieldLabelColorHex Field label color for dark mode (e.g., “#AEAEB2”)
+///
+/// \param borderRadius Corner radius for form elements (default: 8.0)
+///
++ (void)setGlobalThemeWithLightHexColorsWithLightPrimaryColorHex:(NSString * _Nonnull)lightPrimaryColorHex lightSecondaryColorHex:(NSString * _Nullable)lightSecondaryColorHex lightFormBorderColorHex:(NSString * _Nullable)lightFormBorderColorHex lightFormBackgroundColorHex:(NSString * _Nullable)lightFormBackgroundColorHex lightFieldBackgroundColorHex:(NSString * _Nullable)lightFieldBackgroundColorHex lightFieldLabelColorHex:(NSString * _Nullable)lightFieldLabelColorHex darkPrimaryColorHex:(NSString * _Nonnull)darkPrimaryColorHex darkSecondaryColorHex:(NSString * _Nullable)darkSecondaryColorHex darkFormBorderColorHex:(NSString * _Nullable)darkFormBorderColorHex darkFormBackgroundColorHex:(NSString * _Nullable)darkFormBackgroundColorHex darkFieldBackgroundColorHex:(NSString * _Nullable)darkFieldBackgroundColorHex darkFieldLabelColorHex:(NSString * _Nullable)darkFieldLabelColorHex borderRadius:(CGFloat)borderRadius;
+/// Set global theme using Android-style hex color configuration (backward compatibility - uses same theme for both modes)
 /// \param primaryColorHex Primary brand color (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color (e.g., “#AFB4B5”)
@@ -445,7 +495,31 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param borderRadius Corner radius for form elements (default: 8.0)
 ///
 + (void)setGlobalThemeWithHexColorsWithPrimaryColorHex:(NSString * _Nonnull)primaryColorHex secondaryColorHex:(NSString * _Nullable)secondaryColorHex formBorderColorHex:(NSString * _Nullable)formBorderColorHex formBackgroundColorHex:(NSString * _Nullable)formBackgroundColorHex fieldBackgroundColorHex:(NSString * _Nullable)fieldBackgroundColorHex fieldLabelColorHex:(NSString * _Nullable)fieldLabelColorHex borderRadius:(CGFloat)borderRadius;
-/// Set global theme using UIColor properties
+/// Set global theme with separate light and dark themes using UIColor properties
+/// \param lightPrimaryColor Primary brand color for light mode
+///
+/// \param lightSecondaryColor Secondary brand color for light mode (optional)
+///
+/// \param lightBackgroundColor Background color for light mode (optional)
+///
+/// \param lightBorderColor Border color for light mode (optional)
+///
+/// \param lightTextColor Text color for light mode (optional)
+///
+/// \param darkPrimaryColor Primary brand color for dark mode
+///
+/// \param darkSecondaryColor Secondary brand color for dark mode (optional)
+///
+/// \param darkBackgroundColor Background color for dark mode (optional)
+///
+/// \param darkBorderColor Border color for dark mode (optional)
+///
+/// \param darkTextColor Text color for dark mode (optional)
+///
+/// \param borderRadius Corner radius (default: 8.0)
+///
++ (void)setGlobalThemeWithLightColorsWithLightPrimaryColor:(UIColor * _Nonnull)lightPrimaryColor lightSecondaryColor:(UIColor * _Nullable)lightSecondaryColor lightBackgroundColor:(UIColor * _Nullable)lightBackgroundColor lightBorderColor:(UIColor * _Nullable)lightBorderColor lightTextColor:(UIColor * _Nullable)lightTextColor darkPrimaryColor:(UIColor * _Nonnull)darkPrimaryColor darkSecondaryColor:(UIColor * _Nullable)darkSecondaryColor darkBackgroundColor:(UIColor * _Nullable)darkBackgroundColor darkBorderColor:(UIColor * _Nullable)darkBorderColor darkTextColor:(UIColor * _Nullable)darkTextColor borderRadius:(CGFloat)borderRadius;
+/// Set global theme using UIColor properties (backward compatibility - uses same theme for both modes)
 /// \param primaryColor Primary brand color
 ///
 /// \param secondaryColor Secondary brand color (optional)
@@ -460,6 +534,17 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 ///
 + (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface UIViewController (SWIFT_EXTENSION(SpreedlyUI))
+/// Wrap this view controller in a secure container (similar to SwiftUI’s .screenPrevention())
+/// Automatically starts manager protection for app switcher overlay
+/// \param placeholderText Optional text to display in screenshots/recordings (default: “”)
+///
+///
+/// returns:
+/// A container view controller with secure protection applied
+- (UIViewController * _Nonnull)wrapInSecureViewControllerWithPlaceholderText:(NSString * _Nonnull)placeholderText SWIFT_WARN_UNUSED_RESULT;
 @end
 
 typedef SWIFT_ENUM(NSInteger, YearFormat, open) {
