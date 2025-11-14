@@ -1,3 +1,41 @@
+## [0.0.52] - 2025-11-14
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Implemented basic Recaching (#118)
+- Enhance card type detection in CardTypeDetector by adding support for UATP, UnionPay, Routex, Favacard, Copeplus, Cliper, and Tarjeta Axis. Updated formatting patterns for new card types to improve accuracy in card number presentation. (#117)
+- Refactor card number masking logic in CardTypeDetector to dynamically determine digits to reveal based on card type and length. This enhancement improves the accuracy of masked card number formatting while preserving spaces, ensuring better user experience and validation consistency. (#116)
+- Remove  Visa 19-digit card type from CardType enum and related logic in CardTypeDetector. Updated card number formatting and display properties to reflect the change, ensuring cleaner code and improved card type handling. (#115)
+- Refactor SPLTextField to format card numbers before processing input (#114)
+- Fixed by enabling observers even when the theme is not set (#113)
+- Hc 489 i os issue with debug symbol paths in released package (#112)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (0.0.52 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "0.0.52")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 0.0.52'
+```
+
+---
+
 ## [0.0.51] - 2025-11-07
 
 ### Release Type
