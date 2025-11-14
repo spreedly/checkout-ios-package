@@ -205,7 +205,6 @@ For complete integration instructions, see the [Integration Guide](INTEGRATION_G
 - **Spreedly API Documentation**: [docs.spreedly.com](https://docs.spreedly.com/)
 - **Package Verification**: See [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md) for security verification instructions
 - **Privacy Requirements**: See [PLATFORM_PRIVACY_REQUIREMENTS.md](PLATFORM_PRIVACY_REQUIREMENTS.md) for privacy compliance information
-- **Security Policy**: See [SECURITY.md](SECURITY.md) for vulnerability reporting instructions
 
 ## Support
 
@@ -215,7 +214,6 @@ For complete integration instructions, see the [Integration Guide](INTEGRATION_G
 - **Spreedly Documentation**: [docs.spreedly.com](https://docs.spreedly.com/) - API documentation and guides
 - **Support Portal**: [spreedly.com/support](https://spreedly.com/support/) - Customer support
 - **GitHub Issues**: Report bugs and request features
-- **Security Vulnerabilities**: See [SECURITY.md](SECURITY.md) for reporting security issues
 
 ### Common Questions
 

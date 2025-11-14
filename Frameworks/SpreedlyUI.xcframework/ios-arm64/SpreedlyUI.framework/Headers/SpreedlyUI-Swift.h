@@ -308,14 +308,30 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-enum YearFormat : NSInteger;
-enum DropInNameDisplayMode : NSInteger;
-@class PaymentProcessingResult;
 @class NSString;
+@class PaymentProcessingResult;
 @class NSBundle;
-@class FormField;
 @class SPLThemeConfig;
 @class NSCoder;
+SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
+@interface CVVRecachingViewController : UIViewController
+@property (nonatomic, copy) NSString * _Nonnull labelText;
+@property (nonatomic, copy) NSString * _Nonnull placeholderText;
+@property (nonatomic, copy) NSString * _Nonnull buttonText;
+@property (nonatomic, copy) NSString * _Nonnull cancelButtonText;
+@property (nonatomic, copy) NSString * _Nonnull paymentMethodToken;
+@property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+- (void)viewDidLoad;
+@end
+
+enum YearFormat : NSInteger;
+enum DropInNameDisplayMode : NSInteger;
+@class FormField;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @interface CardFormDropInViewController : UIViewController
 @property (nonatomic) enum YearFormat yearFormat;
