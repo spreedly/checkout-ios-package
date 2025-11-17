@@ -26,11 +26,11 @@
 		</data>
 		<key>ios-arm64/SpreedlySecurity.framework/SpreedlySecurity</key>
 		<data>
-		JI57qqSyxj3FOqn+2XeNwvZx3pg=
+		OIgVIL0/OXByovvVW35kR5+qLq0=
 		</data>
 		<key>ios-arm64/SpreedlySecurity.framework/_CodeSignature/CodeResources</key>
 		<data>
-		5xJ0pL7PInKd9o94kHJsS5ePBwQ=
+		LP7YPlQXeMreIDeSk+NttA+UcRE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlySecurity.framework/Info.plist</key>
 		<data>
@@ -70,11 +70,11 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlySecurity.framework/SpreedlySecurity</key>
 		<data>
-		c1t9Ae1bbe5Wo9Oz6pOmCcFZCnI=
+		sR71bPwQqizJYJLaxu5Y6I+Cgq4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlySecurity.framework/_CodeSignature/CodeResources</key>
 		<data>
-		2YEhnWxokZoTQlwQHjevr48DJYo=
+		8bo+hnDusjUbqo3KVG6oxJYwrDs=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -138,22 +138,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			JI57qqSyxj3FOqn+2XeNwvZx3pg=
+			OIgVIL0/OXByovvVW35kR5+qLq0=
 			</data>
 			<key>hash2</key>
 			<data>
-			GVNcoQQCjrxd6H8O8aGQLTHshZx4pM0Kv5KcHmwscPE=
+			thcbDKX2gY9m+TBiCCSggpmo3LHoVmJijztt4wbiU/U=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlySecurity.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5xJ0pL7PInKd9o94kHJsS5ePBwQ=
+			LP7YPlQXeMreIDeSk+NttA+UcRE=
 			</data>
 			<key>hash2</key>
 			<data>
-			xKs6w+cznpl5dNlC/mT7bF2o4U2PmIiQpO2G8YXb0uU=
+			sX7/trVZFaKF4yYehWrFyzMmyb3il3LoNw4NmknBN5M=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlySecurity.framework/Info.plist</key>
@@ -259,22 +259,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			c1t9Ae1bbe5Wo9Oz6pOmCcFZCnI=
+			sR71bPwQqizJYJLaxu5Y6I+Cgq4=
 			</data>
 			<key>hash2</key>
 			<data>
-			X8Pv2mrpF8XVSfYxXkSjwmDH7jirD9CPvQ+TTiX8pgE=
+			7GjFs4D7YVkds8/UZan8pigE/FMJHl5fYtn+4ih2/2M=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlySecurity.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2YEhnWxokZoTQlwQHjevr48DJYo=
+			8bo+hnDusjUbqo3KVG6oxJYwrDs=
 			</data>
 			<key>hash2</key>
 			<data>
-			q5rytpuW0+XUBx6oDFC3m5x8sqnnJCauvK7uz6mRkVk=
+			a3brGBk5SwtM0wviR6RcPnivw4oP5KlEj2Hqd+7KlV0=
 			</data>
 		</dict>
 	</dict>
