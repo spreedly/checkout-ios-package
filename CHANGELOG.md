@@ -1,3 +1,39 @@
+## [0.0.53] - 2025-11-17
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Hc 527 i os code ql workflow timeout issue (#123)
+- Fixed issue with Elo (#122)
+- Enhance CVC field handling in SpreedlyUI by updating placeholder and required messages to reflect optional status based on card type. Refactor SPLTextField to use a state variable for the placeholder, ensuring dynamic updates when card type changes. Add localization for "optional" text to improve user experience. (#121)
+- Refactor test setup and teardown processes to utilize SingletonTestHelper for synchronous singleton resets. This change enhances test reliability by ensuring all singleton states are properly reset before and after each test, eliminating the need for manual state clearing in individual test cases. (#119)
+- Hc 498 native i os the security code always accepts 3 4 digit (#120)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (0.0.53 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "0.0.53")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 0.0.53'
+```
+
+---
+
 ## [0.0.52] - 2025-11-14
 
 ### Release Type
