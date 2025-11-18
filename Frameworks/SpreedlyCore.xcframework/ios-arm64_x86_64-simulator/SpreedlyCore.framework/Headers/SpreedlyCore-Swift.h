@@ -542,17 +542,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
-/// Public method to recache a payment method with an updated CVV
-/// This method updates the CVV for a previously tokenized payment method.
-/// The CVV can be provided directly or retrieved from SecureValueContainer
-/// (if collected via SDK UI).
-/// \param paymentMethodToken The token of the payment method to recache
-///
-/// \param cvv Optional CVV value. If nil, will attempt to retrieve from SecureValueContainer
+/// Public method to recache payment method with updated CVV.
+/// CVV is retrieved from SecureValueContainer (collected via SDK UI).
+/// \param paymentMethodToken Token of payment method to recache
 ///
 ///
 /// returns:
-/// Payment processing result indicating validation status. Actual payment result comes through error handler
+/// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -1261,17 +1257,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
-/// Public method to recache a payment method with an updated CVV
-/// This method updates the CVV for a previously tokenized payment method.
-/// The CVV can be provided directly or retrieved from SecureValueContainer
-/// (if collected via SDK UI).
-/// \param paymentMethodToken The token of the payment method to recache
-///
-/// \param cvv Optional CVV value. If nil, will attempt to retrieve from SecureValueContainer
+/// Public method to recache payment method with updated CVV.
+/// CVV is retrieved from SecureValueContainer (collected via SDK UI).
+/// \param paymentMethodToken Token of payment method to recache
 ///
 ///
 /// returns:
-/// Payment processing result indicating validation status. Actual payment result comes through error handler
+/// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
