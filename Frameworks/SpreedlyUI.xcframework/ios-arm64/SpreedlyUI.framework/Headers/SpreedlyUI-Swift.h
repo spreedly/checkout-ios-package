@@ -313,6 +313,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSBundle;
 @class SPLThemeConfig;
 @class NSCoder;
+/// UIKit wrapper for CVVRecachingView to enable Objective-C usage.
 SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @interface CVVRecachingViewController : UIViewController
 @property (nonatomic, copy) NSString * _Nonnull labelText;
@@ -323,7 +324,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
-- (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
