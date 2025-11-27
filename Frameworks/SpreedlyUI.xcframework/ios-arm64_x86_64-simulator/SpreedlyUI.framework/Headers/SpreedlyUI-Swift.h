@@ -313,7 +313,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSBundle;
 @class SPLThemeConfig;
 @class NSCoder;
-/// UIKit wrapper for CVVRecachingView to enable Objective-C usage.
+/// UIKit wrapper for CVVRecachingView to enable Objective-C integration.
+/// Provides Objective-C compatible API for CVV recaching functionality.
 SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @interface CVVRecachingViewController : UIViewController
 @property (nonatomic, copy) NSString * _Nonnull labelText;
@@ -891,7 +892,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSBundle;
 @class SPLThemeConfig;
 @class NSCoder;
-/// UIKit wrapper for CVVRecachingView to enable Objective-C usage.
+/// UIKit wrapper for CVVRecachingView to enable Objective-C integration.
+/// Provides Objective-C compatible API for CVV recaching functionality.
 SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @interface CVVRecachingViewController : UIViewController
 @property (nonatomic, copy) NSString * _Nonnull labelText;
