@@ -458,7 +458,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 /// \endcode<h3>Objective-C Usage:</h3>
 /// \code
 /// if (result.isSuccess && result.token) {
-///     NSLog(@"Payment successful: %@", result.token);
+///     NSLog(@"Payment successful");
+///     // Use result.token for your payment processing
 /// } else if (result.isFailure && result.failureDetails) {
 ///     switch (result.failureDetails.errorType) {
 ///         case ErrorTypeApiError:
@@ -490,14 +491,16 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @property (nonatomic) BOOL isFailure;
 /// The payment method token (only available for successful payments).
 @property (nonatomic, copy) NSString * _Nullable token;
+/// Indicates if the card should be retained for future payments (only available for successful payments from CardFormDropIn).
+/// This value is passed from UI to merchant and is not sent to the API.
+/// Defaults to false. Always false for recache operations.
+@property (nonatomic) BOOL shouldRetain;
 /// Detailed failure information (only available for failed payments).
 @property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Creates an initial state result.
 + (PaymentResult * _Nonnull)initial SWIFT_WARN_UNUSED_RESULT;
-/// Creates a successful payment result.
-+ (PaymentResult * _Nonnull)successWithToken:(NSString * _Nonnull)token SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.
@@ -538,12 +541,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 ///
 /// \param metadata Optional metadata for the transaction
 ///
+/// \param shouldRetain Flag indicating if the card should be retained for future payments (UI-only, not sent to API)
+///
 ///
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
 /// Public method to recache payment method with updated CVV.
-/// CVV is retrieved from SecureValueContainer (collected via SDK UI).
+/// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
 /// \param paymentMethodToken Token of payment method to recache
 ///
 ///
