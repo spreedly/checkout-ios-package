@@ -1000,6 +1000,8 @@ SPLTextField(
 
 For complete control, build your own form using the headless components.
 
+**Note:** Unlike `CardFormDropIn`, custom forms don't include a built-in "Save card for future payments" checkbox. If you want to offer this feature, you'll need to implement your own checkbox and track the user's preference. Then use that preference to determine whether to save the payment method token for future use.
+
 ### Custom Form Example
 
 ```swift
@@ -1103,9 +1105,67 @@ struct CustomPaymentForm: View {
 
     private func processPayment() {
         // Implement payment processing
+        let processingResult = Spreedly.shared().createCreditCard(
+            additionalFields: [:],
+            metadata: [:]
+        )
+        
+        // Subscribe to payment results
+        let cancellable = Spreedly.shared().subscribeToPaymentResults { result in
+            if result.isSuccess {
+                // Use result.token for your payment processing
+                // If you implemented a "save card" checkbox, check your local state
+                // and save the token accordingly
+            }
+        }
     }
 }
 ```
+
+### Save Card Option in Custom Forms
+
+If you want to offer a "Save card for future payments" option in your custom form, implement it like this:
+
+```swift
+struct CustomPaymentForm: View {
+    @State private var shouldRetain = false  // Track user's preference
+    // ... other state variables
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            // ... your form fields
+            
+            // Add your own "Save card" checkbox
+            Toggle("Save card for future payments", isOn: $shouldRetain)
+            
+            Button("Submit Payment") {
+                processPayment()
+            }
+        }
+        .onAppear {
+            cancellable = Spreedly.shared().subscribeToPaymentResults { result in
+                if result.isSuccess {
+                    if shouldRetain, let token = result.token {
+                        // Save payment method token for future use
+                        // e.g., store token securely, send to backend
+                        savePaymentMethodForFutureUse(token: token)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func savePaymentMethodForFutureUse(token: String) {
+        // Your implementation to save the token
+        // This could involve:
+        // - Storing token securely (e.g., Keychain)
+        // - Sending token to your backend
+        // - Updating user's saved payment methods
+    }
+}
+```
+
+**Note:** The `shouldRetain` property in `PaymentResult` is only set automatically by `CardFormDropIn`. For custom forms, you need to track the user's preference yourself and use it to decide whether to save the payment method token.
 
 ## Additional Fields Integration
 
@@ -1137,6 +1197,9 @@ let cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
     if paymentResult.isSuccess {
         print("Payment successful")
         // Use paymentResult.token for your payment processing
+        
+        // Note: shouldRetain is only available from CardFormDropIn
+        // For custom forms, track your own "save card" preference
     } else if paymentResult.isFailure {
         print("Payment failed: \(paymentResult.failureDetails?.getDescription() ?? "Unknown error")")
     }
@@ -1384,6 +1447,9 @@ struct PaymentWithAdditionalFields: View {
                 paymentResult = result
                 if result.isSuccess {
                     print("Payment successful!")
+                    // Use result.token for your payment processing
+                    // If you want to offer "save card" option, implement your own checkbox
+                    // and save the token based on user's preference
                 }
             }
         }
@@ -1423,34 +1489,11 @@ struct PaymentWithAdditionalFields: View {
 
 ## CVV Recaching
 
-CVV Recaching allows you to update the CVV (Card Verification Value) for existing saved payment methods. This is essential for PCI DSS compliance, as CVV values cannot be stored and must be re-entered by the customer for each transaction or when updating saved payment methods.
+CVV Recaching allows you to update the CVV (Card Verification Value) for existing saved payment methods. This is essential for PCI DSS compliance, as CVV values cannot be stored and must be re-entered by the customer for each transaction.
 
-### Overview
+### Basic Implementation
 
-**Why CVV Recaching?**
-
-- **PCI Compliance**: CVV values cannot be stored per PCI DSS requirements
-- **Repeat Transactions**: Customers must re-enter CVV for saved payment methods
-- **Secure Collection**: SDK provides secure UI for CVV entry with built-in validation
-- **Token Updates**: After successful recaching, the payment method token is updated and ready for transactions
-
-**How It Works:**
-
-1. Customer selects a saved payment method
-2. SDK presents secure CVV entry UI
-3. Customer enters CVV (securely collected via `SecureValueContainer`)
-4. SDK validates CVV format
-5. SDK sends recache request to Spreedly API
-6. Payment method token is updated with new CVV
-7. Updated token can be used for transactions
-
-### SwiftUI Integration
-
-#### Basic Implementation
-
-The SDK provides `CVVRecachingView` and `SpreedlyCVVRecachingView` components for SwiftUI integration. You can present the recaching UI as a sheet or dialog.
-
-**Example: Using `SpreedlyCVVRecachingView` Component**
+The SDK provides `SpreedlyCVVRecachingView` component for SwiftUI integration. You can present the recaching UI as a sheet or dialog.
 
 ```swift
 import SwiftUI
@@ -1464,7 +1507,6 @@ struct SavedCardsView: View {
     @State private var paymentResult: PaymentResult?
     @State private var cancellable: AnyCancellable?
     
-    // Mock saved card data
     struct SavedCard {
         let paymentMethodToken: String
         let lastFourDigits: String
@@ -1474,7 +1516,6 @@ struct SavedCardsView: View {
     
     var body: some View {
         VStack {
-            // List of saved cards
             List(savedCards) { card in
                 CardRow(card: card) {
                     selectedCard = card
@@ -1491,11 +1532,7 @@ struct SavedCardsView: View {
                             cardType: card.cardType,
                             cardBrand: card.cardBrand
                         ),
-                        presentationMode: .bottomSheet,
-                        labelText: "CVV",
-                        placeholderText: "123",
-                        buttonText: "Confirm",
-                        cancelButtonText: "Cancel"
+                        presentationMode: .bottomSheet
                     ),
                     paymentMethodToken: card.paymentMethodToken,
                     onProcessingResult: { result in
@@ -1506,7 +1543,6 @@ struct SavedCardsView: View {
                         }
                     },
                     onDismiss: {
-                        // Called when Cancel button is tapped - merchant handles dismissal
                         showCVVRecaching = false
                     }
                 )
@@ -1514,17 +1550,14 @@ struct SavedCardsView: View {
             }
         }
         .onAppear {
-            // Subscribe to payment results
             cancellable = Spreedly.shared().subscribeToPaymentResults { result in
                 paymentResult = result
                 
                 if result.isSuccess {
-                    // Recaching successful - token updated
                     showCVVRecaching = false
                     print("CVV recached successfully")
                     // Use result.token for your payment processing
                 } else if result.isFailure {
-                    // Handle failure
                     if let failureDetails = result.failureDetails {
                         print("Recaching failed: \(failureDetails.getDescription())")
                     }
@@ -1540,7 +1573,51 @@ struct SavedCardsView: View {
 }
 ```
 
-#### Presentation Modes
+### Payment Result Handling
+
+Recaching uses the same payment result system as payment method creation. You can receive results via:
+
+**1. Combine Publisher (Swift/SwiftUI)**
+
+```swift
+let cancellable = Spreedly.shared().subscribeToPaymentResults { result in
+    if result.isSuccess {
+        // Recaching successful
+        print("Recaching successful")
+        // Use result.token for your payment processing
+    } else if result.isFailure {
+        // Handle failure
+        if let failureDetails = result.failureDetails {
+            print("Error: \(failureDetails.getDescription())")
+        }
+    }
+}
+```
+
+**2. Delegate Pattern (UIKit/Objective-C)**
+
+```objc
+// Set delegate
+[Spreedly.shared setPaymentDelegate:self];
+
+// Implement delegate method
+- (void)paymentDidComplete:(PaymentResult *)result {
+    if (result.isSuccess) {
+        NSLog(@"Recaching successful");
+        // Use result.token for your payment processing
+    } else if (result.isFailure) {
+        NSLog(@"Recaching failed: %@", [result.failureDetails getDescription]);
+    }
+}
+```
+
+**PaymentResult Properties:**
+
+- `token: String?` - The payment method token (available for successful recaching)
+- `paymentResponse: PaymentMethodResponse?` - Full payment method response
+- `shouldRetain: Bool` - Always `false` for recaching operations (not applicable)
+
+### Presentation Modes
 
 The SDK supports two presentation modes via `ScreenPresentationMode` enum:
 
@@ -1549,20 +1626,11 @@ The SDK supports two presentation modes via `ScreenPresentationMode` enum:
 ```swift
 RecacheConfig(
     cardInfo: cardInfo,
-    presentationMode: .bottomSheet, // Standard sheet presentation
-    // ... other config
+    presentationMode: .bottomSheet
 )
 ```
 
 **2. Dialog (`.dialog`)**
-
-```swift
-RecacheConfig(
-    cardInfo: cardInfo,
-    presentationMode: .dialog, // Alert-style with dimmed background
-    // ... other config
-)
-```
 
 For dialog mode, use `.crossDissolveFullScreenCover()` instead of `.sheet()`:
 
@@ -1573,12 +1641,10 @@ For dialog mode, use `.crossDissolveFullScreenCover()` instead of `.sheet()`:
     SpreedlyCVVRecachingView(
         config: RecacheConfig(
             cardInfo: cardInfo,
-            presentationMode: .dialog,
-            // ... other config
+            presentationMode: .dialog
         ),
         paymentMethodToken: paymentMethodToken,
         onDismiss: {
-            // Called when Cancel button is tapped - merchant handles dismissal
             showCVVRecaching = false
         }
     )
@@ -2074,8 +2140,7 @@ Common error scenarios and how to handle them:
 onProcessingResult: { result in
     if result.isValidationFailed {
         if result.invalidFields.contains(.cvc) {
-            // CVV field is invalid
-            print("Invalid CVV format")
+            showError("Please enter a valid CVV (3-4 digits)")
         }
     }
 }
@@ -2089,27 +2154,25 @@ Spreedly.shared().subscribeToPaymentResults { result in
         if let failureDetails = result.failureDetails {
             switch failureDetails.errorType {
             case .networkError:
-                print("Network error: \(failureDetails.message ?? "Unknown")")
+                showError("Network connection failed. Please check your internet connection.")
             case .apiError:
-                print("API error: \(failureDetails.message ?? "Unknown")")
+                showError("Recaching failed. Please try again.")
             default:
-                print("Error: \(failureDetails.getDescription())")
+                showError(failureDetails.getDescription())
             }
         }
     }
 }
 ```
 
-**3. API Errors**
-
-The SDK automatically handles API validation errors and maps them to field-level errors:
+**3. Payment Method Not Found**
 
 ```swift
+Spreedly.shared().subscribeToPaymentResults { result in
 if result.isFailure, let failureDetails = result.failureDetails {
-    // Check for validation errors
-    if !failureDetails.validationErrors.isEmpty {
-        for error in failureDetails.validationErrors {
-            print("Field: \(error.fieldName), Error: \(error.errorMessage ?? "Unknown")")
+        if failureDetails.statusCode?.intValue == 404 {
+            showError("Payment method not found. Please add a new payment method.")
+            removePaymentMethod(token: paymentMethodToken)
         }
     }
 }
@@ -2143,41 +2206,95 @@ Remember to cancel payment result subscriptions to prevent memory leaks:
 }
 ```
 
-### Best Practices
 
-1. **Subscribe Before Recaching**: Always set up payment result subscription before initiating recaching
-2. **Handle Both Callbacks**: Use both `onProcessingResult` (for immediate feedback) and payment result subscription (for final result)
-3. **Apply Screen Prevention**: Always use `.screenPrevention()` to protect CVV input
-4. **Cancel Subscriptions**: Properly cancel subscriptions in `onDisappear` or `dealloc`
-5. **Error Handling**: Provide clear error messages to users
-6. **Loading States**: Show loading indicators during processing
-7. **Theme Consistency**: Use custom themes to match your app's design
 
-### Troubleshooting
+### Security Considerations
+
+**1. Screen Prevention**
+
+Always apply `.screenPrevention()` to protect sensitive CVV input:
+
+```swift
+SpreedlyCVVRecachingView(
+    // ... configuration
+)
+.screenPrevention()
+```
+
+**2. Secure Value Collection**
+
+The SDK uses `SecureValueContainer` to securely collect and transmit CVV values. CVV is never stored locally and is only transmitted securely. When using SDK UI components, `SecureValueContainer` is managed automatically.
+
+**3. Memory Management**
+
+Remember to cancel payment result subscriptions to prevent memory leaks:
+
+```swift
+.onDisappear {
+    cancellable?.cancel()
+    cancellable = nil
+}
+```
 
 **Issue: CVV Recaching view doesn't appear**
 
 - Ensure `paymentMethodToken` is valid and not empty
 - Check that `RecacheConfig` is properly initialized with required `cardInfo`
 - Verify that `isPresented` binding is set to `true`
+- For dialog mode, ensure you're using `.crossDissolveFullScreenCover()` instead of `.sheet()`
+- Check that view is not hidden or covered by other views
 
 **Issue: Payment result not received**
 
-- Ensure payment result subscription is set up before calling recache
+- Ensure payment result subscription is set up BEFORE calling `recachePaymentMethod()`
 - Check that subscription is not cancelled prematurely
 - Verify delegate is set for Objective-C integration
+- Check that you're not creating multiple subscriptions (only one should be active)
+- Verify SDK is properly initialized with `Spreedly.setup()`
 
 **Issue: Validation errors**
 
 - Ensure CVV format is correct (3-4 digits)
 - Check that `SecureValueContainer` is properly initialized
 - Verify SDK configuration is correct
+- For programmatic recaching, ensure CVV is registered before calling recache
+- Check that `SecureValueContainer.shared.startCollection()` was called
 
 **Issue: Network errors**
 
 - Check network connectivity
 - Verify Spreedly environment key is correct
 - Ensure API credentials are valid
+
+**Issue: "CVV is not available for payment processing" error**
+
+- This means CVV was not found in `SecureValueContainer`
+- For UI components: Ensure user actually entered CVV in the input field
+- For programmatic: Ensure you called `SecureValueContainer.shared.registerValue()` before recaching
+- Check that `SecureValueContainer.shared.startCollection()` was called
+- Verify CVV wasn't cleared before recache was called
+
+**Issue: Payment method token not found (404 error)**
+
+- Token may have been deleted
+- Token may belong to a different environment
+- Token may be invalid or expired
+- Solution: Remove token from saved payment methods and ask user to add new payment method
+
+**Issue: Dialog mode not showing dimmed background**
+
+- Ensure you're using `.crossDissolveFullScreenCover()` modifier
+- Check that `presentationMode` is set to `.dialog` in `RecacheConfig`
+
+**Issue: Screen prevention not working**
+
+- Ensure `.screenPrevention()` is applied to the recaching view
+- Verify SDK is properly imported
+
+**Issue: Memory leaks or retain cycles**
+
+- Ensure you cancel subscriptions in `onDisappear` or `dealloc`
+- Verify `SecureValueContainer` is cleaned up after use
 
 ## Advanced Features
 
