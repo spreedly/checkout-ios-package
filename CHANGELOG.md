@@ -1,3 +1,36 @@
+## [0.0.61] - 2025-12-04
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Fix CVV length validation in recaching flow (#131)
+- HC-563 Chore: Add Apache License 2.0 (#130)
+
+### Change Requests
+  - HC-563
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (0.0.61 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "0.0.61")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 0.0.61'
+```
+
+---
+
 ## [0.0.60] - 2025-12-01
 
 ### Release Type
