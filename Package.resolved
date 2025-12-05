@@ -1,5 +1,5 @@
 {
-  "originHash" : "146ae0d6612331c93ec607489d84c958d2501ebcef4e7dcb100b74325678c315",
+  "originHash" : "6168abbda9da1926db36179c0c5e4871ac5dd9fc309b067fb17a616c79cc65ff",
   "pins" : [
     {
       "identity" : "dd-sdk-ios",
@@ -11,12 +11,12 @@
       }
     },
     {
-      "identity" : "forter-ios-sdk",
+      "identity" : "forter-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://bitbucket.org/forter-mobile/forter-ios-sdk.git",
+      "location" : "https://bitbucket.org/forter-mobile/forter-ios.git",
       "state" : {
-        "revision" : "761f9ad97adca3f92831229ad73e6ce044663f69",
-        "version" : "3.0.4"
+        "revision" : "1a195a32b1f4b8ed729e098ebbce9810a237607c",
+        "version" : "2.1.0"
       }
     },
     {

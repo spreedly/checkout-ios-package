@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'DatadogCore', '~> 3.1.0'
   s.dependency 'DatadogLogs', '~> 3.1.0'
-  s.dependency 'ForterSDK', '~> 3.0.4'
+  s.dependency 'Forter3DS', '~> 2.1.0'
 
   s.vendored_frameworks = 'Frameworks/SpreedlyCore.xcframework'
 end
