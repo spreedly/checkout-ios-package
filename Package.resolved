@@ -1,0 +1,42 @@
+{
+  "originHash" : "146ae0d6612331c93ec607489d84c958d2501ebcef4e7dcb100b74325678c315",
+  "pins" : [
+    {
+      "identity" : "dd-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DataDog/dd-sdk-ios",
+      "state" : {
+        "revision" : "8d67e973ff4a958cb536263cb816646ee904c508",
+        "version" : "3.3.0"
+      }
+    },
+    {
+      "identity" : "forter-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://bitbucket.org/forter-mobile/forter-ios-sdk.git",
+      "state" : {
+        "revision" : "761f9ad97adca3f92831229ad73e6ce044663f69",
+        "version" : "3.0.4"
+      }
+    },
+    {
+      "identity" : "opentelemetry-swift-packages",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DataDog/opentelemetry-swift-packages.git",
+      "state" : {
+        "revision" : "4a7295600d4ebb9525a23c11586c5fdb74ae8b7e",
+        "version" : "1.13.1"
+      }
+    },
+    {
+      "identity" : "plcrashreporter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/microsoft/plcrashreporter.git",
+      "state" : {
+        "revision" : "0254f941c646b1ed17b243654723d0f071e990d0",
+        "version" : "1.12.2"
+      }
+    }
+  ],
+  "version" : 3
+}
