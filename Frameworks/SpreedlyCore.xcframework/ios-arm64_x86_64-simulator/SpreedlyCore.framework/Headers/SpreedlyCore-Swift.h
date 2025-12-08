@@ -283,6 +283,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 @import Foundation;
 @import ObjectiveC;
+@import UIKit;
 #endif
 
 #endif
@@ -523,6 +524,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
+@protocol SpreedlyThreeDSChallengeDelegate;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
@@ -530,7 +532,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 /// Objective-C compatible delegate for payment result callbacks
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
-+ (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey;
+/// Objective-C compatible delegate for 3DS challenge result callbacks
+@property (nonatomic, weak) id <SpreedlyThreeDSChallengeDelegate> _Nullable threeDSChallengeDelegate;
+/// Initializes Spreedly with environment key and Forter Site ID for 3DS authentication
+/// \param environmentKey Spreedly environment key
+///
+/// \param forterSiteId Forter Site ID for 3DS authentication (get from https://portal.forter.com/app/integration/credentials/)
+///
++ (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey forterSiteId:(NSString * _Nonnull)forterSiteId;
 + (void)setupWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
@@ -657,6 +666,16 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
+@class ThreeDSChallengeResult;
+/// Objective-C compatible delegate for receiving 3DS challenge result updates
+SWIFT_PROTOCOL("_TtP12SpreedlyCore32SpreedlyThreeDSChallengeDelegate_")
+@protocol SpreedlyThreeDSChallengeDelegate
+/// Called when a 3DS challenge result is available
+/// \param result The challenge result containing success/failure information
+///
+- (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult * _Nonnull)result;
+@end
+
 SWIFT_CLASS("_TtC12SpreedlyCore17SpreedlyUIManager")
 @interface SpreedlyUIManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIManager * _Nonnull shared;)
@@ -703,6 +722,57 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// \param fieldType The specific field type to trigger validation change for
 ///
 - (void)notifyForceOnValidationChangeFor:(enum FormFieldType)fieldType;
+@end
+
+/// Represents the various states and outcomes of a 3DS challenge process.
+/// This class works seamlessly with both Swift and Objective-C, providing
+/// a unified API for 3DS challenge result handling, consistent with PaymentResult.
+/// Important: ECI/CAVV/XID values are NOT provided by Forter SDK callback.
+/// These are handled by Spreedly backend via complete_gratis endpoint.
+SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
+@interface ThreeDSChallengeResult : NSObject
+/// Indicates if the challenge completed successfully.
+@property (nonatomic) BOOL isSuccess;
+/// Indicates if the challenge was canceled by the user.
+@property (nonatomic) BOOL isCanceled;
+/// Indicates if the challenge failed.
+@property (nonatomic) BOOL isFailure;
+/// The managed order token (only available for successful challenges).
+@property (nonatomic, copy) NSString * _Nullable managedOrderToken;
+/// Error if challenge failed (from Forter SDK challengeCompleted(error:) callback).
+/// nil if challenge completed successfully.
+@property (nonatomic) NSError * _Nullable error;
+/// Detailed failure information (only available for failed challenges).
+@property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
+/// Creates a successful challenge result.
+/// \param managedOrderToken The managed order token from the challenge
+///
++ (ThreeDSChallengeResult * _Nonnull)successWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken SWIFT_WARN_UNUSED_RESULT;
+/// Creates a canceled challenge result.
++ (ThreeDSChallengeResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// Creates a failed challenge result.
+/// \param error The error that occurred during the challenge
+///
++ (ThreeDSChallengeResult * _Nonnull)failureWithError:(NSError * _Nonnull)error SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSCoder;
+@class NSBundle;
+/// UIKit wrapper for ThreeDSChallengeView to enable Objective-C integration
+/// This class is always available regardless of whether Forter3DS is configured.
+/// When Forter3DS is not available, the view will display an appropriate message.
+SWIFT_CLASS("_TtC12SpreedlyCore30ThreeDSChallengeViewController")
+@interface ThreeDSChallengeViewController : UIViewController
+/// Initializes the 3DS Challenge View Controller
+/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
+///
+/// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
+///
+- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
@@ -1003,6 +1073,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 @import Foundation;
 @import ObjectiveC;
+@import UIKit;
 #endif
 
 #endif
@@ -1243,6 +1314,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
+@protocol SpreedlyThreeDSChallengeDelegate;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
@@ -1250,7 +1322,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 /// Objective-C compatible delegate for payment result callbacks
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
-+ (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey;
+/// Objective-C compatible delegate for 3DS challenge result callbacks
+@property (nonatomic, weak) id <SpreedlyThreeDSChallengeDelegate> _Nullable threeDSChallengeDelegate;
+/// Initializes Spreedly with environment key and Forter Site ID for 3DS authentication
+/// \param environmentKey Spreedly environment key
+///
+/// \param forterSiteId Forter Site ID for 3DS authentication (get from https://portal.forter.com/app/integration/credentials/)
+///
++ (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey forterSiteId:(NSString * _Nonnull)forterSiteId;
 + (void)setupWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
@@ -1377,6 +1456,16 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
+@class ThreeDSChallengeResult;
+/// Objective-C compatible delegate for receiving 3DS challenge result updates
+SWIFT_PROTOCOL("_TtP12SpreedlyCore32SpreedlyThreeDSChallengeDelegate_")
+@protocol SpreedlyThreeDSChallengeDelegate
+/// Called when a 3DS challenge result is available
+/// \param result The challenge result containing success/failure information
+///
+- (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult * _Nonnull)result;
+@end
+
 SWIFT_CLASS("_TtC12SpreedlyCore17SpreedlyUIManager")
 @interface SpreedlyUIManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIManager * _Nonnull shared;)
@@ -1423,6 +1512,57 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// \param fieldType The specific field type to trigger validation change for
 ///
 - (void)notifyForceOnValidationChangeFor:(enum FormFieldType)fieldType;
+@end
+
+/// Represents the various states and outcomes of a 3DS challenge process.
+/// This class works seamlessly with both Swift and Objective-C, providing
+/// a unified API for 3DS challenge result handling, consistent with PaymentResult.
+/// Important: ECI/CAVV/XID values are NOT provided by Forter SDK callback.
+/// These are handled by Spreedly backend via complete_gratis endpoint.
+SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
+@interface ThreeDSChallengeResult : NSObject
+/// Indicates if the challenge completed successfully.
+@property (nonatomic) BOOL isSuccess;
+/// Indicates if the challenge was canceled by the user.
+@property (nonatomic) BOOL isCanceled;
+/// Indicates if the challenge failed.
+@property (nonatomic) BOOL isFailure;
+/// The managed order token (only available for successful challenges).
+@property (nonatomic, copy) NSString * _Nullable managedOrderToken;
+/// Error if challenge failed (from Forter SDK challengeCompleted(error:) callback).
+/// nil if challenge completed successfully.
+@property (nonatomic) NSError * _Nullable error;
+/// Detailed failure information (only available for failed challenges).
+@property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
+/// Creates a successful challenge result.
+/// \param managedOrderToken The managed order token from the challenge
+///
++ (ThreeDSChallengeResult * _Nonnull)successWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken SWIFT_WARN_UNUSED_RESULT;
+/// Creates a canceled challenge result.
++ (ThreeDSChallengeResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// Creates a failed challenge result.
+/// \param error The error that occurred during the challenge
+///
++ (ThreeDSChallengeResult * _Nonnull)failureWithError:(NSError * _Nonnull)error SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSCoder;
+@class NSBundle;
+/// UIKit wrapper for ThreeDSChallengeView to enable Objective-C integration
+/// This class is always available regardless of whether Forter3DS is configured.
+/// When Forter3DS is not available, the view will display an appropriate message.
+SWIFT_CLASS("_TtC12SpreedlyCore30ThreeDSChallengeViewController")
+@interface ThreeDSChallengeViewController : UIViewController
+/// Initializes the 3DS Challenge View Controller
+/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
+///
+/// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
+///
+- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
