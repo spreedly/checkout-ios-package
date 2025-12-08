@@ -12,17 +12,18 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 6. [Custom Form Integration](#custom-form-integration)
 7. [Additional Fields Integration](#additional-fields-integration)
 8. [CVV Recaching](#cvv-recaching)
-9. [Advanced Features](#advanced-features)
-10. [Screen Prevention and Security](#screen-prevention-and-security)
-11. [Logging System](#logging-system)
-12. [Error Handling](#error-handling)
-13. [Memory Management and Cancellables](#memory-management-and-cancellables)
-14. [Testing](#testing)
-15. [Objective-C Integration](#objective-c-integration)
-16. [Troubleshooting](#troubleshooting)
-17. [Security Best Practices](#security-best-practices)
-18. [Best Practices](#best-practices)
-19. [Support Resources](#support-resources)
+9. [3DS Authentication](#3ds-authentication)
+10. [Advanced Features](#advanced-features)
+11. [Screen Prevention and Security](#screen-prevention-and-security)
+12. [Logging System](#logging-system)
+13. [Error Handling](#error-handling)
+14. [Memory Management and Cancellables](#memory-management-and-cancellables)
+15. [Testing](#testing)
+16. [Objective-C Integration](#objective-c-integration)
+17. [Troubleshooting](#troubleshooting)
+18. [Security Best Practices](#security-best-practices)
+19. [Best Practices](#best-practices)
+20. [Support Resources](#support-resources)
 
 ## Prerequisites
 
@@ -2295,6 +2296,744 @@ Remember to cancel payment result subscriptions to prevent memory leaks:
 
 - Ensure you cancel subscriptions in `onDisappear` or `dealloc`
 - Verify `SecureValueContainer` is cleaned up after use
+
+## 3DS Authentication
+
+3D Secure (3DS) authentication provides an additional layer of security for online card payments. The Spreedly iOS SDK integrates with Forter's 3DS solution to handle Strong Customer Authentication (SCA) challenges when required by the payment gateway.
+
+### Overview
+
+When a transaction requires 3DS authentication, your backend will receive a `managed_order_token` from Spreedly's API. The SDK provides UI components to present the 3DS challenge to the user and report the result back to your application.
+
+**Key Components:**
+
+- **ThreeDSChallengeView** - SwiftUI view for presenting 3DS challenges
+- **ThreeDSChallengeViewController** - UIKit/Objective-C compatible view controller
+- **ThreeDSChallengeResult** - Result object containing challenge outcome
+- **SpreedlyThreeDSChallengeDelegate** - Delegate protocol for Objective-C integration
+
+### SDK Initialization with 3DS Support
+
+To enable 3DS authentication, initialize the SDK with your environment key and Forter Site ID. The SDK supports a two-step initialization pattern for production use with signature-based security.
+
+#### Basic Initialization
+
+**Swift (UIKit):**
+
+```swift
+import SpreedlyCore
+
+// In your App delegate
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    
+    // Initialize with environment key and Forter Site ID for 3DS support
+    Spreedly.setup(
+        environmentKey: "your_environment_key_here",
+        forterSiteId: "your_forter_site_id"  // Get from https://portal.forter.com/app/integration/credentials/
+    )
+    
+    return true
+}
+```
+
+**Swift (SwiftUI):**
+
+```swift
+import SwiftUI
+import SpreedlyCore
+
+@main
+struct MyApp: App {
+    init() {
+        // Initialize Spreedly with 3DS support
+        Spreedly.setup(
+            environmentKey: "your_environment_key_here",
+            forterSiteId: "your_forter_site_id"
+        )
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+```
+
+**Objective-C:**
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // Initialize Spreedly with 3DS support
+    [Spreedly setupWithEnvironmentKey:@"your_environment_key_here" 
+                         forterSiteId:@"your_forter_site_id"];
+    
+    return YES;
+}
+```
+
+#### Production Setup with Signature Security (Recommended)
+
+For production environments, use a two-step initialization pattern that combines 3DS support with signature-based security:
+
+**Step 1:** Initialize with environment key and Forter Site ID at app launch
+**Step 2:** Update configuration with signature parameters before making payment requests
+
+**Swift:**
+
+```swift
+import SpreedlyCore
+
+class SpreedlyConfigManager {
+    static let shared = SpreedlyConfigManager()
+    
+    private let environmentKey = "your_environment_key"
+    private let forterSiteId = "your_forter_site_id"
+    private let serverURL = "https://your-backend.com/api/v1/auth/params"
+    
+    private init() {
+        // Step 1: Initialize with 3DS support
+        Spreedly.setup(environmentKey: environmentKey, forterSiteId: forterSiteId)
+    }
+    
+    /// Step 2: Update config with signature parameters before payment
+    func generateSignature() async -> Result<Bool, Error> {
+        let config = SignatureSecurityService.ServerSecurityConfig(
+            serverURL: serverURL,
+            apiKey: nil,
+            environmentKey: environmentKey
+        )
+        
+        let result = await SignatureSecurityService.setupServerBasedSecurity(config: config)
+        
+        guard let signatureParams = result.signatureParams else {
+            return .failure(result.error ?? NSError(domain: "Config", code: 0))
+        }
+        
+        // Update Spreedly config with signature parameters
+        Spreedly.setup(config: SpreedlyConfig(
+            environmentKey: environmentKey,
+            certificateToken: signatureParams.certificateToken,
+            nonce: signatureParams.nonce,
+            signature: signatureParams.signature,
+            timestamp: String(signatureParams.timestamp)
+        ))
+        
+        return .success(true)
+    }
+}
+```
+
+**Objective-C:**
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+
+@implementation SpreedlyConfigManager
+
+- (instancetype)init {
+    if (self = [super init]) {
+        // Step 1: Initialize with 3DS support
+        [Spreedly setupWithEnvironmentKey:@"your_environment_key" 
+                             forterSiteId:@"your_forter_site_id"];
+    }
+    return self;
+}
+
+/// Step 2: Update config with signature parameters before payment
+- (void)generateSignatureWithCompletion:(void (^)(BOOL success, NSError *error))completion {
+    // Fetch signature from your backend...
+    
+    // Update Spreedly config with signature parameters
+    SpreedlyConfig *config = [[SpreedlyConfig alloc] 
+        initWithEnvironmentKey:@"your_environment_key"
+        certificateToken:signatureParams.certificateToken
+        nonce:signatureParams.nonce
+        signature:signatureParams.signature
+        timestamp:[NSString stringWithFormat:@"%ld", signatureParams.timestamp]];
+    
+    [Spreedly setupWithConfig:config];
+    
+    completion(YES, nil);
+}
+
+@end
+```
+
+> **Note:** The `forterSiteId` is required for 3DS authentication. Get your Forter Site ID from the [Forter Portal](https://portal.forter.com/app/integration/credentials/).
+> 
+> When `setup(config:)` is called after the SDK is already initialized, it updates the existing configuration without reinitializing the Forter SDK.
+
+### 3DS Flow Overview
+
+The typical 3DS flow works as follows:
+
+1. **Tokenize Payment Method** - Use `CardFormDropIn` or individual fields to create a payment method token
+2. **Backend Purchase Request** - Your backend sends the payment method token to Spreedly's purchase/authorize endpoint
+3. **Check for 3DS Requirement** - If the response contains `sca_authentication.managed_order_token`, 3DS is required
+4. **Present Challenge** - Display the 3DS challenge UI using `ThreeDSChallengeView` or `ThreeDSChallengeViewController`
+5. **Handle Result** - Receive the challenge result via subscription or delegate
+6. **Complete Transaction** - Your backend calls Spreedly's `complete_gratis` endpoint to finalize the transaction
+
+### SwiftUI Integration
+
+#### Basic Implementation
+
+```swift
+import SwiftUI
+import SpreedlyCore
+import SpreedlyUI
+import Combine
+
+struct PaymentView: View {
+    @State private var showCheckout = false
+    @State private var show3DSChallenge = false
+    @State private var managedOrderToken: String?
+    @State private var paymentResult: PaymentResult?
+    @State private var challengeResult: ThreeDSChallengeResult?
+    @State private var errorMessage: String?
+    
+    // Subscriptions
+    @State private var paymentCancellable: AnyCancellable?
+    @State private var challengeCancellable: AnyCancellable?
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Button("Pay Now") {
+                showCheckout = true
+            }
+            
+            if let result = paymentResult, result.isSuccess {
+                Text("Payment Successful!")
+                    .foregroundColor(.green)
+            }
+            
+            if let error = errorMessage {
+                Text("Error: \(error)")
+                    .foregroundColor(.red)
+            }
+        }
+        .sheet(isPresented: $showCheckout) {
+            CardFormDropIn(
+                onProcessingResult: { result in
+                    if result.isSuccess {
+                        showCheckout = false
+                    }
+                }
+            )
+        }
+        .sheet(isPresented: $show3DSChallenge) {
+            if let token = managedOrderToken {
+                ThreeDSChallengeView(
+                    managedOrderToken: token,
+                    onDismiss: {
+                        show3DSChallenge = false
+                    }
+                )
+            }
+        }
+        .onAppear {
+            setupSubscriptions()
+        }
+        .onDisappear {
+            cleanupSubscriptions()
+        }
+    }
+    
+    private func setupSubscriptions() {
+        // Subscribe to payment results
+        paymentCancellable = Spreedly.shared().subscribeToPaymentResults { result in
+            paymentResult = result
+            
+            if result.isSuccess {
+                // After successful tokenization, check with your backend if 3DS is required
+                // This is a simplified example - in production, call your backend API
+                checkFor3DSRequirement(paymentToken: result.token ?? "")
+            } else if result.isFailure {
+                errorMessage = result.failureDetails?.getDescription() ?? "Payment failed"
+            }
+        }
+        
+        // Subscribe to 3DS challenge results (MUST subscribe BEFORE presenting challenge)
+        challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
+            challengeResult = result
+            
+            if result.isSuccess {
+                // 3DS Challenge completed successfully
+                print("3DS Challenge successful")
+                show3DSChallenge = false
+                errorMessage = nil
+                
+                // TODO: Call your backend to complete the transaction
+                // Your backend should call Spreedly's complete_gratis endpoint
+                
+            } else if result.isFailure {
+                // 3DS Challenge failed
+                show3DSChallenge = false
+                if let error = result.error {
+                    errorMessage = "3DS Challenge failed: \(error.localizedDescription)"
+                } else {
+                    errorMessage = "3DS Challenge failed"
+                }
+                
+            } else if result.isCanceled {
+                // User canceled 3DS challenge
+                show3DSChallenge = false
+                errorMessage = "3DS Challenge canceled by user"
+            }
+        }
+    }
+    
+    private func cleanupSubscriptions() {
+        paymentCancellable?.cancel()
+        paymentCancellable = nil
+        challengeCancellable?.cancel()
+        challengeCancellable = nil
+    }
+    
+    private func checkFor3DSRequirement(paymentToken: String) {
+        // In production, call your backend API to initiate the purchase
+        // Your backend will return the managed_order_token if 3DS is required
+        
+        // Example (replace with your actual backend call):
+        // Task {
+        //     let response = try await yourBackendAPI.purchase(paymentToken: paymentToken)
+        //     
+        //     await MainActor.run {
+        //         if let token = response.sca_authentication?.managed_order_token {
+        //             managedOrderToken = token
+        //             show3DSChallenge = true
+        //         } else {
+        //             // No 3DS required - transaction complete
+        //         }
+        //     }
+        // }
+    }
+}
+```
+
+#### ThreeDSChallengeView Parameters
+
+```swift
+ThreeDSChallengeView(
+    managedOrderToken: String,      // Required: Token from Spreedly API response
+    onDismiss: (() -> Void)? = nil  // Optional: Called when view should be dismissed
+)
+```
+
+### UIKit Integration
+
+For UIKit-based apps, use `ThreeDSChallengeViewController`:
+
+```swift
+import UIKit
+import SpreedlyCore
+import SpreedlyUI
+import Combine
+
+class PaymentViewController: UIViewController {
+    private var challengeCancellable: AnyCancellable?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupChallengeSubscription()
+    }
+    
+    private func setupChallengeSubscription() {
+        // Subscribe to 3DS challenge results BEFORE presenting challenge
+        challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { [weak self] result in
+            guard let self = self else { return }
+            
+            if result.isSuccess {
+                // 3DS Challenge completed successfully
+                self.dismiss(animated: true) {
+                    self.handleChallengeSuccess()
+                }
+                
+            } else if result.isFailure {
+                // 3DS Challenge failed
+                self.dismiss(animated: true) {
+                    let message = result.error?.localizedDescription ?? "3DS Challenge failed"
+                    self.showError(message)
+                }
+                
+            } else if result.isCanceled {
+                // User canceled
+                self.dismiss(animated: true) {
+                    self.showError("3DS Challenge canceled")
+                }
+            }
+        }
+    }
+    
+    func present3DSChallenge(managedOrderToken: String) {
+        // Create the challenge view controller
+        let challengeVC = ThreeDSChallengeViewController(
+            managedOrderToken: managedOrderToken,
+            onDismiss: { [weak self] in
+                self?.dismiss(animated: true)
+            }
+        )
+        
+        // Present modally
+        present(challengeVC, animated: true)
+    }
+    
+    private func handleChallengeSuccess() {
+        // Call your backend to complete the transaction
+        print("3DS Challenge successful - complete transaction on backend")
+    }
+    
+    private func showError(_ message: String) {
+        let alert = UIAlertController(
+            title: "Error",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    deinit {
+        challengeCancellable?.cancel()
+    }
+}
+```
+
+### Objective-C Integration
+
+For Objective-C projects, use the delegate pattern to receive 3DS challenge results:
+
+#### Setting Up the Delegate
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyUI/SpreedlyUI-Swift.h>
+
+@interface PaymentViewController () <SpreedlyThreeDSChallengeDelegate>
+@end
+
+@implementation PaymentViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // Set the 3DS challenge delegate
+    [Spreedly shared].threeDSChallengeDelegate = self;
+}
+
+// MARK: - SpreedlyThreeDSChallengeDelegate
+
+- (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
+    if (result.isSuccess) {
+        // 3DS Challenge completed successfully
+        NSLog(@"3DS Challenge successful");
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            // Call your backend to complete the transaction
+            // Your backend should call Spreedly's complete_gratis endpoint
+            [self completeTransaction];
+        }];
+        
+    } else if (result.isFailure) {
+        // 3DS Challenge failed
+        NSString *errorMessage = result.error.localizedDescription ?: @"3DS Challenge failed";
+        NSLog(@"3DS Challenge failed: %@", errorMessage);
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self showErrorWithMessage:errorMessage];
+        }];
+        
+    } else if (result.isCanceled) {
+        // User canceled the challenge
+        NSLog(@"3DS Challenge canceled by user");
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self showErrorWithMessage:@"3DS Challenge canceled"];
+        }];
+    }
+}
+
+@end
+```
+
+#### Presenting the 3DS Challenge
+
+```objc
+- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken {
+    // Create the challenge view controller
+    ThreeDSChallengeViewController *challengeVC = [[ThreeDSChallengeViewController alloc] 
+        initWithManagedOrderToken:managedOrderToken 
+        onDismiss:nil];  // Using delegate pattern, so onDismiss can be nil
+    
+    // Present modally
+    [self presentViewController:challengeVC animated:YES completion:nil];
+}
+
+- (void)completeTransaction {
+    // Call your backend to complete the transaction
+    // Your backend should call Spreedly's complete_gratis endpoint
+    NSLog(@"Completing transaction on backend...");
+}
+
+- (void)showErrorWithMessage:(NSString *)message {
+    UIAlertController *alert = [UIAlertController 
+        alertControllerWithTitle:@"Error" 
+        message:message 
+        preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+```
+
+#### Complete Objective-C Example
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyUI/SpreedlyUI-Swift.h>
+
+@interface CheckoutViewController () <SpreedlyPaymentDelegate, SpreedlyThreeDSChallengeDelegate>
+@property (nonatomic, strong) NSString *paymentMethodToken;
+@property (nonatomic, strong) NSString *managedOrderToken;
+@end
+
+@implementation CheckoutViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // Set delegates for both payment and 3DS challenge results
+    [Spreedly shared].paymentDelegate = self;
+    [Spreedly shared].threeDSChallengeDelegate = self;
+}
+
+// MARK: - Show Payment Form
+
+- (void)showPaymentForm {
+    CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc] init];
+    
+    dropInVC.onProcessingResult = ^(PaymentProcessingResult *result) {
+        if (result.isSuccess) {
+            NSLog(@"Payment form submitted successfully");
+        }
+    };
+    
+    [self presentViewController:dropInVC animated:YES completion:nil];
+}
+
+// MARK: - SpreedlyPaymentDelegate
+
+- (void)paymentDidComplete:(PaymentResult *)result {
+    if (result.isSuccess) {
+        self.paymentMethodToken = result.token;
+        
+        // Dismiss payment form and check for 3DS requirement
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self checkFor3DSRequirementWithToken:result.token];
+        }];
+        
+    } else if (result.isFailure) {
+        NSLog(@"Payment failed: %@", [result.failureDetails getDescription]);
+    }
+}
+
+// MARK: - 3DS Flow
+
+- (void)checkFor3DSRequirementWithToken:(NSString *)paymentToken {
+    // Call your backend API to initiate the purchase
+    // Your backend will return the managed_order_token if 3DS is required
+    
+    // Example (replace with your actual backend call):
+    // [self.backendAPI purchaseWithToken:paymentToken completion:^(BackendResponse *response, NSError *error) {
+    //     if (response.managedOrderToken) {
+    //         self.managedOrderToken = response.managedOrderToken;
+    //         [self present3DSChallengeWithToken:response.managedOrderToken];
+    //     } else {
+    //         // No 3DS required - transaction complete
+    //         [self handlePaymentSuccess];
+    //     }
+    // }];
+}
+
+- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken {
+    ThreeDSChallengeViewController *challengeVC = [[ThreeDSChallengeViewController alloc] 
+        initWithManagedOrderToken:managedOrderToken 
+        onDismiss:nil];
+    
+    [self presentViewController:challengeVC animated:YES completion:nil];
+}
+
+// MARK: - SpreedlyThreeDSChallengeDelegate
+
+- (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
+    if (result.isSuccess) {
+        NSLog(@"3DS Challenge successful");
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            // Call your backend to complete the transaction
+            [self completeTransactionOnBackend];
+        }];
+        
+    } else if (result.isFailure) {
+        NSString *errorMessage = result.error.localizedDescription ?: @"3DS Challenge failed";
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self showErrorWithMessage:errorMessage];
+        }];
+        
+    } else if (result.isCanceled) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self showErrorWithMessage:@"Payment canceled"];
+        }];
+    }
+}
+
+// MARK: - Backend Integration
+
+- (void)completeTransactionOnBackend {
+    // Your backend should call Spreedly's complete_gratis endpoint
+    // to finalize the transaction after successful 3DS challenge
+    NSLog(@"Completing transaction on backend...");
+}
+
+- (void)handlePaymentSuccess {
+    NSLog(@"Payment completed successfully!");
+}
+
+- (void)showErrorWithMessage:(NSString *)message {
+    UIAlertController *alert = [UIAlertController 
+        alertControllerWithTitle:@"Payment Error" 
+        message:message 
+        preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+@end
+```
+
+### ThreeDSChallengeResult Properties
+
+The `ThreeDSChallengeResult` class provides information about the challenge outcome:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `isSuccess` | `Bool` | `true` if the challenge completed successfully |
+| `isCanceled` | `Bool` | `true` if the user canceled the challenge |
+| `isFailure` | `Bool` | `true` if the challenge failed |
+| `managedOrderToken` | `String?` | The managed order token (available for successful challenges) |
+| `error` | `Error?` | Error information (available for failed challenges) |
+| `failureDetails` | `FailedDetails?` | Detailed failure information |
+
+### Result Handling Patterns
+
+**Swift with Combine:**
+
+```swift
+let cancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
+    if result.isSuccess {
+        // Challenge completed successfully
+        // Call backend to finalize transaction
+    } else if result.isFailure {
+        // Handle failure
+        if let error = result.error {
+            print("Error: \(error.localizedDescription)")
+        }
+    } else if result.isCanceled {
+        // User canceled
+    }
+}
+```
+
+**Objective-C with Delegate:**
+
+```objc
+// Set delegate
+[Spreedly shared].threeDSChallengeDelegate = self;
+
+// Implement delegate method
+- (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
+    if (result.isSuccess) {
+        // Challenge completed successfully
+    } else if (result.isFailure) {
+        // Handle failure
+    } else if (result.isCanceled) {
+        // User canceled
+    }
+}
+```
+
+### Backend Integration
+
+After a successful 3DS challenge, your backend must call Spreedly's `complete_gratis` endpoint to finalize the transaction. The SDK only handles the client-side challenge presentation.
+
+**Typical Backend Flow:**
+
+1. **Initiate Purchase** - Your backend calls Spreedly's purchase/authorize endpoint
+2. **Handle SCA Response** - If `sca_authentication.managed_order_token` is present, return it to the app
+3. **Complete Transaction** - After successful 3DS challenge, call `complete_gratis` endpoint
+
+For detailed backend integration, refer to [Spreedly's 3DS documentation](https://docs.spreedly.com/guides/3ds/).
+
+### Security Considerations
+
+**1. Token Handling**
+
+- The `managed_order_token` should be passed securely from your backend to the app
+- Never log or store the managed order token permanently
+
+**2. Subscription Timing**
+
+- Always subscribe to 3DS challenge results BEFORE presenting the challenge view
+- This ensures you don't miss the result callback
+
+**3. Memory Management**
+
+```swift
+// Cancel subscriptions when view disappears
+.onDisappear {
+    challengeCancellable?.cancel()
+    challengeCancellable = nil
+}
+```
+
+### Troubleshooting
+
+**Issue: 3DS Challenge view doesn't appear**
+
+- Ensure `managedOrderToken` is valid and not empty
+- Verify Forter Site ID is configured in `Spreedly.setup()`
+- Check that the Forter3DS framework is properly linked
+
+**Issue: Challenge result not received**
+
+- Ensure challenge result subscription is set up BEFORE presenting the challenge
+- Check that subscription is not cancelled prematurely
+- Verify delegate is set for Objective-C integration
+- Verify SDK is properly initialized with `Spreedly.setup(environmentKey:forterSiteId:)`
+
+**Issue: "Forter SDK not initialized" error**
+
+- Ensure you're calling `Spreedly.setup(environmentKey:forterSiteId:)` with a valid Forter Site ID
+- Verify the Forter3DS framework is properly imported
+
+**Issue: Challenge fails immediately**
+
+- Verify the `managed_order_token` is correct and not expired
+- Check your Forter portal configuration
+- Ensure your environment (test/production) matches your Forter configuration
+
+**Issue: Memory leaks or retain cycles**
+
+- Ensure you cancel subscriptions in `onDisappear` or `deinit`
+- Use `[weak self]` in closures to avoid retain cycles
 
 ## Advanced Features
 
