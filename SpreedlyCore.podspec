@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
 
   s.dependency 'DatadogCore', '~> 3.1.0'
   s.dependency 'DatadogLogs', '~> 3.1.0'
-  s.dependency 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 
   s.vendored_frameworks = 'Frameworks/SpreedlyCore.xcframework'
 end
