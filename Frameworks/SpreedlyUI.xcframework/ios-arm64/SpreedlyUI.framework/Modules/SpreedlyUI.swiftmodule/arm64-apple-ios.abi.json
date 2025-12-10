@@ -6,2328 +6,6 @@
     "children": [
       {
         "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlyCore",
-        "printedName": "SpreedlyCore",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlySecurity",
-        "printedName": "SpreedlySecurity",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "CVVRecachingView",
-        "printedName": "CVVRecachingView",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "onProcessingResult",
-            "printedName": "onProcessingResult",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
-                "children": [
-                  {
-                    "kind": "TypeFunc",
-                    "name": "Function",
-                    "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Void",
-                        "printedName": "()"
-                      },
-                      {
-                        "kind": "TypeNominal",
-                        "name": "PaymentProcessingResult",
-                        "printedName": "SpreedlyCore.PaymentProcessingResult",
-                        "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
-                      }
-                    ]
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasInitialValue",
-              "Preconcurrency",
-              "Custom",
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
-                    "children": [
-                      {
-                        "kind": "TypeFunc",
-                        "name": "Function",
-                        "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Void",
-                            "printedName": "()"
-                          },
-                          {
-                            "kind": "TypeNominal",
-                            "name": "PaymentProcessingResult",
-                            "printedName": "SpreedlyCore.PaymentProcessingResult",
-                            "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
-                          }
-                        ]
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Set",
-                "printedName": "Set()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
-                    "children": [
-                      {
-                        "kind": "TypeFunc",
-                        "name": "Function",
-                        "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Void",
-                            "printedName": "()"
-                          },
-                          {
-                            "kind": "TypeNominal",
-                            "name": "PaymentProcessingResult",
-                            "printedName": "SpreedlyCore.PaymentProcessingResult",
-                            "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
-                          }
-                        ]
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvs",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvs",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "set"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Modify",
-                "printedName": "Modify()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvM",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvM",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "_modify"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "onDismiss",
-            "printedName": "onDismiss",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "(() -> ())?",
-                "children": [
-                  {
-                    "kind": "TypeFunc",
-                    "name": "Function",
-                    "printedName": "() -> ()",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Void",
-                        "printedName": "()"
-                      },
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Void",
-                        "printedName": "()"
-                      }
-                    ]
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasInitialValue",
-              "Preconcurrency",
-              "Custom",
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "(() -> ())?",
-                    "children": [
-                      {
-                        "kind": "TypeFunc",
-                        "name": "Function",
-                        "printedName": "() -> ()",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Void",
-                            "printedName": "()"
-                          },
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Void",
-                            "printedName": "()"
-                          }
-                        ]
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Set",
-                "printedName": "Set()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "(() -> ())?",
-                    "children": [
-                      {
-                        "kind": "TypeFunc",
-                        "name": "Function",
-                        "printedName": "() -> ()",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Void",
-                            "printedName": "()"
-                          },
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Void",
-                            "printedName": "()"
-                          }
-                        ]
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvs",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvs",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "set"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Modify",
-                "printedName": "Modify()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvM",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvM",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "_modify"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "config",
-            "printedName": "config",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "RecacheConfig",
-                "printedName": "SpreedlyUI.RecacheConfig",
-                "usr": "s:10SpreedlyUI13RecacheConfigV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "Preconcurrency",
-              "Custom",
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "RecacheConfig",
-                    "printedName": "SpreedlyUI.RecacheConfig",
-                    "usr": "s:10SpreedlyUI13RecacheConfigV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "paymentMethodToken",
-            "printedName": "paymentMethodToken",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "Preconcurrency",
-              "Custom",
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "lightTheme",
-            "printedName": "lightTheme",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SpreedlyTheme",
-                    "printedName": "any SpreedlyUI.SpreedlyTheme",
-                    "usr": "s:10SpreedlyUI0A5ThemeP"
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "Preconcurrency",
-              "Custom",
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "SpreedlyTheme",
-                        "printedName": "any SpreedlyUI.SpreedlyTheme",
-                        "usr": "s:10SpreedlyUI0A5ThemeP"
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "darkTheme",
-            "printedName": "darkTheme",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SpreedlyTheme",
-                    "printedName": "any SpreedlyUI.SpreedlyTheme",
-                    "usr": "s:10SpreedlyUI0A5ThemeP"
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "Preconcurrency",
-              "Custom",
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "SpreedlyTheme",
-                        "printedName": "any SpreedlyUI.SpreedlyTheme",
-                        "usr": "s:10SpreedlyUI0A5ThemeP"
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init(config:paymentMethodToken:theme:darkTheme:onProcessingResult:onDismiss:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "CVVRecachingView",
-                "printedName": "SpreedlyUI.CVVRecachingView",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "RecacheConfig",
-                "printedName": "SpreedlyUI.RecacheConfig",
-                "usr": "s:10SpreedlyUI13RecacheConfigV"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SpreedlyTheme",
-                    "printedName": "any SpreedlyUI.SpreedlyTheme",
-                    "usr": "s:10SpreedlyUI0A5ThemeP"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SpreedlyTheme",
-                    "printedName": "any SpreedlyUI.SpreedlyTheme",
-                    "usr": "s:10SpreedlyUI0A5ThemeP"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
-                "children": [
-                  {
-                    "kind": "TypeFunc",
-                    "name": "Function",
-                    "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Void",
-                        "printedName": "()"
-                      },
-                      {
-                        "kind": "TypeNominal",
-                        "name": "PaymentProcessingResult",
-                        "printedName": "SpreedlyCore.PaymentProcessingResult",
-                        "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
-                      }
-                    ]
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "(() -> ())?",
-                "children": [
-                  {
-                    "kind": "TypeFunc",
-                    "name": "Function",
-                    "printedName": "() -> ()",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Void",
-                        "printedName": "()"
-                      },
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Void",
-                        "printedName": "()"
-                      }
-                    ]
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Constructor",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV6config18paymentMethodToken5theme9darkTheme18onProcessingResult0L7DismissAcA13RecacheConfigV_SSAA0aK0_pSgAMy0A4Core07PaymentmN0CcSgyycSgtcfc",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV6config18paymentMethodToken5theme9darkTheme18onProcessingResult0L7DismissAcA13RecacheConfigV_SSAA0aK0_pSgAMy0A4Core07PaymentmN0CcSgyycSgtcfc",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "Preconcurrency",
-              "Custom",
-              "AccessControl"
-            ],
-            "init_kind": "Designated"
-          },
-          {
-            "kind": "Var",
-            "name": "body",
-            "printedName": "body",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "OpaqueTypeArchetype",
-                "printedName": "some SwiftUI.View",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "View",
-                    "printedName": "SwiftUI.View",
-                    "usr": "s:7SwiftUI4ViewP"
-                  }
-                ]
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI16CVVRecachingViewV4bodyQrvp",
-            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV4bodyQrvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "Preconcurrency",
-              "Custom",
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "OpaqueTypeArchetype",
-                    "printedName": "some SwiftUI.View",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "View",
-                        "printedName": "SwiftUI.View",
-                        "usr": "s:7SwiftUI4ViewP"
-                      }
-                    ]
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI16CVVRecachingViewV4bodyQrvg",
-                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV4bodyQrvg",
-                "moduleName": "SpreedlyUI",
-                "accessorKind": "get"
-              }
-            ]
-          }
-        ],
-        "declKind": "Struct",
-        "usr": "s:10SpreedlyUI16CVVRecachingViewV",
-        "mangledName": "$s10SpreedlyUI16CVVRecachingViewV",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "Preconcurrency",
-          "Custom",
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "View",
-            "printedName": "View",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Body",
-                "printedName": "Body",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "OpaqueTypeArchetype",
-                    "printedName": "some SwiftUI.View",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "View",
-                        "printedName": "SwiftUI.View",
-                        "usr": "s:7SwiftUI4ViewP"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "usr": "s:7SwiftUI4ViewP",
-            "mangledName": "$s7SwiftUI4ViewP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "LocalizationHelper",
-        "printedName": "LocalizationHelper",
-        "children": [
-          {
-            "kind": "Function",
-            "name": "localizedString",
-            "printedName": "localizedString(for:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10SpreedlyUI18LocalizationHelperC15localizedString3forS2S_tFZ",
-            "mangledName": "$s10SpreedlyUI18LocalizationHelperC15localizedString3forS2S_tFZ",
-            "moduleName": "SpreedlyUI",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "localizedString",
-            "printedName": "localizedString(for:defaultValue:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10SpreedlyUI18LocalizationHelperC15localizedString3for12defaultValueS2S_SStFZ",
-            "mangledName": "$s10SpreedlyUI18LocalizationHelperC15localizedString3for12defaultValueS2S_SStFZ",
-            "moduleName": "SpreedlyUI",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "funcSelfKind": "NonMutating"
-          }
-        ],
-        "declKind": "Class",
-        "usr": "s:10SpreedlyUI18LocalizationHelperC",
-        "mangledName": "$s10SpreedlyUI18LocalizationHelperC",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "hasMissingDesignatedInitializers": true,
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlySecurity",
-        "printedName": "SpreedlySecurity",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlyCore",
-        "printedName": "SpreedlyCore",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI"
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "ScreenPresentationMode",
-        "printedName": "ScreenPresentationMode",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "bottomSheet",
-            "printedName": "bottomSheet",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(SpreedlyUI.ScreenPresentationMode.Type) -> SpreedlyUI.ScreenPresentationMode",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ScreenPresentationMode",
-                    "printedName": "SpreedlyUI.ScreenPresentationMode",
-                    "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "SpreedlyUI.ScreenPresentationMode.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "ScreenPresentationMode",
-                        "printedName": "SpreedlyUI.ScreenPresentationMode",
-                        "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "s:10SpreedlyUI22ScreenPresentationModeO11bottomSheetyA2CmF",
-            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO11bottomSheetyA2CmF",
-            "moduleName": "SpreedlyUI"
-          },
-          {
-            "kind": "Var",
-            "name": "dialog",
-            "printedName": "dialog",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(SpreedlyUI.ScreenPresentationMode.Type) -> SpreedlyUI.ScreenPresentationMode",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ScreenPresentationMode",
-                    "printedName": "SpreedlyUI.ScreenPresentationMode",
-                    "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "SpreedlyUI.ScreenPresentationMode.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "ScreenPresentationMode",
-                        "printedName": "SpreedlyUI.ScreenPresentationMode",
-                        "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "s:10SpreedlyUI22ScreenPresentationModeO6dialogyA2CmF",
-            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO6dialogyA2CmF",
-            "moduleName": "SpreedlyUI"
-          },
-          {
-            "kind": "Function",
-            "name": "==",
-            "printedName": "==(_:_:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "ScreenPresentationMode",
-                "printedName": "SpreedlyUI.ScreenPresentationMode",
-                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "ScreenPresentationMode",
-                "printedName": "SpreedlyUI.ScreenPresentationMode",
-                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10SpreedlyUI22ScreenPresentationModeO2eeoiySbAC_ACtFZ",
-            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO2eeoiySbAC_ACtFZ",
-            "moduleName": "SpreedlyUI",
-            "static": true,
-            "implicit": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Var",
-            "name": "hashValue",
-            "printedName": "hashValue",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Int",
-                "printedName": "Swift.Int",
-                "usr": "s:Si"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI22ScreenPresentationModeO9hashValueSivp",
-            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO9hashValueSivp",
-            "moduleName": "SpreedlyUI",
-            "implicit": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI22ScreenPresentationModeO9hashValueSivg",
-                "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO9hashValueSivg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Function",
-            "name": "hash",
-            "printedName": "hash(into:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Hasher",
-                "printedName": "Swift.Hasher",
-                "paramValueOwnership": "InOut",
-                "usr": "s:s6HasherV"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10SpreedlyUI22ScreenPresentationModeO4hash4intoys6HasherVz_tF",
-            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO4hash4intoys6HasherVz_tF",
-            "moduleName": "SpreedlyUI",
-            "implicit": true,
-            "funcSelfKind": "NonMutating"
-          }
-        ],
-        "declKind": "Enum",
-        "usr": "s:10SpreedlyUI22ScreenPresentationModeO",
-        "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Equatable",
-            "printedName": "Equatable",
-            "usr": "s:SQ",
-            "mangledName": "$sSQ"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Hashable",
-            "printedName": "Hashable",
-            "usr": "s:SH",
-            "mangledName": "$sSH"
-          }
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "SavedCardInfo",
-        "printedName": "SavedCardInfo",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "lastFourDigits",
-            "printedName": "lastFourDigits",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvp",
-            "mangledName": "$s10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvg",
-                "mangledName": "$s10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "cardType",
-            "printedName": "cardType",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13SavedCardInfoV8cardTypeSSvp",
-            "mangledName": "$s10SpreedlyUI13SavedCardInfoV8cardTypeSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13SavedCardInfoV8cardTypeSSvg",
-                "mangledName": "$s10SpreedlyUI13SavedCardInfoV8cardTypeSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "cardBrand",
-            "printedName": "cardBrand",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvp",
-            "mangledName": "$s10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "Swift.String?",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "String",
-                        "printedName": "Swift.String",
-                        "usr": "s:SS"
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvg",
-                "mangledName": "$s10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init(lastFourDigits:cardType:cardBrand:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "SavedCardInfo",
-                "printedName": "SpreedlyUI.SavedCardInfo",
-                "usr": "s:10SpreedlyUI13SavedCardInfoV"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Constructor",
-            "usr": "s:10SpreedlyUI13SavedCardInfoV14lastFourDigits8cardType0I5BrandACSS_S2SSgtcfc",
-            "mangledName": "$s10SpreedlyUI13SavedCardInfoV14lastFourDigits8cardType0I5BrandACSS_S2SSgtcfc",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "init_kind": "Designated"
-          }
-        ],
-        "declKind": "Struct",
-        "usr": "s:10SpreedlyUI13SavedCardInfoV",
-        "mangledName": "$s10SpreedlyUI13SavedCardInfoV",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          }
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "RecacheConfig",
-        "printedName": "RecacheConfig",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "recachePresentationMode",
-            "printedName": "recachePresentationMode",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "ScreenPresentationMode",
-                "printedName": "SpreedlyUI.ScreenPresentationMode",
-                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovp",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ScreenPresentationMode",
-                    "printedName": "SpreedlyUI.ScreenPresentationMode",
-                    "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovg",
-                "mangledName": "$s10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "cardInfo",
-            "printedName": "cardInfo",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "SavedCardInfo",
-                "printedName": "SpreedlyUI.SavedCardInfo",
-                "usr": "s:10SpreedlyUI13SavedCardInfoV"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvp",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SavedCardInfo",
-                    "printedName": "SpreedlyUI.SavedCardInfo",
-                    "usr": "s:10SpreedlyUI13SavedCardInfoV"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvg",
-                "mangledName": "$s10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "labelText",
-            "printedName": "labelText",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13RecacheConfigV9labelTextSSvp",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV9labelTextSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13RecacheConfigV9labelTextSSvg",
-                "mangledName": "$s10SpreedlyUI13RecacheConfigV9labelTextSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "placeholderText",
-            "printedName": "placeholderText",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13RecacheConfigV15placeholderTextSSvp",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV15placeholderTextSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13RecacheConfigV15placeholderTextSSvg",
-                "mangledName": "$s10SpreedlyUI13RecacheConfigV15placeholderTextSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "buttonText",
-            "printedName": "buttonText",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13RecacheConfigV10buttonTextSSvp",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV10buttonTextSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13RecacheConfigV10buttonTextSSvg",
-                "mangledName": "$s10SpreedlyUI13RecacheConfigV10buttonTextSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "cancelButtonText",
-            "printedName": "cancelButtonText",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvp",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvg",
-                "mangledName": "$s10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init(cardInfo:presentationMode:labelText:placeholderText:buttonText:cancelButtonText:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "RecacheConfig",
-                "printedName": "SpreedlyUI.RecacheConfig",
-                "usr": "s:10SpreedlyUI13RecacheConfigV"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "SavedCardInfo",
-                "printedName": "SpreedlyUI.SavedCardInfo",
-                "usr": "s:10SpreedlyUI13SavedCardInfoV"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "ScreenPresentationMode",
-                "printedName": "SpreedlyUI.ScreenPresentationMode",
-                "hasDefaultArg": true,
-                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "hasDefaultArg": true,
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Constructor",
-            "usr": "s:10SpreedlyUI13RecacheConfigV8cardInfo16presentationMode9labelText011placeholderJ006buttonJ0012cancelButtonJ0AcA09SavedCardF0V_AA018ScreenPresentationH0OSSSgA3Ntcfc",
-            "mangledName": "$s10SpreedlyUI13RecacheConfigV8cardInfo16presentationMode9labelText011placeholderJ006buttonJ0012cancelButtonJ0AcA09SavedCardF0V_AA018ScreenPresentationH0OSSSgA3Ntcfc",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "init_kind": "Designated"
-          }
-        ],
-        "declKind": "Struct",
-        "usr": "s:10SpreedlyUI13RecacheConfigV",
-        "mangledName": "$s10SpreedlyUI13RecacheConfigV",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "YearFormat",
-        "printedName": "YearFormat",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "twoDigit",
-            "printedName": "twoDigit",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(SpreedlyUI.YearFormat.Type) -> SpreedlyUI.YearFormat",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "YearFormat",
-                    "printedName": "SpreedlyUI.YearFormat",
-                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "SpreedlyUI.YearFormat.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "YearFormat",
-                        "printedName": "SpreedlyUI.YearFormat",
-                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "c:@M@SpreedlyUI@E@YearFormat@YearFormatTwoDigit",
-            "mangledName": "$s10SpreedlyUI10YearFormatO8twoDigityA2CmF",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "ObjC"
-            ],
-            "fixedbinaryorder": 0
-          },
-          {
-            "kind": "Var",
-            "name": "fourDigit",
-            "printedName": "fourDigit",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(SpreedlyUI.YearFormat.Type) -> SpreedlyUI.YearFormat",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "YearFormat",
-                    "printedName": "SpreedlyUI.YearFormat",
-                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "SpreedlyUI.YearFormat.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "YearFormat",
-                        "printedName": "SpreedlyUI.YearFormat",
-                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "c:@M@SpreedlyUI@E@YearFormat@YearFormatFourDigit",
-            "mangledName": "$s10SpreedlyUI10YearFormatO9fourDigityA2CmF",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "ObjC"
-            ],
-            "fixedbinaryorder": 1
-          },
-          {
-            "kind": "Var",
-            "name": "format",
-            "printedName": "format",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI10YearFormatO6formatSSvp",
-            "mangledName": "$s10SpreedlyUI10YearFormatO6formatSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI10YearFormatO6formatSSvg",
-                "mangledName": "$s10SpreedlyUI10YearFormatO6formatSSvg",
-                "moduleName": "SpreedlyUI",
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "placeholder",
-            "printedName": "placeholder",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI10YearFormatO11placeholderSSvp",
-            "mangledName": "$s10SpreedlyUI10YearFormatO11placeholderSSvp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI10YearFormatO11placeholderSSvg",
-                "mangledName": "$s10SpreedlyUI10YearFormatO11placeholderSSvg",
-                "moduleName": "SpreedlyUI",
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "maxLength",
-            "printedName": "maxLength",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Int",
-                "printedName": "Swift.Int",
-                "usr": "s:Si"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI10YearFormatO9maxLengthSivp",
-            "mangledName": "$s10SpreedlyUI10YearFormatO9maxLengthSivp",
-            "moduleName": "SpreedlyUI",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI10YearFormatO9maxLengthSivg",
-                "mangledName": "$s10SpreedlyUI10YearFormatO9maxLengthSivg",
-                "moduleName": "SpreedlyUI",
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init(rawValue:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "SpreedlyUI.YearFormat?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "YearFormat",
-                    "printedName": "SpreedlyUI.YearFormat",
-                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                  }
-                ],
-                "usr": "s:Sq"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "Int",
-                "printedName": "Swift.Int",
-                "usr": "s:Si"
-              }
-            ],
-            "declKind": "Constructor",
-            "usr": "s:10SpreedlyUI10YearFormatO8rawValueACSgSi_tcfc",
-            "mangledName": "$s10SpreedlyUI10YearFormatO8rawValueACSgSi_tcfc",
-            "moduleName": "SpreedlyUI",
-            "implicit": true,
-            "init_kind": "Designated"
-          },
-          {
-            "kind": "Var",
-            "name": "rawValue",
-            "printedName": "rawValue",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Int",
-                "printedName": "Swift.Int",
-                "usr": "s:Si"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI10YearFormatO8rawValueSivp",
-            "mangledName": "$s10SpreedlyUI10YearFormatO8rawValueSivp",
-            "moduleName": "SpreedlyUI",
-            "implicit": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI10YearFormatO8rawValueSivg",
-                "mangledName": "$s10SpreedlyUI10YearFormatO8rawValueSivg",
-                "moduleName": "SpreedlyUI",
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "allCases",
-            "printedName": "allCases",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Array",
-                "printedName": "[SpreedlyUI.YearFormat]",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "YearFormat",
-                    "printedName": "SpreedlyUI.YearFormat",
-                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                  }
-                ],
-                "usr": "s:Sa"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI10YearFormatO8allCasesSayACGvpZ",
-            "mangledName": "$s10SpreedlyUI10YearFormatO8allCasesSayACGvpZ",
-            "moduleName": "SpreedlyUI",
-            "static": true,
-            "implicit": true,
-            "declAttributes": [
-              "Nonisolated"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Array",
-                    "printedName": "[SpreedlyUI.YearFormat]",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "YearFormat",
-                        "printedName": "SpreedlyUI.YearFormat",
-                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                      }
-                    ],
-                    "usr": "s:Sa"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI10YearFormatO8allCasesSayACGvgZ",
-                "mangledName": "$s10SpreedlyUI10YearFormatO8allCasesSayACGvgZ",
-                "moduleName": "SpreedlyUI",
-                "static": true,
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          }
-        ],
-        "declKind": "Enum",
-        "usr": "c:@M@SpreedlyUI@E@YearFormat",
-        "mangledName": "$s10SpreedlyUI10YearFormatO",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "AccessControl",
-          "ObjC",
-          "RawDocComment"
-        ],
-        "enumRawTypeName": "Int",
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Equatable",
-            "printedName": "Equatable",
-            "usr": "s:SQ",
-            "mangledName": "$sSQ"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Hashable",
-            "printedName": "Hashable",
-            "usr": "s:SH",
-            "mangledName": "$sSH"
-          },
-          {
-            "kind": "Conformance",
-            "name": "RawRepresentable",
-            "printedName": "RawRepresentable",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "RawValue",
-                "printedName": "RawValue",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:SY",
-            "mangledName": "$sSY"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CaseIterable",
-            "printedName": "CaseIterable",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "AllCases",
-                "printedName": "AllCases",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Array",
-                    "printedName": "[SpreedlyUI.YearFormat]",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "YearFormat",
-                        "printedName": "SpreedlyUI.YearFormat",
-                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
-                      }
-                    ],
-                    "usr": "s:Sa"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:s12CaseIterableP",
-            "mangledName": "$ss12CaseIterableP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "ValidationConstants",
-        "printedName": "ValidationConstants",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "maxFieldLength",
-            "printedName": "maxFieldLength",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Int",
-                "printedName": "Swift.Int",
-                "usr": "s:Si"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivpZ",
-            "mangledName": "$s10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivpZ",
-            "moduleName": "SpreedlyUI",
-            "static": true,
-            "declAttributes": [
-              "HasInitialValue",
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isLet": true,
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivgZ",
-                "mangledName": "$s10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivgZ",
-                "moduleName": "SpreedlyUI",
-                "static": true,
-                "implicit": true,
-                "accessorKind": "get"
-              }
-            ]
-          }
-        ],
-        "declKind": "Struct",
-        "usr": "s:10SpreedlyUI19ValidationConstantsV",
-        "mangledName": "$s10SpreedlyUI19ValidationConstantsV",
-        "moduleName": "SpreedlyUI",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          }
-        ]
-      },
-      {
-        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -33291,6 +30969,2328 @@
         ]
       },
       {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlySecurity",
+        "printedName": "SpreedlySecurity",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CVVRecachingView",
+        "printedName": "CVVRecachingView",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "onProcessingResult",
+            "printedName": "onProcessingResult",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PaymentProcessingResult",
+                        "printedName": "SpreedlyCore.PaymentProcessingResult",
+                        "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasInitialValue",
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PaymentProcessingResult",
+                            "printedName": "SpreedlyCore.PaymentProcessingResult",
+                            "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PaymentProcessingResult",
+                            "printedName": "SpreedlyCore.PaymentProcessingResult",
+                            "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvs",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvs",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvM",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18onProcessingResulty0A4Core07PaymentfG0CcSgvM",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "onDismiss",
+            "printedName": "onDismiss",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(() -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "() -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasInitialValue",
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(() -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "() -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(() -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "() -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvs",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvs",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvM",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9onDismissyycSgvM",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "config",
+            "printedName": "config",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RecacheConfig",
+                "printedName": "SpreedlyUI.RecacheConfig",
+                "usr": "s:10SpreedlyUI13RecacheConfigV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "RecacheConfig",
+                    "printedName": "SpreedlyUI.RecacheConfig",
+                    "usr": "s:10SpreedlyUI13RecacheConfigV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV6configAA13RecacheConfigVvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "paymentMethodToken",
+            "printedName": "paymentMethodToken",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV18paymentMethodTokenSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "lightTheme",
+            "printedName": "lightTheme",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SpreedlyTheme",
+                    "printedName": "any SpreedlyUI.SpreedlyTheme",
+                    "usr": "s:10SpreedlyUI0A5ThemeP"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SpreedlyTheme",
+                        "printedName": "any SpreedlyUI.SpreedlyTheme",
+                        "usr": "s:10SpreedlyUI0A5ThemeP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV10lightThemeAA0aF0_pSgvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "darkTheme",
+            "printedName": "darkTheme",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SpreedlyTheme",
+                    "printedName": "any SpreedlyUI.SpreedlyTheme",
+                    "usr": "s:10SpreedlyUI0A5ThemeP"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SpreedlyTheme",
+                        "printedName": "any SpreedlyUI.SpreedlyTheme",
+                        "usr": "s:10SpreedlyUI0A5ThemeP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV9darkThemeAA0aF0_pSgvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(config:paymentMethodToken:theme:darkTheme:onProcessingResult:onDismiss:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CVVRecachingView",
+                "printedName": "SpreedlyUI.CVVRecachingView",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "RecacheConfig",
+                "printedName": "SpreedlyUI.RecacheConfig",
+                "usr": "s:10SpreedlyUI13RecacheConfigV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SpreedlyTheme",
+                    "printedName": "any SpreedlyUI.SpreedlyTheme",
+                    "usr": "s:10SpreedlyUI0A5ThemeP"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(any SpreedlyUI.SpreedlyTheme)?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SpreedlyTheme",
+                    "printedName": "any SpreedlyUI.SpreedlyTheme",
+                    "usr": "s:10SpreedlyUI0A5ThemeP"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((SpreedlyCore.PaymentProcessingResult) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(SpreedlyCore.PaymentProcessingResult) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PaymentProcessingResult",
+                        "printedName": "SpreedlyCore.PaymentProcessingResult",
+                        "usr": "c:@M@SpreedlyCore@objc(cs)PaymentProcessingResult"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(() -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "() -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV6config18paymentMethodToken5theme9darkTheme18onProcessingResult0L7DismissAcA13RecacheConfigV_SSAA0aK0_pSgAMy0A4Core07PaymentmN0CcSgyycSgtcfc",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV6config18paymentMethodToken5theme9darkTheme18onProcessingResult0L7DismissAcA13RecacheConfigV_SSAA0aK0_pSgAMy0A4Core07PaymentmN0CcSgyycSgtcfc",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "body",
+            "printedName": "body",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "OpaqueTypeArchetype",
+                "printedName": "some SwiftUI.View",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "View",
+                    "printedName": "SwiftUI.View",
+                    "usr": "s:7SwiftUI4ViewP"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI16CVVRecachingViewV4bodyQrvp",
+            "mangledName": "$s10SpreedlyUI16CVVRecachingViewV4bodyQrvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaqueTypeArchetype",
+                    "printedName": "some SwiftUI.View",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "View",
+                        "printedName": "SwiftUI.View",
+                        "usr": "s:7SwiftUI4ViewP"
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI16CVVRecachingViewV4bodyQrvg",
+                "mangledName": "$s10SpreedlyUI16CVVRecachingViewV4bodyQrvg",
+                "moduleName": "SpreedlyUI",
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10SpreedlyUI16CVVRecachingViewV",
+        "mangledName": "$s10SpreedlyUI16CVVRecachingViewV",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "Preconcurrency",
+          "Custom",
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "View",
+            "printedName": "View",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Body",
+                "printedName": "Body",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaqueTypeArchetype",
+                    "printedName": "some SwiftUI.View",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "View",
+                        "printedName": "SwiftUI.View",
+                        "usr": "s:7SwiftUI4ViewP"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "usr": "s:7SwiftUI4ViewP",
+            "mangledName": "$s7SwiftUI4ViewP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "LocalizationHelper",
+        "printedName": "LocalizationHelper",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "localizedString",
+            "printedName": "localizedString(for:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10SpreedlyUI18LocalizationHelperC15localizedString3forS2S_tFZ",
+            "mangledName": "$s10SpreedlyUI18LocalizationHelperC15localizedString3forS2S_tFZ",
+            "moduleName": "SpreedlyUI",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "localizedString",
+            "printedName": "localizedString(for:defaultValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10SpreedlyUI18LocalizationHelperC15localizedString3for12defaultValueS2S_SStFZ",
+            "mangledName": "$s10SpreedlyUI18LocalizationHelperC15localizedString3for12defaultValueS2S_SStFZ",
+            "moduleName": "SpreedlyUI",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:10SpreedlyUI18LocalizationHelperC",
+        "mangledName": "$s10SpreedlyUI18LocalizationHelperC",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "hasMissingDesignatedInitializers": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlySecurity",
+        "printedName": "SpreedlySecurity",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ScreenPresentationMode",
+        "printedName": "ScreenPresentationMode",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "bottomSheet",
+            "printedName": "bottomSheet",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SpreedlyUI.ScreenPresentationMode.Type) -> SpreedlyUI.ScreenPresentationMode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ScreenPresentationMode",
+                    "printedName": "SpreedlyUI.ScreenPresentationMode",
+                    "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SpreedlyUI.ScreenPresentationMode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ScreenPresentationMode",
+                        "printedName": "SpreedlyUI.ScreenPresentationMode",
+                        "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10SpreedlyUI22ScreenPresentationModeO11bottomSheetyA2CmF",
+            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO11bottomSheetyA2CmF",
+            "moduleName": "SpreedlyUI"
+          },
+          {
+            "kind": "Var",
+            "name": "dialog",
+            "printedName": "dialog",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SpreedlyUI.ScreenPresentationMode.Type) -> SpreedlyUI.ScreenPresentationMode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ScreenPresentationMode",
+                    "printedName": "SpreedlyUI.ScreenPresentationMode",
+                    "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SpreedlyUI.ScreenPresentationMode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ScreenPresentationMode",
+                        "printedName": "SpreedlyUI.ScreenPresentationMode",
+                        "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10SpreedlyUI22ScreenPresentationModeO6dialogyA2CmF",
+            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO6dialogyA2CmF",
+            "moduleName": "SpreedlyUI"
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ScreenPresentationMode",
+                "printedName": "SpreedlyUI.ScreenPresentationMode",
+                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ScreenPresentationMode",
+                "printedName": "SpreedlyUI.ScreenPresentationMode",
+                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10SpreedlyUI22ScreenPresentationModeO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO2eeoiySbAC_ACtFZ",
+            "moduleName": "SpreedlyUI",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI22ScreenPresentationModeO9hashValueSivp",
+            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO9hashValueSivp",
+            "moduleName": "SpreedlyUI",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI22ScreenPresentationModeO9hashValueSivg",
+                "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO9hashValueSivg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10SpreedlyUI22ScreenPresentationModeO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO4hash4intoys6HasherVz_tF",
+            "moduleName": "SpreedlyUI",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:10SpreedlyUI22ScreenPresentationModeO",
+        "mangledName": "$s10SpreedlyUI22ScreenPresentationModeO",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SavedCardInfo",
+        "printedName": "SavedCardInfo",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "lastFourDigits",
+            "printedName": "lastFourDigits",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvp",
+            "mangledName": "$s10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvg",
+                "mangledName": "$s10SpreedlyUI13SavedCardInfoV14lastFourDigitsSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cardType",
+            "printedName": "cardType",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13SavedCardInfoV8cardTypeSSvp",
+            "mangledName": "$s10SpreedlyUI13SavedCardInfoV8cardTypeSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13SavedCardInfoV8cardTypeSSvg",
+                "mangledName": "$s10SpreedlyUI13SavedCardInfoV8cardTypeSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cardBrand",
+            "printedName": "cardBrand",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvp",
+            "mangledName": "$s10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvg",
+                "mangledName": "$s10SpreedlyUI13SavedCardInfoV9cardBrandSSSgvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(lastFourDigits:cardType:cardBrand:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SavedCardInfo",
+                "printedName": "SpreedlyUI.SavedCardInfo",
+                "usr": "s:10SpreedlyUI13SavedCardInfoV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10SpreedlyUI13SavedCardInfoV14lastFourDigits8cardType0I5BrandACSS_S2SSgtcfc",
+            "mangledName": "$s10SpreedlyUI13SavedCardInfoV14lastFourDigits8cardType0I5BrandACSS_S2SSgtcfc",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10SpreedlyUI13SavedCardInfoV",
+        "mangledName": "$s10SpreedlyUI13SavedCardInfoV",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RecacheConfig",
+        "printedName": "RecacheConfig",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "recachePresentationMode",
+            "printedName": "recachePresentationMode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ScreenPresentationMode",
+                "printedName": "SpreedlyUI.ScreenPresentationMode",
+                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovp",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ScreenPresentationMode",
+                    "printedName": "SpreedlyUI.ScreenPresentationMode",
+                    "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovg",
+                "mangledName": "$s10SpreedlyUI13RecacheConfigV23recachePresentationModeAA06ScreenfG0Ovg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cardInfo",
+            "printedName": "cardInfo",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SavedCardInfo",
+                "printedName": "SpreedlyUI.SavedCardInfo",
+                "usr": "s:10SpreedlyUI13SavedCardInfoV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvp",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SavedCardInfo",
+                    "printedName": "SpreedlyUI.SavedCardInfo",
+                    "usr": "s:10SpreedlyUI13SavedCardInfoV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvg",
+                "mangledName": "$s10SpreedlyUI13RecacheConfigV8cardInfoAA09SavedCardF0Vvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "labelText",
+            "printedName": "labelText",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13RecacheConfigV9labelTextSSvp",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV9labelTextSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13RecacheConfigV9labelTextSSvg",
+                "mangledName": "$s10SpreedlyUI13RecacheConfigV9labelTextSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "placeholderText",
+            "printedName": "placeholderText",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13RecacheConfigV15placeholderTextSSvp",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV15placeholderTextSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13RecacheConfigV15placeholderTextSSvg",
+                "mangledName": "$s10SpreedlyUI13RecacheConfigV15placeholderTextSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "buttonText",
+            "printedName": "buttonText",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13RecacheConfigV10buttonTextSSvp",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV10buttonTextSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13RecacheConfigV10buttonTextSSvg",
+                "mangledName": "$s10SpreedlyUI13RecacheConfigV10buttonTextSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cancelButtonText",
+            "printedName": "cancelButtonText",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvp",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvg",
+                "mangledName": "$s10SpreedlyUI13RecacheConfigV16cancelButtonTextSSvg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(cardInfo:presentationMode:labelText:placeholderText:buttonText:cancelButtonText:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RecacheConfig",
+                "printedName": "SpreedlyUI.RecacheConfig",
+                "usr": "s:10SpreedlyUI13RecacheConfigV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SavedCardInfo",
+                "printedName": "SpreedlyUI.SavedCardInfo",
+                "usr": "s:10SpreedlyUI13SavedCardInfoV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "ScreenPresentationMode",
+                "printedName": "SpreedlyUI.ScreenPresentationMode",
+                "hasDefaultArg": true,
+                "usr": "s:10SpreedlyUI22ScreenPresentationModeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10SpreedlyUI13RecacheConfigV8cardInfo16presentationMode9labelText011placeholderJ006buttonJ0012cancelButtonJ0AcA09SavedCardF0V_AA018ScreenPresentationH0OSSSgA3Ntcfc",
+            "mangledName": "$s10SpreedlyUI13RecacheConfigV8cardInfo16presentationMode9labelText011placeholderJ006buttonJ0012cancelButtonJ0AcA09SavedCardF0V_AA018ScreenPresentationH0OSSSgA3Ntcfc",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10SpreedlyUI13RecacheConfigV",
+        "mangledName": "$s10SpreedlyUI13RecacheConfigV",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "YearFormat",
+        "printedName": "YearFormat",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "twoDigit",
+            "printedName": "twoDigit",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SpreedlyUI.YearFormat.Type) -> SpreedlyUI.YearFormat",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "YearFormat",
+                    "printedName": "SpreedlyUI.YearFormat",
+                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SpreedlyUI.YearFormat.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "YearFormat",
+                        "printedName": "SpreedlyUI.YearFormat",
+                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@SpreedlyUI@E@YearFormat@YearFormatTwoDigit",
+            "mangledName": "$s10SpreedlyUI10YearFormatO8twoDigityA2CmF",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 0
+          },
+          {
+            "kind": "Var",
+            "name": "fourDigit",
+            "printedName": "fourDigit",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(SpreedlyUI.YearFormat.Type) -> SpreedlyUI.YearFormat",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "YearFormat",
+                    "printedName": "SpreedlyUI.YearFormat",
+                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "SpreedlyUI.YearFormat.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "YearFormat",
+                        "printedName": "SpreedlyUI.YearFormat",
+                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@SpreedlyUI@E@YearFormat@YearFormatFourDigit",
+            "mangledName": "$s10SpreedlyUI10YearFormatO9fourDigityA2CmF",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 1
+          },
+          {
+            "kind": "Var",
+            "name": "format",
+            "printedName": "format",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI10YearFormatO6formatSSvp",
+            "mangledName": "$s10SpreedlyUI10YearFormatO6formatSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI10YearFormatO6formatSSvg",
+                "mangledName": "$s10SpreedlyUI10YearFormatO6formatSSvg",
+                "moduleName": "SpreedlyUI",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "placeholder",
+            "printedName": "placeholder",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI10YearFormatO11placeholderSSvp",
+            "mangledName": "$s10SpreedlyUI10YearFormatO11placeholderSSvp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI10YearFormatO11placeholderSSvg",
+                "mangledName": "$s10SpreedlyUI10YearFormatO11placeholderSSvg",
+                "moduleName": "SpreedlyUI",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "maxLength",
+            "printedName": "maxLength",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI10YearFormatO9maxLengthSivp",
+            "mangledName": "$s10SpreedlyUI10YearFormatO9maxLengthSivp",
+            "moduleName": "SpreedlyUI",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI10YearFormatO9maxLengthSivg",
+                "mangledName": "$s10SpreedlyUI10YearFormatO9maxLengthSivg",
+                "moduleName": "SpreedlyUI",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(rawValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "SpreedlyUI.YearFormat?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "YearFormat",
+                    "printedName": "SpreedlyUI.YearFormat",
+                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10SpreedlyUI10YearFormatO8rawValueACSgSi_tcfc",
+            "mangledName": "$s10SpreedlyUI10YearFormatO8rawValueACSgSi_tcfc",
+            "moduleName": "SpreedlyUI",
+            "implicit": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "rawValue",
+            "printedName": "rawValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI10YearFormatO8rawValueSivp",
+            "mangledName": "$s10SpreedlyUI10YearFormatO8rawValueSivp",
+            "moduleName": "SpreedlyUI",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI10YearFormatO8rawValueSivg",
+                "mangledName": "$s10SpreedlyUI10YearFormatO8rawValueSivg",
+                "moduleName": "SpreedlyUI",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "allCases",
+            "printedName": "allCases",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[SpreedlyUI.YearFormat]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "YearFormat",
+                    "printedName": "SpreedlyUI.YearFormat",
+                    "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI10YearFormatO8allCasesSayACGvpZ",
+            "mangledName": "$s10SpreedlyUI10YearFormatO8allCasesSayACGvpZ",
+            "moduleName": "SpreedlyUI",
+            "static": true,
+            "implicit": true,
+            "declAttributes": [
+              "Nonisolated"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[SpreedlyUI.YearFormat]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "YearFormat",
+                        "printedName": "SpreedlyUI.YearFormat",
+                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI10YearFormatO8allCasesSayACGvgZ",
+                "mangledName": "$s10SpreedlyUI10YearFormatO8allCasesSayACGvgZ",
+                "moduleName": "SpreedlyUI",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "c:@M@SpreedlyUI@E@YearFormat",
+        "mangledName": "$s10SpreedlyUI10YearFormatO",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "enumRawTypeName": "Int",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CaseIterable",
+            "printedName": "CaseIterable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "AllCases",
+                "printedName": "AllCases",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[SpreedlyUI.YearFormat]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "YearFormat",
+                        "printedName": "SpreedlyUI.YearFormat",
+                        "usr": "c:@M@SpreedlyUI@E@YearFormat"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s12CaseIterableP",
+            "mangledName": "$ss12CaseIterableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ValidationConstants",
+        "printedName": "ValidationConstants",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "maxFieldLength",
+            "printedName": "maxFieldLength",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivpZ",
+            "mangledName": "$s10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivpZ",
+            "moduleName": "SpreedlyUI",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivgZ",
+                "mangledName": "$s10SpreedlyUI19ValidationConstantsV14maxFieldLengthSivgZ",
+                "moduleName": "SpreedlyUI",
+                "static": true,
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10SpreedlyUI19ValidationConstantsV",
+        "mangledName": "$s10SpreedlyUI19ValidationConstantsV",
+        "moduleName": "SpreedlyUI",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
         "kind": "TypeDecl",
         "name": "FormFieldType",
         "printedName": "FormFieldType",
@@ -34711,111 +34711,6 @@
     "json_format_version": 8
   },
   "ConstValues": [
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "BooleanLiteral",
-      "offset": 547,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "BooleanLiteral",
-      "offset": 697,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14635,
-      "length": 6,
-      "value": "\"4242\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14669,
-      "length": 6,
-      "value": "\"Visa\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14704,
-      "length": 6,
-      "value": "\"visa\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14793,
-      "length": 5,
-      "value": "\"CVV\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14829,
-      "length": 5,
-      "value": "\"123\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14860,
-      "length": 9,
-      "value": "\"Confirm\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14901,
-      "length": 8,
-      "value": "\"Cancel\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
-      "kind": "StringLiteral",
-      "offset": 14949,
-      "length": 19,
-      "value": "\"preview_token_123\""
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingDialogView.swift",
-      "kind": "BooleanLiteral",
-      "offset": 668,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingDialogView.swift",
-      "kind": "BooleanLiteral",
-      "offset": 771,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/YearFormat.swift",
-      "kind": "IntegerLiteral",
-      "offset": 197,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/YearFormat.swift",
-      "kind": "IntegerLiteral",
-      "offset": 220,
-      "length": 1,
-      "value": "4"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/ValidationConstants.swift",
-      "kind": "IntegerLiteral",
-      "offset": 319,
-      "length": 3,
-      "value": "350"
-    },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/SpreedlyUI.swift",
       "kind": "BooleanLiteral",
@@ -36548,21 +36443,21 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/CardType.swift",
       "kind": "StringLiteral",
-      "offset": 35708,
+      "offset": 37459,
       "length": 23,
       "value": "\"Unsupported card type\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/CardType.swift",
       "kind": "StringLiteral",
-      "offset": 35757,
+      "offset": 37508,
       "length": 28,
       "value": "\"Invalid card number length\""
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/CardType.swift",
       "kind": "StringLiteral",
-      "offset": 35809,
+      "offset": 37560,
       "length": 21,
       "value": "\"Invalid card number\""
     },
@@ -37013,6 +36908,111 @@
       "offset": 3334,
       "length": 3,
       "value": "0.4"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 547,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 697,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14635,
+      "length": 6,
+      "value": "\"4242\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14669,
+      "length": 6,
+      "value": "\"Visa\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14704,
+      "length": 6,
+      "value": "\"visa\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14793,
+      "length": 5,
+      "value": "\"CVV\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14829,
+      "length": 5,
+      "value": "\"123\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14860,
+      "length": 9,
+      "value": "\"Confirm\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14901,
+      "length": 8,
+      "value": "\"Cancel\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingView.swift",
+      "kind": "StringLiteral",
+      "offset": 14949,
+      "length": 19,
+      "value": "\"preview_token_123\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingDialogView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 668,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Components\/Recaching\/Views\/CVVRecachingDialogView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 771,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/YearFormat.swift",
+      "kind": "IntegerLiteral",
+      "offset": 197,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/YearFormat.swift",
+      "kind": "IntegerLiteral",
+      "offset": 220,
+      "length": 1,
+      "value": "4"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyUI\/SpreedlyUI\/Constants\/ValidationConstants.swift",
+      "kind": "IntegerLiteral",
+      "offset": 319,
+      "length": 3,
+      "value": "350"
     }
   ]
 }
