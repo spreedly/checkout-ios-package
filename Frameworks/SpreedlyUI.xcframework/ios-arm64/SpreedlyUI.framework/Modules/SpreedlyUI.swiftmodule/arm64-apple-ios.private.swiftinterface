@@ -12,74 +12,6 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-@_Concurrency.MainActor @preconcurrency public struct CVVRecachingView : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public var onDismiss: (() -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public let config: SpreedlyUI.RecacheConfig
-  @_Concurrency.MainActor @preconcurrency public let paymentMethodToken: Swift.String
-  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyUI.RecacheConfig, paymentMethodToken: Swift.String, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil, onDismiss: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI16CVVRecachingViewV4bodyQrvp", 0) __
-}
-
-@_hasMissingDesignatedInitializers public class LocalizationHelper {
-  public static func localizedString(for key: Swift.String) -> Swift.String
-  public static func localizedString(for key: Swift.String, defaultValue: Swift.String) -> Swift.String
-  @objc deinit
-}
-public enum ScreenPresentationMode : Swift.Hashable {
-  case bottomSheet
-  case dialog
-  public static func == (a: SpreedlyUI.ScreenPresentationMode, b: SpreedlyUI.ScreenPresentationMode) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-public struct SavedCardInfo {
-  public let lastFourDigits: Swift.String
-  public let cardType: Swift.String
-  public let cardBrand: Swift.String?
-  public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String? = nil)
-}
-public struct RecacheConfig {
-  public let recachePresentationMode: SpreedlyUI.ScreenPresentationMode
-  public let cardInfo: SpreedlyUI.SavedCardInfo
-  public let labelText: Swift.String
-  public let placeholderText: Swift.String
-  public let buttonText: Swift.String
-  public let cancelButtonText: Swift.String
-  public init(cardInfo: SpreedlyUI.SavedCardInfo, presentationMode: SpreedlyUI.ScreenPresentationMode = .bottomSheet, labelText: Swift.String? = nil, placeholderText: Swift.String? = nil, buttonText: Swift.String? = nil, cancelButtonText: Swift.String? = nil)
-}
-@objc public enum YearFormat : Swift.Int, Swift.CaseIterable {
-  case twoDigit = 2
-  case fourDigit = 4
-  public var format: Swift.String {
-    get
-  }
-  public var placeholder: Swift.String {
-    get
-  }
-  public var maxLength: Swift.Int {
-    get
-  }
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [SpreedlyUI.YearFormat]
-  public typealias RawValue = Swift.Int
-  nonisolated public static var allCases: [SpreedlyUI.YearFormat] {
-    get
-  }
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public struct ValidationConstants {
-  public static let maxFieldLength: Swift.Int
-}
 extension SpreedlyCore.FormFieldType {
   public var requiredMessage: Swift.String {
     get
@@ -911,10 +843,74 @@ extension SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public func crossDissolveFullScreenCover<Content>(isPresented: SwiftUICore.Binding<Swift.Bool>, @SwiftUICore.ViewBuilder content: @escaping () -> Content) -> some SwiftUICore.View where Content : SwiftUICore.View
   
 }
-extension SpreedlyUI.CVVRecachingView : Swift.Sendable {}
-extension SpreedlyUI.YearFormat : Swift.Equatable {}
-extension SpreedlyUI.YearFormat : Swift.Hashable {}
-extension SpreedlyUI.YearFormat : Swift.RawRepresentable {}
+@_Concurrency.MainActor @preconcurrency public struct CVVRecachingView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public var onDismiss: (() -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public let config: SpreedlyUI.RecacheConfig
+  @_Concurrency.MainActor @preconcurrency public let paymentMethodToken: Swift.String
+  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyUI.RecacheConfig, paymentMethodToken: Swift.String, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil, onDismiss: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI16CVVRecachingViewV4bodyQrvp", 0) __
+}
+
+@_hasMissingDesignatedInitializers public class LocalizationHelper {
+  public static func localizedString(for key: Swift.String) -> Swift.String
+  public static func localizedString(for key: Swift.String, defaultValue: Swift.String) -> Swift.String
+  @objc deinit
+}
+public enum ScreenPresentationMode : Swift.Hashable {
+  case bottomSheet
+  case dialog
+  public static func == (a: SpreedlyUI.ScreenPresentationMode, b: SpreedlyUI.ScreenPresentationMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct SavedCardInfo {
+  public let lastFourDigits: Swift.String
+  public let cardType: Swift.String
+  public let cardBrand: Swift.String?
+  public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String? = nil)
+}
+public struct RecacheConfig {
+  public let recachePresentationMode: SpreedlyUI.ScreenPresentationMode
+  public let cardInfo: SpreedlyUI.SavedCardInfo
+  public let labelText: Swift.String
+  public let placeholderText: Swift.String
+  public let buttonText: Swift.String
+  public let cancelButtonText: Swift.String
+  public init(cardInfo: SpreedlyUI.SavedCardInfo, presentationMode: SpreedlyUI.ScreenPresentationMode = .bottomSheet, labelText: Swift.String? = nil, placeholderText: Swift.String? = nil, buttonText: Swift.String? = nil, cancelButtonText: Swift.String? = nil)
+}
+@objc public enum YearFormat : Swift.Int, Swift.CaseIterable {
+  case twoDigit = 2
+  case fourDigit = 4
+  public var format: Swift.String {
+    get
+  }
+  public var placeholder: Swift.String {
+    get
+  }
+  public var maxLength: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyUI.YearFormat]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyUI.YearFormat] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct ValidationConstants {
+  public static let maxFieldLength: Swift.Int
+}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.Equatable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.Hashable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.RawRepresentable {}
@@ -938,3 +934,7 @@ extension SpreedlyUI.TooltipCardBrandIcon : Swift.Sendable {}
 extension SpreedlyUI.SPLTextField : Swift.Sendable {}
 extension SpreedlyUI.SpreedlyCVVRecachingView : Swift.Sendable {}
 extension SpreedlyUI.CrossDissolveFullScreenCover : Swift.Sendable {}
+extension SpreedlyUI.CVVRecachingView : Swift.Sendable {}
+extension SpreedlyUI.YearFormat : Swift.Equatable {}
+extension SpreedlyUI.YearFormat : Swift.Hashable {}
+extension SpreedlyUI.YearFormat : Swift.RawRepresentable {}
