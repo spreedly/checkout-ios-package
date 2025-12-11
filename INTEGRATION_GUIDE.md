@@ -105,7 +105,16 @@ end
 
 ## Basic Setup
 
-### 1. Initialize the SDK
+> **⚠️ Important**: `Spreedly.setup(config:)` is **MANDATORY** and must be called with `environmentKey`, `forterSiteId` (for 3DS), and signature parameters (nonce, signature, certificateToken, timestamp) before making any payment requests. `Spreedly.initializeSDK()` alone is **NOT sufficient** - it only provides a basic initialization without the required credentials.
+
+### Two-Step Initialization Pattern (Required)
+
+The SDK uses a two-step initialization pattern:
+
+**Step 1:** Initialize SDK at app launch (basic setup)  
+**Step 2:** Configure with credentials before payment (MANDATORY)
+
+### Step 1: Initialize SDK at App Launch
 
 ```swift
 import SpreedlyCore
@@ -115,30 +124,56 @@ import SpreedlyUI
 // In your App delegate or SwiftUI App
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-    // Initialize with your environment key
-    Spreedly.setup(environmentKey: "your_environment_key_here")
+    // Step 1: Basic initialization (creates SDK instance)
+    // Note: This alone is NOT sufficient - you MUST call setup(config:) with credentials
+    Spreedly.initializeSDK()
 
     return true
 }
 ```
 
-### 2. Configure Security
+### Step 2: Configure with Credentials (MANDATORY)
+
+**You MUST call `Spreedly.setup(config:)` with the following required parameters before making any payment requests:**
+- `environmentKey` (required)
+- `forterSiteId` (required for 3DS support)
+- `certificateToken` (required for security)
+- `nonce` (required for security)
+- `signature` (required for security)
+- `timestamp` (required for security)
 
 ```swift
-// Generate signature for enhanced security
-func configureSpreedly() async {
-    do {
-        let signatureParams = try await generateSignature()
+class SpreedlyConfigManager {
+    static let shared = SpreedlyConfigManager()
+    
+    private let environmentKey = "your_environment_key"  // REQUIRED
+    private let forterSiteId = "your_forter_site_id"      // REQUIRED for 3DS support
+    private let serverURL = "https://your-backend.com/api/v1/auth/params"
+    
+    private init() {
+        // Step 1: Basic initialization (already called in app launch)
+        // This creates the SDK instance but does NOT provide credentials
+    }
+    
+    // Step 2: MANDATORY - Configure with credentials before payment
+    // This MUST be called before any payment operations
+    func configureSpreedly() async {
+        do {
+            let signatureParams = try await generateSignature()
 
-        Spreedly.setup(config: SpreedlyConfig(
-            environmentKey: "your_environment_key",
-            certificateToken: signatureParams.certificateToken,
-            nonce: signatureParams.nonce,
-            signature: signatureParams.signature,
-            timestamp: String(signatureParams.timestamp)
-        ))
-    } catch {
-        print("Failed to configure Spreedly: \(error)")
+            // MANDATORY: Setup with all required credentials
+            Spreedly.setup(config: SpreedlyConfig(
+                environmentKey: environmentKey,           // REQUIRED
+                forterSiteId: forterSiteId,              // REQUIRED for 3DS
+                certificateToken: signatureParams.certificateToken,  // REQUIRED
+                nonce: signatureParams.nonce,            // REQUIRED
+                signature: signatureParams.signature,    // REQUIRED
+                timestamp: String(signatureParams.timestamp)  // REQUIRED
+            ))
+        } catch {
+            print("Failed to configure Spreedly: \(error)")
+            // Handle error - SDK cannot process payments without proper configuration
+        }
     }
 }
 
@@ -1850,45 +1885,64 @@ class SavedCardsViewController: UIViewController {
     @IBAction func updateCVVTapped(_ sender: UIButton) {
         guard let card = selectedCard else { return }
         
-        // Create configuration
-        let config = RecacheConfig(
-            cardInfo: SavedCardInfo(
-                lastFourDigits: card.lastFourDigits,
-                cardType: card.cardType,
-                cardBrand: card.cardBrand
-            ),
-            presentationMode: .bottomSheet,
-            labelText: "CVV",
-            placeholderText: "123",
-            buttonText: "Confirm",
-            cancelButtonText: "Cancel"
-        )
-        
-        // Initialize view controller
-        let recachingVC = CVVRecachingViewController(
-            lastFourDigits: card.lastFourDigits,
-            cardType: card.cardType,
-            cardBrand: card.cardBrand,
-            paymentMethodToken: card.paymentMethodToken,
-            presentationMode: 0, // 0 = sheet, 1 = alert
-            labelText: "CVV",
-            placeholderText: "123",
-            buttonText: "Confirm",
-            cancelButtonText: "Cancel",
-            onProcessingResult: { result in
-                if result.isProcessing {
-                    // Show loading indicator
-                } else if result.isValidationFailed {
-                    // Handle validation errors
+        // Generate signature for Spreedly configuration before showing recaching UI
+        Task {
+            let signatureGenerated = await SpreedlyConfigManager.shared.generateSignature()
+            await MainActor.run {
+                switch signatureGenerated {
+                case .success(_):
+                    // Create configuration
+                    let config = RecacheConfig(
+                        cardInfo: SavedCardInfo(
+                            lastFourDigits: card.lastFourDigits,
+                            cardType: card.cardType,
+                            cardBrand: card.cardBrand
+                        ),
+                        presentationMode: .bottomSheet,
+                        labelText: "CVV",
+                        placeholderText: "123",
+                        buttonText: "Confirm",
+                        cancelButtonText: "Cancel"
+                    )
+                    
+                    // Initialize view controller
+                    let recachingVC = CVVRecachingViewController(
+                        lastFourDigits: card.lastFourDigits,
+                        cardType: card.cardType,
+                        cardBrand: card.cardBrand,
+                        paymentMethodToken: card.paymentMethodToken,
+                        presentationMode: 0, // 0 = sheet, 1 = alert
+                        labelText: "CVV",
+                        placeholderText: "123",
+                        buttonText: "Confirm",
+                        cancelButtonText: "Cancel",
+                        onProcessingResult: { result in
+                            if result.isProcessing {
+                                // Show loading indicator
+                            } else if result.isValidationFailed {
+                                // Handle validation errors
+                            }
+                        }
+                    )
+                    
+                    // Set presentation style
+                    recachingVC.modalPresentationStyle = .formSheet
+                    
+                    // Present view controller
+                    self.present(recachingVC, animated: true)
+                    
+                case .failure(let error):
+                    // Handle signature generation error
+                    let alert = UIAlertController(
+                        title: "Error",
+                        message: "Failed to generate signature: \(error.localizedDescription)",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
                 }
             }
-        )
-        
-        // Set presentation style
-        recachingVC.modalPresentationStyle = .formSheet
-        
-        // Present view controller
-        present(recachingVC, animated: true)
+        }
     }
 }
 ```
@@ -1927,25 +1981,36 @@ let darkThemeConfig = SPLThemeConfig(
     borderRadius: 8.0
 )
 
-// Initialize with custom themes
-let recachingVC = CVVRecachingViewController(
-    lastFourDigits: card.lastFourDigits,
-    cardType: card.cardType,
-    cardBrand: card.cardBrand,
-    paymentMethodToken: card.paymentMethodToken,
-    presentationMode: 0,
-    labelText: "CVV",
-    placeholderText: "123",
-    buttonText: "Confirm",
-    cancelButtonText: "Cancel",
-    lightThemeConfig: lightThemeConfig,
-    darkThemeConfig: darkThemeConfig,
-    onProcessingResult: { result in
-        // Handle processing result
+// Generate signature before presenting (required for production)
+Task {
+    let signatureGenerated = await SpreedlyConfigManager.shared.generateSignature()
+    await MainActor.run {
+        if case .success = signatureGenerated {
+            // Initialize with custom themes
+            let recachingVC = CVVRecachingViewController(
+                lastFourDigits: card.lastFourDigits,
+                cardType: card.cardType,
+                cardBrand: card.cardBrand,
+                paymentMethodToken: card.paymentMethodToken,
+                presentationMode: 0,
+                labelText: "CVV",
+                placeholderText: "123",
+                buttonText: "Confirm",
+                cancelButtonText: "Cancel",
+                lightThemeConfig: lightThemeConfig,
+                darkThemeConfig: darkThemeConfig,
+                onProcessingResult: { result in
+                    // Handle processing result
+                }
+            )
+            
+            present(recachingVC, animated: true)
+        } else {
+            // Handle signature generation error
+            print("Failed to generate signature")
+        }
     }
-)
-
-present(recachingVC, animated: true)
+}
 ```
 
 ### Objective-C Integration
@@ -1975,34 +2040,50 @@ For Objective-C projects, use `CVVRecachingViewController` with Objective-C comp
         return;
     }
     
-    // Create CVV Recaching view controller
-    CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
-        initWithLastFourDigits:self.selectedCard.lastFourDigits
-        cardType:self.selectedCard.cardType
-        cardBrand:self.selectedCard.cardBrand
-        paymentMethodToken:self.selectedCard.paymentMethodToken
-        presentationMode:0  // 0 = sheet, 1 = alert
-        labelText:@"CVV"
-        placeholderText:@"123"
-        buttonText:@"Confirm"
-        cancelButtonText:@"Cancel"
-        onProcessingResult:^(PaymentProcessingResult *result) {
-            // Called during recaching
-            // isValidationFailed = validation error
-            // isProcessing = request started
-            // Final success/failure comes via paymentDidComplete: delegate method
-            if (result.isValidationFailed) {
-                NSLog(@"CVV validation failed");
-            } else if (result.isProcessing) {
-                NSLog(@"Recaching in progress...");
+    // Generate signature for Spreedly configuration before showing recaching UI
+    [[SpreedlyConfigManager shared] generateSignatureWithCompletion:^(BOOL success, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                // Create CVV Recaching view controller
+                CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
+                    initWithLastFourDigits:self.selectedCard.lastFourDigits
+                    cardType:self.selectedCard.cardType
+                    cardBrand:self.selectedCard.cardBrand
+                    paymentMethodToken:self.selectedCard.paymentMethodToken
+                    presentationMode:0  // 0 = sheet, 1 = alert
+                    labelText:@"CVV"
+                    placeholderText:@"123"
+                    buttonText:@"Confirm"
+                    cancelButtonText:@"Cancel"
+                    onProcessingResult:^(PaymentProcessingResult *result) {
+                        // Called during recaching
+                        // isValidationFailed = validation error
+                        // isProcessing = request started
+                        // Final success/failure comes via paymentDidComplete: delegate method
+                        if (result.isValidationFailed) {
+                            NSLog(@"CVV validation failed");
+                        } else if (result.isProcessing) {
+                            NSLog(@"Recaching in progress...");
+                        }
+                    }];
+                
+                // Set presentation style
+                recachingVC.modalPresentationStyle = UIModalPresentationFormSheet;
+                
+                // Present view controller
+                [self presentViewController:recachingVC animated:YES completion:nil];
+            } else {
+                // Handle signature generation error
+                NSString *errorMessage = error ? error.localizedDescription : @"Failed to generate signature";
+                UIAlertController *alert = [UIAlertController 
+                    alertControllerWithTitle:@"Error" 
+                    message:errorMessage 
+                    preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                [self presentViewController:alert animated:YES completion:nil];
             }
-        }];
-    
-    // Set presentation style
-    recachingVC.modalPresentationStyle = UIModalPresentationFormSheet;
-    
-    // Present view controller
-    [self presentViewController:recachingVC animated:YES completion:nil];
+        });
+    }];
 }
 
 #pragma mark - SpreedlyPaymentDelegate
@@ -2065,24 +2146,32 @@ SPLThemeConfig *darkThemeConfig = [[SPLThemeConfig alloc]
     placeholderColor:nil
     borderRadius:8.0];
 
-// Initialize with custom themes
-CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
-    initWithLastFourDigits:self.selectedCard.lastFourDigits
-    cardType:self.selectedCard.cardType
-    cardBrand:self.selectedCard.cardBrand
-    paymentMethodToken:self.selectedCard.paymentMethodToken
-    presentationMode:0
-    labelText:@"CVV"
-    placeholderText:@"123"
-    buttonText:@"Confirm"
-    cancelButtonText:@"Cancel"
-    lightThemeConfig:lightThemeConfig
-    darkThemeConfig:darkThemeConfig
-    onProcessingResult:^(PaymentProcessingResult *result) {
-        // Handle processing result
-    }];
-
-[self presentViewController:recachingVC animated:YES completion:nil];
+// Generate signature before presenting (required for production)
+[[SpreedlyConfigManager shared] generateSignatureWithCompletion:^(BOOL success, NSError * _Nullable error) {
+    if (success) {
+        // Initialize with custom themes
+        CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
+            initWithLastFourDigits:self.selectedCard.lastFourDigits
+            cardType:self.selectedCard.cardType
+            cardBrand:self.selectedCard.cardBrand
+            paymentMethodToken:self.selectedCard.paymentMethodToken
+            presentationMode:0
+            labelText:@"CVV"
+            placeholderText:@"123"
+            buttonText:@"Confirm"
+            cancelButtonText:@"Cancel"
+            lightThemeConfig:lightThemeConfig
+            darkThemeConfig:darkThemeConfig
+            onProcessingResult:^(PaymentProcessingResult *result) {
+                // Handle processing result
+            }];
+        
+        [self presentViewController:recachingVC animated:YES completion:nil];
+    } else {
+        // Handle signature generation error
+        NSLog(@"Failed to generate signature: %@", error.localizedDescription);
+    }
+}];
 ```
 
 ### Payment Result Handling
@@ -2251,7 +2340,7 @@ Remember to cancel payment result subscriptions to prevent memory leaks:
 - Check that subscription is not cancelled prematurely
 - Verify delegate is set for Objective-C integration
 - Check that you're not creating multiple subscriptions (only one should be active)
-- Verify SDK is properly initialized with `Spreedly.setup()`
+- Verify SDK is properly initialized with `Spreedly.initializeSDK()` or `Spreedly.setup(config:)`
 
 **Issue: Validation errors**
 
@@ -2314,9 +2403,16 @@ When a transaction requires 3DS authentication, your backend will receive a `man
 
 ### SDK Initialization with 3DS Support
 
-To enable 3DS authentication, initialize the SDK with your environment key and Forter Site ID. The SDK supports a two-step initialization pattern for production use with signature-based security.
+> **⚠️ Important**: `Spreedly.setup(config:)` is **MANDATORY** and must include `environmentKey`, `forterSiteId`, and all signature parameters. `Spreedly.initializeSDK()` alone is **NOT sufficient** - it only creates the SDK instance without required credentials.
 
-#### Basic Initialization
+To enable 3DS authentication, use the two-step initialization pattern:
+
+**Step 1:** Initialize SDK at app launch (basic setup - creates instance only)  
+**Step 2:** **MANDATORY** - Configure with `environmentKey`, `forterSiteId`, and signature parameters before making payment requests
+
+#### Step 1: Basic Initialization (App Launch)
+
+> **⚠️ Note**: This step only creates the SDK instance. It is **NOT sufficient** for payment operations. You **MUST** complete Step 2 with `setup(config:)` before making any payment requests.
 
 **Swift (UIKit):**
 
@@ -2326,11 +2422,9 @@ import SpreedlyCore
 // In your App delegate
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    // Initialize with environment key and Forter Site ID for 3DS support
-    Spreedly.setup(
-        environmentKey: "your_environment_key_here",
-        forterSiteId: "your_forter_site_id"  // Get from https://portal.forter.com/app/integration/credentials/
-    )
+    // Step 1: Basic initialization (creates SDK instance only)
+    // ⚠️ This alone is NOT sufficient - you MUST call setup(config:) in Step 2
+    Spreedly.initializeSDK()
     
     return true
 }
@@ -2345,11 +2439,9 @@ import SpreedlyCore
 @main
 struct MyApp: App {
     init() {
-        // Initialize Spreedly with 3DS support
-        Spreedly.setup(
-            environmentKey: "your_environment_key_here",
-            forterSiteId: "your_forter_site_id"
-        )
+        // Step 1: Basic initialization (creates SDK instance only)
+        // ⚠️ This alone is NOT sufficient - you MUST call setup(config:) in Step 2
+        Spreedly.initializeSDK()
     }
     
     var body: some Scene {
@@ -2367,20 +2459,28 @@ struct MyApp: App {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // Initialize Spreedly with 3DS support
-    [Spreedly setupWithEnvironmentKey:@"your_environment_key_here" 
-                         forterSiteId:@"your_forter_site_id"];
+    // Step 1: Basic initialization (creates SDK instance only)
+    // ⚠️ This alone is NOT sufficient - you MUST call setupWithConfig: in Step 2
+    [Spreedly initializeSDK];
     
     return YES;
 }
 ```
 
-#### Production Setup with Signature Security (Recommended)
+#### Step 2: Configure with Credentials (MANDATORY)
 
-For production environments, use a two-step initialization pattern that combines 3DS support with signature-based security:
+> **⚠️ CRITICAL**: You **MUST** call `Spreedly.setup(config:)` with all required credentials before making any payment requests. The SDK **will not function** without:
+> - `environmentKey` (REQUIRED)
+> - `forterSiteId` (REQUIRED for 3DS support)
+> - `certificateToken` (REQUIRED for security)
+> - `nonce` (REQUIRED for security)
+> - `signature` (REQUIRED for security)
+> - `timestamp` (REQUIRED for security)
+>
+> **Without Step 2, payment operations will fail.**
 
-**Step 1:** Initialize with environment key and Forter Site ID at app launch
-**Step 2:** Update configuration with signature parameters before making payment requests
+**Step 1:** Initialize SDK with basic configuration at app launch (creates instance only - **NOT sufficient for payments**)  
+**Step 2:** **MANDATORY** - Update configuration with environment key, Forter Site ID, and signature parameters before making payment requests
 
 **Swift:**
 
@@ -2395,11 +2495,12 @@ class SpreedlyConfigManager {
     private let serverURL = "https://your-backend.com/api/v1/auth/params"
     
     private init() {
-        // Step 1: Initialize with 3DS support
-        Spreedly.setup(environmentKey: environmentKey, forterSiteId: forterSiteId)
+        // Step 1: Basic initialization (already called in app launch)
+        // This creates the SDK instance but does NOT provide credentials
     }
     
-    /// Step 2: Update config with signature parameters before payment
+    /// Step 2: MANDATORY - Update config with ALL required credentials before payment
+    /// This MUST be called before any payment operations
     func generateSignature() async -> Result<Bool, Error> {
         let config = SignatureSecurityService.ServerSecurityConfig(
             serverURL: serverURL,
@@ -2413,13 +2514,15 @@ class SpreedlyConfigManager {
             return .failure(result.error ?? NSError(domain: "Config", code: 0))
         }
         
-        // Update Spreedly config with signature parameters
+        // MANDATORY: Update Spreedly config with ALL required credentials
+        // This MUST include: environmentKey, forterSiteId, and signature parameters
         Spreedly.setup(config: SpreedlyConfig(
-            environmentKey: environmentKey,
-            certificateToken: signatureParams.certificateToken,
-            nonce: signatureParams.nonce,
-            signature: signatureParams.signature,
-            timestamp: String(signatureParams.timestamp)
+            environmentKey: environmentKey,           // REQUIRED
+            forterSiteId: forterSiteId,              // REQUIRED for 3DS
+            certificateToken: signatureParams.certificateToken,  // REQUIRED
+            nonce: signatureParams.nonce,            // REQUIRED
+            signature: signatureParams.signature,    // REQUIRED
+            timestamp: String(signatureParams.timestamp)  // REQUIRED
         ))
         
         return .success(true)
@@ -2436,24 +2539,25 @@ class SpreedlyConfigManager {
 
 - (instancetype)init {
     if (self = [super init]) {
-        // Step 1: Initialize with 3DS support
-        [Spreedly setupWithEnvironmentKey:@"your_environment_key" 
-                             forterSiteId:@"your_forter_site_id"];
+        // Step 1: Initialize with default configuration
+        [Spreedly initializeSDK];
     }
     return self;
 }
 
-/// Step 2: Update config with signature parameters before payment
+/// Step 2: MANDATORY - Update config with ALL required credentials before payment
+/// This MUST be called before any payment operations
 - (void)generateSignatureWithCompletion:(void (^)(BOOL success, NSError *error))completion {
     // Fetch signature from your backend...
     
-    // Update Spreedly config with signature parameters
-    SpreedlyConfig *config = [[SpreedlyConfig alloc] 
-        initWithEnvironmentKey:@"your_environment_key"
-        certificateToken:signatureParams.certificateToken
-        nonce:signatureParams.nonce
-        signature:signatureParams.signature
-        timestamp:[NSString stringWithFormat:@"%ld", signatureParams.timestamp]];
+    // MANDATORY: Update Spreedly config with ALL required credentials
+    // This MUST include: environmentKey, forterSiteId, and signature parameters
+    SpreedlyConfig *config = [[SpreedlyConfig alloc] initWithEnvironmentKey:self.environmentKey];  // REQUIRED
+    config.forterSiteId = self.forterSiteId;  // REQUIRED for 3DS
+    config.certificateToken = result.signatureParams.certificateToken;  // REQUIRED
+    config.nonce = result.signatureParams.nonce;  // REQUIRED
+    config.signature = result.signatureParams.signature;  // REQUIRED
+    config.timestamp = [NSString stringWithFormat:@"%ld", (long)result.signatureParams.timestamp];  // REQUIRED
     
     [Spreedly setupWithConfig:config];
     
@@ -2463,8 +2567,13 @@ class SpreedlyConfigManager {
 @end
 ```
 
-> **Note:** The `forterSiteId` is required for 3DS authentication. Get your Forter Site ID from the [Forter Portal](https://portal.forter.com/app/integration/credentials/).
-> 
+> **⚠️ CRITICAL**: `Spreedly.setup(config:)` is **MANDATORY** and must be called with all required credentials:
+> - `environmentKey` (REQUIRED) - Without this, API calls will fail
+> - `forterSiteId` (REQUIRED for 3DS) - Get from [Forter Portal](https://portal.forter.com/app/integration/credentials/)
+> - `certificateToken`, `nonce`, `signature`, `timestamp` (REQUIRED) - For secure authentication
+>
+> **Without calling `setup(config:)` with these credentials, the SDK cannot process payments.**
+>
 > When `setup(config:)` is called after the SDK is already initialized, it updates the existing configuration without reinitializing the Forter SDK.
 
 ### 3DS Flow Overview
@@ -3009,7 +3118,7 @@ For detailed backend integration, refer to [Spreedly's 3DS documentation](https:
 **Issue: 3DS Challenge view doesn't appear**
 
 - Ensure `managedOrderToken` is valid and not empty
-- Verify Forter Site ID is configured in `Spreedly.setup()`
+- Verify Forter Site ID is configured in `Spreedly.setup(config:)` with a `SpreedlyConfig` containing forterSiteId
 - Check that the Forter3DS framework is properly linked
 
 **Issue: Challenge result not received**
@@ -3017,11 +3126,11 @@ For detailed backend integration, refer to [Spreedly's 3DS documentation](https:
 - Ensure challenge result subscription is set up BEFORE presenting the challenge
 - Check that subscription is not cancelled prematurely
 - Verify delegate is set for Objective-C integration
-- Verify SDK is properly initialized with `Spreedly.setup(environmentKey:forterSiteId:)`
+- Verify SDK is properly initialized with `Spreedly.initializeSDK()` or `Spreedly.setup(config:)`
 
 **Issue: "Forter SDK not initialized" error**
 
-- Ensure you're calling `Spreedly.setup(environmentKey:forterSiteId:)` with a valid Forter Site ID
+- Ensure you're calling `Spreedly.setup(config:)` with a `SpreedlyConfig` containing a valid Forter Site ID
 - Verify the Forter3DS framework is properly imported
 
 **Issue: Challenge fails immediately**
@@ -3385,7 +3494,7 @@ By default, logging is enabled with `DEBUG` level. The logger is automatically c
 import SpreedlyCore
 
 // Initialize the SDK
-Spreedly.setup(environmentKey: "your_environment_key")
+Spreedly.initializeSDK()
 
 // Logging is automatically configured and ready to use
 ```
@@ -3655,7 +3764,7 @@ logDebug(tag: "Debug", message: "Debug info: \(expensiveData)")
 ```
 [ERROR] [Spreedly] Spreedly instance not initialized. Call Spreedly(environmentKey:) first.
 ```
-**Solution**: Ensure `Spreedly.setup()` is called before using the SDK.
+**Solution**: Ensure `Spreedly.initializeSDK()` or `Spreedly.setup(config:)` is called before using the SDK.
 
 **2. Network Errors**
 ```
@@ -4094,7 +4203,7 @@ class SpreedlyIntegrationTests: XCTestCase {
 
     func testPaymentFlow() {
         // Setup test environment
-        Spreedly.setup(environmentKey: "test_environment_key")
+        Spreedly.initializeSDK()
 
         // Test payment creation - new API returns PaymentProcessingResult synchronously
         let processingResult = Spreedly.shared().createCreditCard(
@@ -4465,17 +4574,17 @@ import SpreedlyUI
 
 **Error Message:**
 ```
-Spreedly instance not initialized. Call Spreedly.setup() first.
+Spreedly instance not initialized. Call Spreedly.initializeSDK() or Spreedly.setup(config:) first.
 ```
 
 **Solution:**
 ```swift
-// Ensure Spreedly.setup() is called before use
+// Ensure Spreedly.initializeSDK() or Spreedly.setup(config:) is called before use
 // In AppDelegate or SwiftUI App:
 
 // AppDelegate
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    Spreedly.setup(environmentKey: "your_environment_key")
+    Spreedly.initializeSDK()
     return true
 }
 
@@ -4483,7 +4592,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 @main
 struct MyApp: App {
     init() {
-        Spreedly.setup(environmentKey: "your_environment_key")
+        Spreedly.initializeSDK()
     }
     
     var body: some Scene {
@@ -4794,8 +4903,10 @@ This section covers essential security practices for integrating the Spreedly iO
 
 **❌ Bad Practice:**
 ```swift
-// NEVER do this
-Spreedly.setup(environmentKey: "production_key_abc123xyz")
+// NEVER do this - hardcoded keys in source code
+Spreedly.setup(config: SpreedlyConfig(
+    environmentKey: "production_key_abc123xyz"
+))
 ```
 
 **✅ Good Practice:**
@@ -4812,7 +4923,9 @@ struct SecureConfig {
 }
 
 // Initialize with secure key
-Spreedly.setup(environmentKey: SecureConfig.environmentKey)
+Spreedly.setup(config: SpreedlyConfig(
+    environmentKey: SecureConfig.environmentKey
+))
 ```
 
 #### Secure Configuration Management
@@ -4826,7 +4939,7 @@ Spreedly.setup(environmentKey: SecureConfig.environmentKey)
    ```swift
    // Load from environment variables
    let environmentKey = ProcessInfo.processInfo.environment["SPREEDLY_ENV_KEY"] ?? ""
-   Spreedly.setup(environmentKey: environmentKey)
+   Spreedly.setup(config: SpreedlyConfig(environmentKey: environmentKey))
    ```
 
 3. **Secure Backend Service** (Recommended):
@@ -4851,7 +4964,7 @@ func rotateAPIKey() async {
     let newKey = await fetchNewAPIKeyFromBackend()
     
     // 2. Update SDK configuration
-    Spreedly.setup(environmentKey: newKey)
+    Spreedly.setup(config: SpreedlyConfig(environmentKey: newKey))
     
     // 3. Verify new key works
     // Test with a simple API call

@@ -525,6 +525,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
+@class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
@@ -534,13 +535,18 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
 /// Objective-C compatible delegate for 3DS challenge result callbacks
 @property (nonatomic, weak) id <SpreedlyThreeDSChallengeDelegate> _Nullable threeDSChallengeDelegate;
-/// Initializes Spreedly with environment key and Forter Site ID for 3DS authentication
-/// \param environmentKey Spreedly environment key
+/// Initializes the Spreedly instance with the provided security configuration.
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Initializes Spreedly SDK with default configuration.
+/// Use Spreedly.setup(config:) to provide custom configuration including environment key and Forter Site ID.
+/// note:
+/// For 3DS authentication, use Spreedly.setup(config:) with a SpreedlyConfig containing forterSiteId.
++ (void)initializeSDK;
+/// Objective-C compatible method for setting up Spreedly with configuration
+/// \param config The SpreedlyConfig instance containing configuration values
 ///
-/// \param forterSiteId Forter Site ID for 3DS authentication (get from https://portal.forter.com/app/integration/credentials/)
-///
-+ (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey forterSiteId:(NSString * _Nonnull)forterSiteId;
-+ (void)setupWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
++ (void)setupWithConfig:(SpreedlyConfig * _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
@@ -564,8 +570,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
@@ -633,6 +637,7 @@ typedef SWIFT_ENUM(NSInteger, SpreedlyApiError, open) {
 SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @protocol SpreedlyConfigGenerator <NSObject>
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
+@property (nonatomic, copy) NSString * _Nullable forterSiteId;
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
@@ -642,11 +647,16 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @interface SpreedlyConfig : NSObject <SpreedlyConfigGenerator>
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
+@property (nonatomic, copy) NSString * _Nullable forterSiteId;
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nonnull)environmentKey certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp OBJC_DESIGNATED_INITIALIZER;
+/// Objective-C compatible convenience initializer
+/// \param environmentKey Spreedly environment key
+///
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1315,6 +1325,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
+@class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
@@ -1324,13 +1335,18 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
 /// Objective-C compatible delegate for 3DS challenge result callbacks
 @property (nonatomic, weak) id <SpreedlyThreeDSChallengeDelegate> _Nullable threeDSChallengeDelegate;
-/// Initializes Spreedly with environment key and Forter Site ID for 3DS authentication
-/// \param environmentKey Spreedly environment key
+/// Initializes the Spreedly instance with the provided security configuration.
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Initializes Spreedly SDK with default configuration.
+/// Use Spreedly.setup(config:) to provide custom configuration including environment key and Forter Site ID.
+/// note:
+/// For 3DS authentication, use Spreedly.setup(config:) with a SpreedlyConfig containing forterSiteId.
++ (void)initializeSDK;
+/// Objective-C compatible method for setting up Spreedly with configuration
+/// \param config The SpreedlyConfig instance containing configuration values
 ///
-/// \param forterSiteId Forter Site ID for 3DS authentication (get from https://portal.forter.com/app/integration/credentials/)
-///
-+ (void)setupWithEnvironmentKey:(NSString * _Nonnull)environmentKey forterSiteId:(NSString * _Nonnull)forterSiteId;
-+ (void)setupWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
++ (void)setupWithConfig:(SpreedlyConfig * _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
@@ -1354,8 +1370,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
@@ -1423,6 +1437,7 @@ typedef SWIFT_ENUM(NSInteger, SpreedlyApiError, open) {
 SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @protocol SpreedlyConfigGenerator <NSObject>
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
+@property (nonatomic, copy) NSString * _Nullable forterSiteId;
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
@@ -1432,11 +1447,16 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @interface SpreedlyConfig : NSObject <SpreedlyConfigGenerator>
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
+@property (nonatomic, copy) NSString * _Nullable forterSiteId;
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nonnull)environmentKey certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp OBJC_DESIGNATED_INITIALIZER;
+/// Objective-C compatible convenience initializer
+/// \param environmentKey Spreedly environment key
+///
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

@@ -81,15 +81,21 @@ The SDK supports all iOS devices running iOS 13.0 or later:
 
 2. **Initialize the SDK** in your app:
 
+> **⚠️ Important**: You **MUST** call `Spreedly.setup(config:)` with `environmentKey`, `forterSiteId` (for 3DS), and signature parameters before making payment requests. `Spreedly.initializeSDK()` alone is **NOT sufficient**.
+
 ```swift
 import SpreedlyCore
 import SpreedlyUI
 
-// In your App delegate or SwiftUI App
+// Step 1: Basic initialization at app launch
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    Spreedly.setup(environmentKey: "your_environment_key_here")
+    Spreedly.initializeSDK()  // Creates SDK instance (not sufficient alone)
     return true
 }
+
+// Step 2: MANDATORY - Configure with credentials before payment
+// You MUST call this with environmentKey, forterSiteId, and signature parameters
+// See Integration Guide for complete example
 ```
 
 3. **Use the Express Checkout** component:
