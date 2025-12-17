@@ -14,43 +14,43 @@
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		a/+6J1ktfzNXuFdazrv2DU28HJQ=
+		PGYMkjTIvczk9gGsauy/TeeO58E=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		F+KS+/22ZWJNUaOWviFUQ3MYd9s=
+		w4qmfSZCP0O4t4JkKpMdcB5AKYs=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		QuBbaxmIK6u+PVIOma1NQaJMkFc=
+		/WYBBIf+EXhnnSAX7lw/2znqNg4=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		F+KS+/22ZWJNUaOWviFUQ3MYd9s=
+		w4qmfSZCP0O4t4JkKpMdcB5AKYs=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		P+PZ0VRWNA+9rOYxn7M9wzDDdUg=
+		qRrjQhiSOT50fFhLnhYggv7niE8=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		a/+6J1ktfzNXuFdazrv2DU28HJQ=
+		PGYMkjTIvczk9gGsauy/TeeO58E=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		005uMtBRJNUe8vlB0Jsprk954xY=
+		uIsSZUejSHsj4q5CVgjWn4Sh8Rg=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		6twPLoM4lkeL/H43N8YSyKfaGEI=
+		JFRZYwuKl0VflON+FxtXU8gUtz4=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		005uMtBRJNUe8vlB0Jsprk954xY=
+		uIsSZUejSHsj4q5CVgjWn4Sh8Rg=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		OydTY3P9ntlfXPQ2mlWlwDEXDk8=
+		sOH4Bm/ajxPJU7BJRhk1wSp8S70=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -79,70 +79,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			B8Lq645EU9G4+Y0SpXSGJfkE9torVYTn2zK4Q87WcAc=
+			EzmVZgNq7abhjPCaVcJZUWmaPphskX8IiBr0vi8fQz4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			AXep8cc2yz33waU6sAtqaMa5Qz91d7lA8oEGFszpPzI=
+			kgzthbKt/1KACb4ITu08yJck8BkAZEKfJoPVJBxsZGs=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			u815N16C1tD/OWP3zAt7JSXrSZgyYHkbqw6wypnLG60=
+			Eq8CuCU76HTEgAGYNyn3NHIz7p8yKpkOdxxo5nqR/DQ=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			AXep8cc2yz33waU6sAtqaMa5Qz91d7lA8oEGFszpPzI=
+			kgzthbKt/1KACb4ITu08yJck8BkAZEKfJoPVJBxsZGs=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MMMf9TMHuJBB+iree3C8vWm/13hpInHEADWlfpKO1Mw=
+			j/eO7rrgVwdOe0F4BT3XuyEAwFMiVdjvsMXM5lQC+gM=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			B8Lq645EU9G4+Y0SpXSGJfkE9torVYTn2zK4Q87WcAc=
+			EzmVZgNq7abhjPCaVcJZUWmaPphskX8IiBr0vi8fQz4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UMtE3U3/mhLQS6CL3RP+Kl3sbpFjF/gg2/20UsZGzbM=
+			NvhViEvPJsa1B2ngWxfh/etcXz0ly6h4at3+aJ/YeJw=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/L5i6IqzKLGpY//ZWc36ipPF0CRlJ/yy5uFUQUWrCEI=
+			SkO94SIVt2YA21sOx5/QmgM0l/3+cPwrHLG3LFz5oXc=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UMtE3U3/mhLQS6CL3RP+Kl3sbpFjF/gg2/20UsZGzbM=
+			NvhViEvPJsa1B2ngWxfh/etcXz0ly6h4at3+aJ/YeJw=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Cfo50QSWm8PBXi3wTnuHJRaRMBgoYlPwrOIwcTuDjbI=
+			G5rAYF0lvO0QN0Dk5TBu2cvbF7Dh1vYjLIM4nJhNp5o=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
