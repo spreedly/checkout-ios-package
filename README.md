@@ -162,6 +162,44 @@ targets: [
 ]
 ```
 
+#### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
+
+**Important:** If you plan to use 3DS (Three-Domain Secure) authentication, you **must** add the Forter3DS package as a direct dependency to your app target.
+
+**Why is this needed?**
+
+`SpreedlyCore` dynamically links to Forter3DS for 3DS authentication, but doesn't declare it as a transitive dependency. Since Forter3DS is a dynamic framework, it must be embedded in your app bundle. Swift Package Manager doesn't automatically embed transitive dynamic dependencies, so you must add it directly.
+
+**How to add:**
+
+1. **In Xcode:**
+   - File → Add Package Dependencies
+   - Enter: `https://bitbucket.org/forter-mobile/forter-ios.git`
+   - Version: `2.1.0` or later
+   - Add `Forter3DS` product to your app target
+   - Set to "Embed & Sign" in "Frameworks, Libraries, and Embedded Content"
+
+2. **In Package.swift:**
+```swift
+dependencies: [
+    .package(url: "https://github.com/spreedly/checkout-ios-sdk.git", from: "1.0.0"),
+    .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "SpreedlyCore", package: "SpreedlySDK"),
+            .product(name: "SpreedlySecurity", package: "SpreedlySDK"),
+            .product(name: "SpreedlyUI", package: "SpreedlySDK"),
+            .product(name: "Forter3DS", package: "forter-ios")  // Required for 3DS
+        ]
+    )
+]
+```
+
+**Note:** Skip this if you're not using 3DS authentication. The SDK handles the absence gracefully.
+
 ### Option 2: CocoaPods
 
 Add to your `Podfile`:
@@ -177,6 +215,10 @@ target 'YourApp' do
   # pod 'Spreedly/Core', '~> 1.0'
   # pod 'Spreedly/Security', '~> 1.0'
   # pod 'Spreedly/UI', '~> 1.0'
+  
+  # ⚠️ Required for 3DS Authentication
+  # If you plan to use 3DS authentication, add Forter3DS:
+  pod 'Forter3DS', '~> 2.1.0', :source => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 end
 ```
 
@@ -184,6 +226,25 @@ Then run:
 ```bash
 pod install
 ```
+
+#### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
+
+**Important:** If you plan to use 3DS (Three-Domain Secure) authentication, you **must** add the Forter3DS pod to your Podfile.
+
+**Why is this needed?**
+
+`SpreedlyCore` dynamically links to Forter3DS for 3DS authentication, but doesn't declare it as a transitive dependency. Since Forter3DS is a dynamic framework, it must be embedded in your app bundle. CocoaPods doesn't automatically embed transitive dynamic dependencies, so you must add it directly.
+
+**Technical Details:**
+
+The Forter3DS package uses pre-compiled `.xcframework` binaries that are dynamically linked by default. Because these are pre-compiled binaries, the linking type cannot be changed to static linking. The package includes:
+- Pre-compiled `.xcframework` files via `.binaryTarget`
+- `.library` products that default to dynamic linking
+- Multiple binary targets: `Forter3DS`, `ThreeDS_SDK`, and `FTR3DSCommon`
+
+Since static linking is not possible with pre-compiled binaries, the framework must be added as a direct dependency to ensure it's embedded in your app bundle.
+
+**Note:** Skip this if you're not using 3DS authentication. The SDK handles the absence gracefully.
 
 ### Option 3: Manual Framework Integration
 

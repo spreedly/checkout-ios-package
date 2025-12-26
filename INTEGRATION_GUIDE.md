@@ -79,6 +79,48 @@ targets: [
 ]
 ```
 
+#### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
+
+**Important:** If you plan to use 3DS (Three-Domain Secure) authentication, you **must** add the Forter3DS package as a direct dependency to your app target. This is required because `SpreedlyCore` dynamically links to Forter3DS but doesn't declare it as a transitive dependency.
+
+**Why is this needed?**
+
+- `SpreedlyCore` uses Forter3DS for 3DS authentication flows
+- Forter3DS is dynamically linked (not statically compiled into SpreedlyCore)
+- Dynamic frameworks must be embedded in the app bundle at runtime
+- Swift Package Manager doesn't automatically embed transitive dynamic dependencies
+- Without this dependency, your app will crash on real devices with: `dyld: Library not loaded: @rpath/Forter3DS.framework/Forter3DS`
+
+**How to add Forter3DS via Swift Package Manager:**
+
+1. **In Xcode:**
+   - File → Add Package Dependencies
+   - Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
+   - Select version: `2.1.0` or later
+   - Add `Forter3DS` product to your app target
+   - Ensure it's set to "Embed & Sign" in your target's "Frameworks, Libraries, and Embedded Content"
+
+2. **In Package.swift:**
+```swift
+dependencies: [
+    .package(url: "https://github.com/spreedly/checkout-ios-sdk.git", from: "1.0.0"),
+    .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "SpreedlyCore", package: "SpreedlySDK"),
+            .product(name: "SpreedlySecurity", package: "SpreedlySDK"),
+            .product(name: "SpreedlyUI", package: "SpreedlySDK"),
+            .product(name: "Forter3DS", package: "forter-ios")  // Required for 3DS
+        ]
+    )
+]
+```
+
+**Note:** If you're not using 3DS authentication, you can skip adding Forter3DS. The SDK will gracefully handle the absence of Forter3DS and show an appropriate message if 3DS is required.
+
 ### Option 2: Manual Framework Integration
 
 1. **Download frameworks** from GitHub releases
@@ -100,8 +142,35 @@ target 'YourApp' do
   # pod 'Spreedly/Core', '~> 1.0'
   # pod 'Spreedly/Security', '~> 1.0'
   # pod 'Spreedly/UI', '~> 1.0'
+  
+  # ⚠️ Required for 3DS Authentication
+  # If you plan to use 3DS authentication, add Forter3DS:
+  pod 'Forter3DS', '~> 2.1.0', :source => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 end
 ```
+
+#### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
+
+**Important:** If you plan to use 3DS (Three-Domain Secure) authentication, you **must** add the Forter3DS pod to your Podfile. This is required because `SpreedlyCore` dynamically links to Forter3DS but doesn't declare it as a transitive dependency.
+
+**Why is this needed?**
+
+- `SpreedlyCore` uses Forter3DS for 3DS authentication flows
+- Forter3DS is dynamically linked (not statically compiled into SpreedlyCore)
+- Dynamic frameworks must be embedded in the app bundle at runtime
+- CocoaPods doesn't automatically embed transitive dynamic dependencies
+- Without this dependency, your app will crash on real devices with: `dyld: Library not loaded: @rpath/Forter3DS.framework/Forter3DS`
+
+**Technical Details:**
+
+The Forter3DS package uses pre-compiled `.xcframework` binaries with dynamic linking by default. Because these are pre-compiled binaries, the linking type cannot be changed to static linking. The package structure includes:
+- `.binaryTarget` with pre-compiled `.xcframework` files
+- `.library` products that default to dynamic linking (not static)
+- Multiple binary targets: `Forter3DS`, `ThreeDS_SDK`, and `FTR3DSCommon`
+
+Since static linking is not possible with pre-compiled binaries, the framework must be added as a direct dependency to ensure it's embedded in your app bundle.
+
+**Note:** If you're not using 3DS authentication, you can skip adding Forter3DS. The SDK will gracefully handle the absence of Forter3DS and show an appropriate message if 3DS is required.
 
 ## Basic Setup
 
@@ -2396,7 +2465,7 @@ When a transaction requires 3DS authentication, your backend will receive a `man
 
 **Key Components:**
 
-- **ThreeDSChallengeView** - SwiftUI view for presenting 3DS challenges
+- **DoChallengeIfNeeded** - SwiftUI view for presenting 3DS challenges
 - **ThreeDSChallengeViewController** - UIKit/Objective-C compatible view controller
 - **ThreeDSChallengeResult** - Result object containing challenge outcome
 - **SpreedlyThreeDSChallengeDelegate** - Delegate protocol for Objective-C integration
@@ -2583,7 +2652,7 @@ The typical 3DS flow works as follows:
 1. **Tokenize Payment Method** - Use `CardFormDropIn` or individual fields to create a payment method token
 2. **Backend Purchase Request** - Your backend sends the payment method token to Spreedly's purchase/authorize endpoint
 3. **Check for 3DS Requirement** - If the response contains `sca_authentication.managed_order_token`, 3DS is required
-4. **Present Challenge** - Display the 3DS challenge UI using `ThreeDSChallengeView` or `ThreeDSChallengeViewController`
+4. **Present Challenge** - Display the 3DS challenge UI using `DoChallengeIfNeeded` or `ThreeDSChallengeViewController`
 5. **Handle Result** - Receive the challenge result via subscription or delegate
 6. **Complete Transaction** - Your backend calls Spreedly's `complete_gratis` endpoint to finalize the transaction
 
@@ -2635,9 +2704,10 @@ struct PaymentView: View {
             )
         }
         .sheet(isPresented: $show3DSChallenge) {
-            if let token = managedOrderToken {
-                ThreeDSChallengeView(
+            if let token = managedOrderToken, let transactionToken = transactionToken {
+                DoChallengeIfNeeded(
                     managedOrderToken: token,
+                    transactionToken: transactionToken,
                     onDismiss: {
                         show3DSChallenge = false
                     }
@@ -2724,11 +2794,12 @@ struct PaymentView: View {
 }
 ```
 
-#### ThreeDSChallengeView Parameters
+#### DoChallengeIfNeeded Parameters
 
 ```swift
-ThreeDSChallengeView(
-    managedOrderToken: String,      // Required: Token from Spreedly API response
+DoChallengeIfNeeded(
+    managedOrderToken: String,      // Required: Token from Spreedly API response (sca_authentication.managed_order_token)
+    transactionToken: String,         // Required: Transaction token for completion and status APIs
     onDismiss: (() -> Void)? = nil  // Optional: Called when view should be dismissed
 )
 ```
@@ -2778,10 +2849,11 @@ class PaymentViewController: UIViewController {
         }
     }
     
-    func present3DSChallenge(managedOrderToken: String) {
+    func present3DSChallenge(managedOrderToken: String, transactionToken: String) {
         // Create the challenge view controller
         let challengeVC = ThreeDSChallengeViewController(
             managedOrderToken: managedOrderToken,
+            transactionToken: transactionToken,
             onDismiss: { [weak self] in
                 self?.dismiss(animated: true)
             }
@@ -2872,10 +2944,11 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 #### Presenting the 3DS Challenge
 
 ```objc
-- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken {
+- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken transactionToken:(NSString *)transactionToken {
     // Create the challenge view controller
     ThreeDSChallengeViewController *challengeVC = [[ThreeDSChallengeViewController alloc] 
-        initWithManagedOrderToken:managedOrderToken 
+        initWithManagedOrderToken:managedOrderToken
+        transactionToken:transactionToken
         onDismiss:nil];  // Using delegate pattern, so onDismiss can be nil
     
     // Present modally
@@ -2969,9 +3042,10 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
     // }];
 }
 
-- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken {
+- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken transactionToken:(NSString *)transactionToken {
     ThreeDSChallengeViewController *challengeVC = [[ThreeDSChallengeViewController alloc] 
-        initWithManagedOrderToken:managedOrderToken 
+        initWithManagedOrderToken:managedOrderToken
+        transactionToken:transactionToken
         onDismiss:nil];
     
     [self presentViewController:challengeVC animated:YES completion:nil];
