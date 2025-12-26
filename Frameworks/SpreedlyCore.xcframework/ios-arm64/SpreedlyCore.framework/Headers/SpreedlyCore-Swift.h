@@ -283,7 +283,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 @import Foundation;
 @import ObjectiveC;
-@import UIKit;
 #endif
 
 #endif
@@ -765,24 +764,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 ///
 + (ThreeDSChallengeResult * _Nonnull)failureWithError:(NSError * _Nonnull)error SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-@class NSCoder;
-@class NSBundle;
-/// UIKit wrapper for ThreeDSChallengeView to enable Objective-C integration
-/// This class is always available regardless of whether Forter3DS is configured.
-/// When Forter3DS is not available, the view will display an appropriate message.
-SWIFT_CLASS("_TtC12SpreedlyCore30ThreeDSChallengeViewController")
-@interface ThreeDSChallengeViewController : UIViewController
-/// Initializes the 3DS Challenge View Controller
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
-///
-/// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
-///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)viewDidLoad;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {

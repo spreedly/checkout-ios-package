@@ -1,3 +1,35 @@
+## [0.0.67] - 2025-12-26
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Enhance 3DS Authentication Support and Update Integration Guide (#141)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (0.0.67 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "0.0.67")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 0.0.67'
+```
+
+---
+
 ## [0.0.66] - 2025-12-16
 
 ### Release Type
