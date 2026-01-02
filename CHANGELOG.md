@@ -1,3 +1,35 @@
+## [0.0.70] - 2026-01-02
+
+### Release Type
+**Major Version** (Breaking changes - may require code updates)
+
+### Changes
+- Remove Forter3DS Dependency from Project Configuration(SpreedlyCore and other places) (#146)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (0.0.70 - Major Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "0.0.70")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 0.0.70'
+```
+
+---
+
 ## [0.0.69] - 2025-12-31
 
 ### Release Type
