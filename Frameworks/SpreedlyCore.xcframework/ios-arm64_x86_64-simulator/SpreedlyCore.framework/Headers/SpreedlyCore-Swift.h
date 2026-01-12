@@ -737,7 +737,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// This class works seamlessly with both Swift and Objective-C, providing
 /// a unified API for 3DS challenge result handling, consistent with PaymentResult.
 /// Important: ECI/CAVV/XID values are NOT provided by Forter SDK callback.
-/// These are handled by Spreedly backend via complete_gratis endpoint.
+/// Transaction completion is handled automatically by the SDK via internal API calls.
 SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 @interface ThreeDSChallengeResult : NSObject
 /// Indicates if the challenge completed successfully.
@@ -1518,7 +1518,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// This class works seamlessly with both Swift and Objective-C, providing
 /// a unified API for 3DS challenge result handling, consistent with PaymentResult.
 /// Important: ECI/CAVV/XID values are NOT provided by Forter SDK callback.
-/// These are handled by Spreedly backend via complete_gratis endpoint.
+/// Transaction completion is handled automatically by the SDK via internal API calls.
 SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 @interface ThreeDSChallengeResult : NSObject
 /// Indicates if the challenge completed successfully.

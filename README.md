@@ -18,6 +18,7 @@ A modern iOS SDK for integrating Spreedly payment processing into iOS applicatio
 ## Features
 
 - **Secure Payment Processing**: Tokenized payment method creation with Spreedly's secure infrastructure
+- **3DS Authentication**: Built-in support for Strong Customer Authentication (SCA) with automatic transaction completion
 - **Modern UI**: Built with SwiftUI for a native iOS experience
 - **Flexible Integration**: Support for both Drop-in Checkout and Hosted Fields
 - **Additional Fields Support**: Pass billing and shipping information directly to payment processing
@@ -173,11 +174,14 @@ targets: [
 **How to add:**
 
 1. **In Xcode:**
-   - File → Add Package Dependencies
-   - Enter: `https://bitbucket.org/forter-mobile/forter-ios.git`
-   - Version: `2.1.0` or later
+   - File → Swift Packages → Add Package Dependency
+   - Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
+   - Set the dependency rule to "Up to Next Major Version"
+   - On the "Choose Package" screen, verify that `Forter3DS` is selected and press "Add Package"
    - Add `Forter3DS` product to your app target
    - Set to "Embed & Sign" in "Frameworks, Libraries, and Embedded Content"
+   
+   Reference: [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk)
 
 2. **In Package.swift:**
 ```swift
@@ -218,7 +222,8 @@ target 'YourApp' do
   
   # ⚠️ Required for 3DS Authentication
   # If you plan to use 3DS authentication, add Forter3DS:
-  pod 'Forter3DS', '~> 2.1.0', :source => 'https://bitbucket.org/forter-mobile/forter-ios.git'
+  # Reference: https://docs.forter.com/3ds-ios-sdk
+  pod 'forter3ds', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 end
 ```
 
@@ -244,6 +249,15 @@ The Forter3DS package uses pre-compiled `.xcframework` binaries that are dynamic
 
 Since static linking is not possible with pre-compiled binaries, the framework must be added as a direct dependency to ensure it's embedded in your app bundle.
 
+**Forter3DS SDK Dependencies:**
+
+The Forter3DS SDK includes the following external libraries (already embedded in the SDK):
+- **ASN1Decoder**: Certificate parsing in ASN1 structure
+- **SwCrypt**: Crypto library for JWS validation (used only in iOS 10 devices)
+- **GMEllipticCurveCrypto**: Security framework used for elliptic curve keys crypto library
+
+For more details, see the [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk).
+
 **Note:** Skip this if you're not using 3DS authentication. The SDK handles the absence gracefully.
 
 ### Option 3: Manual Framework Integration
@@ -260,12 +274,27 @@ Since static linking is not possible with pre-compiled binaries, the framework m
 For complete integration instructions, see the [Integration Guide](INTEGRATION_GUIDE.md) which covers:
 
 - Complete setup instructions for Express Checkout and Hosted Fields
+- **3DS Authentication**: Complete guide to Strong Customer Authentication (SCA) integration
 - Step-by-step integration examples in Swift and Objective-C
 - Advanced configuration and customization options
 - Error handling and best practices
 - Security best practices
 - Troubleshooting guide
 - Complete API reference
+
+### API Reference
+
+- **[MERCHANT_API_REFERENCE.md](MERCHANT_API_REFERENCE.md)** - Complete API reference for all merchant-facing classes
+- **[SWIFTUI_VS_OBJECTIVEC_CLASSES.md](SWIFTUI_VS_OBJECTIVEC_CLASSES.md)** - Quick reference for SwiftUI vs Objective-C/UIKit classes
+
+### Merchant-Facing Components
+
+| Component | SwiftUI | UIKit/Objective-C |
+|-----------|---------|-------------------|
+| **Complete Payment Form** | `CardFormDropIn` | `CardFormDropInViewController` |
+| **Individual Field** | `SPLTextField` | `SPLTextFieldViewController` |
+| **CVV Recaching** | `SpreedlyCVVRecachingView` | `CVVRecachingViewController` |
+| **3DS Challenge** | `DoChallengeIfNeeded` | `ThreeDSChallengeViewController` |
 
 ### Additional Resources
 
@@ -295,6 +324,9 @@ A: Yes, the SDK includes built-in security features including screen protection,
 
 **Q: How do I customize the UI?**  
 A: The SDK supports extensive theming. See the Integration Guide for customization options.
+
+**Q: How does 3DS authentication work?**  
+A: The SDK automatically handles 3DS challenges when required. When your backend indicates 3DS is needed, present the challenge UI and the SDK will handle the authentication flow, including automatic transaction completion and status checking. See the Integration Guide for complete 3DS integration details.
 
 ---
 
