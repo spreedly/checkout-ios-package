@@ -2,6 +2,22 @@
 
 This comprehensive guide covers everything you need to integrate the Spreedly iOS SDK into your iOS application.
 
+## Quick Reference
+
+- **[MERCHANT_API_REFERENCE.md](MERCHANT_API_REFERENCE.md)** - Complete API reference for all merchant-facing classes
+- **[SWIFTUI_VS_OBJECTIVEC_CLASSES.md](SWIFTUI_VS_OBJECTIVEC_CLASSES.md)** - Quick reference for SwiftUI vs Objective-C/UIKit classes
+
+## Merchant-Facing Components Summary
+
+| Component | SwiftUI | UIKit/Objective-C | Purpose |
+|-----------|---------|-------------------|---------|
+| **Complete Payment Form** | `CardFormDropIn` | `CardFormDropInViewController` | Full checkout form with all fields |
+| **Individual Field** | `SPLTextField` | `SPLTextFieldViewController` | Single form field component |
+| **CVV Recaching** | `SpreedlyCVVRecachingView` | `CVVRecachingViewController` | Collect CVV to recache payment method |
+| **3DS Challenge** | `DoChallengeIfNeeded` | `ThreeDSChallengeViewController` | Present 3DS authentication challenge |
+
+**Note:** All UIKit/Objective-C classes are wrappers around SwiftUI components, providing the same functionality with Objective-C compatible APIs.
+
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
@@ -39,8 +55,12 @@ Before integrating the Spreedly iOS SDK, ensure you have:
 
 You'll need the following from your Spreedly account:
 
+**Note:** The following is an example structure showing the types of credentials you'll need. You should implement your own credential management system:
+
 ```swift
-struct SpreedlyCredentials {
+// Example: Structure showing required credential types
+// This is NOT an SDK class - implement your own credential management
+struct ExampleCredentials {
     let environmentKey: String      // Your Spreedly environment key
     let token: String              // API token for authentication
     let nonce: String              // Unique nonce for each request
@@ -93,10 +113,13 @@ targets: [
 
 **How to add Forter3DS via Swift Package Manager:**
 
+Reference: [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk)
+
 1. **In Xcode:**
-   - File → Add Package Dependencies
+   - File → Swift Packages → Add Package Dependency
    - Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
-   - Select version: `2.1.0` or later
+   - Set the dependency rule to "Up to Next Major Version"
+   - On the "Choose Package" screen, verify that `Forter3DS` is selected and press "Add Package"
    - Add `Forter3DS` product to your app target
    - Ensure it's set to "Embed & Sign" in your target's "Frameworks, Libraries, and Embedded Content"
 
@@ -145,7 +168,8 @@ target 'YourApp' do
   
   # ⚠️ Required for 3DS Authentication
   # If you plan to use 3DS authentication, add Forter3DS:
-  pod 'Forter3DS', '~> 2.1.0', :source => 'https://bitbucket.org/forter-mobile/forter-ios.git'
+  # Reference: https://docs.forter.com/3ds-ios-sdk
+  pod 'forter3ds', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 end
 ```
 
@@ -169,6 +193,15 @@ The Forter3DS package uses pre-compiled `.xcframework` binaries with dynamic lin
 - Multiple binary targets: `Forter3DS`, `ThreeDS_SDK`, and `FTR3DSCommon`
 
 Since static linking is not possible with pre-compiled binaries, the framework must be added as a direct dependency to ensure it's embedded in your app bundle.
+
+**Forter3DS SDK Dependencies:**
+
+The Forter3DS SDK includes the following external libraries (already embedded in the SDK):
+- **ASN1Decoder**: Certificate parsing in ASN1 structure
+- **SwCrypt**: Crypto library for JWS validation (used only in iOS 10 devices)
+- **GMEllipticCurveCrypto**: Security framework used for elliptic curve keys crypto library
+
+For more details, see the [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk).
 
 **Note:** If you're not using 3DS authentication, you can skip adding Forter3DS. The SDK will gracefully handle the absence of Forter3DS and show an appropriate message if 3DS is required.
 
@@ -255,7 +288,9 @@ func generateSignature() async throws -> SignatureParameters {
 
 ## Express Checkout Integration
 
-The Express Checkout provides a complete, pre-built payment form that handles all the complexity for you. The `CardFormDropIn` component includes **built-in screen prevention protection** - you don't need to apply `.screenPrevention()` to it manually. The protection is automatically enabled to secure sensitive payment information.
+The Express Checkout provides a complete, pre-built payment form that handles all the complexity for you.
+
+> ⚠️ **IMPORTANT:** Always apply `.screenPrevention()` modifier to payment forms to protect sensitive payment information from being captured in app switcher screenshots.
 
 ### Basic Implementation
 
@@ -290,11 +325,12 @@ struct CheckoutView: View {
                     if result.isSuccess {
                         checkoutResult = result.paymentResult
                         showCheckout = false
+                    } else if result.isValidationFailed {
+                        print("Validation error: \(result.errorMessage ?? "Unknown error")")
+                    } else {
+                        print("Checkout error: \(result.errorMessage ?? "Unknown error")")
+                        showCheckout = false
                     }
-                },
-                onError: { error in
-                    print("Checkout error: \(error)")
-                    showCheckout = false
                 }
             )
         }
@@ -306,29 +342,70 @@ struct CheckoutView: View {
 
 The `CardFormDropIn` component uses a modern callback system to handle payment processing:
 
-#### New Callback API (Recommended)
+> ⚠️ **CRITICAL:** Subscribe to payment results **BEFORE** presenting the form. If you subscribe after presenting, you may miss the result callback.
+>
+> **Correct Order:**
+> 1. Subscribe in `.onAppear` or before showing form
+> 2. Then present the form
+> 3. Handle results in both callback and subscription
+
+#### Callback API
 
 ```swift
-CardFormDropIn(
-    onProcessingResult: { result in
-        if result.isSuccess {
-            // Payment was successful
-            let paymentResult = result.paymentResult
-            print("Payment successful")
-            // Use paymentResult?.token for your payment processing
-        } else if result.isProcessing {
-            // Payment is still being processed
-            print("Payment processing...")
-        } else {
-            // Payment failed
-            print("Payment failed: \(result.errorMessage ?? "Unknown error")")
+struct CheckoutView: View {
+    @State private var showCheckout = false
+    @State private var isLoading = false
+    @State private var cancellable: AnyCancellable?
+    
+    var body: some View {
+        VStack {
+            if isLoading {
+                ProgressView("Processing payment...")
+            }
+            
+            Button("Show Checkout") {
+                showCheckout = true
+            }
         }
-    },
-    onError: { error in
-        // Handle validation or network errors
-        print("Error: \(error)")
+        .sheet(isPresented: $showCheckout) {
+            CardFormDropIn(
+                onProcessingResult: { result in
+                    if result.isProcessing {
+                        // Payment request started - show loading
+                        isLoading = true
+                    } else if result.isSuccess {
+                        // Payment was successful
+                        let paymentResult = result.paymentResult
+                        isLoading = false
+                        print("Payment successful")
+                        // Use paymentResult?.token for your payment processing
+                    } else if result.isValidationFailed {
+                        // Validation failed - hide loading, show error
+                        isLoading = false
+                        print("Validation failed: \(result.errorMessage ?? "Unknown error")")
+                    } else {
+                        // Payment failed - hide loading, show error
+                        isLoading = false
+                        print("Payment failed: \(result.errorMessage ?? "Unknown error")")
+                    }
+                }
+            )
+            .screenPrevention()  // Required: Protect sensitive payment data
+        }
+        .onAppear {
+            // Subscribe BEFORE presenting form
+            cancellable = Spreedly.shared().subscribeToPaymentResults { result in
+                if result.isSuccess {
+                    print("Payment successful via subscription")
+                    // Handle success
+                }
+            }
+        }
+        .onDisappear {
+            cancellable?.cancel()  // Clean up subscription
+        }
     }
-)
+}
 ```
 
 #### Migration from Old API
@@ -343,7 +420,7 @@ CardFormDropIn(
 )
 ```
 
-**New API:**
+**Current API:**
 
 ```swift
 CardFormDropIn(
@@ -351,10 +428,13 @@ CardFormDropIn(
         if result.isSuccess {
             // Handle successful payment
             let paymentResult = result.paymentResult
+        } else if result.isValidationFailed {
+            // Handle validation errors
+            print("Validation failed: \(result.errorMessage ?? "Unknown error")")
+        } else {
+            // Handle other errors
+            print("Payment failed: \(result.errorMessage ?? "Unknown error")")
         }
-    },
-    onError: { error in
-        // Handle errors
     }
 )
 ```
@@ -382,9 +462,8 @@ CardFormDropIn(
             handleSuccessfulPayment(result.paymentResult)
         }
     },
-    onError: { error in
-        handlePaymentError(error)
-    }
+    // All errors are handled through onProcessingResult
+    // Check result.isValidationFailed or result.errorMessage for error details
 )
 ```
 
@@ -1090,11 +1169,10 @@ SPLTextField(
 )
 ```
 
-**Benefits of New Architecture:**
+**Key Features:**
 
-- **Simplified API**: One component for all field types
+- **Unified Component**: One component (`SPLTextField`) handles all field types
 - **Consistent Behavior**: Same validation and theming across all fields
-- **Better Maintenance**: Single component to maintain and update
 - **Global Theme Support**: Automatic theme application via `SpreedlyThemeManager`
 - **Advanced Keyboard Navigation**: Built-in support for focus management and keyboard flow
 - **Enhanced User Experience**: Automatic keyboard types and text content types for better UX
@@ -2293,6 +2371,8 @@ let cancellable = Spreedly.shared().subscribeToPaymentResults { result in
 
 Common error scenarios and how to handle them:
 
+> **📖 For comprehensive error handling documentation**, including detailed 3DS authentication error handling, see [ERROR_HANDLING_GUIDE.md](ERROR_HANDLING_GUIDE.md).
+
 **1. Validation Errors**
 
 ```swift
@@ -2647,14 +2727,28 @@ class SpreedlyConfigManager {
 
 ### 3DS Flow Overview
 
-The typical 3DS flow works as follows:
+The 3DS authentication flow provides Strong Customer Authentication (SCA) for card payments. The SDK integrates with Forter's 3DS solution to handle the challenge presentation and transaction completion automatically.
+
+**Complete End-to-End Flow:**
 
 1. **Tokenize Payment Method** - Use `CardFormDropIn` or individual fields to create a payment method token
 2. **Backend Purchase Request** - Your backend sends the payment method token to Spreedly's purchase/authorize endpoint
-3. **Check for 3DS Requirement** - If the response contains `sca_authentication.managed_order_token`, 3DS is required
+3. **Check for 3DS Requirement** - If the response contains `sca_authentication.managed_order_token` and `transaction.token`, 3DS is required
 4. **Present Challenge** - Display the 3DS challenge UI using `DoChallengeIfNeeded` or `ThreeDSChallengeViewController`
-5. **Handle Result** - Receive the challenge result via subscription or delegate
-6. **Complete Transaction** - Your backend calls Spreedly's `complete_gratis` endpoint to finalize the transaction
+5. **SDK Internal Processing** (Automatic):
+   - Forter SDK presents challenge UI to user (if required)
+   - When Forter completes, SDK receives callback
+   - **SDK automatically calls `three_ds_automated_complete` API** to signal challenge completion
+   - **SDK automatically calls `status.json` API** to check final transaction state
+   - SDK maps status response to `ThreeDSChallengeResult` and emits result
+6. **Handle Result** - Receive the challenge result via subscription or delegate (result is based on status API, not just Forter callback)
+
+**Important Notes:**
+
+- The SDK **automatically handles** the completion and status API calls internally - you don't need to call them manually
+- The `ThreeDSChallengeResult` you receive is based on the **status.json API response**, ensuring accurate transaction state
+- If Forter SDK reports an error immediately, the SDK emits a failure result without calling APIs
+- The result indicates the final transaction state: success, failure, or canceled
 
 ### SwiftUI Integration
 
@@ -2714,6 +2808,7 @@ struct PaymentView: View {
                 )
             }
         }
+        // Note: Do NOT apply .screenPrevention() to 3DS challenges - Forter SDK handles its own security
         .onAppear {
             setupSubscriptions()
         }
@@ -2736,18 +2831,19 @@ struct PaymentView: View {
             }
         }
         
-        // Subscribe to 3DS challenge results (MUST subscribe BEFORE presenting challenge)
+        // ⚠️ CRITICAL: Subscribe to 3DS challenge results BEFORE presenting challenge
+        // If you subscribe after presenting, you may miss the result callback
         challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
             challengeResult = result
             
             if result.isSuccess {
                 // 3DS Challenge completed successfully
-                print("3DS Challenge successful")
+                // The SDK has already called three_ds_automated_complete API and status API internally
+                // Result is based on status API response, indicating transaction succeeded
                 show3DSChallenge = false
                 errorMessage = nil
                 
-                // TODO: Call your backend to complete the transaction
-                // Your backend should call Spreedly's complete_gratis endpoint
+                // Transaction is complete based on status API response
                 
             } else if result.isFailure {
                 // 3DS Challenge failed
@@ -2775,18 +2871,24 @@ struct PaymentView: View {
     
     private func checkFor3DSRequirement(paymentToken: String) {
         // In production, call your backend API to initiate the purchase
-        // Your backend will return the managed_order_token if 3DS is required
+        // Your backend will return the managed_order_token and transaction_token if 3DS is required
         
         // Example (replace with your actual backend call):
         // Task {
         //     let response = try await yourBackendAPI.purchase(paymentToken: paymentToken)
         //     
         //     await MainActor.run {
-        //         if let token = response.sca_authentication?.managed_order_token {
-        //             managedOrderToken = token
+        //         // Check if 3DS is required
+        //         if let transaction = response.transaction,
+        //            let scaAuth = transaction.scaAuthentication,
+        //            let managedToken = scaAuth.managedOrderToken {
+        //             // Store both tokens - both are required for 3DS challenge
+        //             managedOrderToken = managedToken
+        //             transactionToken = transaction.token  // Required for SDK's internal API calls
         //             show3DSChallenge = true
         //         } else {
         //             // No 3DS required - transaction complete
+        //             successMessage = "Transaction completed successfully!"
         //         }
         //     }
         // }
@@ -2803,6 +2905,8 @@ DoChallengeIfNeeded(
     onDismiss: (() -> Void)? = nil  // Optional: Called when view should be dismissed
 )
 ```
+
+**Note:** Screen prevention cannot be applied to 3DS challenges because Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer. The Forter SDK handles its own security measures for the challenge UI.
 
 ### UIKit Integration
 
@@ -2864,8 +2968,7 @@ class PaymentViewController: UIViewController {
     }
     
     private func handleChallengeSuccess() {
-        // Call your backend to complete the transaction
-        print("3DS Challenge successful - complete transaction on backend")
+        // Transaction is complete based on status API response
     }
     
     private func showError(_ message: String) {
@@ -2911,18 +3014,17 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 - (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
     if (result.isSuccess) {
         // 3DS Challenge completed successfully
-        NSLog(@"3DS Challenge successful");
+        // The SDK has already called three_ds_automated_complete API and status API internally
+        // Result is based on status API response, indicating transaction succeeded
         
         [self dismissViewControllerAnimated:YES completion:^{
-            // Call your backend to complete the transaction
-            // Your backend should call Spreedly's complete_gratis endpoint
-            [self completeTransaction];
+            // Transaction is complete based on status API response
+            [self handleTransactionSuccess];
         }];
         
     } else if (result.isFailure) {
         // 3DS Challenge failed
         NSString *errorMessage = result.error.localizedDescription ?: @"3DS Challenge failed";
-        NSLog(@"3DS Challenge failed: %@", errorMessage);
         
         [self dismissViewControllerAnimated:YES completion:^{
             [self showErrorWithMessage:errorMessage];
@@ -2930,7 +3032,6 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
         
     } else if (result.isCanceled) {
         // User canceled the challenge
-        NSLog(@"3DS Challenge canceled by user");
         
         [self dismissViewControllerAnimated:YES completion:^{
             [self showErrorWithMessage:@"3DS Challenge canceled"];
@@ -2955,10 +3056,9 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
     [self presentViewController:challengeVC animated:YES completion:nil];
 }
 
-- (void)completeTransaction {
-    // Call your backend to complete the transaction
-    // Your backend should call Spreedly's complete_gratis endpoint
-    NSLog(@"Completing transaction on backend...");
+- (void)handleTransactionSuccess {
+    // Transaction is complete based on status API response
+    NSLog(@"Transaction completed successfully");
 }
 
 - (void)showErrorWithMessage:(NSString *)message {
@@ -3028,13 +3128,18 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 
 - (void)checkFor3DSRequirementWithToken:(NSString *)paymentToken {
     // Call your backend API to initiate the purchase
-    // Your backend will return the managed_order_token if 3DS is required
+    // Your backend will return the managed_order_token and transaction_token if 3DS is required
     
     // Example (replace with your actual backend call):
     // [self.backendAPI purchaseWithToken:paymentToken completion:^(BackendResponse *response, NSError *error) {
-    //     if (response.managedOrderToken) {
-    //         self.managedOrderToken = response.managedOrderToken;
-    //         [self present3DSChallengeWithToken:response.managedOrderToken];
+    //     // Check if 3DS is required
+    //     if (response.transaction && 
+    //         response.transaction.scaAuthentication && 
+    //         response.transaction.scaAuthentication.managedOrderToken) {
+    //         // Store both tokens - both are required for 3DS challenge
+    //         self.managedOrderToken = response.transaction.scaAuthentication.managedOrderToken;
+    //         self.transactionToken = response.transaction.token;  // Required for SDK's internal API calls
+    //         [self present3DSChallenge];
     //     } else {
     //         // No 3DS required - transaction complete
     //         [self handlePaymentSuccess];
@@ -3055,11 +3160,13 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 
 - (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
     if (result.isSuccess) {
-        NSLog(@"3DS Challenge successful");
+        // 3DS Challenge completed successfully
+        // The SDK has already called three_ds_automated_complete API and status API internally
+        // Result is based on status API response, indicating transaction succeeded
         
         [self dismissViewControllerAnimated:YES completion:^{
-            // Call your backend to complete the transaction
-            [self completeTransactionOnBackend];
+            // Transaction is complete based on status API response
+            [self handleTransactionSuccess];
         }];
         
     } else if (result.isFailure) {
@@ -3078,14 +3185,13 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 
 // MARK: - Backend Integration
 
-- (void)completeTransactionOnBackend {
-    // Your backend should call Spreedly's complete_gratis endpoint
-    // to finalize the transaction after successful 3DS challenge
-    NSLog(@"Completing transaction on backend...");
+- (void)handleTransactionSuccess {
+    // The SDK has already called three_ds_automated_complete and status APIs internally
+    // Transaction is complete based on the status API response
 }
 
 - (void)handlePaymentSuccess {
-    NSLog(@"Payment completed successfully!");
+    // Payment completed successfully
 }
 
 - (void)showErrorWithMessage:(NSString *)message {
@@ -3155,27 +3261,75 @@ let cancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result 
 
 ### Backend Integration
 
-After a successful 3DS challenge, your backend must call Spreedly's `complete_gratis` endpoint to finalize the transaction. The SDK only handles the client-side challenge presentation.
+**SDK Internal API Calls (Automatic):**
 
-**Typical Backend Flow:**
+The SDK automatically handles the following API calls internally when the Forter challenge completes:
 
-1. **Initiate Purchase** - Your backend calls Spreedly's purchase/authorize endpoint
-2. **Handle SCA Response** - If `sca_authentication.managed_order_token` is present, return it to the app
-3. **Complete Transaction** - After successful 3DS challenge, call `complete_gratis` endpoint
+1. **`three_ds_automated_complete` API** - Called automatically to signal Spreedly that the 3DS challenge has completed
+2. **`status.json` API** - Called automatically after completion API to check the final transaction state
+3. **Result Mapping** - The SDK maps the status API response to `ThreeDSChallengeResult`:
+   - If `transaction.succeeded == true` → `ThreeDSChallengeResult.success`
+   - If `transaction.failed == true` → `ThreeDSChallengeResult.failure`
+   - If `transaction.isPending == true` → `ThreeDSChallengeResult.failure` (with appropriate error message)
+   - If Forter SDK reports an error → `ThreeDSChallengeResult.failure` (emitted immediately, no API calls)
+
+**Your Backend Flow:**
+
+1. **Initiate Purchase** - Your backend calls Spreedly's purchase/authorize endpoint with the payment method token
+2. **Handle SCA Response** - If `sca_authentication.managed_order_token` and `transaction.token` are present in the response, return both to the app
+3. **Receive Challenge Result** - After the SDK completes the challenge and internal API calls, you receive `ThreeDSChallengeResult`
+4. **Transaction Complete** - The transaction is complete based on the status API response. No additional backend calls are needed.
+
+**Important:** The SDK handles the completion and status API calls automatically. You only need to:
+- Extract `managed_order_token` and `transaction.token` from your backend's purchase response
+- Present the challenge UI
+- Handle the result callback
 
 For detailed backend integration, refer to [Spreedly's 3DS documentation](https://docs.spreedly.com/guides/3ds/).
+
+### How 3DS Processing Works
+
+**What You Need to Know:**
+
+The SDK automatically handles the complete 3DS authentication flow for you. Here's what happens:
+
+1. **Challenge Presentation:**
+   - When you present `DoChallengeIfNeeded` or `ThreeDSChallengeViewController`, the SDK manages the Forter SDK integration
+   - The Forter SDK presents its challenge UI to the user if authentication is required
+   - If no challenge is needed, the flow completes immediately
+
+2. **Automatic Processing:**
+   - After the challenge completes, the SDK automatically calls the required Spreedly APIs:
+     - `three_ds_automated_complete` API - Signals that the 3DS challenge has completed
+     - `status.json` API - Checks the final transaction state
+   - The SDK maps the status response to determine the final result
+
+3. **Result Delivery:**
+   - You receive the final `ThreeDSChallengeResult` via:
+     - Combine publisher: `subscribeToThreeDSChallengeResults()`
+     - Delegate: `SpreedlyThreeDSChallengeDelegate.threeDSChallengeDidComplete()`
+   - The result reflects the actual transaction state from Spreedly's status API
+
+**Important Points:**
+- The SDK automatically handles all API calls - you don't need to call any completion or status APIs manually
+- The result you receive reflects the actual transaction state from Spreedly's status API
+- If the Forter SDK reports an error immediately, you get a failure result without any API calls
+- Both `managedOrderToken` and `transactionToken` are required - the SDK uses `transactionToken` for the required API calls
 
 ### Security Considerations
 
 **1. Token Handling**
 
 - The `managed_order_token` should be passed securely from your backend to the app
-- Never log or store the managed order token permanently
+- The `transaction_token` is required for SDK's internal API calls - ensure it's included from your backend response
+- Never log or store these tokens permanently
+- Both tokens are only used during the challenge flow and should be discarded after completion
 
 **2. Subscription Timing**
 
-- Always subscribe to 3DS challenge results BEFORE presenting the challenge view
+- Always subscribe to 3DS challenge results **BEFORE** presenting the challenge view
 - This ensures you don't miss the result callback
+- The SDK emits results asynchronously after internal API calls complete
 
 **3. Memory Management**
 
@@ -3187,36 +3341,63 @@ For detailed backend integration, refer to [Spreedly's 3DS documentation](https:
 }
 ```
 
+**4. Error Handling**
+
+- Handle all three result states: `isSuccess`, `isFailure`, and `isCanceled`
+- The `error` property contains detailed error information for failures
+- Network errors during internal API calls are automatically handled and reported via the result
+
 ### Troubleshooting
 
 **Issue: 3DS Challenge view doesn't appear**
 
 - Ensure `managedOrderToken` is valid and not empty
-- Verify Forter Site ID is configured in `Spreedly.setup(config:)` with a `SpreedlyConfig` containing forterSiteId
-- Check that the Forter3DS framework is properly linked
+- Ensure `transactionToken` is provided (required for SDK's internal API calls)
+- Verify Forter Site ID is configured in `Spreedly.setup(config:)` with a `SpreedlyConfig` containing `forterSiteId`
+- Check that the Forter3DS framework is properly linked and embedded in your app bundle
+- Verify Forter3DS is available at runtime (check that framework is included in "Frameworks, Libraries, and Embedded Content")
 
 **Issue: Challenge result not received**
 
-- Ensure challenge result subscription is set up BEFORE presenting the challenge
+- Ensure challenge result subscription is set up **BEFORE** presenting the challenge view
 - Check that subscription is not cancelled prematurely
-- Verify delegate is set for Objective-C integration
-- Verify SDK is properly initialized with `Spreedly.initializeSDK()` or `Spreedly.setup(config:)`
+- Verify delegate is set for Objective-C integration (`[Spreedly shared].threeDSChallengeDelegate = self`)
+- Verify SDK is properly initialized with `Spreedly.setup(config:)` including all required credentials
+- Check network connectivity - SDK makes internal API calls that require network access
 
 **Issue: "Forter SDK not initialized" error**
 
-- Ensure you're calling `Spreedly.setup(config:)` with a `SpreedlyConfig` containing a valid Forter Site ID
-- Verify the Forter3DS framework is properly imported
+- Ensure you're calling `Spreedly.setup(config:)` with a `SpreedlyConfig` containing a valid `forterSiteId`
+- Verify the Forter3DS framework is properly imported and embedded
+- Check that Forter3DS is available at runtime (not just compile-time)
 
 **Issue: Challenge fails immediately**
 
 - Verify the `managed_order_token` is correct and not expired
+- Ensure `transaction_token` is included from your backend response
 - Check your Forter portal configuration
 - Ensure your environment (test/production) matches your Forter configuration
+- Check network connectivity - SDK needs to call completion and status APIs
+
+**Issue: Result shows failure even though Forter challenge succeeded**
+
+- This is expected behavior - the result is based on Spreedly's status API, not just Forter callback
+- Check the `error` property in `ThreeDSChallengeResult` for details
+- Verify transaction status in Spreedly dashboard
+- The SDK calls `status.json` API after Forter completes - check if that API call succeeded
+
+**Issue: "Transaction is not completed" error in result**
+
+- This occurs when `status.json` API returns `transaction.isPending == true`
+- Possible causes: incorrect authentication, payment method issues, or network problems
+- Check transaction details in Spreedly dashboard
+- Verify payment method is valid and not expired
 
 **Issue: Memory leaks or retain cycles**
 
 - Ensure you cancel subscriptions in `onDisappear` or `deinit`
 - Use `[weak self]` in closures to avoid retain cycles
+- Clean up subscriptions when view controller is deallocated
 
 ## Advanced Features
 
@@ -3294,7 +3475,9 @@ The screen prevention system provides three layers of protection:
 
 Apply screen prevention to any SwiftUI view using the `.screenPrevention()` modifier. **Best Practice:** The most effective way to protect your app is by applying `.screenPrevention()` at the root screen level.
 
-**Note:** `CardFormDropIn` already includes built-in screen prevention protection, so you don't need to apply `.screenPrevention()` to it manually. Use the modifier on other views that need protection.
+**Note:** Always apply `.screenPrevention()` to `CardFormDropIn` and other payment forms to protect sensitive payment information.
+
+**Important:** Screen prevention **cannot** be applied to 3DS challenges (`DoChallengeIfNeeded` or `ThreeDSChallengeViewController`) because Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer. The Forter SDK handles its own security measures for the challenge UI.
 
 ##### Securing the Root Screen (Recommended)
 
@@ -3465,11 +3648,14 @@ let secureVC = sensitiveDataVC.wrapInSecureViewController(
 
 **Note:** `CardFormDropIn` already includes built-in screen prevention, so you don't need to apply it manually.
 
+**Important:** Screen prevention **cannot** be applied to 3DS challenges because Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer.
+
 **Recommended Usage:**
 
 Apply screen prevention to:
 - ✅ Custom views displaying credit card information
 - ✅ Views showing sensitive user data (beyond payment forms)
+- ❌ **NOT** for 3DS challenges (`DoChallengeIfNeeded` or `ThreeDSChallengeViewController`) - Forter SDK handles its own security
 - ✅ Views displaying payment confirmation details
 - ✅ Custom checkout screens (if not using `CardFormDropIn`)
 - ✅ Views showing transaction history with sensitive data
@@ -3478,6 +3664,7 @@ Apply screen prevention to:
 
 You can skip protection for:
 - ❌ `CardFormDropIn` (already protected)
+- ❌ **3DS challenges** (`DoChallengeIfNeeded` or `ThreeDSChallengeViewController`) - Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer
 - ❌ Non-sensitive content (product listings, menus)
 - ❌ Public information
 - ❌ Views without payment or sensitive data
@@ -3861,66 +4048,9 @@ logDebug(tag: "Debug", message: "Debug info: \(expensiveData)")
 ```
 **Solution**: These are informational messages, not errors.
 
-### Advanced Configuration
-
-#### Custom Logger Implementation
-
-For advanced use cases, you can implement a custom logger:
-
-```swift
-class CustomLogger: SpreedlyLogger {
-    func verbose(tag: String, message: String, error: Error?) {
-        // Custom verbose logging implementation
-        print("🔍 [VERBOSE] [\(tag)] \(message)")
-    }
-    
-    func debug(tag: String, message: String, error: Error?) {
-        // Custom debug logging implementation
-        print("🐛 [DEBUG] [\(tag)] \(message)")
-    }
-    
-    func info(tag: String, message: String, error: Error?) {
-        // Custom info logging implementation
-        print("ℹ️ [INFO] [\(tag)] \(message)")
-    }
-    
-    func warn(tag: String, message: String, error: Error?) {
-        // Custom warning logging implementation
-        print("⚠️ [WARN] [\(tag)] \(message)")
-    }
-    
-    func error(tag: String, message: String, error: Error?) {
-        // Custom error logging implementation
-        print("❌ [ERROR] [\(tag)] \(message)")
-    }
-    
-    func isLoggable(level: LogLevel) -> Bool {
-        // Custom log level filtering
-        return level.rawValue >= LogLevel.debug.rawValue
-    }
-}
-
-// Use custom logger
-LoggerManager.shared.setLogger(CustomLogger())
-```
-
-#### Log Filtering and Analysis
-
-Filter logs by tag or level for easier debugging:
-
-```swift
-// Check if specific log level is enabled
-if isLogLevelEnabled(.debug) {
-    logDebug(tag: "PaymentFlow", message: "Debug information")
-}
-
-// Check if specific log level is enabled
-if isLogLevelEnabled(.info) {
-    logInfo(tag: "PaymentFlow", message: "Info message")
-}
-```
-
 ## Error Handling
+
+> **📖 For comprehensive error handling documentation**, including detailed 3DS authentication error handling, see [ERROR_HANDLING_GUIDE.md](ERROR_HANDLING_GUIDE.md).
 
 ### Handling Payment Errors
 
@@ -3931,18 +4061,15 @@ CardFormDropIn(
             // Handle successful payment
             print("Payment successful")
             // Use result.paymentResult?.token for your payment processing
+        } else if result.isValidationFailed {
+            // Handle validation errors
+            showAlert(title: "Validation Error", message: result.errorMessage ?? "Validation failed")
+        } else {
+            // Handle payment errors
+            showAlert(title: "Payment Error", message: result.errorMessage ?? "Payment failed")
         }
-    },
-    onError: { error in
-        // Handle payment errors
-        switch error {
-        case .validationError(let message):
-            showAlert(title: "Validation Error", message: message)
-        case .networkError(let networkError):
-            showAlert(title: "Network Error", message: networkError.localizedDescription)
-        case .paymentError(let paymentError):
-            showAlert(title: "Payment Error", message: paymentError.localizedDescription)
-        default:
+    }
+)
             showAlert(title: "Error", message: "An unexpected error occurred")
         }
     }
@@ -4191,11 +4318,12 @@ struct CheckoutView: View {
                     if result.isSuccess {
                         paymentResult = result.paymentResult
                         showForm = false
+                    } else if result.isValidationFailed {
+                        errorMessage = result.errorMessage
+                    } else {
+                        errorMessage = result.errorMessage
+                        showForm = false
                     }
-                },
-                onError: { error in
-                    errorMessage = error
-                    showForm = false
                 }
             )
         }
@@ -4346,7 +4474,7 @@ class SpreedlyUITests: XCTestCase {
 - (void)showPaymentForm {
     CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc] init];
 
-    // Set up callbacks
+    // Set up callback
     dropInVC.onProcessingResult = ^(PaymentProcessingResult *result) {
         if (result.isSuccess) {
             // Payment was successful
@@ -4356,15 +4484,13 @@ class SpreedlyUITests: XCTestCase {
         } else if (result.isProcessing) {
             // Payment is still being processed
             NSLog(@"Payment processing...");
+        } else if (result.isValidationFailed) {
+            // Validation failed
+            NSLog(@"Validation failed: %@", result.errorMessage);
         } else {
             // Payment failed
             NSLog(@"Payment failed: %@", result.errorMessage);
         }
-    };
-
-    dropInVC.onError = ^(NSString *error) {
-        // Handle validation or network errors
-        NSLog(@"Error: %@", error);
     };
 
     [self presentViewController:dropInVC animated:YES completion:nil];
@@ -4391,15 +4517,15 @@ CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     allowExpiredDate:NO
     yearFormat:YearFormatFourDigit
     nameDisplayMode:DropInNameDisplayModeSeparateFields
-    customTheme:nil
     onProcessingResult:^(PaymentProcessingResult *result) {
         if (result.isSuccess) {
             NSLog(@"Payment successful");
             // Use result.paymentResult.token for your payment processing
+        } else if (result.isValidationFailed) {
+            NSLog(@"Validation failed: %@", result.errorMessage);
+        } else {
+            NSLog(@"Payment failed: %@", result.errorMessage);
         }
-    }
-    onError:^(NSString *error) {
-        NSLog(@"Payment error: %@", error);
     }];
 
 [self presentViewController:dropInVC animated:YES completion:nil];
@@ -4822,11 +4948,13 @@ struct ContentView: View {
                     // Handle successful submission
                     print("Payment successful")
                     // Use result.paymentResult?.token for your payment processing
+                } else if result.isValidationFailed {
+                    // Handle validation errors
+                    print("Validation error: \(result.errorMessage ?? "Unknown error")")
+                } else {
+                    // Handle payment errors
+                    print("Payment error: \(result.errorMessage ?? "Unknown error")")
                 }
-            },
-            onError: { error in
-                // Handle error
-                print("Payment error: \(error)")
             }
         )
     }
@@ -5310,6 +5438,81 @@ class PaymentManager {
 2. **Use different network conditions** to test error handling
 3. **Test accessibility features** with VoiceOver
 4. **Implement automated testing** for critical payment flows
+
+---
+
+## Merchant API Reference Summary
+
+This section provides a quick reference of all merchant-facing classes. For complete API details, see [MERCHANT_API_REFERENCE.md](MERCHANT_API_REFERENCE.md).
+
+### SwiftUI Components
+
+| Class | Purpose | Location |
+|-------|---------|----------|
+| `CardFormDropIn` | Complete payment form with all fields | `SpreedlyUI/Components/Checkout/CardFormDropIn.swift` |
+| `SPLTextField` | Individual form field component | `SpreedlyUI/Components/SPLTextField.swift` |
+| `SpreedlyCVVRecachingView` | CVV recaching component | `SpreedlyUI/Components/Recaching/Views/SpreedlyCVVRecachingView.swift` |
+| `DoChallengeIfNeeded` | 3DS challenge presentation | `SpreedlyUI/Components/ThreeDS/DoChallengeIfNeeded.swift` |
+
+### UIKit/Objective-C Components
+
+| Class | Purpose | Location |
+|-------|---------|----------|
+| `CardFormDropInViewController` | Complete payment form (UIKit wrapper) | `SpreedlyUI/Components/Checkout/CardFormDropIn.swift` |
+| `SPLTextFieldViewController` | Individual form field (UIKit wrapper) | `SpreedlyUI/Components/SPLTextField.swift` |
+| `CVVRecachingViewController` | CVV recaching (UIKit wrapper) | `SpreedlyUI/Components/Recaching/Controllers/CVVRecachingViewController.swift` |
+| `ThreeDSChallengeViewController` | 3DS challenge (UIKit wrapper) | `SpreedlyUI/Components/ThreeDS/ThreeDSChallengeViewController.swift` |
+
+### Core Classes
+
+| Class | Purpose | Location |
+|-------|---------|----------|
+| `Spreedly` | Main SDK class for initialization and configuration | `SpreedlyCore/Core/Spreedly.swift` |
+| `SpreedlyConfig` | Configuration for SDK setup | `SpreedlyCore/Core/Spreedly.swift` |
+
+### Result Classes
+
+| Class | Purpose | Location |
+|-------|---------|----------|
+| `PaymentResult` | Payment method creation/recaching result | `SpreedlyCore/Core/Payment/PaymentResult.swift` |
+| `PaymentProcessingResult` | Processing status during operations | `SpreedlyCore/Core/Payment/PaymentProcessingResult.swift` |
+| `ThreeDSChallengeResult` | 3DS challenge result | `SpreedlyCore/Core/Payment/ThreeDSChallengeResult.swift` |
+
+### Delegate Protocols (Objective-C)
+
+| Protocol | Purpose | Location |
+|----------|---------|----------|
+| `SpreedlyPaymentDelegate` | Payment result callbacks | `SpreedlyCore/Core/Spreedly.swift` |
+| `SpreedlyThreeDSChallengeDelegate` | 3DS challenge result callbacks | `SpreedlyCore/Core/Spreedly.swift` |
+
+### Configuration Classes
+
+| Class | Purpose | Location |
+|-------|---------|----------|
+| `RecacheConfig` | CVV recaching configuration | `SpreedlyUI/Components/Recaching/Models/RecacheConfig.swift` |
+| `SavedCardInfo` | Card information for recaching | `SpreedlyUI/Components/Recaching/Models/RecacheConfig.swift` |
+| `FormField` | Additional field configuration | `SpreedlyCore/Core/Constants/FormFieldType.swift` |
+
+### Enums
+
+| Enum | Purpose | Location |
+|------|---------|----------|
+| `FormFieldType` | Available field types | `SpreedlyCore/Core/Constants/FormFieldType.swift` |
+| `YearFormat` | Year format options (two-digit/four-digit) | `SpreedlyUI/Constants/YearFormat.swift` |
+| `DropInNameDisplayMode` | Name field display mode | `SpreedlyUI/Constants/DropInNameDisplayMode.swift` |
+| `ScreenPresentationMode` | CVV recaching presentation mode | `SpreedlyUI/Components/Recaching/Models/RecacheConfig.swift` |
+| `SpreedlySubmitLabel` | Submit button label options | `SpreedlyCore/Core/Constants/FormFieldType.swift` |
+
+### Important Notes
+
+1. **All UIKit/Objective-C classes are wrappers** around SwiftUI components using `UIHostingController`
+2. **Same implementation** - Both SwiftUI and UIKit classes use the same underlying SwiftUI views
+3. **Result handling differs**:
+   - SwiftUI/Swift: Use Combine subscriptions (`subscribeToPaymentResults()`, `subscribeToThreeDSChallengeResults()`)
+   - Objective-C: Use delegate protocols (`SpreedlyPaymentDelegate`, `SpreedlyThreeDSChallengeDelegate`)
+4. **No internal/private APIs exposed** - Only public merchant-facing classes are documented
+
+For complete API details, parameters, and usage examples, see [MERCHANT_API_REFERENCE.md](MERCHANT_API_REFERENCE.md).
 
 ---
 

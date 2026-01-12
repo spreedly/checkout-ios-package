@@ -400,6 +400,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic, strong) UIColor * _Nullable primaryColor;
 @property (nonatomic, strong) UIColor * _Nullable secondaryColor;
 @property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+@property (nonatomic, strong) UIColor * _Nullable surfaceColor;
 @property (nonatomic, strong) UIColor * _Nullable borderColor;
 @property (nonatomic, strong) UIColor * _Nullable borderFocusedColor;
 @property (nonatomic, strong) UIColor * _Nullable textColor;
@@ -408,7 +409,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic, strong) UIColor * _Nullable placeholderColor;
 @property (nonatomic) CGFloat borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
+- (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor surfaceColor:(UIColor * _Nullable)surfaceColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
 /// Convenience initializer using Android-style configuration
 /// \param primaryColorHex Primary brand color used for buttons and highlights (e.g., “#0077C8”)
 ///
@@ -1004,6 +1005,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic, strong) UIColor * _Nullable primaryColor;
 @property (nonatomic, strong) UIColor * _Nullable secondaryColor;
 @property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+@property (nonatomic, strong) UIColor * _Nullable surfaceColor;
 @property (nonatomic, strong) UIColor * _Nullable borderColor;
 @property (nonatomic, strong) UIColor * _Nullable borderFocusedColor;
 @property (nonatomic, strong) UIColor * _Nullable textColor;
@@ -1012,7 +1014,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic, strong) UIColor * _Nullable placeholderColor;
 @property (nonatomic) CGFloat borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
+- (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor surfaceColor:(UIColor * _Nullable)surfaceColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
 /// Convenience initializer using Android-style configuration
 /// \param primaryColorHex Primary brand color used for buttons and highlights (e.g., “#0077C8”)
 ///
