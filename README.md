@@ -212,18 +212,12 @@ Add to your `Podfile`:
 target 'YourApp' do
   use_frameworks!
 
-  # All modules
-  pod 'Spreedly', '~> 1.0'
-
-  # Or specific modules
-  # pod 'Spreedly/Core', '~> 1.0'
-  # pod 'Spreedly/Security', '~> 1.0'
-  # pod 'Spreedly/UI', '~> 1.0'
+  pod 'SpreedlyCore', :git => 'https://{git_token}@github.com/spreedly/checkout-ios-package.git'
+  pod 'SpreedlySecurity', :git => 'https://{git_token}@github.com/spreedly/checkout-ios-package.git'
+  pod 'SpreedlyUI', :git => 'https://{git_token}@github.com/spreedly/checkout-ios-package.git'
   
-  # ⚠️ Required for 3DS Authentication
-  # If you plan to use 3DS authentication, add Forter3DS:
-  # Reference: https://docs.forter.com/3ds-ios-sdk
-  pod 'forter3ds', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
+  # ⚠️ Required if using 3DS Authentication
+  pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 end
 ```
 
