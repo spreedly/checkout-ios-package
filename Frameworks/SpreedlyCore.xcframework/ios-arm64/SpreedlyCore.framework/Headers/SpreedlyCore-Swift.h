@@ -565,10 +565,16 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
 /// \param paymentMethodToken Token of payment method to recache
 ///
+/// \param allowBlankName Whether to allow blank name fields
+///
+/// \param allowExpiredDate Whether to allow expired dates
+///
+/// \param allowBlankDate Whether to allow blank dates
+///
 ///
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
-- (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken SWIFT_WARN_UNUSED_RESULT;
+- (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate allowBlankDate:(BOOL)allowBlankDate SWIFT_WARN_UNUSED_RESULT;
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
@@ -769,6 +775,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
   ValidationParamAllowBlankName = 0,
   ValidationParamAllowExpiredDate = 1,
+  ValidationParamAllowBlankDate = 2,
 };
 
 #endif

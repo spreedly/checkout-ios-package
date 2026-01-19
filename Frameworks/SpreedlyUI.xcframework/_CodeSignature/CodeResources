@@ -6,7 +6,7 @@
 	<dict>
 		<key>ios-arm64/SpreedlyUI.framework/Headers/SpreedlyUI-Swift.h</key>
 		<data>
-		KFFw12zDFObdY/yoRsHOz5ZeEXg=
+		4cwWd7MpUOOCkDYywKRQKE0kLwg=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Info.plist</key>
 		<data>
@@ -14,19 +14,19 @@
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		dEmonQuvN6lWJLlgRqj1HfrayHU=
+		dAxzZOooAPZ/zPrso7CG3nVlG+M=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		tgScwdzZQ9pxK15VPWb5nF9IGvA=
+		B/zZdGhPcqUlwnTqxtKFR2YPf2Q=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		D5Xz5i4N+KGirbk+Hw0cWHX5EDg=
+		MotLzOXB89yFgATl3BdpRdOyXrY=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		tgScwdzZQ9pxK15VPWb5nF9IGvA=
+		B/zZdGhPcqUlwnTqxtKFR2YPf2Q=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/module.modulemap</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/SpreedlyUI</key>
 		<data>
-		45ecezGkT8x4KbmaTFfpiwNP2HU=
+		GnMD6aNR/pgO7lsz8EBXOCU+y8Q=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		wF2csCpRCen3R1GX7P3qUePSmsM=
+		ZrjO21XTTjMcpZ5nFhmnRc9Nby4=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -51,7 +51,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Headers/SpreedlyUI-Swift.h</key>
 		<data>
-		s9kPl5ip4U4L2lxMEkGKjoT9UYA=
+		Om/S8rKnxTXxqp7X8aSSrv4wJy0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Info.plist</key>
 		<data>
@@ -59,35 +59,35 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		hfe/aeRq0p2l4tyUJZHSDisScG8=
+		j81YdHOKasDf8gnJtKr9rcImGAw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		AORtFAojfJ0aqiS3xHOqYsaWAPM=
+		uLPZEy+6ThvVuCYw5Wa3JS9J4h4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		8lJpsnaXb1GJVDC5597LAoX0a5E=
+		nXupgtvlBCreQFil2pABjA2IB5k=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		AORtFAojfJ0aqiS3xHOqYsaWAPM=
+		uLPZEy+6ThvVuCYw5Wa3JS9J4h4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		hfe/aeRq0p2l4tyUJZHSDisScG8=
+		j81YdHOKasDf8gnJtKr9rcImGAw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		VFZu4Ht+M9T3Lk584nkl0Y2N6Nk=
+		TlDolM6EAcObsrQDmypGHEP9Rfw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		dSI0TNWqQDFe2na50/AxQhOqZiw=
+		IzeGVlPOcJDNcluMo/a2/oo2ubY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		VFZu4Ht+M9T3Lk584nkl0Y2N6Nk=
+		TlDolM6EAcObsrQDmypGHEP9Rfw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/module.modulemap</key>
 		<data>
@@ -95,11 +95,11 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/SpreedlyUI</key>
 		<data>
-		NqEe/p4e6DCgseeawNN3bgvqedI=
+		jbjFdahKYSxL0KdyL648BsVnsPw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		7BFTH9QJvrnRR+Mf/kxyLhWu1dc=
+		uR12t/fOWxPQD72+Cej961b27EE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -117,11 +117,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KFFw12zDFObdY/yoRsHOz5ZeEXg=
+			4cwWd7MpUOOCkDYywKRQKE0kLwg=
 			</data>
 			<key>hash2</key>
 			<data>
-			im2aGTgK1GxJk5HXyfKLSHQuHH9aYbly8gmnvsaPBVc=
+			Yqg4aYETDyJGdJM62GQUNhfoZz6PWifX027EVVGMkkM=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/Info.plist</key>
@@ -139,44 +139,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dEmonQuvN6lWJLlgRqj1HfrayHU=
+			dAxzZOooAPZ/zPrso7CG3nVlG+M=
 			</data>
 			<key>hash2</key>
 			<data>
-			JxcrVa3ra/gAz5LSBze6ihWUC02iSK3owC+e8N5BYiU=
+			iRlZW3OOSvsVSCMzgJgC4nHY7l+f3INiEy50ea/WrOc=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			tgScwdzZQ9pxK15VPWb5nF9IGvA=
+			B/zZdGhPcqUlwnTqxtKFR2YPf2Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			0y/G+D5YQhejVGJFdm0BZawj897Q60LzjAtvJjv4av0=
+			25J6ZhyP3Jtkejcl8Bc0WqQ2BJAcKXPYPHusmE1v8yE=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			D5Xz5i4N+KGirbk+Hw0cWHX5EDg=
+			MotLzOXB89yFgATl3BdpRdOyXrY=
 			</data>
 			<key>hash2</key>
 			<data>
-			08owrg7HL3k7qhOJ80LbCBFP3bdwFrEZlSGFDA7qRn0=
+			fW8a2/KP5gUBBCsGQJ+IpW04xNpMJq0kS9tWvrug39M=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			tgScwdzZQ9pxK15VPWb5nF9IGvA=
+			B/zZdGhPcqUlwnTqxtKFR2YPf2Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			0y/G+D5YQhejVGJFdm0BZawj897Q60LzjAtvJjv4av0=
+			25J6ZhyP3Jtkejcl8Bc0WqQ2BJAcKXPYPHusmE1v8yE=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/Modules/module.modulemap</key>
@@ -194,22 +194,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			45ecezGkT8x4KbmaTFfpiwNP2HU=
+			GnMD6aNR/pgO7lsz8EBXOCU+y8Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			Lys5jqyxnLvAGqlE5QTOcn+FNwsg+w0FaZJ6hBk26cI=
+			lEZbd8I+ovyyuwyhSP3CSks8qDqBwe4LO+DPNB+AJhE=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wF2csCpRCen3R1GX7P3qUePSmsM=
+			ZrjO21XTTjMcpZ5nFhmnRc9Nby4=
 			</data>
 			<key>hash2</key>
 			<data>
-			/jd4uWXQGYmGhzZ/u9SmzMBgrc4IQkm7TM2KzU/Ze80=
+			ilC+U4be06LcR8pDOApXC0MRIFlnvgvuBKdaOgwfWrE=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/en.lproj/Localizable.strings</key>
@@ -229,11 +229,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			s9kPl5ip4U4L2lxMEkGKjoT9UYA=
+			Om/S8rKnxTXxqp7X8aSSrv4wJy0=
 			</data>
 			<key>hash2</key>
 			<data>
-			TGBxeJlFPdSScBeBwhUkXUTm/1O9zz/5ZZwgCBQaao8=
+			BPcXvNwfdfssGFa4DWHIfEbFfIFqwHdnmCe56KlBM+E=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Info.plist</key>
@@ -251,88 +251,88 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hfe/aeRq0p2l4tyUJZHSDisScG8=
+			j81YdHOKasDf8gnJtKr9rcImGAw=
 			</data>
 			<key>hash2</key>
 			<data>
-			QMOU9D21cmZWSLsABDDhWEqUTjNhZ80CAWSa+VmPOwo=
+			B5w8LTVCLvNICP4VC6O4sZ0DfELk+TtqAjFerhcurYQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AORtFAojfJ0aqiS3xHOqYsaWAPM=
+			uLPZEy+6ThvVuCYw5Wa3JS9J4h4=
 			</data>
 			<key>hash2</key>
 			<data>
-			Hc2QaGQkOlGxPCDui2owMQdFDzmdYEVHxisN9AknFsk=
+			WS7gASLzFw4WwHYUJTNz5kmCX20xA2x1Gaz0AOV1MZg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8lJpsnaXb1GJVDC5597LAoX0a5E=
+			nXupgtvlBCreQFil2pABjA2IB5k=
 			</data>
 			<key>hash2</key>
 			<data>
-			+6b4nbmG2jET6OTihk75MtTgZbS1zSAj/sBqyDvIGmo=
+			HmcozUrOTRVu+VItY4x1N+PNlEvtXBAO7VMlPq0mkxA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AORtFAojfJ0aqiS3xHOqYsaWAPM=
+			uLPZEy+6ThvVuCYw5Wa3JS9J4h4=
 			</data>
 			<key>hash2</key>
 			<data>
-			Hc2QaGQkOlGxPCDui2owMQdFDzmdYEVHxisN9AknFsk=
+			WS7gASLzFw4WwHYUJTNz5kmCX20xA2x1Gaz0AOV1MZg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hfe/aeRq0p2l4tyUJZHSDisScG8=
+			j81YdHOKasDf8gnJtKr9rcImGAw=
 			</data>
 			<key>hash2</key>
 			<data>
-			QMOU9D21cmZWSLsABDDhWEqUTjNhZ80CAWSa+VmPOwo=
+			B5w8LTVCLvNICP4VC6O4sZ0DfELk+TtqAjFerhcurYQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VFZu4Ht+M9T3Lk584nkl0Y2N6Nk=
+			TlDolM6EAcObsrQDmypGHEP9Rfw=
 			</data>
 			<key>hash2</key>
 			<data>
-			p2mqzxHXHcouzXsM4hVWqUWt7lTQq9xK+2bt6eFOwAs=
+			+w1JBDIF08rg48opePXfvbtH6b0vmkTcvbcs348aQak=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dSI0TNWqQDFe2na50/AxQhOqZiw=
+			IzeGVlPOcJDNcluMo/a2/oo2ubY=
 			</data>
 			<key>hash2</key>
 			<data>
-			4S0xXoKkkak68hLZNuLMh0AGNqiKWtrdbx/CJ3RNkdo=
+			jPJ0NQg0UBF+DUvDkNuzDH0ciRSBg4oiMyMS0hp6Krs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/SpreedlyUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VFZu4Ht+M9T3Lk584nkl0Y2N6Nk=
+			TlDolM6EAcObsrQDmypGHEP9Rfw=
 			</data>
 			<key>hash2</key>
 			<data>
-			p2mqzxHXHcouzXsM4hVWqUWt7lTQq9xK+2bt6eFOwAs=
+			+w1JBDIF08rg48opePXfvbtH6b0vmkTcvbcs348aQak=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Modules/module.modulemap</key>
@@ -350,22 +350,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NqEe/p4e6DCgseeawNN3bgvqedI=
+			jbjFdahKYSxL0KdyL648BsVnsPw=
 			</data>
 			<key>hash2</key>
 			<data>
-			aEj8vgB4VoIW1tpG1rehdcRXwXP2/VsY1WGoSCAfHeg=
+			SHfDBFTe2gFJMgD+BZBxo7hlJu0AuwY518RlOmmxZxE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7BFTH9QJvrnRR+Mf/kxyLhWu1dc=
+			uR12t/fOWxPQD72+Cej961b27EE=
 			</data>
 			<key>hash2</key>
 			<data>
-			JOS8iBb/M40NU8HhBBjodVx/7ZzYTkuXR/figPGG7Ho=
+			5EmsfbSclTX0GrEHU1auao1WoYmBKT8HC6o6KWYAQU0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/en.lproj/Localizable.strings</key>

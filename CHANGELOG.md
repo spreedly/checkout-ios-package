@@ -1,3 +1,36 @@
+## [1.0.10] - 2026-01-19
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Enhance Payment Method Validation Parameters (#165)
+- Revert "security(deps): bump github.com/datadog/dd-sdk-ios from 3.3.0 to 3.5.0 (#163)" (#164)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.0.10 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.0.10")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 1.0.10'
+```
+
+---
+
 ## [1.0.9] - 2026-01-13
 
 ### Release Type

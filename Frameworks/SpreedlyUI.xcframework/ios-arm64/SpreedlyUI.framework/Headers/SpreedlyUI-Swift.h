@@ -322,6 +322,9 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @property (nonatomic, copy) NSString * _Nonnull buttonText;
 @property (nonatomic, copy) NSString * _Nonnull cancelButtonText;
 @property (nonatomic, copy) NSString * _Nonnull paymentMethodToken;
+@property (nonatomic) BOOL allowBlankName;
+@property (nonatomic) BOOL allowExpiredDate;
+@property (nonatomic) BOOL allowBlankDate;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -339,11 +342,36 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @property (nonatomic) enum DropInNameDisplayMode nameDisplayMode;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
-- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
-- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+- (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)viewDidLoad;
+@end
+
+/// UIKit wrapper for DoChallengeIfNeeded to enable Objective-C integration
+/// This class is always available regardless of whether Forter3DS is configured.
+/// When Forter3DS is not available, the view will display an appropriate message.
+SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
+@interface DoChallengeIfNeededViewController : UIViewController
+/// Initializes the 3DS Challenge View Controller
+/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
+///
+/// \param transactionToken Transaction token for status.json API (required for status check)
+///
+/// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
+///
+- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+/// Convenience initializer for Objective-C compatibility
+/// Omits the onDismiss closure parameter for simpler Objective-C usage
+/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
+///
+/// \param transactionToken Transaction token for status.json API (required for status check)
+///
+- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken;
+- (void)viewDidLoad;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 typedef SWIFT_ENUM(NSInteger, DropInNameDisplayMode, open) {
@@ -552,31 +580,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 ///
 + (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-/// UIKit wrapper for DoChallengeIfNeeded to enable Objective-C integration
-/// This class is always available regardless of whether Forter3DS is configured.
-/// When Forter3DS is not available, the view will display an appropriate message.
-SWIFT_CLASS("_TtC10SpreedlyUI30ThreeDSChallengeViewController")
-@interface ThreeDSChallengeViewController : UIViewController
-/// Initializes the 3DS Challenge View Controller
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
-///
-/// \param transactionToken Transaction token for status.json API (required for status check)
-///
-/// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
-///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-/// Convenience initializer for Objective-C compatibility
-/// Omits the onDismiss closure parameter for simpler Objective-C usage
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
-///
-/// \param transactionToken Transaction token for status.json API (required for status check)
-///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken;
-- (void)viewDidLoad;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 @interface UIViewController (SWIFT_EXTENSION(SpreedlyUI))
