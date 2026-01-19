@@ -493,10 +493,12 @@ SPLThemeConfig *darkThemeConfig = [[SPLThemeConfig alloc] initWithPrimaryColorHe
     fieldLabelColorHex:@"#AEAEB2"
     borderRadius:8.0];
 
+// Set validation parameters before creating CardFormDropInViewController (optional)
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankName value:NO];
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowExpiredDate value:NO];
+
 CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     initWithOtherFields:@[]
-    allowBlankName:NO
-    allowExpiredDate:NO
     yearFormat:YearFormatFourDigit
     nameDisplayMode:DropInNameDisplayModeSeparateFields
     lightThemeConfig:lightThemeConfig
@@ -516,8 +518,6 @@ SPLThemeConfig *themeConfig = [[SPLThemeConfig alloc] initWithPrimaryColorHex:@"
 
 CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     initWithOtherFields:@[]
-    allowBlankName:NO
-    allowExpiredDate:NO
     yearFormat:YearFormatFourDigit
     nameDisplayMode:DropInNameDisplayModeSeparateFields
     themeConfig:themeConfig  // Used for both light and dark modes
@@ -528,8 +528,6 @@ CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
 // Method 3: Using global theme (no themeConfig parameter)
 CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     initWithOtherFields:@[]
-    allowBlankName:NO
-    allowExpiredDate:NO
     yearFormat:YearFormatFourDigit
     nameDisplayMode:DropInNameDisplayModeSeparateFields
     onProcessingResult:^(PaymentProcessingResult *result) {
@@ -650,18 +648,22 @@ SPLTextFieldViewController *textFieldVC = [[SPLTextFieldViewController alloc]
         fieldLabelColorHex:@"#495057"
         borderRadius:12.0];
 
+    // Set validation parameters (optional)
+    [[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankName value:NO];
+    [[Spreedly shared] setParamWithParameter:ValidationParamAllowExpiredDate value:NO];
+    
     self.dropInVC = [[CardFormDropInViewController alloc]
         initWithOtherFields:@[]
-        allowBlankName:NO
-        allowExpiredDate:NO
         yearFormat:YearFormatFourDigit
         nameDisplayMode:DropInNameDisplayModeSeparateFields
         themeConfig:customTheme
-        onProcessingResult:^(BOOL success) {
-            if (success) {
+        onProcessingResult:^(PaymentProcessingResult *result) {
+            if (result.isSuccess) {
                 NSLog(@"Payment successful!");
+            } else if (result.isValidationFailed) {
+                NSLog(@"Validation failed: %@", result.errorMessage);
             } else {
-                NSLog(@"Payment failed!");
+                NSLog(@"Payment failed: %@", result.errorMessage);
             }
         }];
 
@@ -738,16 +740,24 @@ SPLThemeConfig *androidTheme = [[SPLThemeConfig alloc] initWithPrimaryColorHex:@
 // Set as global theme
 [SpreedlyThemeManagerObjC setGlobalThemeWithConfig:androidTheme];
 
+// Set validation parameters (optional)
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankName value:NO];
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowExpiredDate value:NO];
+
 // Use in components
 CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     initWithOtherFields:@[]
-    allowBlankName:NO
-    allowExpiredDate:NO
     yearFormat:YearFormatFourDigit
     nameDisplayMode:DropInNameDisplayModeSeparateFields
     themeConfig:androidTheme
-    onProcessingResult:^(BOOL success) {
-        // Handle result
+    onProcessingResult:^(PaymentProcessingResult *result) {
+        if (result.isSuccess) {
+            // Handle success
+        } else if (result.isValidationFailed) {
+            // Handle validation errors
+        } else {
+            // Handle payment errors
+        }
     }];
 ```
 

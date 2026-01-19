@@ -14,7 +14,7 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 | **Complete Payment Form** | `CardFormDropIn` | `CardFormDropInViewController` | Full checkout form with all fields |
 | **Individual Field** | `SPLTextField` | `SPLTextFieldViewController` | Single form field component |
 | **CVV Recaching** | `SpreedlyCVVRecachingView` | `CVVRecachingViewController` | Collect CVV to recache payment method |
-| **3DS Challenge** | `DoChallengeIfNeeded` | `ThreeDSChallengeViewController` | Present 3DS authentication challenge |
+| **3DS Challenge** | `DoChallengeIfNeeded` | `DoChallengeIfNeededViewController` | Present 3DS authentication challenge |
 
 **Note:** All UIKit/Objective-C classes are wrappers around SwiftUI components, providing the same functionality with Objective-C compatible APIs.
 
@@ -442,6 +442,11 @@ CardFormDropIn(
 ### Advanced Configuration
 
 ```swift
+// Set validation parameters before showing CardFormDropIn
+Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
+
 CardFormDropIn(
     // Customize form fields
     otherFields: [
@@ -452,8 +457,6 @@ CardFormDropIn(
     ],
 
     // Configuration options
-    allowBlankName: false,
-    allowExpiredDate: false,
     yearFormat: .fourDigit,
 
     // Callbacks
@@ -466,6 +469,18 @@ CardFormDropIn(
     // Check result.isValidationFailed or result.errorMessage for error details
 )
 ```
+
+### Validation Parameters
+
+The SDK provides three validation parameters that control how payment method fields are validated:
+
+- **`allowBlankName`** (default: `false`): When set to `true`, allows the cardholder name field to be empty. When `false`, the name field is required.
+
+- **`allowExpiredDate`** (default: `false`): When set to `true`, allows payment methods with expiration dates in the past. When `false`, expired dates are rejected.
+
+- **`allowBlankDate`** (default: `false`): When set to `true`, allows the expiration month and year fields to be empty, making the expiration date optional. When `false`, both month and year are required.
+
+**Note:** These parameters should be set using `Spreedly.shared().setParam(parameter:value:)` before displaying `CardFormDropIn` or `CardFormDropInViewController`. They can also be set when creating payment methods via `createCreditCard()` or when recaching payment methods via `recachePaymentMethod()`. For recache operations, all three parameters default to `false` and are always sent to the API.
 
 ### Save Card for Future Payments
 
@@ -1372,7 +1387,10 @@ let processingResult = Spreedly.shared().createCreditCard(
         .phoneNumber: "+1234567890",
         .email: "john.doe@example.com"
     ],
-    metadata: ["orderId": "12345"]
+    metadata: ["orderId": "12345"],
+    allowBlankName: false,
+    allowExpiredDate: false,
+    allowBlankDate: false
 )
 
 // Listen for payment results
@@ -1718,6 +1736,9 @@ struct SavedCardsView: View {
                         presentationMode: .bottomSheet
                     ),
                     paymentMethodToken: card.paymentMethodToken,
+                    allowBlankName: false,
+                    allowExpiredDate: false,
+                    allowBlankDate: false,
                     onProcessingResult: { result in
                         if result.isProcessing {
                             // Show loading indicator
@@ -1827,6 +1848,9 @@ For dialog mode, use `.crossDissolveFullScreenCover()` instead of `.sheet()`:
             presentationMode: .dialog
         ),
         paymentMethodToken: paymentMethodToken,
+        allowBlankName: false,
+        allowExpiredDate: false,
+        allowBlankDate: false,
         onDismiss: {
             showCVVRecaching = false
         }
@@ -1852,6 +1876,26 @@ RecacheConfig(
     buttonText: "Confirm",              // Submit button text (default: "Confirm")
     cancelButtonText: "Cancel"           // Cancel button text (default: "Cancel")
 )
+```
+
+**Validation Parameters for Recaching:**
+
+When using `SpreedlyCVVRecachingView`, you can also specify validation parameters:
+
+```swift
+SpreedlyCVVRecachingView(
+    config: recacheConfig,
+    paymentMethodToken: paymentMethodToken,
+    allowBlankName: false,      // Allow blank name fields (default: false)
+    allowExpiredDate: false,    // Allow expired dates (default: false)
+    allowBlankDate: false,      // Allow blank expiration date (default: false)
+    onProcessingResult: { result in
+        // Handle result
+    }
+)
+```
+
+**Note:** For recache operations, all validation parameters default to `false` and are always sent to the API, even if not explicitly set.
 ```
 
 #### Theme Customization
@@ -1880,6 +1924,9 @@ SpreedlyCVVRecachingView(
     paymentMethodToken: paymentMethodToken,
     theme: lightTheme,
     darkTheme: darkTheme,
+    allowBlankName: false,
+    allowExpiredDate: false,
+    allowBlankDate: false,
     onProcessingResult: { result in
         // Handle result
     },
@@ -1972,6 +2019,9 @@ struct RecachingExampleView: View {
                         presentationMode: .bottomSheet
                     ),
                     paymentMethodToken: card.paymentMethodToken,
+                    allowBlankName: false,
+                    allowExpiredDate: false,
+                    allowBlankDate: false,
                     onProcessingResult: { result in
                         if result.isProcessing {
                             isLoading = true
@@ -2546,7 +2596,7 @@ When a transaction requires 3DS authentication, your backend will receive a `man
 **Key Components:**
 
 - **DoChallengeIfNeeded** - SwiftUI view for presenting 3DS challenges
-- **ThreeDSChallengeViewController** - UIKit/Objective-C compatible view controller
+- **DoChallengeIfNeededViewController** - UIKit/Objective-C compatible view controller
 - **ThreeDSChallengeResult** - Result object containing challenge outcome
 - **SpreedlyThreeDSChallengeDelegate** - Delegate protocol for Objective-C integration
 
@@ -2734,7 +2784,7 @@ The 3DS authentication flow provides Strong Customer Authentication (SCA) for ca
 1. **Tokenize Payment Method** - Use `CardFormDropIn` or individual fields to create a payment method token
 2. **Backend Purchase Request** - Your backend sends the payment method token to Spreedly's purchase/authorize endpoint
 3. **Check for 3DS Requirement** - If the response contains `sca_authentication.managed_order_token` and `transaction.token`, 3DS is required
-4. **Present Challenge** - Display the 3DS challenge UI using `DoChallengeIfNeeded` or `ThreeDSChallengeViewController`
+4. **Present Challenge** - Display the 3DS challenge UI using `DoChallengeIfNeeded` or `DoChallengeIfNeededViewController`
 5. **SDK Internal Processing** (Automatic):
    - Forter SDK presents challenge UI to user (if required)
    - When Forter completes, SDK receives callback
@@ -2910,7 +2960,7 @@ DoChallengeIfNeeded(
 
 ### UIKit Integration
 
-For UIKit-based apps, use `ThreeDSChallengeViewController`:
+For UIKit-based apps, use `DoChallengeIfNeededViewController`:
 
 ```swift
 import UIKit
@@ -2955,7 +3005,7 @@ class PaymentViewController: UIViewController {
     
     func present3DSChallenge(managedOrderToken: String, transactionToken: String) {
         // Create the challenge view controller
-        let challengeVC = ThreeDSChallengeViewController(
+        let challengeVC = DoChallengeIfNeededViewController(
             managedOrderToken: managedOrderToken,
             transactionToken: transactionToken,
             onDismiss: { [weak self] in
@@ -3047,7 +3097,7 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 ```objc
 - (void)present3DSChallengeWithToken:(NSString *)managedOrderToken transactionToken:(NSString *)transactionToken {
     // Create the challenge view controller
-    ThreeDSChallengeViewController *challengeVC = [[ThreeDSChallengeViewController alloc] 
+    DoChallengeIfNeededViewController *challengeVC = [[DoChallengeIfNeededViewController alloc] 
         initWithManagedOrderToken:managedOrderToken
         transactionToken:transactionToken
         onDismiss:nil];  // Using delegate pattern, so onDismiss can be nil
@@ -3148,7 +3198,7 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 }
 
 - (void)present3DSChallengeWithToken:(NSString *)managedOrderToken transactionToken:(NSString *)transactionToken {
-    ThreeDSChallengeViewController *challengeVC = [[ThreeDSChallengeViewController alloc] 
+    DoChallengeIfNeededViewController *challengeVC = [[DoChallengeIfNeededViewController alloc] 
         initWithManagedOrderToken:managedOrderToken
         transactionToken:transactionToken
         onDismiss:nil];
@@ -3294,7 +3344,7 @@ For detailed backend integration, refer to [Spreedly's 3DS documentation](https:
 The SDK automatically handles the complete 3DS authentication flow for you. Here's what happens:
 
 1. **Challenge Presentation:**
-   - When you present `DoChallengeIfNeeded` or `ThreeDSChallengeViewController`, the SDK manages the Forter SDK integration
+   - When you present `DoChallengeIfNeeded` or `DoChallengeIfNeededViewController`, the SDK manages the Forter SDK integration
    - The Forter SDK presents its challenge UI to the user if authentication is required
    - If no challenge is needed, the flow completes immediately
 
@@ -3477,7 +3527,7 @@ Apply screen prevention to any SwiftUI view using the `.screenPrevention()` modi
 
 **Note:** Always apply `.screenPrevention()` to `CardFormDropIn` and other payment forms to protect sensitive payment information.
 
-**Important:** Screen prevention **cannot** be applied to 3DS challenges (`DoChallengeIfNeeded` or `ThreeDSChallengeViewController`) because Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer. The Forter SDK handles its own security measures for the challenge UI.
+**Important:** Screen prevention **cannot** be applied to 3DS challenges (`DoChallengeIfNeeded` or `DoChallengeIfNeededViewController`) because Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer. The Forter SDK handles its own security measures for the challenge UI.
 
 ##### Securing the Root Screen (Recommended)
 
@@ -3655,7 +3705,7 @@ let secureVC = sensitiveDataVC.wrapInSecureViewController(
 Apply screen prevention to:
 - ✅ Custom views displaying credit card information
 - ✅ Views showing sensitive user data (beyond payment forms)
-- ❌ **NOT** for 3DS challenges (`DoChallengeIfNeeded` or `ThreeDSChallengeViewController`) - Forter SDK handles its own security
+- ❌ **NOT** for 3DS challenges (`DoChallengeIfNeeded` or `DoChallengeIfNeededViewController`) - Forter SDK handles its own security
 - ✅ Views displaying payment confirmation details
 - ✅ Custom checkout screens (if not using `CardFormDropIn`)
 - ✅ Views showing transaction history with sensitive data
@@ -3664,7 +3714,7 @@ Apply screen prevention to:
 
 You can skip protection for:
 - ❌ `CardFormDropIn` (already protected)
-- ❌ **3DS challenges** (`DoChallengeIfNeeded` or `ThreeDSChallengeViewController`) - Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer
+- ❌ **3DS challenges** (`DoChallengeIfNeeded` or `DoChallengeIfNeededViewController`) - Forter SDK presents its own sheet/view controller that cannot be wrapped in our protection layer
 - ❌ Non-sensitive content (product listings, menus)
 - ❌ Public information
 - ❌ Views without payment or sensitive data
@@ -4510,11 +4560,14 @@ NSArray *additionalFields = @[
     [[FormField alloc] initWithId:@"zipCode" title:@"ZIP Code" type:FormFieldTypeZipCode placeholder:nil isRequired:YES]
 ];
 
+// Set validation parameters before creating CardFormDropInViewController
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankName value:NO];
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowExpiredDate value:NO];
+[[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankDate value:NO];
+
 // Create CardFormDropIn with configuration
 CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     initWithOtherFields:additionalFields
-    allowBlankName:NO
-    allowExpiredDate:NO
     yearFormat:YearFormatFourDigit
     nameDisplayMode:DropInNameDisplayModeSeparateFields
     onProcessingResult:^(PaymentProcessingResult *result) {
@@ -5461,7 +5514,7 @@ This section provides a quick reference of all merchant-facing classes. For comp
 | `CardFormDropInViewController` | Complete payment form (UIKit wrapper) | `SpreedlyUI/Components/Checkout/CardFormDropIn.swift` |
 | `SPLTextFieldViewController` | Individual form field (UIKit wrapper) | `SpreedlyUI/Components/SPLTextField.swift` |
 | `CVVRecachingViewController` | CVV recaching (UIKit wrapper) | `SpreedlyUI/Components/Recaching/Controllers/CVVRecachingViewController.swift` |
-| `ThreeDSChallengeViewController` | 3DS challenge (UIKit wrapper) | `SpreedlyUI/Components/ThreeDS/ThreeDSChallengeViewController.swift` |
+| `DoChallengeIfNeededViewController` | 3DS challenge (UIKit wrapper) | `SpreedlyUI/Components/ThreeDS/DoChallengeIfNeededViewController.swift` |
 
 ### Core Classes
 
