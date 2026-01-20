@@ -480,7 +480,7 @@ The SDK provides three validation parameters that control how payment method fie
 
 - **`allowBlankDate`** (default: `false`): When set to `true`, allows the expiration month and year fields to be empty, making the expiration date optional. When `false`, both month and year are required.
 
-**Note:** These parameters should be set using `Spreedly.shared().setParam(parameter:value:)` before displaying `CardFormDropIn` or `CardFormDropInViewController`. They can also be set when creating payment methods via `createCreditCard()` or when recaching payment methods via `recachePaymentMethod()`. For recache operations, all three parameters default to `false` and are always sent to the API.
+**Note:** These parameters are stored on `Spreedly.shared()` and apply globally across screens. Set them before showing a form, and reset to defaults (`false`) when you leave a flow if you don't want the values to carry over to other screens. They can also be set when creating payment methods via `createCreditCard()` or when recaching payment methods via `recachePaymentMethod()`. For recache operations, all three parameters default to `false` and are always sent to the API.
 
 ### Save Card for Future Payments
 
