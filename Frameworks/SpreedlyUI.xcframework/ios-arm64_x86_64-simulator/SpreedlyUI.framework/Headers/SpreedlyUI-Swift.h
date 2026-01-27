@@ -355,21 +355,17 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 @interface DoChallengeIfNeededViewController : UIViewController
 /// Initializes the 3DS Challenge View Controller
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
-///
-/// \param transactionToken Transaction token for status.json API (required for status check)
+/// \param transactionToken Transaction token for status.json API (managed_order_token is fetched internally)
 ///
 /// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
 ///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 /// Convenience initializer for Objective-C compatibility
 /// Omits the onDismiss closure parameter for simpler Objective-C usage
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
+/// \param transactionToken Transaction token for status.json API (managed_order_token is fetched internally)
 ///
-/// \param transactionToken Transaction token for status.json API (required for status check)
-///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken;
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken;
 - (void)viewDidLoad;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
@@ -392,6 +388,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic) enum FormFieldType field;
 @property (nonatomic, copy) NSString * _Nullable fieldTitle;
 @property (nonatomic) BOOL isRequired;
+@property (nonatomic) enum YearFormat yearFormat;
 @property (nonatomic, copy) NSString * _Nullable placeholder;
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextContentType _Nullable textContentType;
@@ -963,21 +960,17 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 @interface DoChallengeIfNeededViewController : UIViewController
 /// Initializes the 3DS Challenge View Controller
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
-///
-/// \param transactionToken Transaction token for status.json API (required for status check)
+/// \param transactionToken Transaction token for status.json API (managed_order_token is fetched internally)
 ///
 /// \param onDismiss Callback when view should be dismissed (e.g., Cancel button or merchant action)
 ///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 /// Convenience initializer for Objective-C compatibility
 /// Omits the onDismiss closure parameter for simpler Objective-C usage
-/// \param managedOrderToken Token from Spreedly API response (sca_authentication.managed_order_token)
+/// \param transactionToken Transaction token for status.json API (managed_order_token is fetched internally)
 ///
-/// \param transactionToken Transaction token for status.json API (required for status check)
-///
-- (nonnull instancetype)initWithManagedOrderToken:(NSString * _Nonnull)managedOrderToken transactionToken:(NSString * _Nonnull)transactionToken;
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken;
 - (void)viewDidLoad;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
@@ -1000,6 +993,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic) enum FormFieldType field;
 @property (nonatomic, copy) NSString * _Nullable fieldTitle;
 @property (nonatomic) BOOL isRequired;
+@property (nonatomic) enum YearFormat yearFormat;
 @property (nonatomic, copy) NSString * _Nullable placeholder;
 @property (nonatomic) UIKeyboardType keyboardType;
 @property (nonatomic) UITextContentType _Nullable textContentType;
