@@ -2591,7 +2591,7 @@ Remember to cancel payment result subscriptions to prevent memory leaks:
 
 ### Overview
 
-When a transaction requires 3DS authentication, your backend will receive a `managed_order_token` from Spreedly's API. The SDK provides UI components to present the 3DS challenge to the user and report the result back to your application.
+When a transaction requires 3DS authentication, your backend will receive a `managed_order_token` from Spreedly's API. The SDK fetches this token internally via the status API using the `transaction_token`, so you no longer need to pass `managed_order_token` into the app. The SDK provides UI components to present the 3DS challenge to the user and report the result back to your application.
 
 **Key Components:**
 
@@ -2783,7 +2783,7 @@ The 3DS authentication flow provides Strong Customer Authentication (SCA) for ca
 
 1. **Tokenize Payment Method** - Use `CardFormDropIn` or individual fields to create a payment method token
 2. **Backend Purchase Request** - Your backend sends the payment method token to Spreedly's purchase/authorize endpoint
-3. **Check for 3DS Requirement** - If the response contains `sca_authentication.managed_order_token` and `transaction.token`, 3DS is required
+3. **Check for 3DS Requirement** - If the response contains `sca_authentication` and `transaction.token`, 3DS is required
 4. **Present Challenge** - Display the 3DS challenge UI using `DoChallengeIfNeeded` or `DoChallengeIfNeededViewController`
 5. **SDK Internal Processing** (Automatic):
    - Forter SDK presents challenge UI to user (if required)
@@ -2813,7 +2813,7 @@ import Combine
 struct PaymentView: View {
     @State private var showCheckout = false
     @State private var show3DSChallenge = false
-    @State private var managedOrderToken: String?
+    @State private var transactionToken: String?
     @State private var paymentResult: PaymentResult?
     @State private var challengeResult: ThreeDSChallengeResult?
     @State private var errorMessage: String?
@@ -2848,9 +2848,8 @@ struct PaymentView: View {
             )
         }
         .sheet(isPresented: $show3DSChallenge) {
-            if let token = managedOrderToken, let transactionToken = transactionToken {
+            if let transactionToken = transactionToken {
                 DoChallengeIfNeeded(
-                    managedOrderToken: token,
                     transactionToken: transactionToken,
                     onDismiss: {
                         show3DSChallenge = false
@@ -2921,7 +2920,7 @@ struct PaymentView: View {
     
     private func checkFor3DSRequirement(paymentToken: String) {
         // In production, call your backend API to initiate the purchase
-        // Your backend will return the managed_order_token and transaction_token if 3DS is required
+        // Your backend will return the transaction_token and indicate if 3DS is required
         
         // Example (replace with your actual backend call):
         // Task {
@@ -2930,10 +2929,8 @@ struct PaymentView: View {
         //     await MainActor.run {
         //         // Check if 3DS is required
         //         if let transaction = response.transaction,
-        //            let scaAuth = transaction.scaAuthentication,
-        //            let managedToken = scaAuth.managedOrderToken {
-        //             // Store both tokens - both are required for 3DS challenge
-        //             managedOrderToken = managedToken
+        //            transaction.scaAuthentication != nil {
+        //             // Store the transaction token - SDK fetches managed_order_token internally
         //             transactionToken = transaction.token  // Required for SDK's internal API calls
         //             show3DSChallenge = true
         //         } else {
@@ -2950,7 +2947,6 @@ struct PaymentView: View {
 
 ```swift
 DoChallengeIfNeeded(
-    managedOrderToken: String,      // Required: Token from Spreedly API response (sca_authentication.managed_order_token)
     transactionToken: String,         // Required: Transaction token for completion and status APIs
     onDismiss: (() -> Void)? = nil  // Optional: Called when view should be dismissed
 )
@@ -3003,10 +2999,9 @@ class PaymentViewController: UIViewController {
         }
     }
     
-    func present3DSChallenge(managedOrderToken: String, transactionToken: String) {
+    func present3DSChallenge(transactionToken: String) {
         // Create the challenge view controller
         let challengeVC = DoChallengeIfNeededViewController(
-            managedOrderToken: managedOrderToken,
             transactionToken: transactionToken,
             onDismiss: { [weak self] in
                 self?.dismiss(animated: true)
@@ -3095,11 +3090,10 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 #### Presenting the 3DS Challenge
 
 ```objc
-- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken transactionToken:(NSString *)transactionToken {
+- (void)present3DSChallengeWithTransactionToken:(NSString *)transactionToken {
     // Create the challenge view controller
     DoChallengeIfNeededViewController *challengeVC = [[DoChallengeIfNeededViewController alloc] 
-        initWithManagedOrderToken:managedOrderToken
-        transactionToken:transactionToken
+        initWithTransactionToken:transactionToken
         onDismiss:nil];  // Using delegate pattern, so onDismiss can be nil
     
     // Present modally
@@ -3131,7 +3125,6 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 
 @interface CheckoutViewController () <SpreedlyPaymentDelegate, SpreedlyThreeDSChallengeDelegate>
 @property (nonatomic, strong) NSString *paymentMethodToken;
-@property (nonatomic, strong) NSString *managedOrderToken;
 @end
 
 @implementation CheckoutViewController
@@ -3178,18 +3171,16 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
 
 - (void)checkFor3DSRequirementWithToken:(NSString *)paymentToken {
     // Call your backend API to initiate the purchase
-    // Your backend will return the managed_order_token and transaction_token if 3DS is required
+    // Your backend will return the transaction_token and indicate if 3DS is required
     
     // Example (replace with your actual backend call):
     // [self.backendAPI purchaseWithToken:paymentToken completion:^(BackendResponse *response, NSError *error) {
     //     // Check if 3DS is required
     //     if (response.transaction && 
-    //         response.transaction.scaAuthentication && 
-    //         response.transaction.scaAuthentication.managedOrderToken) {
-    //         // Store both tokens - both are required for 3DS challenge
-    //         self.managedOrderToken = response.transaction.scaAuthentication.managedOrderToken;
+    //         response.transaction.scaAuthentication) {
+    //         // Store the transaction token - SDK fetches managed_order_token internally
     //         self.transactionToken = response.transaction.token;  // Required for SDK's internal API calls
-    //         [self present3DSChallenge];
+    //         [self present3DSChallengeWithTransactionToken:self.transactionToken];
     //     } else {
     //         // No 3DS required - transaction complete
     //         [self handlePaymentSuccess];
@@ -3197,10 +3188,9 @@ For Objective-C projects, use the delegate pattern to receive 3DS challenge resu
     // }];
 }
 
-- (void)present3DSChallengeWithToken:(NSString *)managedOrderToken transactionToken:(NSString *)transactionToken {
+- (void)present3DSChallengeWithTransactionToken:(NSString *)transactionToken {
     DoChallengeIfNeededViewController *challengeVC = [[DoChallengeIfNeededViewController alloc] 
-        initWithManagedOrderToken:managedOrderToken
-        transactionToken:transactionToken
+        initWithTransactionToken:transactionToken
         onDismiss:nil];
     
     [self presentViewController:challengeVC animated:YES completion:nil];
@@ -3326,12 +3316,12 @@ The SDK automatically handles the following API calls internally when the Forter
 **Your Backend Flow:**
 
 1. **Initiate Purchase** - Your backend calls Spreedly's purchase/authorize endpoint with the payment method token
-2. **Handle SCA Response** - If `sca_authentication.managed_order_token` and `transaction.token` are present in the response, return both to the app
+2. **Handle SCA Response** - If `sca_authentication` and `transaction.token` are present in the response, return the transaction token and a 3DS-required signal to the app
 3. **Receive Challenge Result** - After the SDK completes the challenge and internal API calls, you receive `ThreeDSChallengeResult`
 4. **Transaction Complete** - The transaction is complete based on the status API response. No additional backend calls are needed.
 
 **Important:** The SDK handles the completion and status API calls automatically. You only need to:
-- Extract `managed_order_token` and `transaction.token` from your backend's purchase response
+- Extract `transaction.token` from your backend's purchase response
 - Present the challenge UI
 - Handle the result callback
 
@@ -3364,16 +3354,16 @@ The SDK automatically handles the complete 3DS authentication flow for you. Here
 - The SDK automatically handles all API calls - you don't need to call any completion or status APIs manually
 - The result you receive reflects the actual transaction state from Spreedly's status API
 - If the Forter SDK reports an error immediately, you get a failure result without any API calls
-- Both `managedOrderToken` and `transactionToken` are required - the SDK uses `transactionToken` for the required API calls
+- The SDK requires `transactionToken` for internal API calls and fetches `managedOrderToken` via status
 
 ### Security Considerations
 
 **1. Token Handling**
 
-- The `managed_order_token` should be passed securely from your backend to the app
 - The `transaction_token` is required for SDK's internal API calls - ensure it's included from your backend response
+- The SDK fetches `managed_order_token` internally via the status API
 - Never log or store these tokens permanently
-- Both tokens are only used during the challenge flow and should be discarded after completion
+- Tokens are only used during the challenge flow and should be discarded after completion
 
 **2. Subscription Timing**
 
@@ -3401,8 +3391,8 @@ The SDK automatically handles the complete 3DS authentication flow for you. Here
 
 **Issue: 3DS Challenge view doesn't appear**
 
-- Ensure `managedOrderToken` is valid and not empty
 - Ensure `transactionToken` is provided (required for SDK's internal API calls)
+- Verify the status API response includes a valid `managed_order_token`
 - Verify Forter Site ID is configured in `Spreedly.setup(config:)` with a `SpreedlyConfig` containing `forterSiteId`
 - Check that the Forter3DS framework is properly linked and embedded in your app bundle
 - Verify Forter3DS is available at runtime (check that framework is included in "Frameworks, Libraries, and Embedded Content")
@@ -3423,8 +3413,8 @@ The SDK automatically handles the complete 3DS authentication flow for you. Here
 
 **Issue: Challenge fails immediately**
 
-- Verify the `managed_order_token` is correct and not expired
 - Ensure `transaction_token` is included from your backend response
+- Verify the status API response includes a valid `managed_order_token`
 - Check your Forter portal configuration
 - Ensure your environment (test/production) matches your Forter configuration
 - Check network connectivity - SDK needs to call completion and status APIs
