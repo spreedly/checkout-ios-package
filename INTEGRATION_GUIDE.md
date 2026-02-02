@@ -2800,6 +2800,116 @@ The 3DS authentication flow provides Strong Customer Authentication (SCA) for ca
 - If Forter SDK reports an error immediately, the SDK emits a failure result without calling APIs
 - The result indicates the final transaction state: success, failure, or canceled
 
+### Gateway-Specific 3DS (Worldpay and similar gateways)
+
+Gateway-specific 3DS flows require the **merchant backend** to call `/complete.json`. With SwiftUI, the merchant should present `DoChallengeIfNeeded`, and handle the trigger-completion event to finalize the flow. The SDK manages the WebViews, polling, and final result delivery.
+
+**Merchant-Facing APIs:**
+
+- `GatewaySpecific3DSIntegration.finalizeTransaction(for:transaction:)`
+- `GatewaySpecific3DSIntegration.cleanupLifecycle(for:)`
+- `Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { ... }`
+- `Spreedly.shared().subscribeToThreeDSChallengeResults { ... }`
+
+> **Important:** Subscribe to gateway-specific events **before** presenting `DoChallengeIfNeeded`.
+
+#### Gateway-Specific Flow Overview
+
+1. **Purchase/Authorize** on your backend → get `transaction.token`
+2. **Check Status**: backend calls `/transactions/{token}/status.json`
+3. **Present 3DS UI** in app using `DoChallengeIfNeeded`
+4. **Trigger Completion**: SDK emits `gatewaySpecific3DSTriggerCompletion`
+5. **Complete**: backend calls `/complete.json`
+6. **Finalize**: app calls `finalizeTransaction(...)` with the transaction from `/complete.json`
+7. **Final Result**: SDK emits `ThreeDSChallengeResult` (success/failure/canceled)
+
+> **Advanced:** `GatewaySpecific3DSIntegration.getLifecycle(for:)` exists for debugging or custom callbacks. Use sparingly; most merchants should rely on the public events and helpers above.
+
+#### SwiftUI Integration (Gateway-Specific 3DS)
+
+```swift
+import SwiftUI
+import Combine
+import SpreedlyCore
+import SpreedlyUI
+
+struct GatewaySpecific3DSView: View {
+    @State private var show3DSChallenge = false
+    @State private var triggerCancellable: AnyCancellable?
+    @State private var resultCancellable: AnyCancellable?
+    @State private var errorMessage: String?
+    
+    let transactionToken: String
+    
+    var body: some View {
+        VStack {
+            Button("Start 3DS") {
+                show3DSChallenge = true
+            }
+            
+            if let errorMessage {
+                Text(errorMessage).foregroundColor(.red)
+            }
+        }
+        .sheet(isPresented: $show3DSChallenge) {
+            DoChallengeIfNeeded(
+                transactionToken: transactionToken,
+                onDismiss: { show3DSChallenge = false }
+            )
+        }
+        .onAppear {
+            setupSubscriptions()
+        }
+        .onDisappear {
+            cleanupSubscriptions()
+        }
+    }
+    
+    private func setupSubscriptions() {
+        triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { event in
+            // 1) Call your backend to POST /complete.json using event.token
+            // 2) Decode the response into TransactionStatus
+            // 3) Call finalizeTransaction with the transaction
+            // Example:
+            // Task {
+            //   let completeResponse = try await backend.completeTransaction(event.token)
+            //   GatewaySpecific3DSIntegration.finalizeTransaction(
+            //       for: event.token,
+            //       transaction: completeResponse.transaction
+            //   )
+            // }
+        }
+        
+        resultCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
+            if result.isSuccess {
+                errorMessage = nil
+            } else if result.isFailure {
+                errorMessage = result.error?.localizedDescription ?? "3DS challenge failed"
+            } else if result.isCanceled {
+                errorMessage = "3DS challenge canceled"
+            }
+        }
+    }
+    
+    private func cleanupSubscriptions() {
+        triggerCancellable?.cancel()
+        resultCancellable?.cancel()
+        triggerCancellable = nil
+        resultCancellable = nil
+    }
+}
+```
+
+#### Manual Cleanup (Optional)
+
+If you need to cancel a flow early (user backs out), call:
+
+```swift
+GatewaySpecific3DSIntegration.cleanupLifecycle(for: transactionToken)
+```
+
+> The SDK automatically cleans up when a terminal result is emitted; this is only for explicit cancellation.
+
 ### SwiftUI Integration
 
 #### Basic Implementation

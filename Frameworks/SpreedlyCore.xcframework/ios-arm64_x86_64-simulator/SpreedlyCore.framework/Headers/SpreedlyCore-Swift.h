@@ -360,6 +360,13 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeZipCode = 12,
 };
 
+/// Manages the complete gateway-specific 3DS lifecycle
+SWIFT_CLASS("_TtC12SpreedlyCore27GatewaySpecific3DSLifecycle")
+@interface GatewaySpecific3DSLifecycle : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Represents the immediate result of a payment processing attempt.
 /// This class captures the synchronous result of calling processPayment(),
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
@@ -1147,6 +1154,13 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeState = 11,
   FormFieldTypeZipCode = 12,
 };
+
+/// Manages the complete gateway-specific 3DS lifecycle
+SWIFT_CLASS("_TtC12SpreedlyCore27GatewaySpecific3DSLifecycle")
+@interface GatewaySpecific3DSLifecycle : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
 
 /// Represents the immediate result of a payment processing attempt.
 /// This class captures the synchronous result of calling processPayment(),
