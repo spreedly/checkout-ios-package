@@ -645,7 +645,6 @@ typedef SWIFT_ENUM(NSInteger, SpreedlyApiError, open) {
   SpreedlyApiErrorUnknown = 9,
 };
 
-/// Configuration for basic authentication
 SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @protocol SpreedlyConfigGenerator <NSObject>
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
@@ -1440,7 +1439,6 @@ typedef SWIFT_ENUM(NSInteger, SpreedlyApiError, open) {
   SpreedlyApiErrorUnknown = 9,
 };
 
-/// Configuration for basic authentication
 SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @protocol SpreedlyConfigGenerator <NSObject>
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
