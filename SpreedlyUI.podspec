@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyUI'
-  s.version          = '1.0.15'
+  s.version          = '1.0.16'
   s.summary          = 'SpreedlyUI is the ui framework of the Spreedly SDK.'
   s.homepage         = 'https://github.com/Capillary/hydra-sdk-ios-packages'
   s.license          = { :type => 'Proprietary', :text => 'Licensed for internal use only.' }
