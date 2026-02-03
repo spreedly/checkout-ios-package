@@ -349,11 +349,12 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 - (void)viewDidLoad;
 @end
 
+@class UIPresentationController;
 /// UIKit wrapper for DoChallengeIfNeeded to enable Objective-C integration
 /// This class is always available regardless of whether Forter3DS is configured.
 /// When Forter3DS is not available, the view will display an appropriate message.
 SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
-@interface DoChallengeIfNeededViewController : UIViewController
+@interface DoChallengeIfNeededViewController : UIViewController <UIAdaptivePresentationControllerDelegate>
 /// Initializes the 3DS Challenge View Controller
 /// \param transactionToken Transaction token for status.json API (managed_order_token is fetched internally)
 ///
@@ -367,6 +368,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 ///
 - (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken;
 - (void)viewDidLoad;
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
@@ -954,11 +956,12 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 - (void)viewDidLoad;
 @end
 
+@class UIPresentationController;
 /// UIKit wrapper for DoChallengeIfNeeded to enable Objective-C integration
 /// This class is always available regardless of whether Forter3DS is configured.
 /// When Forter3DS is not available, the view will display an appropriate message.
 SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
-@interface DoChallengeIfNeededViewController : UIViewController
+@interface DoChallengeIfNeededViewController : UIViewController <UIAdaptivePresentationControllerDelegate>
 /// Initializes the 3DS Challenge View Controller
 /// \param transactionToken Transaction token for status.json API (managed_order_token is fetched internally)
 ///
@@ -972,6 +975,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 ///
 - (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken;
 - (void)viewDidLoad;
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 

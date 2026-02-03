@@ -367,6 +367,32 @@ SWIFT_CLASS("_TtC12SpreedlyCore27GatewaySpecific3DSLifecycle")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class NSData;
+/// Objective-C bridge for gateway-specific 3DS finalize flow.
+/// Allows ObjC callers to decode complete.json responses and finalize the SDK lifecycle.
+SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
+@interface GatewaySpecific3DSObjCBridge : NSObject
+/// Finalizes a gateway-specific 3DS transaction using the complete.json response data.
+/// \param transactionToken Transaction token from the purchase response
+///
+/// \param completeResponseData Raw JSON data returned by /complete.json
+///
+///
+/// throws:
+/// NSError if decoding fails or transaction is missing
++ (BOOL)finalizeTransactionForTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error;
+/// Finalizes a gateway-specific 3DS transaction using the complete.json response data.
+/// \param transactionToken Transaction token from the purchase response
+///
+/// \param completeResponseData Raw JSON data returned by /complete.json
+///
+///
+/// throws:
+/// NSError if decoding fails or transaction is missing
++ (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Represents the immediate result of a payment processing attempt.
 /// This class captures the synchronous result of calling processPayment(),
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
@@ -534,6 +560,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
+@class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
@@ -582,6 +609,12 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate allowBlankDate:(BOOL)allowBlankDate SWIFT_WARN_UNUSED_RESULT;
+/// Emits a 3DS challenge result through both Combine publisher and delegate
+/// note:
+/// This is primarily intended for SDK-internal flows (UI/components).
+/// \param result The challenge result to emit
+///
+- (void)emitThreeDSChallengeResult:(ThreeDSChallengeResult * _Nonnull)result;
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
@@ -687,7 +720,6 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
-@class ThreeDSChallengeResult;
 /// Objective-C compatible delegate for receiving 3DS challenge result updates
 SWIFT_PROTOCOL("_TtP12SpreedlyCore32SpreedlyThreeDSChallengeDelegate_")
 @protocol SpreedlyThreeDSChallengeDelegate
@@ -1161,6 +1193,32 @@ SWIFT_CLASS("_TtC12SpreedlyCore27GatewaySpecific3DSLifecycle")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class NSData;
+/// Objective-C bridge for gateway-specific 3DS finalize flow.
+/// Allows ObjC callers to decode complete.json responses and finalize the SDK lifecycle.
+SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
+@interface GatewaySpecific3DSObjCBridge : NSObject
+/// Finalizes a gateway-specific 3DS transaction using the complete.json response data.
+/// \param transactionToken Transaction token from the purchase response
+///
+/// \param completeResponseData Raw JSON data returned by /complete.json
+///
+///
+/// throws:
+/// NSError if decoding fails or transaction is missing
++ (BOOL)finalizeTransactionForTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error;
+/// Finalizes a gateway-specific 3DS transaction using the complete.json response data.
+/// \param transactionToken Transaction token from the purchase response
+///
+/// \param completeResponseData Raw JSON data returned by /complete.json
+///
+///
+/// throws:
+/// NSError if decoding fails or transaction is missing
++ (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Represents the immediate result of a payment processing attempt.
 /// This class captures the synchronous result of calling processPayment(),
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
@@ -1328,6 +1386,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
+@class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
@@ -1376,6 +1435,12 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate allowBlankDate:(BOOL)allowBlankDate SWIFT_WARN_UNUSED_RESULT;
+/// Emits a 3DS challenge result through both Combine publisher and delegate
+/// note:
+/// This is primarily intended for SDK-internal flows (UI/components).
+/// \param result The challenge result to emit
+///
+- (void)emitThreeDSChallengeResult:(ThreeDSChallengeResult * _Nonnull)result;
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
@@ -1481,7 +1546,6 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
-@class ThreeDSChallengeResult;
 /// Objective-C compatible delegate for receiving 3DS challenge result updates
 SWIFT_PROTOCOL("_TtP12SpreedlyCore32SpreedlyThreeDSChallengeDelegate_")
 @protocol SpreedlyThreeDSChallengeDelegate
