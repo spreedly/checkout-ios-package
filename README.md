@@ -33,8 +33,8 @@ A modern iOS SDK for integrating Spreedly payment processing into iOS applicatio
 
 | Component             | Minimum Version | Recommended Version | Maximum Tested Version |
 |-----------------------|-----------------|---------------------|------------------------|
-| **iOS Version**       | 13.0            | 18.0                | 26.0.1                 |
-| **Deployment Target** | 13.0            | 18.0                | 26.0.1                 |
+| **iOS Version**       | 13.0            | 26                | 26                 |
+| **Deployment Target** | 13.0            | 26                | 26                 |
 | **Swift Version**     | 5.10            | 5.10                | 6.2                    |
 
 ### Supported iOS Versions
@@ -47,7 +47,7 @@ The SDK is tested and supported on the following iOS versions:
 - ✅ **iOS 16.0** - Full compatibility
 - ✅ **iOS 17.0** - Full compatibility
 - ✅ **iOS 18.0** - Full compatibility
-- ✅ **iOS 26.0.1** - Tested and verified
+- ✅ **iOS 26** - Tested and verified
 
 ### Device Support
 

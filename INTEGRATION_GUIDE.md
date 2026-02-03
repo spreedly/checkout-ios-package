@@ -80,6 +80,7 @@ struct ExampleCredentials {
    - File → Add Package Dependencies
    - Enter repository URL: `https://github.com/spreedly/checkout-ios-sdk.git`
    - Select version requirements
+   - Use the latest available SDK version to avoid missing APIs or fixes
    - Choose the modules you need
 
 2. **Add to Package.swift** (if using Package.swift):
@@ -1326,11 +1327,11 @@ If you want to offer a "Save card for future payments" option in your custom for
 ```swift
 struct CustomPaymentForm: View {
     @State private var shouldRetain = false  // Track user's preference
-    // ... other state variables
+    // Add any additional state you need
     
     var body: some View {
         VStack(spacing: 16) {
-            // ... your form fields
+            // Add your form fields here
             
             // Add your own "Save card" checkbox
             Toggle("Save card for future payments", isOn: $shouldRetain)
@@ -2474,7 +2475,7 @@ Always apply `.screenPrevention()` to protect sensitive CVV input:
 
 ```swift
 SpreedlyCVVRecachingView(
-    // ... configuration
+    // Configure your recache view here
 )
 .screenPrevention()
 ```
@@ -2504,7 +2505,7 @@ Always apply `.screenPrevention()` to protect sensitive CVV input:
 
 ```swift
 SpreedlyCVVRecachingView(
-    // ... configuration
+    // Configure your recache view here
 )
 .screenPrevention()
 ```
@@ -2625,11 +2626,19 @@ var body: some View {
     }
     .onAppear {
         challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
-            // Handle success/failure/canceled
+            if result.isSuccess {
+                // Show success
+            } else if result.isFailure {
+                // Show error
+            } else if result.isCanceled {
+                // User canceled
+            }
         }
     }
 }
 ```
+
+When showing error messages from `ThreeDSChallengeResult`, use your normal error handling to decide what to display to the user.
 
 **UIKit (SwiftUI wrapper)**
 
@@ -2640,7 +2649,42 @@ private var challengeCancellable: AnyCancellable?
 
 func setup3DS() {
     challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
-        // Handle success/failure/canceled
+        if result.isSuccess {
+            // Show success
+        } else if result.isFailure {
+            // Show error
+        } else if result.isCanceled {
+            // User canceled
+        }
+    }
+}
+
+func present3DSChallenge(transactionToken: String) {
+    let challengeView = DoChallengeIfNeeded(
+        transactionToken: transactionToken,
+        onDismiss: { [weak self] in self?.dismiss(animated: true) }
+    )
+    let hostingVC = UIHostingController(rootView: challengeView)
+    present(hostingVC, animated: true)
+}
+```
+
+**UIKit (UIViewController wrapper)**
+
+```swift
+import SwiftUI
+
+private var challengeCancellable: AnyCancellable?
+
+func setup3DS() {
+    challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
+        if result.isSuccess {
+            // Show success
+        } else if result.isFailure {
+            // Show error
+        } else if result.isCanceled {
+            // User canceled
+        }
     }
 }
 
@@ -2659,10 +2703,27 @@ func present3DSChallenge(transactionToken: String) {
 ```swift
 private var challengeCancellable: AnyCancellable?
 
+
+**UIKit**
+
+```swift
+private var challengeCancellable: AnyCancellable?
+
+
 func setup3DS() {
     challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
         // Handle success/failure/canceled
     }
+
+}
+
+func present3DSChallenge(transactionToken: String) {
+    let challengeVC = DoChallengeIfNeededViewController(
+        transactionToken: transactionToken,
+        onDismiss: { [weak self] in self?.dismiss(animated: true) }
+    )
+    present(challengeVC, animated: true)
+    
 }
 
 func present3DSChallenge(transactionToken: String) {
@@ -2686,9 +2747,17 @@ func present3DSChallenge(transactionToken: String) {
 }
 
 - (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
-    // Handle success/failure/canceled
+    if (result.isSuccess) {
+        // Show success
+    } else if (result.isFailure) {
+        // Show error
+    } else if (result.isCanceled) {
+        // User canceled
+    }
 }
 ```
+
+When showing error messages from `ThreeDSChallengeResult`, use your normal error handling to decide what to display to the user.
 
 Example references: `ThreeDSPaymentFlowView` and `ThreeDSPaymentFlowViewController`.
 
@@ -2701,39 +2770,267 @@ Example references: `ThreeDSPaymentFlowView` and `ThreeDSPaymentFlowViewControll
 4. App calls `finalizeTransaction(...)`
 5. SDK emits `ThreeDSChallengeResult`
 
-**Important (UI integrations):** If you present `DoChallengeIfNeeded`, the SDK handles `checkTransactionStatus` and `GatewaySpecific3DSIntegration.startFlow` internally. Merchants should not call those APIs directly. They remain public only because `SpreedlyUI` depends on them.
+**Note:** The `/complete.json` call must be made by your backend. The app should call your backend endpoint, not `core.spreedly.com` directly.
 
-**Swift (Combine trigger)**
+**Important (UI integrations):** If you present `DoChallengeIfNeeded`, the SDK handles the 3DS lifecycle internally. Merchants should only follow the steps in this guide.
+
+**Device fingerprint polling window:** The SDK polls `status.json` every 2 seconds for up to ~20 seconds (10 attempts). If it times out (or receives a Worldpay postMessage), it emits the trigger so you can call `/complete.json`.
+
+**Purchase response checks (merchant‑friendly)**
+
+- If `response.errors` is non‑empty, surface the error and stop the flow.
+- If `transaction` is missing, treat it as an error and stop the flow.
+- If `transaction.state == "pending"` or `transaction.scaAuthentication?.requiredAction == "device_fingerprint"`, present the challenge UI.
+- If `transaction.state == "succeeded"`, show success immediately and skip the challenge UI.
+
+When showing error messages during gateway‑specific flows, use your normal error handling to decide what to display to the user.
+
+**Events (what they mean)**
+- `GatewaySpecific3DSTriggerCompletion`: The SDK needs your backend to call `/complete.json`.
+- `ThreeDSChallengeResult`: Final 3DS outcome (success/failure/canceled).
+
+**SwiftUI (complete sample)**
 
 ```swift
-triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { event in
-    Task {
-        let transaction = try await backend.complete(transactionToken: event.token)
-        await MainActor.run {
-            GatewaySpecific3DSIntegration.finalizeTransaction(for: event.token, transaction: transaction)
+@State private var show3DSChallenge = false
+@State private var transactionToken: String?
+@State private var challengeCancellable: AnyCancellable?
+@State private var triggerCancellable: AnyCancellable?
+@State private var errorMessage: String?
+@State private var successMessage: String?
+
+var body: some View {
+    // Your payment UI
+    .sheet(isPresented: $show3DSChallenge) {
+        if let token = transactionToken {
+            DoChallengeIfNeeded(transactionToken: token) {
+                show3DSChallenge = false
+            }
+        }
+    }
+    .onAppear {
+        // Final 3DS outcome.
+        challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
+            if result.isSuccess {
+                successMessage = "Payment successful"
+                show3DSChallenge = false
+            } else if result.isFailure {
+                errorMessage = result.error?.localizedDescription ?? "Payment failed"
+                show3DSChallenge = false
+            } else if result.isCanceled {
+                errorMessage = "Payment canceled"
+                show3DSChallenge = false
+            }
+        }
+
+        // Trigger to call /complete.json on your backend.
+        triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { event in
+            Task {
+                // Your backend should call /complete.json and return the transaction.
+                let transaction = try await backend.complete(transactionToken: event.token)
+                if transaction.state?.lowercased() == "succeeded" {
+                    await MainActor.run {
+                        successMessage = "Payment successful"
+                        show3DSChallenge = false
+                    }
+                    return
+                }
+                await MainActor.run {
+                    GatewaySpecific3DSIntegration.finalizeTransaction(
+                        for: event.token,
+                        transaction: transaction
+                    )
+                }
+            }
+        }
+    }
+    .onDisappear {
+        challengeCancellable?.cancel()
+        triggerCancellable?.cancel()
+    }
+}
+
+// Call this after your purchase/authorize response.
+func handlePurchaseResponse(_ response: PurchaseResponse) {
+    guard response.errors?.isEmpty ?? true else {
+        errorMessage = "Purchase failed"
+        return
+    }
+    guard let transaction = response.transaction else {
+        errorMessage = "Missing transaction"
+        return
+    }
+    transactionToken = transaction.token
+
+    let state = transaction.state?.lowercased() ?? ""
+    let requiredAction = transaction.scaAuthentication?.requiredAction?.lowercased() ?? ""
+    if state == "succeeded" {
+        successMessage = "Payment successful"
+    } else if state == "pending" || requiredAction == "device_fingerprint" {
+        show3DSChallenge = true
+    }
+}
+```
+
+**UIKit (Swift + Combine)**
+
+```swift
+final class GatewaySpecific3DSViewController: UIViewController {
+    private var challengeCancellable: AnyCancellable?
+    private var triggerCancellable: AnyCancellable?
+    private var transactionToken: String?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Final 3DS outcome.
+        challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { [weak self] result in
+            if result.isSuccess {
+                // show success
+                self?.dismiss(animated: true)
+            } else if result.isFailure {
+                // show error
+                self?.dismiss(animated: true)
+            } else if result.isCanceled {
+                // show cancel
+                self?.dismiss(animated: true)
+            }
+        }
+
+        // Trigger to call /complete.json on your backend.
+        triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { [weak self] event in
+            Task {
+                // Your backend should call /complete.json and return the transaction.
+                let transaction = try await backend.complete(transactionToken: event.token)
+                if transaction.state?.lowercased() == "succeeded" {
+                    await MainActor.run { self?.dismiss(animated: true) }
+                    return
+                }
+                await MainActor.run {
+                    GatewaySpecific3DSIntegration.finalizeTransaction(
+                        for: event.token,
+                        transaction: transaction
+                    )
+                }
+            }
+        }
+    }
+
+    func handlePurchaseResponse(_ response: PurchaseResponse) {
+        guard response.errors?.isEmpty ?? true,
+              let transaction = response.transaction else { return }
+        transactionToken = transaction.token
+
+        let state = transaction.state?.lowercased() ?? ""
+        let requiredAction = transaction.scaAuthentication?.requiredAction?.lowercased() ?? ""
+        if state == "succeeded" { return }
+        if state == "pending" || requiredAction == "device_fingerprint" {
+            presentChallenge()
+        }
+    }
+
+    private func presentChallenge() {
+        guard let token = transactionToken else { return }
+        let vc = DoChallengeIfNeededViewController(
+            transactionToken: token,
+            onDismiss: { [weak self] in self?.dismiss(animated: true) }
+        )
+        present(vc, animated: true)
+    }
+}
+```
+
+**UIKit (Swift + Notification + Delegate)**
+
+```swift
+final class GatewaySpecific3DSViewController: UIViewController, SpreedlyThreeDSChallengeDelegate {
+    private var transactionToken: String?
+    private var triggerObserver: NSObjectProtocol?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Spreedly.shared().threeDSChallengeDelegate = self
+
+        // Notification posted when the SDK needs your backend to call /complete.json.
+        triggerObserver = NotificationCenter.default.addObserver(
+            forName: .gatewaySpecific3DSTriggerCompletion,
+            object: nil,
+            queue: .main
+        ) { [weak self] note in
+            guard let token = note.userInfo?["transactionToken"] as? String else { return }
+            Task {
+                // Your backend should call /complete.json and return the transaction.
+                let transaction = try await backend.complete(transactionToken: token)
+                if transaction.state?.lowercased() == "succeeded" { return }
+                await MainActor.run {
+                    GatewaySpecific3DSIntegration.finalizeTransaction(
+                        for: token,
+                        transaction: transaction
+                    )
+                }
+            }
+        }
+    }
+
+    deinit {
+        if let observer = triggerObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
+    // Final 3DS outcome.
+    func threeDSChallengeDidComplete(_ result: ThreeDSChallengeResult) {
+        if result.isSuccess {
+            // show success
+        } else if result.isFailure {
+            // show error
+        } else if result.isCanceled {
+            // show cancel
         }
     }
 }
 ```
 
-**Objective‑C (notification trigger)**
+**Objective‑C (notification + delegate)**
 
 ```objc
+// Set delegate before presenting. Delegate receives final 3DS outcome.
+[Spreedly.shared setThreeDSChallengeDelegate:self];
+
 id observer = [[NSNotificationCenter defaultCenter]
     addObserverForName:@"GatewaySpecific3DSTriggerCompletion"
                 object:nil
                  queue:[NSOperationQueue mainQueue]
             usingBlock:^(NSNotification *note) {
                 NSString *transactionToken = note.userInfo[@"transactionToken"];
-                // Call backend /complete.json -> responseData
+                // Trigger to call /complete.json on your backend.
                 NSError *finalizeError = nil;
                 [GatewaySpecific3DSObjCBridge finalizeTransactionForTransactionToken:transactionToken
                                                                   completeResponseData:responseData
                                                                                  error:&finalizeError];
             }];
+
+// Implement delegate (final 3DS outcome)
+- (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
+    if (result.isSuccess) {
+        // show success
+    } else if (result.isFailure) {
+        // show error
+    } else if (result.isCanceled) {
+        // show cancel
+    }
+}
 ```
 
 Example references: `GatewaySpecificThreeDSPaymentFlowView` and `ThreeDSPaymentFlowViewController`.
+
+**Result handling (merchant‑friendly checks)**
+
+- `/complete.json` returns a `transaction.state`. If it is `succeeded`, you can show success immediately and exit the flow.
+- For any other state (`pending`, `failed`, etc.), call `GatewaySpecific3DSIntegration.finalizeTransaction(...)` so the SDK can emit `ThreeDSChallengeResult`.
+- Always handle all `ThreeDSChallengeResult` outcomes in your subscriber: `isSuccess`, `isFailure`, `isCanceled`.
+- In `subscribeToThreeDSChallengeResults`, explicitly branch on `isSuccess`/`isFailure`/`isCanceled` so merchants know where to show success, show errors, or treat user cancel.
+- If the error message contains `"Forced Failure"` (case-insensitive), use your normal error handling to decide what to display to the user.
 
 ## Advanced Features
 
