@@ -305,6 +305,24 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+enum DocumentIdKey : NSInteger;
+@class NSString;
+SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
+@interface DocumentId : NSObject
+@property (nonatomic, readonly) enum DocumentIdKey key;
+@property (nonatomic, readonly, copy) NSString * _Nonnull value;
+@property (nonatomic, readonly, copy) NSString * _Nullable customKey;
+- (nonnull instancetype)initWithKey:(enum DocumentIdKey)key value:(NSString * _Nonnull)value customKey:(NSString * _Nullable)customKey OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly, copy) NSString * _Nullable fieldName;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, DocumentIdKey, open) {
+  DocumentIdKeyDocumentId = 0,
+  DocumentIdKeyCustom = 1,
+};
+
 /// Categorizes the type of error that occurred.
 typedef SWIFT_ENUM(NSInteger, ErrorType, open) {
 /// Detailed API error with specific information from Spreedly
@@ -315,7 +333,6 @@ typedef SWIFT_ENUM(NSInteger, ErrorType, open) {
   ErrorTypeUnknownError = 2,
 };
 
-@class NSString;
 @class NSNumber;
 @class PaymentValidationError;
 /// Contains detailed information about a payment failure.
@@ -392,6 +409,42 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 + (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+enum OffsitePaymentMethodType : NSInteger;
+SWIFT_CLASS("_TtC12SpreedlyCore20OffsitePaymentConfig")
+@interface OffsitePaymentConfig : NSObject
+@property (nonatomic, readonly) enum OffsitePaymentMethodType paymentMethodType;
+@property (nonatomic, readonly, copy) NSString * _Nullable redirectUrl;
+@property (nonatomic, readonly, copy) NSString * _Nullable email;
+@property (nonatomic, readonly, copy) NSString * _Nullable fullName;
+@property (nonatomic, readonly, copy) NSString * _Nullable firstName;
+@property (nonatomic, readonly, copy) NSString * _Nullable lastName;
+@property (nonatomic, readonly, strong) DocumentId * _Nullable documentId;
+@property (nonatomic, readonly, copy) NSString * _Nullable country;
+@property (nonatomic, readonly, copy) NSString * _Nullable countryCode;
+@property (nonatomic, readonly, copy) NSString * _Nullable phoneNumber;
+@property (nonatomic, readonly, copy) NSString * _Nullable address1;
+@property (nonatomic, readonly, copy) NSString * _Nullable address2;
+@property (nonatomic, readonly, copy) NSString * _Nullable city;
+@property (nonatomic, readonly, copy) NSString * _Nullable state;
+@property (nonatomic, readonly, copy) NSString * _Nullable zip;
+- (nonnull instancetype)initWithPaymentMethodType:(enum OffsitePaymentMethodType)paymentMethodType redirectUrl:(NSString * _Nullable)redirectUrl email:(NSString * _Nullable)email fullName:(NSString * _Nullable)fullName firstName:(NSString * _Nullable)firstName lastName:(NSString * _Nullable)lastName documentId:(DocumentId * _Nullable)documentId country:(NSString * _Nullable)country countryCode:(NSString * _Nullable)countryCode phoneNumber:(NSString * _Nullable)phoneNumber address1:(NSString * _Nullable)address1 address2:(NSString * _Nullable)address2 city:(NSString * _Nullable)city state:(NSString * _Nullable)state zip:(NSString * _Nullable)zip OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
+  OffsitePaymentMethodTypePaypal = 0,
+  OffsitePaymentMethodTypeStripePaymentIntent = 1,
+  OffsitePaymentMethodTypePix = 2,
+  OffsitePaymentMethodTypeBoletoBancario = 3,
+  OffsitePaymentMethodTypeNupay = 4,
+  OffsitePaymentMethodTypeNupayRecurrent = 5,
+  OffsitePaymentMethodTypeOxxo = 6,
+  OffsitePaymentMethodTypeKhipu = 7,
+  OffsitePaymentMethodTypeRapipago = 8,
+  OffsitePaymentMethodTypeSprel = 9,
+};
 
 /// Represents the immediate result of a payment processing attempt.
 /// This class captures the synchronous result of calling processPayment(),
@@ -524,6 +577,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @property (nonatomic) BOOL isFailure;
 /// The payment method token (only available for successful payments).
 @property (nonatomic, copy) NSString * _Nullable token;
+/// The transaction state (when available).
+@property (nonatomic, copy) NSString * _Nullable state;
 /// Indicates if the card should be retained for future payments (only available for successful payments from CardFormDropIn).
 /// This value is passed from UI to merchant and is not sent to the API.
 /// Defaults to false. Always false for recache operations.
@@ -595,6 +650,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+/// Creates an offsite payment method using transparent redirect flow.
+/// \param config Offsite payment config provided by merchant
+///
+///
+/// returns:
+/// PaymentProcessingResult indicating synchronous validation status
+- (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
 /// \param paymentMethodToken Token of payment method to recache
@@ -609,6 +671,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate allowBlankDate:(BOOL)allowBlankDate SWIFT_WARN_UNUSED_RESULT;
+/// Public method for SDK UI flows to emit payment results
+/// \param result The payment result to emit
+///
+- (void)publishPaymentResult:(PaymentResult * _Nonnull)result;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
 /// This is primarily intended for SDK-internal flows (UI/components).
@@ -1131,6 +1197,24 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+enum DocumentIdKey : NSInteger;
+@class NSString;
+SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
+@interface DocumentId : NSObject
+@property (nonatomic, readonly) enum DocumentIdKey key;
+@property (nonatomic, readonly, copy) NSString * _Nonnull value;
+@property (nonatomic, readonly, copy) NSString * _Nullable customKey;
+- (nonnull instancetype)initWithKey:(enum DocumentIdKey)key value:(NSString * _Nonnull)value customKey:(NSString * _Nullable)customKey OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly, copy) NSString * _Nullable fieldName;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, DocumentIdKey, open) {
+  DocumentIdKeyDocumentId = 0,
+  DocumentIdKeyCustom = 1,
+};
+
 /// Categorizes the type of error that occurred.
 typedef SWIFT_ENUM(NSInteger, ErrorType, open) {
 /// Detailed API error with specific information from Spreedly
@@ -1141,7 +1225,6 @@ typedef SWIFT_ENUM(NSInteger, ErrorType, open) {
   ErrorTypeUnknownError = 2,
 };
 
-@class NSString;
 @class NSNumber;
 @class PaymentValidationError;
 /// Contains detailed information about a payment failure.
@@ -1218,6 +1301,42 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 + (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+enum OffsitePaymentMethodType : NSInteger;
+SWIFT_CLASS("_TtC12SpreedlyCore20OffsitePaymentConfig")
+@interface OffsitePaymentConfig : NSObject
+@property (nonatomic, readonly) enum OffsitePaymentMethodType paymentMethodType;
+@property (nonatomic, readonly, copy) NSString * _Nullable redirectUrl;
+@property (nonatomic, readonly, copy) NSString * _Nullable email;
+@property (nonatomic, readonly, copy) NSString * _Nullable fullName;
+@property (nonatomic, readonly, copy) NSString * _Nullable firstName;
+@property (nonatomic, readonly, copy) NSString * _Nullable lastName;
+@property (nonatomic, readonly, strong) DocumentId * _Nullable documentId;
+@property (nonatomic, readonly, copy) NSString * _Nullable country;
+@property (nonatomic, readonly, copy) NSString * _Nullable countryCode;
+@property (nonatomic, readonly, copy) NSString * _Nullable phoneNumber;
+@property (nonatomic, readonly, copy) NSString * _Nullable address1;
+@property (nonatomic, readonly, copy) NSString * _Nullable address2;
+@property (nonatomic, readonly, copy) NSString * _Nullable city;
+@property (nonatomic, readonly, copy) NSString * _Nullable state;
+@property (nonatomic, readonly, copy) NSString * _Nullable zip;
+- (nonnull instancetype)initWithPaymentMethodType:(enum OffsitePaymentMethodType)paymentMethodType redirectUrl:(NSString * _Nullable)redirectUrl email:(NSString * _Nullable)email fullName:(NSString * _Nullable)fullName firstName:(NSString * _Nullable)firstName lastName:(NSString * _Nullable)lastName documentId:(DocumentId * _Nullable)documentId country:(NSString * _Nullable)country countryCode:(NSString * _Nullable)countryCode phoneNumber:(NSString * _Nullable)phoneNumber address1:(NSString * _Nullable)address1 address2:(NSString * _Nullable)address2 city:(NSString * _Nullable)city state:(NSString * _Nullable)state zip:(NSString * _Nullable)zip OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
+  OffsitePaymentMethodTypePaypal = 0,
+  OffsitePaymentMethodTypeStripePaymentIntent = 1,
+  OffsitePaymentMethodTypePix = 2,
+  OffsitePaymentMethodTypeBoletoBancario = 3,
+  OffsitePaymentMethodTypeNupay = 4,
+  OffsitePaymentMethodTypeNupayRecurrent = 5,
+  OffsitePaymentMethodTypeOxxo = 6,
+  OffsitePaymentMethodTypeKhipu = 7,
+  OffsitePaymentMethodTypeRapipago = 8,
+  OffsitePaymentMethodTypeSprel = 9,
+};
 
 /// Represents the immediate result of a payment processing attempt.
 /// This class captures the synchronous result of calling processPayment(),
@@ -1350,6 +1469,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @property (nonatomic) BOOL isFailure;
 /// The payment method token (only available for successful payments).
 @property (nonatomic, copy) NSString * _Nullable token;
+/// The transaction state (when available).
+@property (nonatomic, copy) NSString * _Nullable state;
 /// Indicates if the card should be retained for future payments (only available for successful payments from CardFormDropIn).
 /// This value is passed from UI to merchant and is not sent to the API.
 /// Defaults to false. Always false for recache operations.
@@ -1421,6 +1542,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+/// Creates an offsite payment method using transparent redirect flow.
+/// \param config Offsite payment config provided by merchant
+///
+///
+/// returns:
+/// PaymentProcessingResult indicating synchronous validation status
+- (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
 /// \param paymentMethodToken Token of payment method to recache
@@ -1435,6 +1563,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Processing result. Final result comes via payment result subscription.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate allowBlankDate:(BOOL)allowBlankDate SWIFT_WARN_UNUSED_RESULT;
+/// Public method for SDK UI flows to emit payment results
+/// \param result The payment result to emit
+///
+- (void)publishPaymentResult:(PaymentResult * _Nonnull)result;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
 /// This is primarily intended for SDK-internal flows (UI/components).
