@@ -286,6 +286,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import ObjectiveC;
 @import SpreedlyCore;
 @import UIKit;
+@import WebKit;
 #endif
 
 #endif
@@ -382,6 +383,36 @@ SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 - (nonnull instancetype)initWithId:(NSString * _Nonnull)id title:(NSString * _Nonnull)title type:(enum FormFieldType)type placeholder:(NSString * _Nullable)placeholder isRequired:(BOOL)isRequired OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
+  OffsiteGatewayPaypal = 0,
+  OffsiteGatewayStripePaymentIntent = 1,
+  OffsiteGatewayPix = 2,
+  OffsiteGatewayBoletoBancario = 3,
+  OffsiteGatewayNupay = 4,
+  OffsiteGatewayNupayRecurrent = 5,
+  OffsiteGatewayOxxo = 6,
+  OffsiteGatewayKhipu = 7,
+  OffsiteGatewayRapipago = 8,
+  OffsiteGatewaySprel = 9,
+};
+
+@class WKWebView;
+@class WKNavigation;
+SWIFT_CLASS("_TtC10SpreedlyUI28OffsitePaymentViewController")
+@interface OffsitePaymentViewController : UIViewController <UIAdaptivePresentationControllerDelegate, WKNavigationDelegate>
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken gateway:(enum OffsiteGateway)gateway onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (void)viewDidLoad;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewDidDisappear:(BOOL)animated;
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
+- (void)webView:(WKWebView * _Nonnull)webView didStartProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFinishNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFailNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (void)webView:(WKWebView * _Nonnull)webView didFailProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 enum SpreedlySubmitLabel : NSInteger;
@@ -893,6 +924,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import ObjectiveC;
 @import SpreedlyCore;
 @import UIKit;
+@import WebKit;
 #endif
 
 #endif
@@ -989,6 +1021,36 @@ SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 - (nonnull instancetype)initWithId:(NSString * _Nonnull)id title:(NSString * _Nonnull)title type:(enum FormFieldType)type placeholder:(NSString * _Nullable)placeholder isRequired:(BOOL)isRequired OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
+  OffsiteGatewayPaypal = 0,
+  OffsiteGatewayStripePaymentIntent = 1,
+  OffsiteGatewayPix = 2,
+  OffsiteGatewayBoletoBancario = 3,
+  OffsiteGatewayNupay = 4,
+  OffsiteGatewayNupayRecurrent = 5,
+  OffsiteGatewayOxxo = 6,
+  OffsiteGatewayKhipu = 7,
+  OffsiteGatewayRapipago = 8,
+  OffsiteGatewaySprel = 9,
+};
+
+@class WKWebView;
+@class WKNavigation;
+SWIFT_CLASS("_TtC10SpreedlyUI28OffsitePaymentViewController")
+@interface OffsitePaymentViewController : UIViewController <UIAdaptivePresentationControllerDelegate, WKNavigationDelegate>
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken gateway:(enum OffsiteGateway)gateway onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (void)viewDidLoad;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewDidDisappear:(BOOL)animated;
+- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
+- (void)webView:(WKWebView * _Nonnull)webView didStartProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFinishNavigation:(WKNavigation * _Null_unspecified)navigation;
+- (void)webView:(WKWebView * _Nonnull)webView didFailNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (void)webView:(WKWebView * _Nonnull)webView didFailProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
 enum SpreedlySubmitLabel : NSInteger;
