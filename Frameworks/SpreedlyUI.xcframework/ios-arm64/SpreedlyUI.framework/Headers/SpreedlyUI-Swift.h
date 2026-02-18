@@ -284,9 +284,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import CoreFoundation;
 @import Foundation;
 @import ObjectiveC;
+@import SafariServices;
 @import SpreedlyCore;
 @import UIKit;
-@import WebKit;
 #endif
 
 #endif
@@ -393,27 +393,9 @@ typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
   OffsiteGatewayNupay = 4,
   OffsiteGatewayNupayRecurrent = 5,
   OffsiteGatewayOxxo = 6,
-  OffsiteGatewayKhipu = 7,
-  OffsiteGatewayRapipago = 8,
-  OffsiteGatewaySprel = 9,
+  OffsiteGatewayRapipago = 7,
+  OffsiteGatewaySprel = 8,
 };
-
-@class WKWebView;
-@class WKNavigation;
-SWIFT_CLASS("_TtC10SpreedlyUI28OffsitePaymentViewController")
-@interface OffsitePaymentViewController : UIViewController <UIAdaptivePresentationControllerDelegate, WKNavigationDelegate>
-- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken gateway:(enum OffsiteGateway)gateway onDismiss:(void (^ _Nullable)(void))onDismiss OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-- (void)viewDidLoad;
-- (void)viewDidAppear:(BOOL)animated;
-- (void)viewDidDisappear:(BOOL)animated;
-- (void)presentationControllerDidDismiss:(UIPresentationController * _Nonnull)presentationController;
-- (void)webView:(WKWebView * _Nonnull)webView didStartProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation;
-- (void)webView:(WKWebView * _Nonnull)webView didFinishNavigation:(WKNavigation * _Null_unspecified)navigation;
-- (void)webView:(WKWebView * _Nonnull)webView didFailNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
-- (void)webView:(WKWebView * _Nonnull)webView didFailProvisionalNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
-@end
 
 enum SpreedlySubmitLabel : NSInteger;
 SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
@@ -498,6 +480,22 @@ SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
 @property (nonatomic, readonly, strong) UIView * _Null_unspecified contentView;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class SFSafariViewController;
+/// Presents SFSafariViewController directly on the topmost VC.
+/// SDK fetches checkout_url via status API, presents Safari, and
+/// publishes PaymentResult when the user finishes or returns via redirect.
+SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
+@interface SpreedlyOffsiteCheckout : NSObject <SFSafariViewControllerDelegate>
+/// Fetches the checkout URL for the given transaction and presents
+/// SFSafariViewController directly on the topmost view controller.
+/// Result is delivered via <code>Spreedly.shared().paymentResultPublisher</code>
+/// (or the <code>SpreedlyPaymentDelegate</code> for Obj-C).
++ (void)presentWithTransactionToken:(NSString * _Nonnull)transactionToken;
+- (void)safariViewControllerDidFinish:(SFSafariViewController * _Nonnull)controller;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 /// Custom submit label enum that maps to SubmitLabel on iOS 15+

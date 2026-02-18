@@ -441,9 +441,8 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypeNupay = 4,
   OffsitePaymentMethodTypeNupayRecurrent = 5,
   OffsitePaymentMethodTypeOxxo = 6,
-  OffsitePaymentMethodTypeKhipu = 7,
-  OffsitePaymentMethodTypeRapipago = 8,
-  OffsitePaymentMethodTypeSprel = 9,
+  OffsitePaymentMethodTypeRapipago = 7,
+  OffsitePaymentMethodTypeSprel = 8,
 };
 
 /// Represents the immediate result of a payment processing attempt.
@@ -615,6 +614,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
+@class NSURL;
 @class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
@@ -675,6 +675,24 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// \param result The payment result to emit
 ///
 - (void)publishPaymentResult:(PaymentResult * _Nonnull)result;
+/// Query parameter name for transaction token in offsite return URLs (Universal Links).
+/// Merchant’s redirect URL should include e.g. <code>?transaction_token=XXX</code> so the SDK can finalize the correct transaction.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnTransactionTokenQueryKey;)
++ (NSString * _Nonnull)offsiteReturnTransactionTokenQueryKey SWIFT_WARN_UNUSED_RESULT;
+/// Alternate query parameter for transaction token (e.g. <code>?code=XXX</code>). SDK accepts either <code>transaction_token</code> or <code>code</code>.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnCodeQueryKey;)
++ (NSString * _Nonnull)offsiteReturnCodeQueryKey SWIFT_WARN_UNUSED_RESULT;
+/// Sets the closure to run when the app is opened via Universal Link after offsite payment (so the SDK can dismiss SFSafariViewController).
+/// Called by SpreedlyUI when presenting the Safari-based offsite flow. Pass <code>nil</code> to clear.
+- (void)setOffsiteSafariDismissHandler:(void (^ _Nullable)(void))handler;
+/// Call this from your app’s <code>application(_:continue:restorationHandler:)</code> (or scene equivalent) when the app opens via the offsite payment return URL (Universal Link).
+/// The URL must include the transaction token, e.g. <code>https://yourdomain.com/payment/success?transaction_token=XXX</code>.
+/// \param url The URL received from the Universal Link
+///
+///
+/// returns:
+/// <code>true</code> if the URL was recognized (contained <code>transaction_token</code>) and the SDK verified status and published the payment result; <code>false</code> otherwise
+- (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
 /// This is primarily intended for SDK-internal flows (UI/components).
@@ -1333,9 +1351,8 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypeNupay = 4,
   OffsitePaymentMethodTypeNupayRecurrent = 5,
   OffsitePaymentMethodTypeOxxo = 6,
-  OffsitePaymentMethodTypeKhipu = 7,
-  OffsitePaymentMethodTypeRapipago = 8,
-  OffsitePaymentMethodTypeSprel = 9,
+  OffsitePaymentMethodTypeRapipago = 7,
+  OffsitePaymentMethodTypeSprel = 8,
 };
 
 /// Represents the immediate result of a payment processing attempt.
@@ -1507,6 +1524,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 enum ValidationParam : NSInteger;
+@class NSURL;
 @class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
@@ -1567,6 +1585,24 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// \param result The payment result to emit
 ///
 - (void)publishPaymentResult:(PaymentResult * _Nonnull)result;
+/// Query parameter name for transaction token in offsite return URLs (Universal Links).
+/// Merchant’s redirect URL should include e.g. <code>?transaction_token=XXX</code> so the SDK can finalize the correct transaction.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnTransactionTokenQueryKey;)
++ (NSString * _Nonnull)offsiteReturnTransactionTokenQueryKey SWIFT_WARN_UNUSED_RESULT;
+/// Alternate query parameter for transaction token (e.g. <code>?code=XXX</code>). SDK accepts either <code>transaction_token</code> or <code>code</code>.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnCodeQueryKey;)
++ (NSString * _Nonnull)offsiteReturnCodeQueryKey SWIFT_WARN_UNUSED_RESULT;
+/// Sets the closure to run when the app is opened via Universal Link after offsite payment (so the SDK can dismiss SFSafariViewController).
+/// Called by SpreedlyUI when presenting the Safari-based offsite flow. Pass <code>nil</code> to clear.
+- (void)setOffsiteSafariDismissHandler:(void (^ _Nullable)(void))handler;
+/// Call this from your app’s <code>application(_:continue:restorationHandler:)</code> (or scene equivalent) when the app opens via the offsite payment return URL (Universal Link).
+/// The URL must include the transaction token, e.g. <code>https://yourdomain.com/payment/success?transaction_token=XXX</code>.
+/// \param url The URL received from the Universal Link
+///
+///
+/// returns:
+/// <code>true</code> if the URL was recognized (contained <code>transaction_token</code>) and the SDK verified status and published the payment result; <code>false</code> otherwise
+- (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
 /// This is primarily intended for SDK-internal flows (UI/components).
