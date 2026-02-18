@@ -15,11 +15,11 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 | **Individual Field** | `SPLTextField` | `SPLTextFieldViewController` | Single form field component |
 | **CVV Recaching** | `SpreedlyCVVRecachingView` | `CVVRecachingViewController` | Collect CVV to recache payment method |
 | **3DS Challenge** | `DoChallengeIfNeeded` | `DoChallengeIfNeededViewController` | Present 3DS authentication challenge |
-| **Offsite Checkout** | `OffsitePaymentFlow` | `OffsitePaymentViewController` | Complete offsite payment (e.g. PayPal) in WebView |
+| **Offsite Checkout** | `SpreedlyOffsiteCheckout.present(transactionToken:)` | `[SpreedlyOffsiteCheckout presentWithTransactionToken:]` | Present Safari directly for offsite payment (e.g. PayPal) |
 
 **3DS:** Two flows are supported—**3DS Global (Forter)** and **3DS Gateway-Specific** (e.g. Worldpay)—each with **SwiftUI**, **UIKit**, and **Objective-C** examples. See [3DS Authentication](#3ds-authentication).
 
-**Offsite:** Create payment method with `submitOffsitePayment`, then purchase/authorize on your backend and present `OffsitePaymentFlow`. See [Offsite Payments](#offsite-payments).
+**Offsite:** Create payment method with `submitOffsitePayment`, purchase on your backend, then call `SpreedlyOffsiteCheckout.present(transactionToken:)`. SDK presents Safari directly — no sheet or intermediate UI. See [Offsite Payments](#offsite-payments).
 
 **Note:** All UIKit/Objective-C classes are wrappers around SwiftUI components, providing the same functionality with Objective-C compatible APIs.
 
@@ -2911,269 +2911,253 @@ Example references: `GatewaySpecificThreeDSPaymentFlowView` and `ThreeDSPaymentF
 
 ## Offsite Payments
 
-Offsite payments (e.g. PayPal, Sprel) use a payment method token and a merchant backend purchase/authorize call; the SDK then presents a WebView checkout. The same `PaymentResult` callback is used for **two different API responses**—tokenization and checkout completion—so the merchant must know which one they are handling (e.g. with a stage or flag of their choice).
+Offsite payments (e.g. PayPal, Sprel) let users pay via external providers. The SDK handles payment method tokenization and browser-based checkout via `SFSafariViewController`. The merchant handles the purchase API call.
+
+### SDK Methods
+
+| # | Method | Module | Purpose |
+|---|--------|--------|---------|
+| 1 | `Spreedly.shared().submitOffsitePayment(config:)` | SpreedlyCore | Create offsite payment method token |
+| 2 | `Spreedly.shared().subscribeToPaymentResults { }` | SpreedlyCore | Listen for results (tokenization + checkout) |
+| 3 | `SpreedlyOffsiteCheckout.present(transactionToken:)` | SpreedlyUI | Present Safari directly with checkout URL |
+| 4 | `Spreedly.shared().handleOffsiteReturn(url:)` | SpreedlyCore | Handle redirect URL when app re-opens (returns `true` if Spreedly URL, `false` otherwise) |
 
 ### Important
 
-- **Two responses in `handlePaymentResult`:** (1) **First response** — after you call `submitOffsitePayment`, the SDK tokenizes the offsite payment method and delivers the result here; `result.token` is the **payment_method_token**. (2) **Second response** — after the user finishes the WebView checkout and the SDK calls status, the final purchase result is delivered here; use `result.isSuccess` / `result.isFailure` and `result.state` for checkout outcome. How you tell them apart (e.g. a stage enum like `creatingPaymentMethod` vs `checkout`) is up to you.
-- **Signature before submitOffsitePayment:** As with other flows (e.g. CVV recaching, card form), call your signature API and then `Spreedly.setup(config:)` (or equivalent) before calling `submitOffsitePayment`. The Example app calls `SpreedlyConfigManager.shared.generateSignature()` then `Spreedly.shared().submitOffsitePayment(config:)`.
-- **Purchase response:** Before presenting checkout, verify the purchase/authorize response includes a **transaction** (with token). If not, show an error and do not present `OffsitePaymentFlow`.
-- **Checkout failure states:** When the second response is failure, inspect `result.state` and show user-friendly messages for `processing`, `gateway_processing_failed`, and `pending` (see table below).
-- **Cleanup:** Cancel `subscribeToPaymentResults` (or clear `paymentDelegate`) in `onDisappear` / `viewDidDisappear` / `dealloc`.
+- **Two responses:** (1) After `submitOffsitePayment` — tokenization; `result.token` is the `payment_method_token`. (2) After checkout — final purchase result; use `result.isSuccess` / `result.state`. Distinguish them with a stage enum.
+- **Signature required:** Call your signature API and `Spreedly.setup(config:)` before `submitOffsitePayment`.
+- **No SDK UI before Safari:** `SpreedlyOffsiteCheckout.present()` opens `SFSafariViewController` directly on the topmost VC — no intermediate sheet or loader. Merchant controls their own loading indicator.
+- **Do NOT cancel the subscription** in `onDisappear` — Safari on top can trigger disappear events, killing the subscription before the result arrives.
+- **URL scheme:** Register a custom URL scheme in `Info.plist` and handle in `onOpenURL` (SwiftUI) or `scene:openURLContexts:` (UIKit).
 
 ### Flow
 
-1. Create payment method: `submitOffsitePayment(config)` → receive `payment_method_token` via `PaymentResult.token`.
-2. Purchase/authorize on your backend with `payment_method_token` and `redirect_url` → receive `transaction_token`.
-3. Present `OffsitePaymentFlow(transactionToken:gateway:onDismiss:)` (or `OffsitePaymentViewController`). SDK loads `checkout_url` from status and shows WebView.
-4. On dismiss, SDK calls status and emits `PaymentResult` with final `state`.
+1. Create payment method: `submitOffsitePayment(config:)` → receive `payment_method_token` via `PaymentResult`.
+2. Purchase/authorize on your backend with `payment_method_token`, `redirect_url`, `callback_url` → receive `transaction_token`.
+3. Call `SpreedlyOffsiteCheckout.present(transactionToken:)`. SDK fetches `checkout_url` and presents Safari directly.
+4. User completes payment. On return (redirect or Done tap), SDK checks status and emits `PaymentResult`.
 
-### Merchant checks (recommended)
+### Merchant Checks
 
 | Check | Action |
 |-------|--------|
-| **Distinguishing the two responses** | Use a stage (or any flag) of your choice so that in `handlePaymentResult` you treat the first result as tokenization (use token for purchase) and the second as checkout outcome (show success/failure). |
-| **Transaction** | If `response.transaction` is nil after purchase, do not present checkout; show error (e.g. "Purchase failed while setup a transaction"). |
-| **Checkout failure `result.state`** | `"processing"` → "Your offsite payment is currently being processed..."; `"gateway_processing_failed"` → "We couldn't complete your offsite payment..."; `"pending"` → "Your payment is pending..."; else use `failureDetails` or generic message. |
-| **Pre-conditions** | Ensure amount/product selected and valid; guard signature/backend readiness if used. |
+| **Two responses** | Use a stage: first = tokenization (use token for purchase), second = checkout outcome. |
+| **Transaction nil** | If `response.transaction` is nil after purchase, do not call `SpreedlyOffsiteCheckout.present()`; show error. |
+| **`result.state`** | `"processing"` → "Being processed..."; `"gateway_processing_failed"` → "Couldn't complete..."; `"pending"` → "Pending..."; else use `failureDetails`. |
+| **`redirect_url`** | Must use a custom URL scheme registered in `Info.plist`. Gateway appends `transaction_token` on redirect. |
 
 ### SwiftUI (Combine)
 
-Example structure aligned with the Example app (`OffsitePaymentFlowView`). **Before** calling the SDK’s `submitOffsitePayment`, call your signature API and configure the SDK (same as other flows).
-
 ```swift
-// State (stage is up to you—used only to tell which of the two PaymentResult callbacks you're in)
+import SpreedlyCore
+import SpreedlyUI
+
 @State private var paymentResultCancellable: AnyCancellable?
-@State private var checkoutTransactionToken: String?
-@State private var stage: OffsiteStage = .idle  // e.g. idle | creatingPaymentMethod | purchasing | checkout
+@State private var stage: OffsiteStage = .idle  // idle | creatingPaymentMethod | purchasing | checkout
 @State private var isLoading = false
 @State private var errorMessage: String?
 @State private var successMessage: String?
 
-// 1. Subscribe to PaymentResult before starting the flow (you will get two callbacks—see handlePaymentResult)
+// 1. Subscribe (keep alive — do NOT cancel in onDisappear)
 .onAppear {
-    setupSubscriptions()
-}
-.onDisappear {
-    paymentResultCancellable?.cancel()
-    paymentResultCancellable = nil
-}
-
-private func setupSubscriptions() {
     paymentResultCancellable?.cancel()
     paymentResultCancellable = Spreedly.shared().subscribeToPaymentResults { result in
         handlePaymentResult(result)
     }
 }
 
-// 2. Start flow: signature first (required, as in other flows), then submitOffsitePayment
-private func startOffsiteFlow() {
-    isLoading = true
-    errorMessage = nil
-    successMessage = nil
-    stage = .creatingPaymentMethod
-
+// 2. Start flow
+func startOffsiteFlow() {
+    isLoading = true; stage = .creatingPaymentMethod
     Task {
-        let signatureResult = await SpreedlyConfigManager.shared.generateSignature()
-        guard case .success = signatureResult else {
-            await MainActor.run {
-                isLoading = false
-                errorMessage = "Failed to generate signature"
-                stage = .idle
-            }
-            return
-        }
-
-        let config = OffsitePaymentConfig(
-            paymentMethodType: selectedProvider,
-            email: "test@test.com",
-            fullName: "Ana Santos Araujo",
-            documentId: DocumentId(key: .documentId, value: "853.513.468-93"),
-            country: "BR",
-            phoneNumber: "8522847035",
-            address1: "Rua E, 1040",
-            city: "Maracanaú",
-            state: "CE",
-            zip: "12345"
-        )
-
+        await generateSignatureAndSetupSDK()
+        let config = OffsitePaymentConfig(paymentMethodType: .sprel, email: "user@example.com", ...)
         _ = Spreedly.shared().submitOffsitePayment(config: config)
     }
 }
 
-// handlePaymentResult receives TWO API responses—use stage (or your own flag) to tell them apart:
-// - 1st: After submitOffsitePayment → tokenization result; result.token = payment_method_token.
-// - 2nd: After user completes WebView checkout → SDK calls status and delivers final purchase result here.
-private func handlePaymentResult(_ result: PaymentResult) {
+// 3. Handle two responses
+func handlePaymentResult(_ result: PaymentResult) {
     switch stage {
     case .creatingPaymentMethod:
-        // 1st response: tokenization
-        if result.isSuccess, let paymentMethodToken = result.token {
+        if result.isSuccess, let token = result.token {
             stage = .purchasing
-            Task { await purchaseWithToken(paymentMethodToken) }
+            Task { await purchaseWithToken(token) }
         } else if result.isFailure {
-            isLoading = false
-            stage = .idle
+            isLoading = false; stage = .idle
             errorMessage = result.failureDetails?.getDescription() ?? "Failed to create payment method"
         }
-    case .purchasing:
-        break
+    case .purchasing: break
     case .checkout:
-        // 2nd response: checkout outcome
+        isLoading = false; stage = .idle
         if result.isSuccess {
-            isLoading = false
-            stage = .idle
             successMessage = "Offsite checkout succeeded"
         } else if result.isFailure {
-            isLoading = false
-            stage = .idle
-            if result.state == "processing" {
-                errorMessage = "Your offsite payment is currently being processed. Please wait a moment."
-            } else if result.state == "gateway_processing_failed" {
-                errorMessage = "We couldn't complete your offsite payment. Please try again."
-            } else if result.state == "pending" {
-                errorMessage = "Your payment is pending. Please try again shortly."
-            } else {
-                errorMessage = result.failureDetails?.getDescription() ?? "Offsite checkout failed"
+            switch result.state {
+            case "processing": errorMessage = "Your payment is being processed. Please wait."
+            case "gateway_processing_failed": errorMessage = "Couldn't complete your payment. Try again."
+            case "pending": errorMessage = "Your payment is pending."
+            default: errorMessage = result.failureDetails?.getDescription() ?? "Checkout failed"
             }
         }
-    case .idle:
-        break
+    case .idle: break
     }
 }
 
-// Your backend purchase/authorize; then present SDK checkout only if response.transaction exists
-private func purchaseWithToken(_ paymentMethodToken: String) async {
-    let client = SpreedlyConfigManager.shared.createPurchaseAPIClient()
-    let response = try? await client.offsitePurchase(
+// 4. Purchase on your backend, then present checkout
+func purchaseWithToken(_ paymentMethodToken: String) async {
+    let response = try? await yourBackend.offsitePurchase(
         paymentMethodToken: paymentMethodToken,
         amount: amountInCents,
-        currencyCode: "BRL",
-        redirectUrl: redirectUrl,
-        callbackUrl: callbackUrl
+        redirectUrl: "spreedlyApp://yourapp/offsite/checkout",
+        callbackUrl: "https://yourbackend.com/callback"
     )
     await MainActor.run {
         if let transaction = response?.transaction {
             stage = .checkout
-            checkoutTransactionToken = transaction.token
+            SpreedlyOffsiteCheckout.present(transactionToken: transaction.token)
         } else {
-            isLoading = false
-            stage = .idle
-            errorMessage = "Purchase failed while setup a transaction"
+            isLoading = false; stage = .idle
+            errorMessage = "Purchase failed"
         }
     }
 }
 
-// Present SDK offsite checkout (SpreedlyUI)
-.sheet(isPresented: Binding(
-    get: { checkoutTransactionToken != nil },
-    set: { if !$0 { checkoutTransactionToken = nil } }
-)) {
-    if let token = checkoutTransactionToken {
-        OffsitePaymentFlow(
-            transactionToken: token,
-            gateway: selectedProvider == .paypal ? .paypal : .sprel,
-            onDismiss: { checkoutTransactionToken = nil }
-        )
+// 5. Handle redirect return (in App entry point)
+.onOpenURL { url in
+    let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
+    if !isSpreedlyURL {
+        // Handle other custom URL navigations
     }
 }
 ```
 
-### UIKit (Swift) with delegate
-
-Call your signature API and configure the SDK before `submitOffsitePayment`. Set `Spreedly.shared().paymentDelegate = self` and implement `paymentDidComplete`. You receive **two** callbacks: (1) after tokenization, (2) after checkout completes.
+### UIKit (Swift) with Delegate
 
 ```swift
-Spreedly.shared().paymentDelegate = self
+import SpreedlyCore
+import SpreedlyUI
 
-// Two responses: 1st = after submitOffsitePayment (tokenization); 2nd = after SDK checkout (purchase result)
-func paymentDidComplete(_ result: PaymentResult) {
-    if stage == .creatingPaymentMethod {
-        if result.isSuccess, let paymentMethodToken = result.token {
-            stage = .purchasing
-            purchaseWithToken(paymentMethodToken) { [weak self] transactionToken in
-                guard let self = self else { return }
-                if let token = transactionToken {
-                    self.stage = .checkout
-                    self.presentOffsiteCheckout(transactionToken: token)
+class OffsitePaymentVC: UIViewController, SpreedlyPaymentDelegate {
+    var stage: OffsiteStage = .idle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Spreedly.shared().paymentDelegate = self
+    }
+
+    func startOffsiteFlow() {
+        stage = .creatingPaymentMethod
+        // Generate signature, setup SDK, then:
+        let config = OffsitePaymentConfig(paymentMethodType: .sprel, email: "user@example.com", ...)
+        Spreedly.shared().submitOffsitePayment(config: config)
+    }
+
+    // Two responses: 1st = tokenization, 2nd = checkout outcome
+    func paymentDidComplete(_ result: PaymentResult) {
+        DispatchQueue.main.async {
+            if self.stage == .creatingPaymentMethod {
+                if result.isSuccess, let token = result.token {
+                    self.stage = .purchasing
+                    self.purchaseWithToken(token)
                 } else {
                     self.stage = .idle
-                    self.showError("Purchase failed while setup a transaction")
+                    self.showError(result.failureDetails?.getDescription() ?? "Failed")
+                }
+            } else if self.stage == .checkout {
+                self.stage = .idle
+                if result.isSuccess {
+                    self.showSuccess("Offsite checkout succeeded")
+                } else {
+                    self.showError(result.failureDetails?.getDescription() ?? "Checkout failed")
                 }
             }
-        } else if result.isFailure {
-            stage = .idle
-            showError(result.failureDetails?.getDescription() ?? "Failed to create payment method")
         }
-    } else if stage == .checkout {
-        if result.isSuccess {
-            stage = .idle
-            showSuccess("Offsite checkout succeeded")
-        } else if result.isFailure {
-            stage = .idle
-            if result.state == "processing" { showError("Your offsite payment is currently being processed...") }
-            else if result.state == "gateway_processing_failed" { showError("We couldn't complete your offsite payment...") }
-            else if result.state == "pending" { showError("Your payment is pending...") }
-            else { showError(result.failureDetails?.getDescription() ?? "Offsite checkout failed") }
-        }
+    }
+
+    func purchaseWithToken(_ token: String) {
+        // Call your backend, then on success:
+        self.stage = .checkout
+        SpreedlyOffsiteCheckout.present(transactionToken: transactionToken)
     }
 }
 
-func presentOffsiteCheckout(transactionToken: String) {
-    let vc = OffsitePaymentViewController(
-        transactionToken: transactionToken,
-        gateway: .paypal,
-        onDismiss: nil
-    )
-    present(vc, animated: true)
+// In SceneDelegate — handle redirect return:
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    guard let url = URLContexts.first?.url else { return }
+    let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
+    if !isSpreedlyURL {
+        // Handle other URLs
+    }
 }
 ```
 
 ### Objective-C
 
-Generate signature and configure the SDK before calling `submitOffsitePaymentWithConfig:`. Same two responses in `paymentDidComplete:`: first = tokenization, second = checkout result.
-
 ```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyUI/SpreedlyUI-Swift.h>
+
+// Set delegate
 [Spreedly shared].paymentDelegate = self;
 
-// Two responses: 1st = after submitOffsitePayment (tokenization); 2nd = after SDK checkout (purchase result)
+// Start flow
+- (void)startOffsiteFlow {
+    self.stage = OffsiteStageCreatingPaymentMethod;
+    // Generate signature, setup SDK, then:
+    OffsitePaymentConfig *config = [[OffsitePaymentConfig alloc]
+        initWithPaymentMethodType:OffsitePaymentMethodTypeSprel
+        redirectUrl:nil email:@"user@example.com" fullName:@"Test User"
+        firstName:nil lastName:nil documentId:nil
+        country:@"BR" countryCode:nil phoneNumber:@"123456789"
+        address1:@"123 Main St" address2:nil city:@"City" state:@"ST" zip:@"12345"];
+    [[Spreedly shared] submitOffsitePaymentWithConfig:config];
+}
+
+// Two responses: 1st = tokenization, 2nd = checkout outcome
 - (void)paymentDidComplete:(PaymentResult *)result {
-    if (self.stage == OffsiteStageCreatingPaymentMethod) {
-        if (result.isSuccess && result.token.length > 0) {
-            self.stage = OffsiteStagePurchasing;
-            [self purchaseWithToken:result.token completion:^(Transaction * _Nullable tx) {
-                if (tx.token) {
-                    self.stage = OffsiteStageCheckout;
-                    [self presentOffsiteCheckoutWithToken:tx.token];
-                } else {
-                    self.stage = OffsiteStageIdle;
-                    [self showError:@"Purchase failed while setup a transaction"];
-                }
-            }];
-        } else if (result.isFailure) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.stage == OffsiteStageCreatingPaymentMethod) {
+            if (result.isSuccess && result.token.length > 0) {
+                self.stage = OffsiteStagePurchasing;
+                [self purchaseWithToken:result.token];
+            } else {
+                self.stage = OffsiteStageIdle;
+                [self showError:result.failureDetails.getDescription ?: @"Failed"];
+            }
+        } else if (self.stage == OffsiteStageCheckout) {
             self.stage = OffsiteStageIdle;
-            [self showError:result.failureDetails.getDescription ?: @"Failed to create payment method"];
+            if (result.isSuccess) {
+                [self showSuccess:@"Offsite checkout succeeded"];
+            } else {
+                [self showError:result.failureDetails.getDescription ?: @"Checkout failed"];
+            }
         }
-    } else if (self.stage == OffsiteStageCheckout) {
-        if (result.isSuccess) {
-            self.stage = OffsiteStageIdle;
-            [self showSuccess:@"Offsite checkout succeeded"];
-        } else if (result.isFailure) {
-            self.stage = OffsiteStageIdle;
-            if ([result.state isEqualToString:@"processing"])
-                [self showError:@"Your offsite payment is currently being processed. Please wait a moment."];
-            else if ([result.state isEqualToString:@"gateway_processing_failed"])
-                [self showError:@"We couldn't complete your offsite payment. Please try again."];
-            else if ([result.state isEqualToString:@"pending"])
-                [self showError:@"Your payment is pending. Please try again shortly."];
-            else
-                [self showError:result.failureDetails.getDescription ?: @"Offsite checkout failed"];
+    });
+}
+
+// After backend purchase succeeds:
+- (void)purchaseWithToken:(NSString *)token {
+    // Call your backend, then:
+    self.stage = OffsiteStageCheckout;
+    [SpreedlyOffsiteCheckout presentWithTransactionToken:transactionToken];
+}
+
+// In SceneDelegate — handle redirect return:
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    NSURL *url = URLContexts.allObjects.firstObject.URL;
+    if (url) {
+        BOOL isSpreedlyURL = [[Spreedly shared] handleOffsiteReturnWithUrl:url];
+        if (!isSpreedlyURL) {
+            // Handle other URLs
         }
     }
 }
 ```
 
-**Config:** Use `OffsitePaymentConfig(paymentMethodType: .paypal, ...)` (or `.sprel` for test). Required: `payment_method_type`. Optional: `email`, `fullName`, `firstName`, `lastName`, `documentId`, `country`, `countryCode`, `phoneNumber`, `address1`, `address2`, `city`, `state`, `zip`. `redirectUrl` is used in the purchase API, not in the payment method request.
+### Config Reference
+
+`OffsitePaymentConfig(paymentMethodType:, ...)` — Required: `paymentMethodType`. Optional: `email`, `fullName`, `firstName`, `lastName`, `documentId`, `country`, `countryCode`, `phoneNumber`, `address1`, `address2`, `city`, `state`, `zip`. `redirectUrl` is used in the purchase API call, not in the payment method creation.
 
 Example references: `OffsitePaymentFlowView` (SwiftUI) and `OffsitePaymentFlowViewController` (Objective-C).
 
