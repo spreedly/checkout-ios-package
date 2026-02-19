@@ -21,6 +21,8 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 
 **Offsite:** Create payment method with `submitOffsitePayment`, purchase on your backend, then call `SpreedlyOffsiteCheckout.present(transactionToken:)`. SDK presents Safari directly — no sheet or intermediate UI. See [Offsite Payments](#offsite-payments).
 
+**EBANX:** EBANX uses the same offsite flow with provider-specific payment types (Pix, Boleto, OXXO, NuPay). The purchase API call includes EBANX `gateway_specific_fields` (e.g. taxpayer document). See [EBANX Integration](#ebanx-integration).
+
 **Note:** All UIKit/Objective-C classes are wrappers around SwiftUI components, providing the same functionality with Objective-C compatible APIs.
 
 ## Table of Contents
@@ -35,17 +37,18 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 8. [CVV Recaching](#cvv-recaching)
 9. [3DS Authentication](#3ds-authentication)
 10. [Offsite Payments](#offsite-payments)
-11. [Advanced Features](#advanced-features)
-12. [Screen Prevention and Security](#screen-prevention-and-security)
-13. [Logging System](#logging-system)
-14. [Error Handling](#error-handling)
-15. [Memory Management and Cancellables](#memory-management-and-cancellables)
-16. [Testing](#testing)
-17. [Objective-C Integration](#objective-c-integration)
-18. [Troubleshooting](#troubleshooting)
-19. [Security Best Practices](#security-best-practices)
-20. [Best Practices](#best-practices)
-21. [Support Resources](#support-resources)
+11. [EBANX Integration](#ebanx-integration)
+12. [Advanced Features](#advanced-features)
+13. [Screen Prevention and Security](#screen-prevention-and-security)
+14. [Logging System](#logging-system)
+15. [Error Handling](#error-handling)
+16. [Memory Management and Cancellables](#memory-management-and-cancellables)
+17. [Testing](#testing)
+18. [Objective-C Integration](#objective-c-integration)
+19. [Troubleshooting](#troubleshooting)
+20. [Security Best Practices](#security-best-practices)
+21. [Best Practices](#best-practices)
+22. [Support Resources](#support-resources)
 
 ## Prerequisites
 
@@ -2911,7 +2914,11 @@ Example references: `GatewaySpecificThreeDSPaymentFlowView` and `ThreeDSPaymentF
 
 ## Offsite Payments
 
-Offsite payments (e.g. PayPal, Sprel) let users pay via external providers. The SDK handles payment method tokenization and browser-based checkout via `SFSafariViewController`. The merchant handles the purchase API call.
+Offsite payments (e.g. PayPal, Sprel, EBANX) let users pay via external providers. The SDK handles payment method tokenization and browser-based checkout via `SFSafariViewController`. The merchant handles the purchase API call.
+
+**Supported offsite payment types:** `paypal`, `sprel`, `pix`, `boletoBancario`, `oxxo`, `nupay`, `nupayRecurrent`, `rapipago`, `stripePaymentIntent`.
+
+For EBANX-specific integration (Pix, Boleto, OXXO, NuPay) with gateway-specific fields, see [EBANX Integration](#ebanx-integration).
 
 ### SDK Methods
 
@@ -2928,7 +2935,102 @@ Offsite payments (e.g. PayPal, Sprel) let users pay via external providers. The 
 - **Signature required:** Call your signature API and `Spreedly.setup(config:)` before `submitOffsitePayment`.
 - **No SDK UI before Safari:** `SpreedlyOffsiteCheckout.present()` opens `SFSafariViewController` directly on the topmost VC — no intermediate sheet or loader. Merchant controls their own loading indicator.
 - **Do NOT cancel the subscription** in `onDisappear` — Safari on top can trigger disappear events, killing the subscription before the result arrives.
-- **URL scheme:** Register a custom URL scheme in `Info.plist` and handle in `onOpenURL` (SwiftUI) or `scene:openURLContexts:` (UIKit).
+- **URL scheme:** Register a custom URL scheme in `Info.plist` and handle in `onOpenURL` (SwiftUI) or `scene:openURLContexts:` (UIKit). See [Custom URL Scheme Setup](#custom-url-scheme-setup) below.
+
+### Custom URL Scheme Setup
+
+Both Offsite and EBANX flows redirect the user back to your app after checkout. You **must** register a custom URL scheme so iOS can open your app when the gateway redirects.
+
+#### 1. Register in `Info.plist`
+
+Add a `CFBundleURLTypes` entry to your app's `Info.plist`:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>com.yourcompany.yourapp.offsite</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>yourAppScheme</string>
+        </array>
+    </dict>
+</array>
+```
+
+Or in **Xcode**: Target → Info → URL Types → click **+** → set **URL Schemes** to your custom scheme (e.g., `yourAppScheme`).
+
+#### 2. `redirect_url` Format
+
+When calling the purchase API, pass a `redirect_url` using your registered scheme. The gateway appends the `transaction_token` as a query parameter on redirect.
+
+| Flow | Example `redirect_url` |
+|------|----------------------|
+| **Offsite (PayPal, Sprel)** | `yourAppScheme://com.yourcompany.yourapp/offsite/checkout` |
+| **EBANX (Pix, Boleto, OXXO, NuPay)** | `yourAppScheme://com.yourcompany.yourapp/ebanx/checkout` |
+
+You can use any path structure after the scheme — it does not affect SDK behavior. The SDK matches on the scheme to recognize the redirect.
+
+#### 3. Handle Redirect in Your App
+
+When the user completes checkout, the gateway redirects to your `redirect_url`. Pass the URL to the SDK so it can check the transaction status and emit a `PaymentResult`.
+
+**SwiftUI** — in your `App` struct or root view:
+
+```swift
+@main
+struct YourApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .onOpenURL { url in
+                    let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
+                    if !isSpreedlyURL {
+                        // Handle other deep links
+                    }
+                }
+        }
+    }
+}
+```
+
+**UIKit** — in `SceneDelegate`:
+
+```swift
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    guard let url = URLContexts.first?.url else { return }
+    let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
+    if !isSpreedlyURL {
+        // Handle other deep links
+    }
+}
+```
+
+**Objective-C** — in `SceneDelegate`:
+
+```objc
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    NSURL *url = URLContexts.allObjects.firstObject.URL;
+    if (url) {
+        BOOL isSpreedlyURL = [[Spreedly shared] handleOffsiteReturnWithUrl:url];
+        if (!isSpreedlyURL) {
+            // Handle other deep links
+        }
+    }
+}
+```
+
+#### 4. `callback_url`
+
+The `callback_url` is a server-to-server webhook. The gateway POSTs the transaction result to this URL — it is **not** used by the mobile app. Set it to your backend endpoint (e.g., `https://yourbackend.com/spreedly/callback`).
+
+| Parameter | Purpose | Used by |
+|-----------|---------|---------|
+| `redirect_url` | Redirects the user back to your app after checkout | Mobile app (custom URL scheme) |
+| `callback_url` | Server-to-server notification of transaction result | Your backend |
 
 ### Flow
 
@@ -2944,7 +3046,7 @@ Offsite payments (e.g. PayPal, Sprel) let users pay via external providers. The 
 | **Two responses** | Use a stage: first = tokenization (use token for purchase), second = checkout outcome. |
 | **Transaction nil** | If `response.transaction` is nil after purchase, do not call `SpreedlyOffsiteCheckout.present()`; show error. |
 | **`result.state`** | `"processing"` → "Being processed..."; `"gateway_processing_failed"` → "Couldn't complete..."; `"pending"` → "Pending..."; else use `failureDetails`. |
-| **`redirect_url`** | Must use a custom URL scheme registered in `Info.plist`. Gateway appends `transaction_token` on redirect. |
+| **`redirect_url`** | Must use a custom URL scheme registered in `Info.plist`. Gateway appends `transaction_token` on redirect. See [Custom URL Scheme Setup](#custom-url-scheme-setup). |
 
 ### SwiftUI (Combine)
 
@@ -3160,6 +3262,527 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 `OffsitePaymentConfig(paymentMethodType:, ...)` — Required: `paymentMethodType`. Optional: `email`, `fullName`, `firstName`, `lastName`, `documentId`, `country`, `countryCode`, `phoneNumber`, `address1`, `address2`, `city`, `state`, `zip`. `redirectUrl` is used in the purchase API call, not in the payment method creation.
 
 Example references: `OffsitePaymentFlowView` (SwiftUI) and `OffsitePaymentFlowViewController` (Objective-C).
+
+## EBANX Integration
+
+EBANX payments (Pix, Boleto Bancario, OXXO, NuPay) use the same offsite flow as other providers, with two key differences:
+
+1. **Provider-specific `OffsitePaymentConfig`** — Different EBANX providers require different fields (e.g., OXXO needs address; Pix/Boleto/NuPay need `documentId`).
+2. **Gateway-specific fields in the purchase API** — The purchase call includes `gateway_specific_fields.ebanx.document` for taxpayer identification. This is a merchant backend concern, not an SDK call.
+
+### SDK Methods
+
+The SDK methods are the same as standard offsite payments:
+
+| # | Method | Module | Purpose |
+|---|--------|--------|---------|
+| 1 | `Spreedly.shared().submitOffsitePayment(config:)` | SpreedlyCore | Create EBANX payment method token |
+| 2 | `Spreedly.shared().subscribeToPaymentResults { }` | SpreedlyCore | Listen for results (tokenization + checkout) |
+| 3 | `SpreedlyOffsiteCheckout.present(transactionToken:)` | SpreedlyUI | Present Safari for EBANX checkout |
+| 4 | `Spreedly.shared().handleOffsiteReturn(url:)` | SpreedlyCore | Handle redirect URL when app re-opens |
+
+### Supported EBANX Payment Types
+
+| Type | Enum Value | Country | Required Fields |
+|------|-----------|---------|-----------------|
+| **Pix** | `.pix` | Brazil | `email`, `fullName`, `documentId`, `country("BR")`, `phoneNumber`, `address1`, `city`, `state`, `zip` |
+| **Boleto Bancario** | `.boletoBancario` | Brazil | `email`, `fullName`, `documentId`, `country("BR")`, `phoneNumber`, `address1`, `city`, `state`, `zip` |
+| **OXXO** | `.oxxo` | Mexico | `email`, `fullName`, `country("MX")`, `phoneNumber`, `address1`, `city`, `state`, `zip` |
+| **NuPay** | `.nupay` | Brazil | `email`, `fullName`, `documentId`, `country("BR")`, `phoneNumber` |
+
+### Flow
+
+1. **Create payment method:** Call `submitOffsitePayment(config:)` with the appropriate `OffsitePaymentConfig` for the selected EBANX provider. Receive `payment_method_token` via `PaymentResult`.
+2. **Purchase on your backend:** Call Spreedly purchase API with `payment_method_token`, `redirect_url`, `callback_url`, and `gateway_specific_fields` (including `ebanx.document` for taxpayer ID). Receive `transaction_token`.
+3. **Present checkout:** Call `SpreedlyOffsiteCheckout.present(transactionToken:)`. SDK fetches the checkout URL and presents Safari.
+4. **Handle result:** User completes payment in Safari. On return, SDK checks status and emits `PaymentResult`.
+
+### Important
+
+- **`pending` is a success for EBANX:** Many EBANX methods (Boleto, OXXO, Pix) result in a `"pending"` state, meaning the customer will complete payment offline/externally. Treat `"pending"` as a successful initiation.
+- **Document ID:** Required for Brazilian payment methods (Pix, Boleto, NuPay). This is the CPF/CNPJ taxpayer number. Pass it both in `OffsitePaymentConfig.documentId` (for tokenization) and in `gateway_specific_fields.ebanx.document` (for the purchase API).
+- **Currency:** Use `BRL` for Brazilian methods (Pix, Boleto, NuPay) and `MXN` for Mexican methods (OXXO).
+- **Same subscription rules as offsite:** Do NOT cancel the subscription in `onDisappear`. Safari can trigger disappear events.
+- **Custom URL scheme required:** The `redirect_url` in your purchase API call must use a custom URL scheme registered in your app's `Info.plist`. This is the same setup as standard offsite payments — see [Custom URL Scheme Setup](#custom-url-scheme-setup) for full instructions.
+
+### EBANX Purchase API (Merchant Backend)
+
+Your backend purchase call to Spreedly must include EBANX gateway-specific fields. Example request body:
+
+```json
+{
+  "transaction": {
+    "payment_method_token": "<token from step 1>",
+    "amount": 9900,
+    "currency_code": "BRL",
+    "redirect_url": "spreedlyApp://yourapp/ebanx/checkout",
+    "callback_url": "https://yourbackend.com/callback",
+    "channel": "app",
+    "gateway_specific_fields": {
+      "ebanx": {
+        "document": "853.513.468-93"
+      }
+    }
+  }
+}
+```
+
+- `document` — CPF/CNPJ taxpayer ID. Required for Pix, Boleto, NuPay. Not required for OXXO.
+- `channel` — Set to `"app"` for mobile transactions.
+- `redirect_url` — Must use a custom URL scheme registered in your app's `Info.plist`. See [Custom URL Scheme Setup](#custom-url-scheme-setup).
+
+### SwiftUI
+
+```swift
+import SwiftUI
+import Combine
+import SpreedlyCore
+import SpreedlyUI
+
+struct EbanxPaymentView: View {
+    @State private var paymentResultCancellable: AnyCancellable?
+    @State private var stage: EbanxStage = .idle
+    @State private var isLoading = false
+    @State private var errorMessage: String?
+    @State private var successMessage: String?
+
+    enum EbanxStage { case idle, creatingPaymentMethod, purchasing, checkout }
+
+    var body: some View {
+        VStack {
+            // Your product selection and provider picker UI ...
+
+            Button("Pay with Pix") { startEbanxFlow(provider: .pix) }
+                .disabled(isLoading)
+
+            if let success = successMessage {
+                Text(success).foregroundColor(.green)
+            }
+            if let error = errorMessage {
+                Text(error).foregroundColor(.red)
+            }
+        }
+        .onAppear {
+            // Subscribe once — do NOT cancel in onDisappear
+            paymentResultCancellable?.cancel()
+            paymentResultCancellable = Spreedly.shared().subscribeToPaymentResults { result in
+                handlePaymentResult(result)
+            }
+        }
+        .onOpenURL { url in
+            let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
+            if !isSpreedlyURL {
+                // Handle other custom URL navigations
+            }
+        }
+    }
+
+    // MARK: - Start Flow
+
+    func startEbanxFlow(provider: OffsitePaymentMethodType) {
+        isLoading = true
+        errorMessage = nil
+        successMessage = nil
+        stage = .creatingPaymentMethod
+
+        Task {
+            // Step 0: Generate signature and setup SDK (your implementation)
+            await generateSignatureAndSetupSDK()
+
+            // Step 1: Build config based on provider
+            let config = buildConfig(for: provider)
+            _ = Spreedly.shared().submitOffsitePayment(config: config)
+        }
+    }
+
+    // MARK: - Build Provider Config
+
+    func buildConfig(for provider: OffsitePaymentMethodType) -> OffsitePaymentConfig {
+        switch provider {
+        case .oxxo:
+            return OffsitePaymentConfig(
+                paymentMethodType: .oxxo,
+                email: "user@example.com",
+                fullName: "Maria Garcia",
+                country: "MX",
+                phoneNumber: "5551234567",
+                address1: "Calle 10, 200",
+                city: "Mexico City",
+                state: "CDMX",
+                zip: "06600"
+            )
+        case .nupay:
+            return OffsitePaymentConfig(
+                paymentMethodType: .nupay,
+                email: "user@example.com",
+                fullName: "Ana Santos",
+                documentId: DocumentId(key: .documentId, value: "853.513.468-93"),
+                country: "BR",
+                phoneNumber: "11987654321"
+            )
+        default: // pix, boletoBancario
+            return OffsitePaymentConfig(
+                paymentMethodType: provider,
+                email: "user@example.com",
+                fullName: "Ana Santos",
+                documentId: DocumentId(key: .documentId, value: "853.513.468-93"),
+                country: "BR",
+                phoneNumber: "11987654321",
+                address1: "Rua E, 1040",
+                city: "Maracanaú",
+                state: "CE",
+                zip: "12345"
+            )
+        }
+    }
+
+    // MARK: - Handle Two Responses
+
+    func handlePaymentResult(_ result: PaymentResult) {
+        switch stage {
+        case .creatingPaymentMethod:
+            if result.isSuccess, let token = result.token {
+                stage = .purchasing
+                Task { await purchaseWithToken(token) }
+            } else if result.isFailure {
+                isLoading = false
+                stage = .idle
+                errorMessage = result.failureDetails?.getDescription() ?? "Failed to create payment method"
+            }
+
+        case .purchasing:
+            break
+
+        case .checkout:
+            isLoading = false
+            stage = .idle
+            if result.isSuccess {
+                successMessage = "EBANX payment succeeded"
+            } else if result.isFailure {
+                switch result.state {
+                case "pending":
+                    // Pending is expected for Boleto, OXXO, Pix — customer completes offline
+                    successMessage = "Payment initiated. The customer will complete payment offline."
+                case "processing":
+                    errorMessage = "Payment is being processed. Please wait."
+                case "gateway_processing_failed":
+                    errorMessage = "Payment could not be completed. Please try again."
+                default:
+                    errorMessage = result.failureDetails?.getDescription() ?? "EBANX checkout failed"
+                }
+            }
+
+        case .idle:
+            break
+        }
+    }
+
+    // MARK: - Purchase (Merchant Backend Call)
+
+    func purchaseWithToken(_ paymentMethodToken: String) async {
+        let document: String? = "853.513.468-93" // CPF — omit for OXXO
+        do {
+            // Call YOUR backend which calls Spreedly purchase API
+            // Include gateway_specific_fields.ebanx.document in the request
+            let response = try await yourBackend.ebanxPurchase(
+                paymentMethodToken: paymentMethodToken,
+                amount: amountInCents,
+                currencyCode: "BRL",
+                redirectUrl: "spreedlyApp://yourapp/ebanx/checkout",
+                callbackUrl: "https://yourbackend.com/callback",
+                document: document
+            )
+
+            await MainActor.run {
+                if let transaction = response.transaction {
+                    stage = .checkout
+                    SpreedlyOffsiteCheckout.present(transactionToken: transaction.token)
+                } else {
+                    isLoading = false
+                    stage = .idle
+                    errorMessage = "Purchase failed"
+                }
+            }
+        } catch {
+            await MainActor.run {
+                isLoading = false
+                stage = .idle
+                errorMessage = "Purchase failed: \(error.localizedDescription)"
+            }
+        }
+    }
+}
+```
+
+### UIKit (Swift)
+
+```swift
+import UIKit
+import SpreedlyCore
+import SpreedlyUI
+
+class EbanxPaymentViewController: UIViewController, SpreedlyPaymentDelegate {
+
+    enum EbanxStage { case idle, creatingPaymentMethod, purchasing, checkout }
+    var stage: EbanxStage = .idle
+    var selectedProvider: OffsitePaymentMethodType = .pix
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Spreedly.shared().paymentDelegate = self
+    }
+
+    // MARK: - Start Flow
+
+    func startEbanxFlow() {
+        stage = .creatingPaymentMethod
+        // Generate signature and setup SDK, then:
+        let config = buildConfig(for: selectedProvider)
+        Spreedly.shared().submitOffsitePayment(config: config)
+    }
+
+    // MARK: - Build Provider Config
+
+    func buildConfig(for provider: OffsitePaymentMethodType) -> OffsitePaymentConfig {
+        switch provider {
+        case .oxxo:
+            return OffsitePaymentConfig(
+                paymentMethodType: .oxxo,
+                email: "user@example.com",
+                fullName: "Maria Garcia",
+                country: "MX",
+                phoneNumber: "5551234567",
+                address1: "Calle 10, 200",
+                city: "Mexico City",
+                state: "CDMX",
+                zip: "06600"
+            )
+        case .nupay:
+            return OffsitePaymentConfig(
+                paymentMethodType: .nupay,
+                email: "user@example.com",
+                fullName: "Ana Santos",
+                documentId: DocumentId(key: .documentId, value: "853.513.468-93"),
+                country: "BR",
+                phoneNumber: "11987654321"
+            )
+        default:
+            return OffsitePaymentConfig(
+                paymentMethodType: provider,
+                email: "user@example.com",
+                fullName: "Ana Santos",
+                documentId: DocumentId(key: .documentId, value: "853.513.468-93"),
+                country: "BR",
+                phoneNumber: "11987654321",
+                address1: "Rua E, 1040",
+                city: "Maracanaú",
+                state: "CE",
+                zip: "12345"
+            )
+        }
+    }
+
+    // MARK: - SpreedlyPaymentDelegate — Two responses
+
+    func paymentDidComplete(_ result: PaymentResult) {
+        DispatchQueue.main.async {
+            switch self.stage {
+            case .creatingPaymentMethod:
+                if result.isSuccess, let token = result.token {
+                    self.stage = .purchasing
+                    self.purchaseWithToken(token)
+                } else {
+                    self.stage = .idle
+                    self.showError(result.failureDetails?.getDescription() ?? "Failed to create payment method")
+                }
+
+            case .checkout:
+                self.stage = .idle
+                if result.isSuccess {
+                    self.showSuccess("EBANX payment succeeded")
+                } else if result.state == "pending" {
+                    self.showSuccess("Payment initiated. Customer will complete offline.")
+                } else {
+                    self.showError(result.failureDetails?.getDescription() ?? "EBANX checkout failed")
+                }
+
+            default:
+                break
+            }
+        }
+    }
+
+    // MARK: - Purchase (Merchant Backend Call)
+
+    func purchaseWithToken(_ token: String) {
+        // Call YOUR backend with gateway_specific_fields, then on success:
+        self.stage = .checkout
+        SpreedlyOffsiteCheckout.present(transactionToken: transactionToken)
+    }
+}
+
+// In SceneDelegate — handle redirect return:
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    guard let url = URLContexts.first?.url else { return }
+    let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
+    if !isSpreedlyURL {
+        // Handle other URLs
+    }
+}
+```
+
+### Objective-C
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyUI/SpreedlyUI-Swift.h>
+
+typedef NS_ENUM(NSInteger, EbanxStage) {
+    EbanxStageIdle,
+    EbanxStageCreatingPaymentMethod,
+    EbanxStagePurchasing,
+    EbanxStageCheckout
+};
+
+@interface EbanxPaymentViewController () <SpreedlyPaymentDelegate>
+@property (nonatomic, assign) EbanxStage stage;
+@end
+
+@implementation EbanxPaymentViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [Spreedly shared].paymentDelegate = self;
+}
+
+// MARK: - Start Flow
+
+- (void)startEbanxFlowWithProvider:(OffsitePaymentMethodType)provider {
+    self.stage = EbanxStageCreatingPaymentMethod;
+    // Generate signature, setup SDK, then:
+    OffsitePaymentConfig *config = [self buildConfigForProvider:provider];
+    [[Spreedly shared] submitOffsitePaymentWithConfig:config];
+}
+
+// MARK: - Build Provider Config
+
+- (OffsitePaymentConfig *)buildConfigForProvider:(OffsitePaymentMethodType)provider {
+    switch (provider) {
+        case OffsitePaymentMethodTypeOxxo:
+            return [[OffsitePaymentConfig alloc]
+                initWithPaymentMethodType:OffsitePaymentMethodTypeOxxo
+                redirectUrl:nil email:@"user@example.com"
+                fullName:@"Maria Garcia"
+                firstName:nil lastName:nil documentId:nil
+                country:@"MX" countryCode:nil
+                phoneNumber:@"5551234567"
+                address1:@"Calle 10, 200" address2:nil
+                city:@"Mexico City" state:@"CDMX" zip:@"06600"];
+
+        case OffsitePaymentMethodTypeNupay:
+            return [[OffsitePaymentConfig alloc]
+                initWithPaymentMethodType:OffsitePaymentMethodTypeNupay
+                redirectUrl:nil email:@"user@example.com"
+                fullName:@"Ana Santos"
+                firstName:nil lastName:nil
+                documentId:[[DocumentId alloc] initWithKey:DocumentIdKeyDocumentId
+                                                    value:@"853.513.468-93"
+                                                customKey:nil]
+                country:@"BR" countryCode:nil
+                phoneNumber:@"11987654321"
+                address1:nil address2:nil
+                city:nil state:nil zip:nil];
+
+        default: // Pix, Boleto
+            return [[OffsitePaymentConfig alloc]
+                initWithPaymentMethodType:provider
+                redirectUrl:nil email:@"user@example.com"
+                fullName:@"Ana Santos"
+                firstName:nil lastName:nil
+                documentId:[[DocumentId alloc] initWithKey:DocumentIdKeyDocumentId
+                                                    value:@"853.513.468-93"
+                                                customKey:nil]
+                country:@"BR" countryCode:nil
+                phoneNumber:@"11987654321"
+                address1:@"Rua E, 1040" address2:nil
+                city:@"Maracanaú" state:@"CE" zip:@"12345"];
+    }
+}
+
+// MARK: - SpreedlyPaymentDelegate — Two responses
+
+- (void)paymentDidComplete:(PaymentResult *)result {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.stage == EbanxStageCreatingPaymentMethod) {
+            if (result.isSuccess && result.token.length > 0) {
+                self.stage = EbanxStagePurchasing;
+                [self purchaseWithToken:result.token];
+            } else {
+                self.stage = EbanxStageIdle;
+                NSString *msg = [result.failureDetails getDescription] ?: @"Failed to create payment method";
+                [self showError:msg];
+            }
+        } else if (self.stage == EbanxStageCheckout) {
+            self.stage = EbanxStageIdle;
+            if (result.isSuccess) {
+                [self showSuccess:@"EBANX payment succeeded"];
+            } else if ([result.state isEqualToString:@"pending"]) {
+                [self showSuccess:@"Payment initiated. Customer will complete offline."];
+            } else {
+                NSString *msg = [result.failureDetails getDescription] ?: @"EBANX checkout failed";
+                [self showError:msg];
+            }
+        }
+    });
+}
+
+// MARK: - Purchase (Merchant Backend Call)
+
+- (void)purchaseWithToken:(NSString *)token {
+    // Call YOUR backend with gateway_specific_fields.ebanx.document, then:
+    self.stage = EbanxStageCheckout;
+    [SpreedlyOffsiteCheckout presentWithTransactionToken:transactionToken];
+}
+
+@end
+
+// In SceneDelegate — handle redirect return:
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    NSURL *url = URLContexts.allObjects.firstObject.URL;
+    if (url) {
+        BOOL isSpreedlyURL = [[Spreedly shared] handleOffsiteReturnWithUrl:url];
+        if (!isSpreedlyURL) {
+            // Handle other URLs
+        }
+    }
+}
+```
+
+### EBANX Config Reference
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `paymentMethodType` | `OffsitePaymentMethodType` | Yes | `.pix`, `.boletoBancario`, `.oxxo`, `.nupay` |
+| `email` | `String` | Yes | Customer email |
+| `fullName` | `String` | Yes | Customer full name |
+| `documentId` | `DocumentId` | Pix, Boleto, NuPay | CPF/CNPJ — use `DocumentId(key: .documentId, value: "...")` |
+| `country` | `String` | Yes | `"BR"` for Brazil, `"MX"` for Mexico |
+| `phoneNumber` | `String` | Yes | Customer phone number |
+| `address1` | `String` | Pix, Boleto, OXXO | Street address |
+| `city` | `String` | Pix, Boleto, OXXO | City |
+| `state` | `String` | Pix, Boleto, OXXO | State/province |
+| `zip` | `String` | Pix, Boleto, OXXO | Postal code |
+
+### EBANX Result States
+
+| `result.state` | Meaning | Recommended UX |
+|----------------|---------|----------------|
+| `"succeeded"` | Payment completed | Show success |
+| `"pending"` | Customer will pay offline (Boleto, OXXO, Pix) | Show success — "Payment initiated, complete offline" |
+| `"processing"` | Payment is being processed | Show "Please wait" message |
+| `"gateway_processing_failed"` | Gateway could not process | Show retry message |
+
+Example reference: `EbanxPaymentFlowView` (SwiftUI) in the example app.
 
 ## Advanced Features
 
