@@ -498,6 +498,32 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class NSURL;
+@class StripeAPMConfig;
+SWIFT_CLASS("_TtC10SpreedlyUI25SpreedlyStripeAPMCheckout")
+@interface SpreedlyStripeAPMCheckout : NSObject
+/// Called from the URL pre-handler when the app is opened via the Stripe return URL.
+/// Notifies Spreedly (GET redirect URL) so Spreedly can update the transaction, then forwards to Stripe.
++ (BOOL)handleStripeReturnURL:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
+/// Presents the Stripe PaymentSheet for APM checkout from the topmost view controller
+/// (same approach as <code>SpreedlyOffsiteCheckout.present(transactionToken:)</code>).
+/// Use this from SwiftUI or when you do not have a specific presenter.
+/// Result is delivered via <code>Spreedly.shared().paymentResultPublisher</code>
+/// (or the <code>SpreedlyPaymentDelegate</code> for Obj-C).
+/// \param config StripeAPMConfig with publishableKey, clientSecret, transactionToken, etc.
+///
++ (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
+/// Configures and presents the Stripe PaymentSheet for APM checkout from the given view controller.
+/// Prefer <code>present(config:)</code> so the SDK finds the topmost VC (works with sheets/alerts).
+/// \param config StripeAPMConfig with publishableKey, clientSecret, transactionToken, etc.
+///
+/// \param viewController The UIViewController to present the PaymentSheet from.
+///
++ (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Custom submit label enum that maps to SubmitLabel on iOS 15+
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,

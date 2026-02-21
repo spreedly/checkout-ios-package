@@ -205,7 +205,9 @@ For more details, see the [Forter 3DS iOS SDK Documentation](https://docs.forter
 
 ## Basic Setup
 
-> **⚠️ Important**: `Spreedly.setup(config:)` is **MANDATORY** and must be called with `environmentKey`, `forterSiteId` (for 3DS), and signature parameters (nonce, signature, certificateToken, timestamp) before making any payment requests. `Spreedly.initializeSDK()` alone is **NOT sufficient** - it only provides a basic initialization without the required credentials.
+> **⚠️ Important**: `Spreedly.setup(config:)` is **MANDATORY** and must be called with `environmentKey`, `forterSiteId` (for 3DS), and signature parameters (nonce, signature, certificateToken, timestamp) **before** any tokenization or payment operation. This includes: `createCreditCard()`, `submitOffsitePayment()`, `recachePaymentMethod()`, presenting `CardFormDropIn`, and any 3DS challenge flows. `Spreedly.initializeSDK()` alone is **NOT sufficient** — it only provides a basic initialization without the required credentials.
+>
+> Signature parameters must be fetched from your backend server. They are time-sensitive and should be generated fresh before each payment session.
 
 ### Two-Step Initialization Pattern (Required)
 
@@ -288,6 +290,8 @@ func generateSignature() async throws -> SignatureParameters {
 The Express Checkout provides a complete, pre-built payment form that handles all the complexity for you.
 
 > ⚠️ **IMPORTANT:** Always apply `.screenPrevention()` modifier to payment forms to protect sensitive payment information from being captured in app switcher screenshots.
+
+> ⚠️ **IMPORTANT:** You must call your backend to fetch signature parameters and call `Spreedly.setup(config:)` **before** presenting any payment form or calling `createCreditCard()`. Without valid signature parameters, tokenization will fail. See [Basic Setup](#basic-setup) for the full initialization pattern.
 
 ### Basic Implementation
 
@@ -1195,6 +1199,8 @@ SPLTextField(
 
 For complete control, build your own form using the headless components.
 
+> ⚠️ **Prerequisite:** Fetch signature parameters from your backend and call `Spreedly.setup(config:)` before calling `createCreditCard()`. See [Basic Setup](#basic-setup).
+
 **Note:** Unlike `CardFormDropIn`, custom forms don't include a built-in "Save card for future payments" checkbox. If you want to offer this feature, you'll need to implement your own checkbox and track the user's preference. Then use that preference to determine whether to save the payment method token for future use.
 
 ### Custom Form Example
@@ -1365,6 +1371,8 @@ struct CustomPaymentForm: View {
 ## Additional Fields Integration
 
 The SDK now supports passing additional field values directly to the `createCreditCard` method, providing more flexibility for developers who want to handle their own form validation and field management.
+
+> ⚠️ **Prerequisite:** Ensure you have fetched signature parameters from your backend and called `Spreedly.setup(config:)` before calling `createCreditCard()`. See [Basic Setup](#basic-setup).
 
 ### Using Additional Fields
 
@@ -1688,6 +1696,8 @@ struct PaymentWithAdditionalFields: View {
 ## CVV Recaching
 
 CVV Recaching allows you to update the CVV (Card Verification Value) for existing saved payment methods. This is essential for PCI DSS compliance, as CVV values cannot be stored and must be re-entered by the customer for each transaction.
+
+> ⚠️ **Prerequisite:** Fetch signature parameters from your backend and call `Spreedly.setup(config:)` before presenting the recaching UI or calling `recachePaymentMethod()`. See [Basic Setup](#basic-setup).
 
 ### Basic Implementation
 
@@ -2916,9 +2926,12 @@ Example references: `GatewaySpecificThreeDSPaymentFlowView` and `ThreeDSPaymentF
 
 Offsite payments (e.g. PayPal, Sprel, EBANX) let users pay via external providers. The SDK handles payment method tokenization and browser-based checkout via `SFSafariViewController`. The merchant handles the purchase API call.
 
+> ⚠️ **Prerequisite:** Fetch signature parameters from your backend and call `Spreedly.setup(config:)` before calling `submitOffsitePayment()`. See [Basic Setup](#basic-setup).
+
 **Supported offsite payment types:** `paypal`, `sprel`, `pix`, `boletoBancario`, `oxxo`, `nupay`, `nupayRecurrent`, `rapipago`, `stripePaymentIntent`.
 
 For EBANX-specific integration (Pix, Boleto, OXXO, NuPay) with gateway-specific fields, see [EBANX Integration](#ebanx-integration).
+For Stripe APM integration (iDEAL, Bancontact), see [Stripe APM Integration](#stripe-apm-alternative-payment-methods-integration).
 
 ### SDK Methods
 
@@ -3783,6 +3796,411 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
 | `"gateway_processing_failed"` | Gateway could not process | Show retry message |
 
 Example reference: `EbanxPaymentFlowView` (SwiftUI) in the example app.
+
+## Stripe APM (Alternative Payment Methods) Integration
+
+Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact) using Stripe's native PaymentSheet. Unlike EBANX and other offsite flows, Stripe APM does **not** require a separate payment method tokenization step — the merchant backend creates a pending purchase directly, and the Stripe PaymentSheet handles APM selection and payment confirmation natively.
+
+### Prerequisites
+
+1. **Stripe account** with APM payment methods enabled in the Stripe dashboard
+2. **Stripe Payment Intents gateway** configured in Spreedly
+3. **Stripe publishable key** (from the Stripe dashboard, starts with `pk_test_` or `pk_live_`)
+4. **Stripe webhook** configured to send all Payment Intent events to Spreedly (required for delayed payment methods)
+5. **StripePaymentSheet** iOS SDK added to your app target (see Dependency Setup below)
+
+### Dependency Setup
+
+The Spreedly SDK includes Stripe APM support via **weak linking** (same pattern as Forter3DS) — it compiles without the Stripe SDK, but requires it at runtime for Stripe APM flows.
+
+**Add to your app target** (not the SDK):
+
+#### Swift Package Manager
+1. In Xcode, select **File > Add Package Dependencies...**
+2. Enter the repository URL: `https://github.com/stripe/stripe-ios-spm`
+3. Select the `StripePaymentSheet` product
+4. Add it to your app target with **Embed & Sign**
+
+#### CocoaPods
+```ruby
+pod 'StripePaymentSheet'
+```
+
+### URL Handling
+
+Register a custom URL scheme in your app's `Info.plist` for redirect-based APMs (e.g., iDEAL opens a bank auth page in Safari). **The `redirect_url` you pass when creating the pending purchase (Step 1) should be this custom URL** (e.g. `myapp://stripe-redirect`) so that after the user completes authentication in Safari, they are redirected back into your app. The Spreedly SDK handles Stripe redirect URLs automatically — no Stripe-specific URL handling code is needed in your app.
+
+The same `handleOffsiteReturn(url:)` call you already use for offsite payments handles Stripe APM redirects too. In **SwiftUI** use `onOpenURL`; in **UIKit/Objective-C** handle the URL in `SceneDelegate` (or `AppDelegate`). See the platform examples below.
+
+### SDK Methods
+
+| # | Method | Module | Purpose |
+|---|--------|--------|---------|
+| 1 | Backend: create pending purchase (Spreedly purchase API) | Merchant backend | Get `client_secret` + `transaction_token` |
+| 2 | `SpreedlyStripeAPMCheckout.present(config:)` | SpreedlyUI | Present Stripe PaymentSheet (SDK finds topmost VC; same as Offsite) |
+| 3 | `Spreedly.shared().subscribeToPaymentResults { }` (Swift/SwiftUI) or `SpreedlyPaymentDelegate.paymentDidComplete:` (UIKit/ObjC) | SpreedlyCore | Receive payment result |
+| 4 | `Spreedly.shared().handleOffsiteReturn(url:)` | SpreedlyCore | Handle redirect when app re-opens (same as offsite) |
+
+### Supported Stripe APM Payment Methods
+
+| Type | `apm_types` Value | Country | Currency | Flow |
+|------|-------------------|---------|----------|------|
+| **iDEAL** | `"ideal"` | Netherlands | EUR | Redirect (bank auth in Safari) |
+| **Bancontact** | `"bancontact"` | Belgium | EUR | Redirect (bank auth in Safari) |
+
+Pass one or more of these values in the `apm_types` array when creating the pending purchase on your backend. The Stripe PaymentSheet will display only the APMs you specify (filtered by the currency in the purchase request).
+
+### Flow
+
+The steps below are referenced in the code examples as **Step 1**, **Step 2**, **Step 3**, and **Step 4** in the `// MERCHANT (Step N):` comments.
+
+1. **Create pending purchase on your backend:** Call Spreedly purchase API with `payment_method_type: "stripe_apm"`, `apm_types`, `redirect_url`, `callback_url`. Receive `transaction.token`, `transaction.state == "pending"`, and `transaction.gateway_specific_response_fields.stripe_payment_intents.client_secret`.
+2. **Present PaymentSheet:** Build `StripeAPMConfig` (publishable key, client secret, transaction token, merchant display name, return URL) and call `SpreedlyStripeAPMCheckout.present(config:)`. The SDK finds the topmost view controller (works with sheets and alerts); no need to pass a presenter.
+3. **Handle result:** User completes payment (and any redirect). Receive `PaymentResult` via `subscribeToPaymentResults` (SwiftUI/Swift) or `SpreedlyPaymentDelegate.paymentDidComplete:` (UIKit/Objective-C).
+4. **Handle redirect return:** When the user returns from an external flow (e.g. bank auth), forward the URL to `Spreedly.shared().handleOffsiteReturn(url:)` (SwiftUI: `onOpenURL`; UIKit/ObjC: SceneDelegate/AppDelegate).
+
+### Create Pending Purchase (Merchant Backend)
+
+Your backend calls Spreedly's API to create a pending purchase with `stripe_apm` payment method type:
+
+```bash
+POST https://core.spreedly.com/v1/gateways/{stripe_pi_gateway_token}/purchase.json
+Authorization: Basic {base64(environment_key:access_secret)}
+Content-Type: application/json
+
+{
+  "transaction": {
+    "amount": 1000,
+    "currency_code": "EUR",
+    "channel": "app",
+    "redirect_url": "https://your-site.com/stripe-redirect",
+    "callback_url": "https://your-backend.com/spreedly/callbacks",
+    "payment_method": {
+      "payment_method_type": "stripe_apm",
+      "apm_types": ["ideal", "bancontact"]
+    }
+  }
+}
+```
+
+Response: `transaction.token`, `transaction.state` (must be `"pending"`), `transaction.gateway_specific_response_fields.stripe_payment_intents.client_secret`.
+
+- **`redirect_url`:** Use your app's custom URL (e.g. `myapp://stripe-redirect`) so the user is redirected from Safari back into your app after completing bank auth or other external steps. This must match the URL scheme registered in `Info.plist` and the `returnURL` you pass to `StripeAPMConfig` (Step 2).
+
+### SwiftUI
+
+```swift
+import SwiftUI
+import Combine
+import SpreedlyCore
+import SpreedlyUI
+
+struct StripeAPMPaymentView: View {
+    @State private var paymentResultCancellable: AnyCancellable?
+    @State private var stage: StripeAPMStage = .idle
+    @State private var isLoading = false
+    @State private var errorMessage: String?
+    @State private var successMessage: String?
+    @State private var selectedProduct: Product?
+    @State private var selectedAPMTypes: Set<String> = ["ideal"]
+
+    enum StripeAPMStage { case idle, creatingPendingPurchase, checkout }
+
+    var body: some View {
+        VStack {
+            // MERCHANT (before Step 1): Build your own product selection and APM type selection UI (e.g. list of products, iDEAL/Bancontact toggles).
+            Button("Pay") { startStripeAPMFlow() }
+                .disabled(selectedProduct == nil || selectedAPMTypes.isEmpty || isLoading)
+            if let success = successMessage { Text(success).foregroundColor(.green) }
+            if let error = errorMessage { Text(error).foregroundColor(.red) }
+        }
+        .onAppear {
+            // MERCHANT (Step 3): Subscribe once to payment results; do not cancel in onDisappear (same as offsite flows).
+            paymentResultCancellable?.cancel()
+            paymentResultCancellable = Spreedly.shared().subscribeToPaymentResults { handlePaymentResult($0) }
+        }
+        .onOpenURL { url in
+            // MERCHANT (Step 4): Forward all custom URL opens so the SDK can handle Stripe redirect returns.
+            _ = Spreedly.shared().handleOffsiteReturn(url: url)
+        }
+    }
+
+    func startStripeAPMFlow() {
+        guard let product = selectedProduct else { return }
+        isLoading = true
+        errorMessage = nil
+        successMessage = nil
+        stage = .creatingPendingPurchase
+
+        Task {
+            // MERCHANT (Step 1): Use your own API client that calls Spreedly purchase API (or call backend which does). Example uses shared config.
+            let client = SpreedlyConfigManager.shared.createStripeAPMPurchaseAPIClient()
+            let response = try await client.stripeAPMPendingPurchase(
+                amount: product.price * AppConstants.centsPerDollar,
+                currencyCode: "EUR",
+                redirectUrl: "https://your-site.com/stripe-redirect",   // MERCHANT (Step 1): Your redirect URL (or Spreedly’s; see docs).
+                callbackUrl: "https://your-backend.com/callback",       // MERCHANT (Step 1): Your backend callback URL for webhooks.
+                apmTypes: Array(selectedAPMTypes)
+            )
+
+            await MainActor.run {
+                guard let transaction = response.transaction,
+                      transaction.state == "pending",
+                      let clientSecret = transaction.gatewaySpecificResponseFields?.stripePaymentIntents?.clientSecret else {
+                    isLoading = false
+                    stage = .idle
+                    errorMessage = "Failed to create pending purchase"
+                    return
+                }
+
+                stage = .checkout
+                isLoading = false
+
+                // MERCHANT (Step 2): Use your Stripe publishable key and a display name for the PaymentSheet.
+                let config = StripeAPMConfig(
+                    publishableKey: SpreedlyConfigManager.shared.stripePublishableKey,
+                    clientSecret: clientSecret,
+                    transactionToken: transaction.token,
+                    merchantDisplayName: "Your Store",           // MERCHANT (Step 2): Your business name shown in the sheet.
+                    returnURL: "myapp://stripe-redirect"        // MERCHANT (Step 2): Must match the custom URL scheme in Info.plist.
+                )
+                SpreedlyStripeAPMCheckout.present(config: config)
+            }
+        }
+    }
+
+    // MERCHANT (Step 3): Handle success/failure and optional state (succeeded, processing, pending) as needed for your UX.
+    func handlePaymentResult(_ result: PaymentResult) {
+        guard stage == .checkout else { return }
+        stage = .idle
+        isLoading = false
+
+        if result.isSuccess {
+            switch result.state {
+            case "succeeded": successMessage = "Payment completed!"
+            case "processing": successMessage = "Payment accepted, confirmation pending."
+            case "pending": successMessage = "Payment submitted."
+            default: successMessage = "Payment completed."
+            }
+        } else {
+            let msg = result.failureDetails?.getDescription() ?? "Payment failed"
+            errorMessage = msg.lowercased().contains("canceled") ? "Payment was canceled." : msg
+        }
+    }
+}
+```
+
+### UIKit (Swift)
+
+```swift
+import UIKit
+import SpreedlyCore
+import SpreedlyUI
+
+class StripeAPMPaymentViewController: UIViewController, SpreedlyPaymentDelegate {
+
+    enum StripeAPMStage { case idle, creatingPendingPurchase, checkout }
+    var stage: StripeAPMStage = .idle
+    var selectedProduct: Product?
+    var selectedAPMTypes: Set<String> = ["ideal"]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // MERCHANT (Step 3): Set delegate so paymentDidComplete is called after redirect return.
+        Spreedly.shared().paymentDelegate = self
+    }
+
+    func startStripeAPMFlow() {
+        guard let product = selectedProduct else { return }
+        stage = .creatingPendingPurchase
+        isLoading = true
+
+        // MERCHANT (Step 1): Use your own API client that calls Spreedly purchase API (or call backend which does).
+        let client = SpreedlyConfigManager.shared.createStripeAPMPurchaseAPIClient()
+        client.stripeAPMPendingPurchase(
+            amount: product.price * AppConstants.centsPerDollar,
+            currencyCode: "EUR",
+            redirectUrl: "https://your-site.com/stripe-redirect",   // MERCHANT (Step 1): Your redirect URL (or Spreedly’s; see docs).
+            callbackUrl: "https://your-backend.com/callback",       // MERCHANT (Step 1): Your backend callback URL for webhooks.
+            apmTypes: Array(selectedAPMTypes)
+        ) { [weak self] response, error in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.stage = .idle
+                    self.isLoading = false
+                    self.showError(error.localizedDescription)
+                    return
+                }
+                guard let transaction = response?.transaction,
+                      transaction.state == "pending",
+                      let clientSecret = transaction.gatewaySpecificResponseFields?.stripePaymentIntents?.clientSecret else {
+                    self.stage = .idle
+                    self.isLoading = false
+                    self.showError("Failed to create pending purchase")
+                    return
+                }
+
+                self.stage = .checkout
+                self.isLoading = false
+
+                // MERCHANT (Step 2): Use your Stripe publishable key; merchantDisplayName and returnURL must be your values.
+                let config = StripeAPMConfig(
+                    publishableKey: SpreedlyConfigManager.shared.stripePublishableKey,
+                    clientSecret: clientSecret,
+                    transactionToken: transaction.token,
+                    merchantDisplayName: "Your Store",           // MERCHANT (Step 2): Your business name shown in the sheet.
+                    returnURL: "myapp://stripe-redirect"        // MERCHANT (Step 2): Must match the custom URL scheme in Info.plist.
+                )
+                SpreedlyStripeAPMCheckout.present(config: config)
+            }
+        }
+    }
+
+    // MERCHANT (Step 3): Handle success/failure and optional state (succeeded, processing, pending) as needed for your UX.
+    func paymentDidComplete(_ result: PaymentResult) {
+        guard stage == .checkout else { return }
+        DispatchQueue.main.async {
+            self.stage = .idle
+            self.isLoading = false
+            if result.isSuccess {
+                self.showSuccess(result.state == "succeeded" ? "Payment completed!" : "Payment submitted.")
+            } else {
+                let msg = result.failureDetails?.getDescription() ?? "Payment failed"
+                self.showError(msg.contains("canceled") ? "Payment was canceled." : msg)
+            }
+        }
+    }
+}
+
+// MERCHANT (Step 4): In your SceneDelegate (or AppDelegate), forward custom URL opens so the SDK can handle Stripe redirect returns.
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    guard let url = URLContexts.first?.url else { return }
+    Spreedly.shared().handleOffsiteReturn(url: url)
+}
+```
+
+### Objective-C
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyUI/SpreedlyUI-Swift.h>
+#import "SpreedlyConfigManager.h"
+#import "SpreedlyPurchaseAPIClient.h"
+#import "PurchaseModels.h"
+
+typedef NS_ENUM(NSInteger, StripeAPMStage) {
+    StripeAPMStageIdle,
+    StripeAPMStageCreatingPendingPurchase,
+    StripeAPMStageCheckout
+};
+
+@interface StripeAPMPaymentViewController () <SpreedlyPaymentDelegate>
+@property (nonatomic, assign) StripeAPMStage stage;
+@property (nonatomic, strong) Product *selectedProduct;
+@property (nonatomic, strong) NSMutableSet<NSString *> *selectedAPMTypes;
+@property (nonatomic, assign) BOOL isLoading;
+@end
+
+@implementation StripeAPMPaymentViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // MERCHANT (Step 3): Set delegate so paymentDidComplete: is called after redirect return.
+    [Spreedly shared].paymentDelegate = self;
+    self.selectedAPMTypes = [NSMutableSet setWithObject:@"ideal"];
+}
+
+- (void)startStripeAPMFlow {
+    if (!self.selectedProduct || self.selectedAPMTypes.count == 0) return;
+
+    self.stage = StripeAPMStageCreatingPendingPurchase;
+    self.isLoading = YES;
+
+    NSDecimalNumber *amountInCents = [self.selectedProduct.price decimalNumberByMultiplyingBy:[AppConstants centsPerDollar]];
+    // MERCHANT (Step 1): Use your own API client that calls Spreedly purchase API (or call backend which does). SpreedlyConfigManager holds gateway token and base URL.
+    SpreedlyPurchaseAPIClient *client = [[SpreedlyConfigManager shared] createStripeAPMPurchaseAPIClient];
+    [client stripeAPMPendingPurchaseWithAmount:amountInCents
+                                 currencyCode:@"EUR"
+                                  redirectUrl:@"https://your-site.com/stripe-redirect"   // MERCHANT (Step 1): Your redirect URL (or Spreedly’s; see docs).
+                                 callbackUrl:@"https://your-backend.com/callback"       // MERCHANT (Step 1): Your backend callback URL for webhooks.
+                                    apmTypes:[self.selectedAPMTypes allObjects]
+                                  completion:^(PurchaseResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.stage = StripeAPMStageIdle;
+                self.isLoading = NO;
+                [self showError:error.localizedDescription];
+            });
+            return;
+        }
+        PurchaseTransaction *tx = response.transaction;
+        if (!tx || ![tx.state isEqualToString:@"pending"] || !tx.stripePaymentIntentClientSecret.length) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.stage = StripeAPMStageIdle;
+                self.isLoading = NO;
+                [self showError:@"Failed to create pending purchase"];
+            });
+            return;
+        }
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.stage = StripeAPMStageCheckout;
+            self.isLoading = NO;
+
+            // MERCHANT (Step 2): Use your Stripe publishable key; merchantDisplayName and returnURL must be your values. returnURL must match Info.plist URL scheme.
+            StripeAPMConfig *config = [[StripeAPMConfig alloc] initWithPublishableKey:[[SpreedlyConfigManager shared] stripePublishableKey]
+                                                                        clientSecret:tx.stripePaymentIntentClientSecret
+                                                                   transactionToken:tx.token
+                                                                  merchantDisplayName:@"Your Store"           // MERCHANT (Step 2): Your business name shown in the sheet.
+                                                                              returnURL:@"myapp://stripe-redirect"];
+            [SpreedlyStripeAPMCheckout presentWithConfig:config];
+        });
+    }];
+}
+
+// MERCHANT (Step 3): Handle success/failure and optional state (succeeded, processing, pending) as needed for your UX.
+- (void)paymentDidComplete:(PaymentResult *)result {
+    if (self.stage != StripeAPMStageCheckout) return;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.stage = StripeAPMStageIdle;
+        self.isLoading = NO;
+        if (result.isSuccess) {
+            [self showSuccess:[result.state isEqualToString:@"succeeded"] ? @"Payment completed!" : @"Payment submitted."];
+        } else {
+            NSString *msg = [result.failureDetails getDescription] ?: @"Payment failed";
+            [self showError:[msg rangeOfString:@"canceled" options:NSCaseInsensitiveSearch].location != NSNotFound ? @"Payment was canceled." : msg];
+        }
+    });
+}
+
+@end
+
+// MERCHANT (Step 4): In your SceneDelegate (or AppDelegate), forward custom URL opens so the SDK can handle Stripe redirect returns.
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    NSURL *url = URLContexts.allObjects.firstObject.URL;
+    if (url) { [[Spreedly shared] handleOffsiteReturnWithUrl:url]; }
+}
+```
+
+### Stripe APM Result States
+
+| `result.state` | Meaning | Recommended UX |
+|----------------|---------|----------------|
+| `"succeeded"` | Payment completed, funds received | Show success |
+| `"processing"` | Payment accepted, funds pending (e.g., SEPA debit) | Show "Payment accepted, confirmation pending" |
+| `"pending"` | Payment submitted, awaiting final status | Show "Payment submitted" |
+| `"failed"` / `"gateway_processing_failed"` | Payment failed | Show error, offer retry |
+
+### Important Notes
+
+- **No tokenization step:** Unlike EBANX/PayPal, Stripe APM does not use `submitOffsitePayment()`. The pending purchase is created directly on the backend.
+- **SDK finds topmost VC:** Call `SpreedlyStripeAPMCheckout.present(config:)` with only the config. The SDK finds the topmost view controller (same approach as `SpreedlyOffsiteCheckout.present(transactionToken:)`), so you do not need to pass a presenter or implement a top-VC helper—works when a sheet or alert is already presented.
+- **URL handling:** Use `handleOffsiteReturn(url:)` in `onOpenURL` (SwiftUI) or in `SceneDelegate` (UIKit/Objective-C). The SDK forwards Stripe redirect URLs internally; no Stripe-specific code is required in the app.
+- **Delayed payment methods:** The SDK sets `allowsDelayedPaymentMethods = true` on the PaymentSheet. Currency (e.g., EUR for iDEAL) in the pending purchase determines which APMs are shown.
+- **Weak linking:** The `StripePaymentSheet` framework is weakly linked; add it to your app target only when using Stripe APM.
+
+Example references: `StripeAPMPaymentFlowView` (SwiftUI) and `StripeAPMPaymentFlowViewController` (Objective-C) in the example app.
 
 ## Advanced Features
 
