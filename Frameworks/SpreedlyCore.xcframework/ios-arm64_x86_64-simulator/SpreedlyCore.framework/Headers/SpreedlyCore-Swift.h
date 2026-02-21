@@ -435,14 +435,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore20OffsitePaymentConfig")
 
 typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypePaypal = 0,
-  OffsitePaymentMethodTypeStripePaymentIntent = 1,
-  OffsitePaymentMethodTypePix = 2,
-  OffsitePaymentMethodTypeBoletoBancario = 3,
-  OffsitePaymentMethodTypeNupay = 4,
-  OffsitePaymentMethodTypeNupayRecurrent = 5,
-  OffsitePaymentMethodTypeOxxo = 6,
-  OffsitePaymentMethodTypeRapipago = 7,
-  OffsitePaymentMethodTypeSprel = 8,
+  OffsitePaymentMethodTypePix = 1,
+  OffsitePaymentMethodTypeBoletoBancario = 2,
+  OffsitePaymentMethodTypeNupay = 3,
+  OffsitePaymentMethodTypeNupayRecurrent = 4,
+  OffsitePaymentMethodTypeOxxo = 5,
+  OffsitePaymentMethodTypeRapipago = 6,
+  OffsitePaymentMethodTypeSprel = 7,
 };
 
 /// Represents the immediate result of a payment processing attempt.
@@ -685,13 +684,18 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Sets the closure to run when the app is opened via Universal Link after offsite payment (so the SDK can dismiss SFSafariViewController).
 /// Called by SpreedlyUI when presenting the Safari-based offsite flow. Pass <code>nil</code> to clear.
 - (void)setOffsiteSafariDismissHandler:(void (^ _Nullable)(void))handler;
-/// Call this from your app’s <code>application(_:continue:restorationHandler:)</code> (or scene equivalent) when the app opens via the offsite payment return URL (Universal Link).
-/// The URL must include the transaction token, e.g. <code>https://yourdomain.com/payment/success?transaction_token=XXX</code>.
-/// \param url The URL received from the Universal Link
+/// Registers a pre-handler that intercepts URLs before standard offsite return processing.
+/// Used by SpreedlyUI to forward URLs to the Stripe SDK for redirect-based APM handling.
+/// The handler returns <code>true</code> if it consumed the URL, <code>false</code> to let normal processing continue.
+- (void)setURLPreHandler:(BOOL (^ _Nullable)(NSURL * _Nonnull))handler;
+/// Call this from your app’s <code>onOpenURL</code>, <code>application(_:open:options:)</code>, or
+/// <code>scene(_:openURLContexts:)</code> when the app opens via a URL (Universal Link or custom scheme).
+/// The SDK automatically handles both Stripe APM redirects and Spreedly offsite returns.
+/// \param url The URL received
 ///
 ///
 /// returns:
-/// <code>true</code> if the URL was recognized (contained <code>transaction_token</code>) and the SDK verified status and published the payment result; <code>false</code> otherwise
+/// <code>true</code> if the SDK recognized and handled the URL; <code>false</code> otherwise
 - (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
@@ -861,6 +865,29 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 - (void)notifyForceOnValidationChangeFor:(enum FormFieldType)fieldType;
 @end
 
+/// Configuration required to present the Stripe APM PaymentSheet.
+/// The merchant backend creates a pending purchase via Spreedly’s API, which returns
+/// a Stripe PaymentIntent <code>client_secret</code> and a Spreedly <code>transaction_token</code>.
+/// Those values, along with the Stripe <code>publishable_key</code>, are passed here.
+SWIFT_CLASS("_TtC12SpreedlyCore15StripeAPMConfig")
+@interface StripeAPMConfig : NSObject
+/// Stripe publishable key (from Stripe dashboard, starts with <code>pk_test_</code> or <code>pk_live_</code>)
+@property (nonatomic, readonly, copy) NSString * _Nonnull publishableKey;
+/// Stripe PaymentIntent client secret returned from the pending purchase response
+/// at <code>transaction.gateway_specific_response_fields.stripe_payment_intents.client_secret</code>
+@property (nonatomic, readonly, copy) NSString * _Nonnull clientSecret;
+/// Spreedly transaction token returned from the pending purchase response
+@property (nonatomic, readonly, copy) NSString * _Nonnull transactionToken;
+/// Merchant display name shown in the Stripe PaymentSheet
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
+/// Custom URL scheme for returning to the app after redirect-based APMs (e.g. “myapp://stripe-redirect”).
+/// Required for APMs that redirect to external apps or Safari for authentication.
+@property (nonatomic, readonly, copy) NSString * _Nullable returnURL;
+- (nonnull instancetype)initWithPublishableKey:(NSString * _Nonnull)publishableKey clientSecret:(NSString * _Nonnull)clientSecret transactionToken:(NSString * _Nonnull)transactionToken merchantDisplayName:(NSString * _Nonnull)merchantDisplayName returnURL:(NSString * _Nullable)returnURL OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Represents the various states and outcomes of a 3DS challenge process.
 /// This class works seamlessly with both Swift and Objective-C, providing
 /// a unified API for 3DS challenge result handling, consistent with PaymentResult.
@@ -891,6 +918,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 /// \param error The error that occurred during the challenge
 ///
 + (ThreeDSChallengeResult * _Nonnull)failureWithError:(NSError * _Nonnull)error SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+SWIFT_CLASS("_TtC12SpreedlyCore23TransactionStatusMapper")
+@interface TransactionStatusMapper : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1345,14 +1377,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore20OffsitePaymentConfig")
 
 typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypePaypal = 0,
-  OffsitePaymentMethodTypeStripePaymentIntent = 1,
-  OffsitePaymentMethodTypePix = 2,
-  OffsitePaymentMethodTypeBoletoBancario = 3,
-  OffsitePaymentMethodTypeNupay = 4,
-  OffsitePaymentMethodTypeNupayRecurrent = 5,
-  OffsitePaymentMethodTypeOxxo = 6,
-  OffsitePaymentMethodTypeRapipago = 7,
-  OffsitePaymentMethodTypeSprel = 8,
+  OffsitePaymentMethodTypePix = 1,
+  OffsitePaymentMethodTypeBoletoBancario = 2,
+  OffsitePaymentMethodTypeNupay = 3,
+  OffsitePaymentMethodTypeNupayRecurrent = 4,
+  OffsitePaymentMethodTypeOxxo = 5,
+  OffsitePaymentMethodTypeRapipago = 6,
+  OffsitePaymentMethodTypeSprel = 7,
 };
 
 /// Represents the immediate result of a payment processing attempt.
@@ -1595,13 +1626,18 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Sets the closure to run when the app is opened via Universal Link after offsite payment (so the SDK can dismiss SFSafariViewController).
 /// Called by SpreedlyUI when presenting the Safari-based offsite flow. Pass <code>nil</code> to clear.
 - (void)setOffsiteSafariDismissHandler:(void (^ _Nullable)(void))handler;
-/// Call this from your app’s <code>application(_:continue:restorationHandler:)</code> (or scene equivalent) when the app opens via the offsite payment return URL (Universal Link).
-/// The URL must include the transaction token, e.g. <code>https://yourdomain.com/payment/success?transaction_token=XXX</code>.
-/// \param url The URL received from the Universal Link
+/// Registers a pre-handler that intercepts URLs before standard offsite return processing.
+/// Used by SpreedlyUI to forward URLs to the Stripe SDK for redirect-based APM handling.
+/// The handler returns <code>true</code> if it consumed the URL, <code>false</code> to let normal processing continue.
+- (void)setURLPreHandler:(BOOL (^ _Nullable)(NSURL * _Nonnull))handler;
+/// Call this from your app’s <code>onOpenURL</code>, <code>application(_:open:options:)</code>, or
+/// <code>scene(_:openURLContexts:)</code> when the app opens via a URL (Universal Link or custom scheme).
+/// The SDK automatically handles both Stripe APM redirects and Spreedly offsite returns.
+/// \param url The URL received
 ///
 ///
 /// returns:
-/// <code>true</code> if the URL was recognized (contained <code>transaction_token</code>) and the SDK verified status and published the payment result; <code>false</code> otherwise
+/// <code>true</code> if the SDK recognized and handled the URL; <code>false</code> otherwise
 - (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
@@ -1771,6 +1807,29 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 - (void)notifyForceOnValidationChangeFor:(enum FormFieldType)fieldType;
 @end
 
+/// Configuration required to present the Stripe APM PaymentSheet.
+/// The merchant backend creates a pending purchase via Spreedly’s API, which returns
+/// a Stripe PaymentIntent <code>client_secret</code> and a Spreedly <code>transaction_token</code>.
+/// Those values, along with the Stripe <code>publishable_key</code>, are passed here.
+SWIFT_CLASS("_TtC12SpreedlyCore15StripeAPMConfig")
+@interface StripeAPMConfig : NSObject
+/// Stripe publishable key (from Stripe dashboard, starts with <code>pk_test_</code> or <code>pk_live_</code>)
+@property (nonatomic, readonly, copy) NSString * _Nonnull publishableKey;
+/// Stripe PaymentIntent client secret returned from the pending purchase response
+/// at <code>transaction.gateway_specific_response_fields.stripe_payment_intents.client_secret</code>
+@property (nonatomic, readonly, copy) NSString * _Nonnull clientSecret;
+/// Spreedly transaction token returned from the pending purchase response
+@property (nonatomic, readonly, copy) NSString * _Nonnull transactionToken;
+/// Merchant display name shown in the Stripe PaymentSheet
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
+/// Custom URL scheme for returning to the app after redirect-based APMs (e.g. “myapp://stripe-redirect”).
+/// Required for APMs that redirect to external apps or Safari for authentication.
+@property (nonatomic, readonly, copy) NSString * _Nullable returnURL;
+- (nonnull instancetype)initWithPublishableKey:(NSString * _Nonnull)publishableKey clientSecret:(NSString * _Nonnull)clientSecret transactionToken:(NSString * _Nonnull)transactionToken merchantDisplayName:(NSString * _Nonnull)merchantDisplayName returnURL:(NSString * _Nullable)returnURL OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Represents the various states and outcomes of a 3DS challenge process.
 /// This class works seamlessly with both Swift and Objective-C, providing
 /// a unified API for 3DS challenge result handling, consistent with PaymentResult.
@@ -1801,6 +1860,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 /// \param error The error that occurred during the challenge
 ///
 + (ThreeDSChallengeResult * _Nonnull)failureWithError:(NSError * _Nonnull)error SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+SWIFT_CLASS("_TtC12SpreedlyCore23TransactionStatusMapper")
+@interface TransactionStatusMapper : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
