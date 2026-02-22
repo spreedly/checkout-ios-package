@@ -305,8 +305,41 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-enum DocumentIdKey : NSInteger;
 @class NSString;
+enum BraintreePaymentType : NSInteger;
+/// Configuration for presenting a Braintree PayPal or Venmo checkout flow.
+/// The merchant backend creates a purchase via Spreedly’s Braintree gateway with
+/// <code>offsite_sync: true</code>, then passes the resulting <code>transactionToken</code> and
+/// <code>clientToken</code> here.
+SWIFT_CLASS("_TtC12SpreedlyCore23BraintreeCheckoutConfig")
+@interface BraintreeCheckoutConfig : NSObject
+/// Spreedly transaction token from the purchase response.
+@property (nonatomic, readonly, copy) NSString * _Nonnull transactionToken;
+/// The Braintree payment method to present (PayPal or Venmo).
+@property (nonatomic, readonly) enum BraintreePaymentType paymentType;
+/// Merchant name shown in the Braintree payment UI.
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
+/// Braintree <code>client_token</code> extracted from the purchase response at
+/// <code>gateway_specific_response_fields.braintree.client_token</code>.
+/// When provided the SDK skips the status API call (recommended).
+@property (nonatomic, readonly, copy) NSString * _Nullable clientToken;
+/// Transaction amount as a decimal string (e.g. “10.00”).
+/// Required for PayPal checkout requests.
+@property (nonatomic, readonly, copy) NSString * _Nullable amount;
+/// ISO 4217 currency code (e.g. “USD”).
+@property (nonatomic, readonly, copy) NSString * _Nullable currencyCode;
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken paymentType:(enum BraintreePaymentType)paymentType merchantDisplayName:(NSString * _Nonnull)merchantDisplayName clientToken:(NSString * _Nullable)clientToken amount:(NSString * _Nullable)amount currencyCode:(NSString * _Nullable)currencyCode OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Braintree payment method types supported by the Spreedly Braintree checkout flow.
+typedef SWIFT_ENUM(NSInteger, BraintreePaymentType, open) {
+  BraintreePaymentTypePaypal = 0,
+  BraintreePaymentTypeVenmo = 1,
+};
+
+enum DocumentIdKey : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 @interface DocumentId : NSObject
 @property (nonatomic, readonly) enum DocumentIdKey key;
@@ -581,12 +614,34 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// This value is passed from UI to merchant and is not sent to the API.
 /// Defaults to false. Always false for recache operations.
 @property (nonatomic) BOOL shouldRetain;
+/// Braintree payment nonce returned by the Braintree SDK after PayPal/Venmo authorization.
+/// When non-nil, the merchant must forward this nonce to their backend which calls
+/// Spreedly’s <code>/confirm.json</code> endpoint to complete the transaction.
+/// Only present for Braintree payment flows.
+@property (nonatomic, copy) NSString * _Nullable nonce;
+/// Braintree device fingerprint data for fraud detection.
+/// Should be forwarded alongside the nonce to the merchant backend for <code>/confirm.json</code>.
+/// May be nil if device data collection failed (non-fatal).
+/// Only present for Braintree payment flows.
+@property (nonatomic, copy) NSString * _Nullable deviceData;
 /// Detailed failure information (only available for failed payments).
 @property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Creates an initial state result.
 + (PaymentResult * _Nonnull)initial SWIFT_WARN_UNUSED_RESULT;
+/// Creates a successful payment result for Braintree flows that return a nonce.
+/// The merchant must forward the nonce (and optionally deviceData) to their backend,
+/// which calls Spreedly’s <code>/confirm.json</code> endpoint to finalize the transaction.
+/// \param token Spreedly transaction token from the pending purchase
+///
+/// \param nonce Braintree payment nonce from PayPal/Venmo authorization
+///
+/// \param deviceData Braintree device fingerprint data (may be nil if collection failed)
+///
+/// \param state Transaction state (typically “pending” for Braintree flows)
+///
++ (PaymentResult * _Nonnull)completedWithToken:(NSString * _Nonnull)token nonce:(NSString * _Nonnull)nonce deviceData:(NSString * _Nullable)deviceData state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.
@@ -1247,8 +1302,41 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-enum DocumentIdKey : NSInteger;
 @class NSString;
+enum BraintreePaymentType : NSInteger;
+/// Configuration for presenting a Braintree PayPal or Venmo checkout flow.
+/// The merchant backend creates a purchase via Spreedly’s Braintree gateway with
+/// <code>offsite_sync: true</code>, then passes the resulting <code>transactionToken</code> and
+/// <code>clientToken</code> here.
+SWIFT_CLASS("_TtC12SpreedlyCore23BraintreeCheckoutConfig")
+@interface BraintreeCheckoutConfig : NSObject
+/// Spreedly transaction token from the purchase response.
+@property (nonatomic, readonly, copy) NSString * _Nonnull transactionToken;
+/// The Braintree payment method to present (PayPal or Venmo).
+@property (nonatomic, readonly) enum BraintreePaymentType paymentType;
+/// Merchant name shown in the Braintree payment UI.
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
+/// Braintree <code>client_token</code> extracted from the purchase response at
+/// <code>gateway_specific_response_fields.braintree.client_token</code>.
+/// When provided the SDK skips the status API call (recommended).
+@property (nonatomic, readonly, copy) NSString * _Nullable clientToken;
+/// Transaction amount as a decimal string (e.g. “10.00”).
+/// Required for PayPal checkout requests.
+@property (nonatomic, readonly, copy) NSString * _Nullable amount;
+/// ISO 4217 currency code (e.g. “USD”).
+@property (nonatomic, readonly, copy) NSString * _Nullable currencyCode;
+- (nonnull instancetype)initWithTransactionToken:(NSString * _Nonnull)transactionToken paymentType:(enum BraintreePaymentType)paymentType merchantDisplayName:(NSString * _Nonnull)merchantDisplayName clientToken:(NSString * _Nullable)clientToken amount:(NSString * _Nullable)amount currencyCode:(NSString * _Nullable)currencyCode OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Braintree payment method types supported by the Spreedly Braintree checkout flow.
+typedef SWIFT_ENUM(NSInteger, BraintreePaymentType, open) {
+  BraintreePaymentTypePaypal = 0,
+  BraintreePaymentTypeVenmo = 1,
+};
+
+enum DocumentIdKey : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 @interface DocumentId : NSObject
 @property (nonatomic, readonly) enum DocumentIdKey key;
@@ -1523,12 +1611,34 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// This value is passed from UI to merchant and is not sent to the API.
 /// Defaults to false. Always false for recache operations.
 @property (nonatomic) BOOL shouldRetain;
+/// Braintree payment nonce returned by the Braintree SDK after PayPal/Venmo authorization.
+/// When non-nil, the merchant must forward this nonce to their backend which calls
+/// Spreedly’s <code>/confirm.json</code> endpoint to complete the transaction.
+/// Only present for Braintree payment flows.
+@property (nonatomic, copy) NSString * _Nullable nonce;
+/// Braintree device fingerprint data for fraud detection.
+/// Should be forwarded alongside the nonce to the merchant backend for <code>/confirm.json</code>.
+/// May be nil if device data collection failed (non-fatal).
+/// Only present for Braintree payment flows.
+@property (nonatomic, copy) NSString * _Nullable deviceData;
 /// Detailed failure information (only available for failed payments).
 @property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Creates an initial state result.
 + (PaymentResult * _Nonnull)initial SWIFT_WARN_UNUSED_RESULT;
+/// Creates a successful payment result for Braintree flows that return a nonce.
+/// The merchant must forward the nonce (and optionally deviceData) to their backend,
+/// which calls Spreedly’s <code>/confirm.json</code> endpoint to finalize the transaction.
+/// \param token Spreedly transaction token from the pending purchase
+///
+/// \param nonce Braintree payment nonce from PayPal/Venmo authorization
+///
+/// \param deviceData Braintree device fingerprint data (may be nil if collection failed)
+///
+/// \param state Transaction state (typically “pending” for Braintree flows)
+///
++ (PaymentResult * _Nonnull)completedWithToken:(NSString * _Nonnull)token nonce:(NSString * _Nonnull)nonce deviceData:(NSString * _Nullable)deviceData state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.

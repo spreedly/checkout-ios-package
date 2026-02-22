@@ -1,3 +1,35 @@
+## [1.0.25] - 2026-02-22
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Add Braintree Payment Flow with Documentation and Example Implementation (#184)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.0.25 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.0.25")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 1.0.25'
+```
+
+---
+
 ## [1.0.24] - 2026-02-21
 
 ### Release Type

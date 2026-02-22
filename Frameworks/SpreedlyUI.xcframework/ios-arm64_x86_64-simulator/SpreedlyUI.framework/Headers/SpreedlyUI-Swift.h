@@ -309,6 +309,20 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+@class NSURL;
+/// Objective-C compatible wrapper for Braintree URL handling.
+/// Call handleOpenWithUrl: from your URL handler (e.g. scene:openURLContexts: or application:open:options:).
+SWIFT_CLASS("_TtC10SpreedlyUI23BraintreeURLHandlerObjC")
+@interface BraintreeURLHandlerObjC : NSObject
+/// Forwards a URL to the Braintree SDK for app-switch handling.
+/// Call from your app’s URL handler (e.g. scene:openURLContexts: or application:open:options:).
+///
+/// returns:
+/// YES if the URL was handled by Braintree, NO otherwise.
++ (BOOL)handleOpenWithUrl:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class NSString;
 @class PaymentProcessingResult;
 @class NSBundle;
@@ -482,6 +496,29 @@ SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class BraintreeCheckoutConfig;
+SWIFT_CLASS("_TtC10SpreedlyUI25SpreedlyBraintreeCheckout")
+@interface SpreedlyBraintreeCheckout : NSObject
+/// <code>true</code> when Braintree SDK is linked and Braintree checkout can be used.
+/// Optional: use this to show/hide Braintree UI. You can instead call <code>present(config:)</code>
+/// directly; when Braintree is not linked, a failure will be published to the payment result.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isAvailable;)
++ (BOOL)isAvailable SWIFT_WARN_UNUSED_RESULT;
+/// Whether a Braintree checkout is currently in progress.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isActive;)
++ (BOOL)isActive SWIFT_WARN_UNUSED_RESULT;
+/// The transaction token of the active checkout, if any.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nullable currentTransactionToken;)
++ (NSString * _Nullable)currentTransactionToken SWIFT_WARN_UNUSED_RESULT;
+/// Presents the Braintree PayPal or Venmo flow from the topmost view controller.
+/// Result is delivered via <code>Spreedly.shared().paymentResultPublisher</code>.
+/// When Braintree is not linked, publishes a failure (no-op presentation).
++ (void)presentWithConfig:(BraintreeCheckoutConfig * _Nonnull)config;
+/// Presents the Braintree PayPal or Venmo flow from the given view controller.
++ (void)presentWithConfig:(BraintreeCheckoutConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class SFSafariViewController;
 /// Presents SFSafariViewController directly on the topmost VC.
 /// SDK fetches checkout_url via status API, presents Safari, and
@@ -498,7 +535,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class NSURL;
 @class StripeAPMConfig;
 SWIFT_CLASS("_TtC10SpreedlyUI25SpreedlyStripeAPMCheckout")
 @interface SpreedlyStripeAPMCheckout : NSObject
@@ -971,6 +1007,20 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+@class NSURL;
+/// Objective-C compatible wrapper for Braintree URL handling.
+/// Call handleOpenWithUrl: from your URL handler (e.g. scene:openURLContexts: or application:open:options:).
+SWIFT_CLASS("_TtC10SpreedlyUI23BraintreeURLHandlerObjC")
+@interface BraintreeURLHandlerObjC : NSObject
+/// Forwards a URL to the Braintree SDK for app-switch handling.
+/// Call from your app’s URL handler (e.g. scene:openURLContexts: or application:open:options:).
+///
+/// returns:
+/// YES if the URL was handled by Braintree, NO otherwise.
++ (BOOL)handleOpenWithUrl:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class NSString;
 @class PaymentProcessingResult;
 @class NSBundle;
@@ -1144,6 +1194,29 @@ SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class BraintreeCheckoutConfig;
+SWIFT_CLASS("_TtC10SpreedlyUI25SpreedlyBraintreeCheckout")
+@interface SpreedlyBraintreeCheckout : NSObject
+/// <code>true</code> when Braintree SDK is linked and Braintree checkout can be used.
+/// Optional: use this to show/hide Braintree UI. You can instead call <code>present(config:)</code>
+/// directly; when Braintree is not linked, a failure will be published to the payment result.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isAvailable;)
++ (BOOL)isAvailable SWIFT_WARN_UNUSED_RESULT;
+/// Whether a Braintree checkout is currently in progress.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isActive;)
++ (BOOL)isActive SWIFT_WARN_UNUSED_RESULT;
+/// The transaction token of the active checkout, if any.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nullable currentTransactionToken;)
++ (NSString * _Nullable)currentTransactionToken SWIFT_WARN_UNUSED_RESULT;
+/// Presents the Braintree PayPal or Venmo flow from the topmost view controller.
+/// Result is delivered via <code>Spreedly.shared().paymentResultPublisher</code>.
+/// When Braintree is not linked, publishes a failure (no-op presentation).
++ (void)presentWithConfig:(BraintreeCheckoutConfig * _Nonnull)config;
+/// Presents the Braintree PayPal or Venmo flow from the given view controller.
++ (void)presentWithConfig:(BraintreeCheckoutConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class SFSafariViewController;
 /// Presents SFSafariViewController directly on the topmost VC.
 /// SDK fetches checkout_url via status API, presents Safari, and
@@ -1160,7 +1233,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class NSURL;
 @class StripeAPMConfig;
 SWIFT_CLASS("_TtC10SpreedlyUI25SpreedlyStripeAPMCheckout")
 @interface SpreedlyStripeAPMCheckout : NSObject
