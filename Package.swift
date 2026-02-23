@@ -6,37 +6,24 @@ import PackageDescription
 let package = Package(
     name: "checkout-ios-package",
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "SpreedlyCore",
-            targets: ["SpreedlyCore"]
-        ),
-        .library(
-            name: "SpreedlySecurity",
-            targets: ["SpreedlySecurity"]
-        ),
-        .library(
-            name: "SpreedlyUI",
-            targets: ["SpreedlyUI"]
-        ),
-        
-        // All-in-one product
-        .library(
-            name: "Spreedly",
-            targets: ["SpreedlyCore", "SpreedlySecurity", "SpreedlyUI"]
-        ),
+        // Core modules (always needed)
+        .library(name: "SpreedlyCore", targets: ["SpreedlyCore"]),
+        .library(name: "SpreedlySecurity", targets: ["SpreedlySecurity"]),
+        .library(name: "SpreedlyUI", targets: ["SpreedlyUI"]),
+        // Gateway modules (optional — merchants add only what they use)
+        .library(name: "SpreedlyStripeAPM", targets: ["SpreedlyStripeAPM"]),
+        .library(name: "SpreedlyBraintree", targets: ["SpreedlyBraintree"]),
+        // All-in-one (core only — gateways are always opt-in)
+        .library(name: "Spreedly", targets: ["SpreedlyCore", "SpreedlySecurity", "SpreedlyUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/DataDog/dd-sdk-ios", from: "3.1.0")
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .binaryTarget(
-            name: "SpreedlyCore", 
-            path: "./Frameworks/SpreedlyCore.xcframework"
-        ),
+        .binaryTarget(name: "SpreedlyCore", path: "./Frameworks/SpreedlyCore.xcframework"),
         .binaryTarget(name: "SpreedlySecurity", path: "./Frameworks/SpreedlySecurity.xcframework"),
         .binaryTarget(name: "SpreedlyUI", path: "./Frameworks/SpreedlyUI.xcframework"),
+        .binaryTarget(name: "SpreedlyStripeAPM", path: "./Frameworks/SpreedlyStripeAPM.xcframework"),
+        .binaryTarget(name: "SpreedlyBraintree", path: "./Frameworks/SpreedlyBraintree.xcframework"),
     ]
 )

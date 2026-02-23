@@ -114,49 +114,14 @@ targets: [
 ]
 ```
 
-#### Forter3DS Dependency (CocoaPods)
+#### Optional Gateway Modules
 
-**Important:** If you plan to use 3DS (Three-Domain Secure) authentication, you **must** add the Forter3DS package as a direct dependency to your app target. This is required because `SpreedlyCore` dynamically links to Forter3DS but doesn't declare it as a transitive dependency.
+Add only the gateway products you use. Each optional module has a corresponding third-party SDK dependency:
 
-**Why is this needed?**
-
-- `SpreedlyCore` uses Forter3DS for 3DS authentication flows
-- Forter3DS is dynamically linked (not statically compiled into SpreedlyCore)
-- Dynamic frameworks must be embedded in the app bundle at runtime
-- Swift Package Manager doesn't automatically embed transitive dynamic dependencies
-- Without this dependency, your app will crash on real devices with: `dyld: Library not loaded: @rpath/Forter3DS.framework/Forter3DS`
-
-**How to add Forter3DS via Swift Package Manager:**
-
-Reference: [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk)
-
-1. **In Xcode:**
-   - File → Swift Packages → Add Package Dependency
-   - Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
-   - Set the dependency rule to "Up to Next Major Version"
-   - On the "Choose Package" screen, verify that `Forter3DS` is selected and press "Add Package"
-   - Add `Forter3DS` product to your app target
-   - Ensure it's set to "Embed & Sign" in your target's "Frameworks, Libraries, and Embedded Content"
-
-2. **In Package.swift:**
-dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-sdk.git", from: "1.0.0"),
-    .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
-],
-targets: [
-    .target(
-        name: "YourApp",
-        dependencies: [
-            .product(name: "SpreedlyCore", package: "SpreedlySDK"),
-            .product(name: "SpreedlySecurity", package: "SpreedlySDK"),
-            .product(name: "SpreedlyUI", package: "SpreedlySDK"),
-            .product(name: "Forter3DS", package: "forter-ios")  // Required for 3DS
-        ]
-    )
-]
-```
-
-**Note:** If you're not using 3DS authentication, you can skip adding Forter3DS. The SDK will gracefully handle the absence of Forter3DS and show an appropriate message if 3DS is required.
+| Product | Use case | Also add (SPM / CocoaPods) |
+|---------|----------|----------------------------|
+| **SpreedlyStripeAPM** | Stripe APM (iDEAL, Bancontact, etc.) | `StripePaymentSheet` from [stripe-ios-spm](https://github.com/stripe/stripe-ios-spm) |
+| **SpreedlyBraintree** | PayPal / Venmo via Braintree | BraintreeCore, BraintreePayPal, BraintreeVenmo from [braintree_ios](https://github.com/braintree/braintree_ios) |
 
 ### Option 2: Manual Framework Integration
 
@@ -179,35 +144,8 @@ target 'YourApp' do
   # pod 'Spreedly/Core', '~> 1.0'
   # pod 'Spreedly/Security', '~> 1.0'
   # pod 'Spreedly/UI', '~> 1.0'
-  
-  # ⚠️ Required for 3DS Authentication
-  # If you plan to use 3DS authentication, add Forter3DS:
-  # Reference: https://docs.forter.com/3ds-ios-sdk
-  pod 'forter3ds', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
 end
 ```
-
-#### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
-
-For the rationale and troubleshooting details, see the Forter3DS dependency note above. The same requirement applies to CocoaPods.
-
-**Technical Details:**
-
-The Forter3DS package uses pre-compiled `.xcframework` binaries with dynamic linking by default. Because these are pre-compiled binaries, the linking type cannot be changed to static linking. The package structure includes:
-- `.binaryTarget` with pre-compiled `.xcframework` files
-- `.library` products that default to dynamic linking (not static)
-- Multiple binary targets: `Forter3DS`, `ThreeDS_SDK`, and `FTR3DSCommon`
-
-Since static linking is not possible with pre-compiled binaries, the framework must be added as a direct dependency to ensure it's embedded in your app bundle.
-
-**Forter3DS SDK Dependencies:**
-
-The Forter3DS SDK includes the following external libraries (already embedded in the SDK):
-- **ASN1Decoder**: Certificate parsing in ASN1 structure
-- **SwCrypt**: Crypto library for JWS validation (used only in iOS 10 devices)
-- **GMEllipticCurveCrypto**: Security framework used for elliptic curve keys crypto library
-
-For more details, see the [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk).
 
 ## Basic Setup
 
