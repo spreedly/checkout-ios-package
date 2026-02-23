@@ -4,8 +4,7 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 
 ## Quick Reference
 
-- **[MERCHANT_API_REFERENCE.md](MERCHANT_API_REFERENCE.md)** - Complete API reference for all merchant-facing classes
-- **[SWIFTUI_VS_OBJECTIVEC_CLASSES.md](SWIFTUI_VS_OBJECTIVEC_CLASSES.md)** - Quick reference for SwiftUI vs Objective-C/UIKit classes
+- **Merchant-facing APIs** are documented in this guide and in `SDK_TECHNICAL_SPECIFICATION.md`. SwiftUI and UIKit/Objective-C usage are covered in the sections below and in the Example app.
 
 ## Merchant-Facing Components Summary
 
@@ -16,6 +15,7 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 | **CVV Recaching** | `SpreedlyCVVRecachingView` | `CVVRecachingViewController` | Collect CVV to recache payment method |
 | **3DS Challenge** | `DoChallengeIfNeeded` | `DoChallengeIfNeededViewController` | Present 3DS authentication challenge |
 | **Offsite Checkout** | `SpreedlyOffsiteCheckout.present(transactionToken:)` | `[SpreedlyOffsiteCheckout presentWithTransactionToken:]` | Present Safari directly for offsite payment (e.g. PayPal) |
+| **Stripe APM** | `SpreedlyStripeAPMCheckout.present(config:)` | `[SpreedlyStripeAPMCheckout presentWithConfig:]` | Present Stripe PaymentSheet for iDEAL, Bancontact, EPS, P24, SEPA Debit; backend creates pending purchase, then present with config |
 | **Braintree (PayPal/Venmo)** | `SpreedlyBraintreeCheckout.present(config:)` | `[SpreedlyBraintreeCheckout presentWithConfig:]` | Present Braintree PayPal or Venmo flow; result via payment result (nonce) then backend confirm |
 
 **3DS:** Two flows are supported—**3DS Global (Forter)** and **3DS Gateway-Specific** (e.g. Worldpay)—each with **SwiftUI**, **UIKit**, and **Objective-C** examples. See [3DS Authentication](#3ds-authentication).
@@ -23,6 +23,8 @@ This comprehensive guide covers everything you need to integrate the Spreedly iO
 **Offsite:** Create payment method with `submitOffsitePayment`, purchase on your backend, then call `SpreedlyOffsiteCheckout.present(transactionToken:)`. SDK presents Safari directly — no sheet or intermediate UI. See [Offsite Payments](#offsite-payments).
 
 **EBANX:** EBANX uses the same offsite flow with provider-specific payment types (Pix, Boleto, OXXO, NuPay). The purchase API call includes EBANX `gateway_specific_fields` (e.g. taxpayer document). See [EBANX Integration](#ebanx-integration).
+
+**Stripe APM:** Backend creates a pending purchase with `payment_method_type: "stripe_apm"` and `apm_types` (e.g. iDEAL, Bancontact, EPS, P24, SEPA Debit); app gets `transaction_token` and `client_secret`, then presents Stripe PaymentSheet via SDK. See [Stripe APM Integration](#stripe-apm-alternative-payment-methods-integration).
 
 **Braintree (PayPal/Venmo):** Backend creates a Braintree purchase; app gets `transaction_token` and `client_token`, presents Braintree checkout via SDK, then sends nonce to backend for confirm. See [Braintree (PayPal / Venmo) Integration](#braintree-paypal--venmo-integration).
 
@@ -3803,7 +3805,7 @@ Example reference: `EbanxPaymentFlowView` (SwiftUI) in the example app.
 
 ## Stripe APM (Alternative Payment Methods) Integration
 
-Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact) using Stripe's native PaymentSheet. Unlike EBANX and other offsite flows, Stripe APM does **not** require a separate payment method tokenization step — the merchant backend creates a pending purchase directly, and the Stripe PaymentSheet handles APM selection and payment confirmation natively.
+Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact, EPS, P24, SEPA Debit) using Stripe's native PaymentSheet. Unlike EBANX and other offsite flows, Stripe APM does **not** require a separate payment method tokenization step — the merchant backend creates a pending purchase directly, and the Stripe PaymentSheet handles APM selection and payment confirmation natively.
 
 ### Prerequisites
 
@@ -3851,8 +3853,13 @@ The same `handleOffsiteReturn(url:)` call you already use for offsite payments h
 |------|-------------------|---------|----------|------|
 | **iDEAL** | `"ideal"` | Netherlands | EUR | Redirect (bank auth in Safari) |
 | **Bancontact** | `"bancontact"` | Belgium | EUR | Redirect (bank auth in Safari) |
+| **EPS** | `"eps"` | Austria | EUR | Redirect (bank auth in Safari) |
+| **Przelewy24 (P24)** | `"p24"` | Poland | PLN, EUR | Redirect (bank auth in Safari) |
+| **SEPA Debit** | `"sepa_debit"` | SEPA countries | EUR | Redirect (bank auth in Safari) |
 
 Pass one or more of these values in the `apm_types` array when creating the pending purchase on your backend. The Stripe PaymentSheet will display only the APMs you specify (filtered by the currency in the purchase request).
+
+**Using typed constants (optional):** In **Swift** you can use `StripeAPMType` (e.g. `StripeAPMType.ideal.apmTypeValue` or `[StripeAPMType.ideal, .eps].map(\.apmTypeValue)`). In **Objective-C** use `StripeAPMTypeHelper.apmTypeValueForType:` (e.g. `[StripeAPMTypeHelper apmTypeValueForType:StripeAPMTypeEps]`) to get the string for each type. You can also pass string literals (e.g. `@"ideal"`, `@"sepa_debit"`) directly.
 
 ### Flow
 
@@ -3881,7 +3888,7 @@ Content-Type: application/json
     "callback_url": "https://your-backend.com/spreedly/callbacks",
     "payment_method": {
       "payment_method_type": "stripe_apm",
-      "apm_types": ["ideal", "bancontact"]
+      "apm_types": ["ideal", "bancontact", "eps", "p24", "sepa_debit"]
     }
   }
 }
@@ -4273,19 +4280,18 @@ When the user returns from the PayPal or Venmo app, iOS can open your app in two
 
 **Important:** Call **Braintree URL handling first**, then your existing offsite/Stripe URL handling (e.g. `handleOffsiteReturn(url:)`), so Braintree return URLs are not treated as generic offsite returns.
 
-At app launch you can call `BraintreeURLHandler.configure()` (Swift) or `[BraintreeURLHandlerObjC configure]` (ObjC) once; in Braintree v7 the return URL is set when the SDK creates the PayPal/Venmo client, so this is optional but recommended for compatibility.
+The return URL is set when the SDK creates the PayPal/Venmo client; just forward the URL from your app's URL handler (see table below).
 
 ### SDK Methods
 
 | # | Method | Module | Purpose |
 |---|--------|--------|---------|
 | 1 | Backend: create Braintree purchase (Spreedly purchase API) | Merchant backend | Get `transaction_token` and `client_token` (in `gateway_specific_response_fields.braintree.client_token`) |
-| 2 | `BraintreeURLHandler.configure()` / `BraintreeURLHandlerObjC.configure` | SpreedlyUI | Optional: configure at launch (recommended). |
-| 3 | `BraintreeURLHandler.handleOpen(url:)` / `BraintreeURLHandlerObjC.handleOpenWithUrl:` | SpreedlyUI | Forward return URL from PayPal/Venmo so SDK can complete the flow. |
-| 4 | `BraintreeCheckoutConfig(transactionToken:paymentType:clientToken:amount:currencyCode:)` | SpreedlyCore | Build config for checkout. |
-| 5 | `SpreedlyBraintreeCheckout.present(config:)` / `presentWithConfig:` | SpreedlyUI | Present PayPal or Venmo flow (SDK finds topmost VC). |
-| 6 | `Spreedly.shared().subscribeToPaymentResults { }` (Swift) or `SpreedlyPaymentDelegate.paymentDidComplete:` (UIKit/ObjC) | SpreedlyCore | Receive `PaymentResult` with nonce and optional deviceData. |
-| 7 | Backend: POST confirm with nonce (+ device_data) | Merchant backend | Complete the transaction. |
+| 2 | `BraintreeURLHandler.handleOpen(url:)` / `BraintreeURLHandlerObjC.handleOpenWithUrl:` | SpreedlyUI | Forward return URL from PayPal/Venmo so SDK can complete the flow. |
+| 3 | `BraintreeCheckoutConfig(transactionToken:paymentType:merchantDisplayName:clientToken:amount:currencyCode:)` | SpreedlyCore | Build config for checkout (`merchantDisplayName` can be `""`). |
+| 4 | `SpreedlyBraintreeCheckout.present(config:)` / `presentWithConfig:` | SpreedlyUI | Present PayPal or Venmo flow (SDK finds topmost VC). |
+| 5 | `Spreedly.shared().subscribeToPaymentResults { }` (Swift) or `SpreedlyPaymentDelegate.paymentDidComplete:` (UIKit/ObjC) | SpreedlyCore | Receive `PaymentResult` with nonce and optional deviceData. |
+| 6 | Backend: POST confirm with nonce (+ device_data) | Merchant backend | Complete the transaction. |
 
 ### Flow (Steps Referenced in Examples)
 
@@ -4350,9 +4356,7 @@ struct BraintreePaymentView: View {
             if let error = errorMessage { Text(error).foregroundColor(.red) }
         }
         .onAppear {
-            // Step 1: Configure Braintree URL handler so SDK can handle return URLs.
-            BraintreeURLHandler.configure()
-            // Step 2: Subscribe to payment result before presenting checkout.
+            // Step 1: Subscribe to payment result before presenting checkout.
             paymentResultCancellable?.cancel()
             paymentResultCancellable = Spreedly.shared().paymentResultPublisher
                 .receive(on: DispatchQueue.main)
@@ -4428,9 +4432,7 @@ class BraintreePaymentViewController: UIViewController, SpreedlyPaymentDelegate 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Step 1: Configure Braintree URL handler.
-        BraintreeURLHandler.configure()
-        // Step 2: Set delegate so paymentDidComplete is called.
+        // Step 1: Set delegate so paymentDidComplete is called.
         Spreedly.shared().paymentDelegate = self
     }
 
@@ -6643,6 +6645,7 @@ This section provides a quick reference of all merchant-facing classes. For comp
 |-------|---------|----------|
 | `RecacheConfig` | CVV recaching configuration | `SpreedlyUI/Components/Recaching/Models/RecacheConfig.swift` |
 | `SavedCardInfo` | Card information for recaching | `SpreedlyUI/Components/Recaching/Models/RecacheConfig.swift` |
+| `StripeAPMConfig` | Stripe APM checkout config (publishable key, client secret, transaction token, merchant display name, return URL) | `SpreedlyCore/Core/StripeAPM/StripeAPMConfig.swift` |
 | `FormField` | Additional field configuration | `SpreedlyCore/Core/Constants/FormFieldType.swift` |
 
 ### Enums
@@ -6654,6 +6657,7 @@ This section provides a quick reference of all merchant-facing classes. For comp
 | `DropInNameDisplayMode` | Name field display mode | `SpreedlyUI/Constants/DropInNameDisplayMode.swift` |
 | `ScreenPresentationMode` | CVV recaching presentation mode | `SpreedlyUI/Components/Recaching/Models/RecacheConfig.swift` |
 | `SpreedlySubmitLabel` | Submit button label options | `SpreedlyCore/Core/Constants/FormFieldType.swift` |
+| `StripeAPMType` | Stripe APM type identifiers (ideal, bancontact, eps, p24, sepa_debit) for `apm_types`; use `apmTypeValue` (Swift) or `StripeAPMTypeHelper.apmTypeValueForType:` (Objective-C) | `SpreedlyCore/Core/StripeAPM/StripeAPMType.swift` |
 
 ### Important Notes
 

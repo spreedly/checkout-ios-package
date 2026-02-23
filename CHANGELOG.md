@@ -1,3 +1,38 @@
+## [1.0.26] - 2026-02-23
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- Refactor Braintree Documentation and Fix Discrepancies (#188)
+- Enhance Stripe APM Integration and Documentation (#187)
+- Revert "Update project configuration, enhance CI scripts, and add unit tests …" (#186)
+- Update project configuration, enhance CI scripts, and add unit tests for payment flows (#185)
+
+### Change Requests
+  - No Jira tickets found in commit messages
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.0.26 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.0.26")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 1.0.26'
+```
+
+---
+
 ## [1.0.25] - 2026-02-22
 
 ### Release Type
