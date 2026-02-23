@@ -943,6 +943,27 @@ SWIFT_CLASS("_TtC12SpreedlyCore15StripeAPMConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Supported Stripe APM type identifiers to pass in the <code>apm_types</code> array
+/// when creating a pending purchase (e.g. <code>POST /gateways/{token}/purchase.json</code>).
+/// The backend and Stripe PaymentSheet will show only the APMs you specify.
+/// <em>Swift:</em> Use <code>apmTypeValue</code> to get the API string (e.g. <code>StripeAPMType.eps.apmTypeValue</code> → <code>"eps"</code>).
+/// <em>Objective-C:</em> Use <code>StripeAPMTypeHelper.apmTypeValue(for:)</code> to get the string for a given enum value.
+typedef SWIFT_ENUM(NSInteger, StripeAPMType, open) {
+  StripeAPMTypeIdeal = 0,
+  StripeAPMTypeBancontact = 1,
+  StripeAPMTypeEps = 2,
+  StripeAPMTypeP24 = 3,
+  StripeAPMTypeSepaDebit = 4,
+};
+
+/// Objective-C bridge: returns the API string for a given <code>StripeAPMType</code>.
+/// Use when building the <code>apm_types</code> array from Objective-C (e.g. <code>[StripeAPMTypeHelper apmTypeValueForType:StripeAPMTypeEps]</code>).
+SWIFT_CLASS("_TtC12SpreedlyCore19StripeAPMTypeHelper")
+@interface StripeAPMTypeHelper : NSObject
++ (NSString * _Nonnull)apmTypeValueForType:(enum StripeAPMType)type SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Represents the various states and outcomes of a 3DS challenge process.
 /// This class works seamlessly with both Swift and Objective-C, providing
 /// a unified API for 3DS challenge result handling, consistent with PaymentResult.
@@ -1938,6 +1959,27 @@ SWIFT_CLASS("_TtC12SpreedlyCore15StripeAPMConfig")
 - (nonnull instancetype)initWithPublishableKey:(NSString * _Nonnull)publishableKey clientSecret:(NSString * _Nonnull)clientSecret transactionToken:(NSString * _Nonnull)transactionToken merchantDisplayName:(NSString * _Nonnull)merchantDisplayName returnURL:(NSString * _Nullable)returnURL OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Supported Stripe APM type identifiers to pass in the <code>apm_types</code> array
+/// when creating a pending purchase (e.g. <code>POST /gateways/{token}/purchase.json</code>).
+/// The backend and Stripe PaymentSheet will show only the APMs you specify.
+/// <em>Swift:</em> Use <code>apmTypeValue</code> to get the API string (e.g. <code>StripeAPMType.eps.apmTypeValue</code> → <code>"eps"</code>).
+/// <em>Objective-C:</em> Use <code>StripeAPMTypeHelper.apmTypeValue(for:)</code> to get the string for a given enum value.
+typedef SWIFT_ENUM(NSInteger, StripeAPMType, open) {
+  StripeAPMTypeIdeal = 0,
+  StripeAPMTypeBancontact = 1,
+  StripeAPMTypeEps = 2,
+  StripeAPMTypeP24 = 3,
+  StripeAPMTypeSepaDebit = 4,
+};
+
+/// Objective-C bridge: returns the API string for a given <code>StripeAPMType</code>.
+/// Use when building the <code>apm_types</code> array from Objective-C (e.g. <code>[StripeAPMTypeHelper apmTypeValueForType:StripeAPMTypeEps]</code>).
+SWIFT_CLASS("_TtC12SpreedlyCore19StripeAPMTypeHelper")
+@interface StripeAPMTypeHelper : NSObject
++ (NSString * _Nonnull)apmTypeValueForType:(enum StripeAPMType)type SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 /// Represents the various states and outcomes of a 3DS challenge process.
