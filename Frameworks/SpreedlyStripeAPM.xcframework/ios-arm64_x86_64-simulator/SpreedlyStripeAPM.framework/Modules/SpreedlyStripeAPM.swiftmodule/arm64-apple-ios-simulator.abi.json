@@ -1,0 +1,304 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "SpreedlyStripeAPM",
+    "printedName": "SpreedlyStripeAPM",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "StripePaymentSheet",
+        "printedName": "StripePaymentSheet",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM"
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SpreedlyStripeAPMCheckout",
+        "printedName": "SpreedlyStripeAPMCheckout",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "handleStripeReturnURL",
+            "printedName": "handleStripeReturnURL(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@SpreedlyStripeAPM@objc(cs)SpreedlyStripeAPMCheckout(cm)handleStripeReturnURL:",
+            "mangledName": "$s17SpreedlyStripeAPM0aB11APMCheckoutC06handleB9ReturnURLySb10Foundation0G0VFZ",
+            "moduleName": "SpreedlyStripeAPM",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "present",
+            "printedName": "present(config:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "StripeAPMConfig",
+                "printedName": "SpreedlyCore.StripeAPMConfig",
+                "usr": "c:@M@SpreedlyCore@objc(cs)StripeAPMConfig"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@SpreedlyStripeAPM@objc(cs)SpreedlyStripeAPMCheckout(cm)presentWithConfig:",
+            "mangledName": "$s17SpreedlyStripeAPM0aB11APMCheckoutC7present6configy0A4Core0B9APMConfigC_tFZ",
+            "moduleName": "SpreedlyStripeAPM",
+            "static": true,
+            "objc_name": "presentWithConfig:",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "present",
+            "printedName": "present(config:from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "StripeAPMConfig",
+                "printedName": "SpreedlyCore.StripeAPMConfig",
+                "usr": "c:@M@SpreedlyCore@objc(cs)StripeAPMConfig"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@SpreedlyStripeAPM@objc(cs)SpreedlyStripeAPMCheckout(cm)presentWithConfig:from:",
+            "mangledName": "$s17SpreedlyStripeAPM0aB11APMCheckoutC7present6config4fromy0A4Core0B9APMConfigC_So16UIViewControllerCtFZ",
+            "moduleName": "SpreedlyStripeAPM",
+            "static": true,
+            "objc_name": "presentWithConfig:from:",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SpreedlyStripeAPMCheckout",
+                "printedName": "SpreedlyStripeAPM.SpreedlyStripeAPMCheckout",
+                "usr": "c:@M@SpreedlyStripeAPM@objc(cs)SpreedlyStripeAPMCheckout"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@SpreedlyStripeAPM@objc(cs)SpreedlyStripeAPMCheckout(im)init",
+            "mangledName": "$s17SpreedlyStripeAPM0aB11APMCheckoutCACycfc",
+            "moduleName": "SpreedlyStripeAPM",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@SpreedlyStripeAPM@objc(cs)SpreedlyStripeAPMCheckout",
+        "mangledName": "$s17SpreedlyStripeAPM0aB11APMCheckoutC",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "StripePaymentSheet",
+        "printedName": "StripePaymentSheet",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM"
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
+      "kind": "IntegerLiteral",
+      "offset": 543,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
+      "kind": "FloatLiteral",
+      "offset": 595,
+      "length": 3,
+      "value": "2.0"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
+      "kind": "BooleanLiteral",
+      "offset": 750,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/StripeAPMSetupHelper.swift",
+      "kind": "StringLiteral",
+      "offset": 255,
+      "length": 27,
+      "value": "\"https:\/\/core.spreedly.com\""
+    }
+  ]
+}
