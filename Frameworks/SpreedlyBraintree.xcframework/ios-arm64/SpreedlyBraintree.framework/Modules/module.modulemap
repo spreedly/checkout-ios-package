@@ -1,0 +1,4 @@
+framework module SpreedlyBraintree {
+  header "SpreedlyBraintree-Swift.h"
+  requires objc
+}

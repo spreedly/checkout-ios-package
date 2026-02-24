@@ -1,0 +1,4 @@
+framework module SpreedlyStripeAPM {
+  header "SpreedlyStripeAPM-Swift.h"
+  requires objc
+}

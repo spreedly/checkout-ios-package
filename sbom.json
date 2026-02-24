@@ -3,7 +3,7 @@
   "specVersion": "1.5",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-23T06:47:28Z",
+    "timestamp": "2026-02-24T07:30:27Z",
     "tools": [
       {
         "vendor": "GitHub Actions",
@@ -14,16 +14,16 @@
     "component": {
       "type": "application",
       "name": "Spreedly iOS SDK",
-      "version": "1.0.26",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk@v1.0.26",
+      "version": "1.0.27",
+      "purl": "pkg:github/spreedly/checkout-ios-sdk@v1.0.27",
       "properties": [
         {
           "name": "build:tag",
-          "value": "v1.0.26"
+          "value": "v1.0.27"
         },
         {
           "name": "build:commit",
-          "value": "3491463c8245f2bca4027ad1d218f47fd2540f88"
+          "value": "d27384f91768e524480eba7633dd6d08bc73fe88"
         },
         {
           "name": "build:repository",
@@ -35,7 +35,7 @@
         },
         {
           "name": "build:run_id",
-          "value": "22295743457"
+          "value": "22340971798"
         }
       ]
     }
@@ -44,8 +44,8 @@
     {
       "type": "library",
       "name": "SpreedlyCore",
-      "version": "1.0.26",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.0.26",
+      "version": "1.0.27",
+      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.0.27",
       "scope": "required",
       "properties": [
         {
@@ -61,8 +61,8 @@
     {
       "type": "library",
       "name": "SpreedlySecurity",
-      "version": "1.0.26",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.0.26",
+      "version": "1.0.27",
+      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.0.27",
       "scope": "required",
       "properties": [
         {
@@ -78,9 +78,43 @@
     {
       "type": "library",
       "name": "SpreedlyUI",
-      "version": "1.0.26",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.0.26",
+      "version": "1.0.27",
+      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.0.27",
       "scope": "required",
+      "properties": [
+        {
+          "name": "framework:type",
+          "value": "binary"
+        },
+        {
+          "name": "framework:platform",
+          "value": "iOS"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "SpreedlyStripeAPM",
+      "version": "1.0.27",
+      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyStripeAPM@v1.0.27",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "framework:type",
+          "value": "binary"
+        },
+        {
+          "name": "framework:platform",
+          "value": "iOS"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "SpreedlyBraintree",
+      "version": "1.0.27",
+      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyBraintree@v1.0.27",
+      "scope": "optional",
       "properties": [
         {
           "name": "framework:type",
@@ -108,15 +142,23 @@
   ],
   "dependencies": [
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.0.26",
+      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.0.27",
       "dependsOn": []
     },
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.0.26",
+      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.0.27",
       "dependsOn": []
     },
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.0.26",
+      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.0.27",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyStripeAPM@v1.0.27",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyBraintree@v1.0.27",
       "dependsOn": []
     }
   ]
