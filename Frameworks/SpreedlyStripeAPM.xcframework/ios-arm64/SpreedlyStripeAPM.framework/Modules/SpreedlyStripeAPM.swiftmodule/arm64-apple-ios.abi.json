@@ -6,6 +6,16 @@
     "children": [
       {
         "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
         "name": "StripePaymentSheet",
         "printedName": "StripePaymentSheet",
         "declKind": "Import",
@@ -21,16 +31,6 @@
         "printedName": "SpreedlyCore",
         "declKind": "Import",
         "moduleName": "SpreedlyStripeAPM"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "SpreedlyStripeAPM",
-        "declAttributes": [
-          "RawDocComment"
-        ]
       },
       {
         "kind": "Import",
