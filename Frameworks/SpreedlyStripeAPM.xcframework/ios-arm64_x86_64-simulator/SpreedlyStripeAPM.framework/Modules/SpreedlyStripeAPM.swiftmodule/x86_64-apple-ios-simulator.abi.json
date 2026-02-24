@@ -17,6 +17,24 @@
       },
       {
         "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM"
+      },
+      {
+        "kind": "Import",
+        "name": "StripePaymentSheet",
+        "printedName": "StripePaymentSheet",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
         "declKind": "Import",
@@ -249,29 +267,18 @@
         "declAttributes": [
           "RawDocComment"
         ]
-      },
-      {
-        "kind": "Import",
-        "name": "StripePaymentSheet",
-        "printedName": "StripePaymentSheet",
-        "declKind": "Import",
-        "moduleName": "SpreedlyStripeAPM",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlyCore",
-        "printedName": "SpreedlyCore",
-        "declKind": "Import",
-        "moduleName": "SpreedlyStripeAPM"
       }
     ],
     "json_format_version": 8
   },
   "ConstValues": [
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/StripeAPMSetupHelper.swift",
+      "kind": "StringLiteral",
+      "offset": 255,
+      "length": 27,
+      "value": "\"https:\/\/core.spreedly.com\""
+    },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
       "kind": "IntegerLiteral",
@@ -292,13 +299,6 @@
       "offset": 750,
       "length": 5,
       "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/StripeAPMSetupHelper.swift",
-      "kind": "StringLiteral",
-      "offset": 255,
-      "length": 27,
-      "value": "\"https:\/\/core.spreedly.com\""
     }
   ]
 }

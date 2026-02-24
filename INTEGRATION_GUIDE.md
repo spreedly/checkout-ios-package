@@ -110,22 +110,36 @@ targets: [
             .product(name: "SpreedlyCore", package: "SpreedlySDK"),
             .product(name: "SpreedlySecurity", package: "SpreedlySDK"),
             .product(name: "SpreedlyUI", package: "SpreedlySDK")
+            // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
+            // .product(name: "SpreedlyStripeAPM", package: "SpreedlySDK"),
+            // .product(name: "SpreedlyBraintree", package: "SpreedlySDK")
         ]
     )
 ]
 ```
 
-#### Forter3DS Dependency (CocoaPods)
+**Optional modules:** Add `SpreedlyStripeAPM` and/or `SpreedlyBraintree` when you use those flows. Each module's section below states any **additional app dependencies** (e.g. third-party SDKs) required for that module.
 
-**Important:** If you plan to use 3DS (Three-Domain Secure) authentication, you **must** add the Forter3DS package as a direct dependency to your app target. This is required because `SpreedlyCore` dynamically links to Forter3DS but doesn't declare it as a transitive dependency.
+#### Stripe and Braintree (optional, via SPM)
 
-**Why is this needed?**
+When you use **Stripe APM** or **Braintree** (PayPal/Venmo), you must also add their SDKs to your app target. In the same Xcode project:
 
-- `SpreedlyCore` uses Forter3DS for 3DS authentication flows
-- Forter3DS is dynamically linked (not statically compiled into SpreedlyCore)
-- Dynamic frameworks must be embedded in the app bundle at runtime
-- Swift Package Manager doesn't automatically embed transitive dynamic dependencies
-- Without this dependency, your app will crash on real devices with: `dyld: Library not loaded: @rpath/Forter3DS.framework/Forter3DS`
+**Stripe (required for Stripe APM):**
+1. File → Add Package Dependencies...
+2. URL: `https://github.com/stripe/stripe-ios-spm`
+3. Add the **StripePaymentSheet** product to your app target with **Embed & Sign**.
+
+**Braintree (required for PayPal/Venmo):**
+1. File → Add Package Dependencies...
+2. URL: `https://github.com/braintree/braintree_ios.git`
+3. Version **7.0.0** or later.
+4. Add **BraintreeCore**, **BraintreePayPal**, **BraintreeVenmo**, and **BraintreeDataCollector** to your app target with **Embed & Sign**.
+
+Full details: [Stripe APM Integration](#stripe-apm-alternative-payment-methods-integration), [Braintree (PayPal / Venmo) Integration](#braintree-paypal--venmo-integration).
+
+#### Forter3DS Dependency
+
+**Required for 3DS Global.** You must add the Forter3DS package as a direct dependency to your app target. See [3DS Authentication](#3ds-authentication). Without it, the app will crash when 3DS is required (`dyld: Library not loaded: Forter3DS`).
 
 **How to add Forter3DS via Swift Package Manager:**
 
@@ -173,24 +187,28 @@ targets: [
 target 'YourApp' do
   use_frameworks!
 
-  # All modules
+  # Spreedly SDK
   pod 'Spreedly', '~> 1.0'
+  # Or specific modules: pod 'Spreedly/Core', '~> 1.0', etc.
 
-  # Or specific modules
-  # pod 'Spreedly/Core', '~> 1.0'
-  # pod 'Spreedly/Security', '~> 1.0'
-  # pod 'Spreedly/UI', '~> 1.0'
-  
-  # ⚠️ Required for 3DS Authentication
-  # If you plan to use 3DS authentication, add Forter3DS:
-  # Reference: https://docs.forter.com/3ds-ios-sdk
+  # ⚠️ Required for 3DS Global
   pod 'forter3ds', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git'
+
+  # Optional: required when using Stripe APM (iDEAL, Bancontact, etc.)
+  pod 'StripePaymentSheet'
+
+  # Optional: required when using Braintree (PayPal / Venmo)
+  pod 'Braintree'
+  # Or subspecs: Braintree/Core, Braintree/PayPal, Braintree/Venmo, Braintree/DataCollector
 end
 ```
 
+- **Stripe:** Add `pod 'StripePaymentSheet'` only if you use [Stripe APM](#stripe-apm-alternative-payment-methods-integration).
+- **Braintree:** Add `pod 'Braintree'` only if you use [Braintree (PayPal / Venmo)](#braintree-paypal--venmo-integration).
+
 #### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
 
-For the rationale and troubleshooting details, see the Forter3DS dependency note above. The same requirement applies to CocoaPods.
+Same requirement as above: add Forter3DS to your app target when using 3DS Global. See [3DS Authentication](#3ds-authentication).
 
 **Technical Details:**
 
@@ -2534,7 +2552,7 @@ Remember to cancel payment result subscriptions to prevent memory leaks:
 ### Important
 
 - **Setup required:** Complete the two‑step SDK setup before any 3DS calls (see [Basic Setup](#basic-setup)).
-- **Forter3DS dependency:** Required for **3DS Global** and must be added directly to the app target.
+- **Forter3DS dependency:** Required for **3DS Global**; must be added directly to the app target. To add it, see [Installation > Forter3DS Dependency](#forter3ds-dependency).
 - **Subscription order:** Subscribe to 3DS results (and gateway‑specific trigger) **before** presenting the challenge UI.
 - **Gateway-specific trigger:** Emitted after device fingerprint polling timeout or when the gateway posts a completion message.
 - **Result source:** `ThreeDSChallengeResult` reflects the **status API** response, not only the Forter callback.
@@ -3808,6 +3826,8 @@ Example reference: `EbanxPaymentFlowView` (SwiftUI) in the example app.
 
 Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact, EPS, P24, SEPA Debit) using Stripe's native PaymentSheet. Unlike EBANX and other offsite flows, Stripe APM does **not** require a separate payment method tokenization step — the merchant backend creates a pending purchase directly, and the Stripe PaymentSheet handles APM selection and payment confirmation natively.
 
+**Required for Stripe integration:** You **must** add the **Stripe iOS SDK** (`StripePaymentSheet`) to your **app target** when using Stripe APM. Add it via Swift Package Manager ([stripe-ios-spm](https://github.com/stripe/stripe-ios-spm)) or CocoaPods (see [Dependency Setup](#dependency-setup) below). Without it, presenting the PaymentSheet will crash with: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The Spreedly SDK does not embed Stripe's resource bundle; the app must depend on Stripe so the bundle is included.
+
 ### Prerequisites
 
 1. **Stripe account** with APM payment methods enabled in the Stripe dashboard
@@ -4210,7 +4230,6 @@ typedef NS_ENUM(NSInteger, StripeAPMStage) {
 - **SDK finds topmost VC:** Call `SpreedlyStripeAPMCheckout.present(config:)` with only the config. The SDK finds the topmost view controller (same approach as `SpreedlyOffsiteCheckout.present(transactionToken:)`), so you do not need to pass a presenter or implement a top-VC helper—works when a sheet or alert is already presented.
 - **URL handling:** Use `handleOffsiteReturn(url:)` in `onOpenURL` (SwiftUI) or in `SceneDelegate` (UIKit/Objective-C). The SDK forwards Stripe redirect URLs internally; no Stripe-specific code is required in the app.
 - **Delayed payment methods:** The SDK sets `allowsDelayedPaymentMethods = true` on the PaymentSheet. Currency (e.g., EUR for iDEAL) in the pending purchase determines which APMs are shown.
-- **Weak linking:** The `StripePaymentSheet` framework is weakly linked; add it to your app target only when using Stripe APM.
 
 Example references: `StripeAPMPaymentFlowView` (SwiftUI) and `StripeAPMPaymentFlowViewController` (Objective-C) in the example app.
 
