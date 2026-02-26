@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
   s.swift_version    = '5.10'
 
   s.dependency 'SpreedlyCore'
-  s.dependency 'BraintreeCore', '~> 7.0'
-  s.dependency 'BraintreePayPal', '~> 7.0'
-  s.dependency 'BraintreeVenmo', '~> 7.0'
-  s.dependency 'BraintreeDataCollector', '~> 7.0'
+  s.dependency 'Braintree/Core', '~> 7.0'
+  s.dependency 'Braintree/PayPal', '~> 7.0'
+  s.dependency 'Braintree/Venmo', '~> 7.0'
+  s.dependency 'Braintree/DataCollector', '~> 7.0'
 
   s.vendored_frameworks = 'Frameworks/SpreedlyBraintree.xcframework'
 end
