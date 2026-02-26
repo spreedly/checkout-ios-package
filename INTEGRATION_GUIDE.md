@@ -118,25 +118,60 @@ targets: [
 ]
 ```
 
-#### Optional Gateway Modules
+**Optional modules:** Add `SpreedlyStripeAPM` and/or `SpreedlyBraintree` when you use those flows. Each module's section below states any **additional app dependencies** (e.g. third-party SDKs) required for that module.
 
-Add only the gateway products you use. Each optional module has a corresponding third-party SDK dependency:
+#### Stripe and Braintree (optional, via SPM)
 
-| Product | Use case | Also add (SPM / CocoaPods) |
-|---------|----------|----------------------------|
-| **SpreedlyStripeAPM** | Stripe APM (iDEAL, Bancontact, etc.) | `StripePaymentSheet` from [stripe-ios-spm](https://github.com/stripe/stripe-ios-spm) |
-| **SpreedlyBraintree** | PayPal / Venmo via Braintree | BraintreeCore, BraintreePayPal, BraintreeVenmo from [braintree_ios](https://github.com/braintree/braintree_ios) |
+When you use **Stripe APM** or **Braintree** (PayPal/Venmo), you must also add their SDKs to your app target. In the same Xcode project:
 
-Each module's section states the exact app dependencies required; see [Stripe APM Integration](#stripe-apm-alternative-payment-methods-integration), [Braintree](#braintree-paypal--venmo-integration).
+**Stripe (required for Stripe APM):**
+1. File → Add Package Dependencies...
+2. URL: `https://github.com/stripe/stripe-ios-spm`
+3. Add the **StripePaymentSheet** product to your app target with **Embed & Sign**.
 
-**Stripe and Braintree (SPM)** — add to your app target when using those flows:
+**Braintree (required for PayPal/Venmo):**
+1. File → Add Package Dependencies...
+2. URL: `https://github.com/braintree/braintree_ios.git`
+3. Version **7.0.0** or later.
+4. Add **BraintreeCore**, **BraintreePayPal**, **BraintreeVenmo**, and **BraintreeDataCollector** to your app target with **Embed & Sign**.
 
-| SDK     | Package URL | Product(s) |
-|---------|-------------|------------|
-| **Stripe** | `https://github.com/stripe/stripe-ios-spm` | StripePaymentSheet |
-| **Braintree** | `https://github.com/braintree/braintree_ios.git` (7.0.0+) | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector |
+Full details: [Stripe APM Integration](#stripe-apm-alternative-payment-methods-integration), [Braintree (PayPal / Venmo) Integration](#braintree-paypal--venmo-integration).
 
-In Xcode: **File → Add Package Dependencies** → add the package → add the product(s) to your app target with **Embed & Sign**.
+#### Forter3DS Dependency
+
+**Required for 3DS Global.** You must add the Forter3DS package as a direct dependency to your app target. See [3DS Authentication](#3ds-authentication). Without it, the app will crash when 3DS is required (`dyld: Library not loaded: Forter3DS`).
+
+**How to add Forter3DS via Swift Package Manager:**
+
+Reference: [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk)
+
+1. **In Xcode:**
+   - File → Swift Packages → Add Package Dependency
+   - Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
+   - Set the dependency rule to "Up to Next Major Version"
+   - On the "Choose Package" screen, verify that `Forter3DS` is selected and press "Add Package"
+   - Add `Forter3DS` product to your app target
+   - Ensure it's set to "Embed & Sign" in your target's "Frameworks, Libraries, and Embedded Content"
+
+2. **In Package.swift:**
+dependencies: [
+    .package(url: "https://github.com/spreedly/checkout-ios-sdk.git", from: "1.0.0"),
+    .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "SpreedlyCore", package: "SpreedlySDK"),
+            .product(name: "SpreedlySecurity", package: "SpreedlySDK"),
+            .product(name: "SpreedlyUI", package: "SpreedlySDK"),
+            .product(name: "Forter3DS", package: "forter-ios")  // Required for 3DS
+        ]
+    )
+]
+```
+
+**Note:** If you're not using 3DS authentication, you can skip adding Forter3DS. The SDK will gracefully handle the absence of Forter3DS and show an appropriate message if 3DS is required.
 
 ### Option 2: Manual Framework Integration
 
@@ -168,14 +203,30 @@ target 'YourApp' do
 end
 ```
 
-**Stripe and Braintree** (when using [Stripe APM](#stripe-apm-alternative-payment-methods-integration) or [Braintree](#braintree-paypal--venmo-integration)) — add via **SPM**, not CocoaPods. Use the same table and steps as in [Option 1](#option-1-swift-package-manager-recommended):
+- **Stripe:** Add `pod 'StripePaymentSheet'` only if you use [Stripe APM](#stripe-apm-alternative-payment-methods-integration).
+- **Braintree:** Add `pod 'Braintree'` only if you use [Braintree (PayPal / Venmo)](#braintree-paypal--venmo-integration).
 
-| SDK     | Package URL | Product(s) |
-|---------|-------------|------------|
-| **Stripe** | `https://github.com/stripe/stripe-ios-spm` | StripePaymentSheet |
-| **Braintree** | `https://github.com/braintree/braintree_ios.git` (7.0.0+) | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector |
+#### ⚠️ Required: Add Forter3DS Dependency (For 3DS Authentication)
 
-**File → Add Package Dependencies** → add package → add product(s) to app target with **Embed & Sign**.
+Same requirement as above: add Forter3DS to your app target when using 3DS Global. See [3DS Authentication](#3ds-authentication).
+
+**Technical Details:**
+
+The Forter3DS package uses pre-compiled `.xcframework` binaries with dynamic linking by default. Because these are pre-compiled binaries, the linking type cannot be changed to static linking. The package structure includes:
+- `.binaryTarget` with pre-compiled `.xcframework` files
+- `.library` products that default to dynamic linking (not static)
+- Multiple binary targets: `Forter3DS`, `ThreeDS_SDK`, and `FTR3DSCommon`
+
+Since static linking is not possible with pre-compiled binaries, the framework must be added as a direct dependency to ensure it's embedded in your app bundle.
+
+**Forter3DS SDK Dependencies:**
+
+The Forter3DS SDK includes the following external libraries (already embedded in the SDK):
+- **ASN1Decoder**: Certificate parsing in ASN1 structure
+- **SwCrypt**: Crypto library for JWS validation (used only in iOS 10 devices)
+- **GMEllipticCurveCrypto**: Security framework used for elliptic curve keys crypto library
+
+For more details, see the [Forter 3DS iOS SDK Documentation](https://docs.forter.com/3ds-ios-sdk).
 
 ## Basic Setup
 
