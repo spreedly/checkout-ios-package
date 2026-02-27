@@ -3835,6 +3835,7 @@ Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact, EP
 3. **Stripe publishable key** (from the Stripe dashboard, starts with `pk_test_` or `pk_live_`)
 4. **Stripe webhook** configured to send all Payment Intent events to Spreedly (required for delayed payment methods)
 5. **StripePaymentSheet** iOS SDK added to your app target (see Dependency Setup below)
+6. **Info.plist:** Set **Bundle display name** (`CFBundleDisplayName`) in your app's `Info.plist`. The Stripe SDK requires it to be non-nil; otherwise you may see: *"CFBundleDisplayName must be non-nil. Please set 'Bundle display name' in your Info.plist."* Add a key `CFBundleDisplayName` with a string value (e.g. `Spreedly Example` or your app name).
 
 ### Dependency Setup
 
@@ -4236,6 +4237,8 @@ Example references: `StripeAPMPaymentFlowView` (SwiftUI) and `StripeAPMPaymentFl
 ## Braintree (PayPal / Venmo) Integration
 
 Braintree lets users pay with **PayPal** or **Venmo** via the native Braintree SDK. There is no payment method tokenization step — your backend creates a purchase on the Braintree gateway; the SDK presents the PayPal/Venmo flow and returns a nonce; your backend then calls Spreedly's confirm API to complete the transaction.
+
+**Info.plist (Stripe / Venmo):** Set **Bundle display name** (`CFBundleDisplayName`) in your app's `Info.plist`. Some flows (including when using Venmo or Stripe) require it to be non-nil; otherwise you may see: *"CFBundleDisplayName must be non-nil. Please set 'Bundle display name' in your Info.plist."* Add a key `CFBundleDisplayName` with a string value (e.g. your app name).
 
 ### Braintree Version and Required Libraries
 

@@ -14,11 +14,11 @@
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		VbuZrGryie2GSboHU6bqjRPcR1Q=
+		CAUkkdDINVa+SCSpRI8UjDqVZpc=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		BNve77jBvvDUd3x+4mWpfLY8hdo=
+		6uGOYpAmOyMLeQexEPj90Q684Os=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -26,16 +26,25 @@
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		BNve77jBvvDUd3x+4mWpfLY8hdo=
+		6uGOYpAmOyMLeQexEPj90Q684Os=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		wo+YW2EBoJlG0S+Tc5iYsZ079VA=
+		g8YPFVon1R5mVMccyGb7C2UOLwg=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		UuxjHjnvcJGqcuDbIWv+LBeGlsk=
 		</data>
+		<key>en.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			SMUktZbeJof3R0MHhvGuAhqdNHU=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -50,14 +59,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/Jv2byDYDBf3oMANypGT7PkG85g2BDOeMHlGNm8rrt4=
+			eJCQp1cIz5pmC7cHtjItdvie5n/zC9gwXNViIEd198E=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DA62JNZAN7HfFB8NgdDpYWEMzeeZv+c1ZXOB4WRsapM=
+			bpVF+OY/oZJ6U7Wqb1hOxZKa9OQ5xGdugflrYhngiw8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -71,14 +80,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DA62JNZAN7HfFB8NgdDpYWEMzeeZv+c1ZXOB4WRsapM=
+			bpVF+OY/oZJ6U7Wqb1hOxZKa9OQ5xGdugflrYhngiw8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			AxJ0wwgHl7EX/Rzbr0BkI2rOkhVB1KFILxIKkObrkHs=
+			fvrUiSA99g4p0A6eOPc2pdnYorTj75lV/cCTaRnhfOk=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -87,6 +96,15 @@
 			<data>
 			Pecg18ixWoyO9MgMVJuU6jFd9YXiy/D1YhYPMollIGA=
 			</data>
+		</dict>
+		<key>en.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JIR0tOqZfHQIjIzCwSX5AhvImHrss0Yc5JUFP525Wv8=
+			</data>
+			<key>optional</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>rules</key>
