@@ -14,23 +14,23 @@
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		sGwFWfLRCiUYGnLX4OhlHQwgU78=
+		AKB/vATGLYerG0v9CUoG6WB0DHc=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		tY/JhAQlzDj5wx4e9o2id4KxlKU=
+		sgGi8U60cvDksevWg8rPiF5rWMw=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		WRiuDtSU+eFvwCBgEylkRBnlhvM=
+		WmgcUdhkvIfeioAJem5NJH1xutY=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		tY/JhAQlzDj5wx4e9o2id4KxlKU=
+		sgGi8U60cvDksevWg8rPiF5rWMw=
 		</data>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		n1YaEZR+6mziAPEfveIix8dx6Es=
+		1dmaaPlCeiJHI4KUqBUu6z1+YAs=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -40,7 +40,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zBduIcG3avzS0Gw83JeE3wp8iJI=
+			PctKB6ipxtj1M3VL3texYC4YBIo=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -59,35 +59,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			mdUJI5X7VuJihm6lLYJWo3X+utD+tGkP35oyPz2pZug=
+			eSTM13yfI3VED18PH7feOwpr+e7d1vRCPvu1Y7XiCg8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/h0YzagNejN42KE97JBv9JvhMQSziWTBtav9Zl141sw=
+			C118qUVvsL+cCKRRLPbNP2oDcPf7uNd3R5wpVmKzuuo=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			67j1dHH/yYEGU5bEFAu6Km/BzMx76IxnWc5MxbCHZnM=
+			lvbLTpRD9XtIEUmJ1ulgr9Xo5OVpcTgd/jou8TFnfK8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/h0YzagNejN42KE97JBv9JvhMQSziWTBtav9Zl141sw=
+			C118qUVvsL+cCKRRLPbNP2oDcPf7uNd3R5wpVmKzuuo=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyUI.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IJmQRJmgdEEgJ2WOfmsYQkYVDS/UfQTaBpHDaRk57Bs=
+			WJp1YQENSNl2ZkeVRj6pJyaMjJWb5+ajP9dptjncUMw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -101,7 +101,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			yyh1IB5BCgBKmSt7N0iy1k9TSHutkCx5ZQC8XYVK0HU=
+			dTlrhodTL31TQBcdwexwmAoesWpIOKmH8CEv+HDMmcg=
 			</data>
 			<key>optional</key>
 			<true/>
