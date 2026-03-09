@@ -1,25 +1,18 @@
-## [1.1.0] - 2026-03-09
+## [1.1.1] - 2026-03-09
 
 ### Release Type
-**Minor Version** (New features - backward compatible)
+**Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1223 fix Build Validation failures in test-and-lint CI workflow (#203)
-- HC-1193: Add comprehensive documentation, expand test coverage, and cleanup SDK structure (#202)
-- HC-1209: iOS optimize ci/cd time (#201)
-- HC-1216 Migrate gateway-specific 3DS challenge from WKWebView to SFSafariViewController (#200)
-- HC-1209: Optimize CI Workflows for CodeQL and Testing (#199)
+- HC-1223 update version references and documentation for 1.1.0 release (#205)
 
 ### Change Requests
-  - HC-1193
-  - HC-1209
-  - HC-1216
   - HC-1223
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.1.0 - Minor Version)
+- **Version History**: Semantic versioning maintained (1.1.1 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -27,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.0")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.1")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.1.0'
+pod 'Spreedly', '~> 1.1.1'
 ```
 
 ---
