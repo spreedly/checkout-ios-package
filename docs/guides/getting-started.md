@@ -116,6 +116,23 @@ end
 
 Then run `pod install`.
 
+**Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead of version specifiers:
+
+```ruby
+target 'YourApp' do
+  use_frameworks!
+
+  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  # Add these only if needed:
+  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+end
+```
+
+Replace `{GitToken}` with your GitHub personal access token that has read access to the repository. Then run `pod install`.
+
 ### Option 3: Manual Framework Integration
 
 1. Download frameworks from GitHub releases

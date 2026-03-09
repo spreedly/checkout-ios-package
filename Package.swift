@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "checkout-ios-package",
+    platforms: [
+        .iOS(.v14)
+    ],
     products: [
         // Core modules (always needed)
         .library(name: "SpreedlyCore", targets: ["SpreedlyCore"]),
