@@ -1,0 +1,537 @@
+# Getting Started - Spreedly iOS SDK
+
+Set up the Spreedly iOS SDK in your project in under 15 minutes.
+
+**Estimated integration time:** ~15 minutes
+
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Required Credentials](#required-credentials)
+3. [Installation](#installation)
+4. [Optional Dependencies](#optional-dependencies)
+5. [Required Info.plist Entries](#required-infoplist-entries)
+6. [Required App Setup](#required-app-setup)
+7. [Basic Setup](#basic-setup)
+8. [Module Dependency Table](#module-dependency-table)
+9. [Testing and Sandbox](#testing-and-sandbox)
+10. [Choosing Your Integration Path](#choosing-your-integration-path)
+11. [Conditional Imports for Optional Modules](#conditional-imports-for-optional-modules)
+12. [Next Steps](#next-steps)
+13. [Related Documentation](#related-documentation)
+
+---
+
+## Prerequisites
+
+Before integrating the Spreedly iOS SDK, ensure you have:
+
+- **iOS 14.0+** deployment target
+- **Xcode 16.4** for development
+- **Swift 6.1** for Swift projects
+- **Spreedly Account** with API credentials
+- **Valid Environment Key** from the Spreedly dashboard
+
+---
+
+## Required Credentials
+
+You will need the following from your Spreedly account. Implement your own credential management system; the example below shows the credential types required:
+
+```swift
+// Example: Structure showing required credential types
+// This is NOT an SDK class - implement your own credential management
+struct ExampleCredentials {
+    let environmentKey: String      // Your Spreedly environment key
+    let token: String               // API token for authentication
+    let nonce: String               // Unique nonce for each request
+    let timestamp: String           // Current timestamp
+    let certificateToken: String    // Certificate token for security
+    let signature: String           // Generated signature
+}
+```
+
+Signature parameters must be fetched from your backend server. They are time-sensitive and should be generated fresh before each payment session.
+
+---
+
+## Installation
+
+### Option 1: Swift Package Manager (Recommended)
+
+SPM distribution is from a separate repository: `https://github.com/spreedly/checkout-ios-package`.
+
+**Add via Xcode UI:**
+
+1. File → Add Package Dependencies
+2. Enter repository URL: `https://github.com/spreedly/checkout-ios-package`
+3. Select version requirements (use the latest available SDK version)
+4. Choose the modules you need:
+   - **Spreedly** (all-in-one: Core + Security + UI) — recommended for most apps
+   - Or individual libraries: **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**
+   - **SpreedlyStripeAPM** (optional, for Stripe APM)
+   - **SpreedlyBraintree** (optional, for Braintree PayPal/Venmo)
+
+**Add via Package.swift:**
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.0.0")
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "Spreedly", package: "checkout-ios-package")  // All-in-one: Core + Security + UI
+            // Or use individual libraries:
+            // .product(name: "SpreedlyCore", package: "checkout-ios-package"),
+            // .product(name: "SpreedlySecurity", package: "checkout-ios-package"),
+            // .product(name: "SpreedlyUI", package: "checkout-ios-package")
+            // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
+            // .product(name: "SpreedlyStripeAPM", package: "checkout-ios-package"),
+            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package")
+        ]
+    )
+]
+```
+
+**Note:** The package identifier may appear as `checkout-ios-package` depending on how Xcode resolves the dependency. Use the identifier shown in your project's package resolution.
+
+### Option 2: CocoaPods
+
+Add to your `Podfile`. Source is `https://github.com/spreedly/checkout-ios-package`:
+
+```ruby
+target 'YourApp' do
+  use_frameworks!
+
+  pod 'SpreedlyCore', '~> 1.0'
+  pod 'SpreedlySecurity', '~> 1.0'
+  pod 'SpreedlyUI', '~> 1.0'
+  # Add these only if needed:
+  # pod 'SpreedlyStripeAPM', '~> 1.0'
+  # pod 'SpreedlyBraintree', '~> 1.0'
+end
+```
+
+Then run `pod install`.
+
+### Option 3: Manual Framework Integration
+
+1. Download frameworks from GitHub releases
+2. Drag and drop `.framework` files into your Xcode project
+3. Link frameworks in your target's Build Phases
+4. Import modules in your Swift files
+
+---
+
+## Optional Dependencies
+
+Add these only when you need the corresponding features:
+
+| Feature | Package | URL | Version |
+|---------|---------|-----|---------|
+| 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
+| Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
+| Braintree (PayPal/Venmo) — SPM only | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector | `https://github.com/braintree/braintree_ios.git` | 7.0.0+ |
+
+**Forter3DS (3DS Global):** Required for 3DS authentication. Add as a direct dependency to your app target. Without it, the app will crash when 3DS is required.
+
+**StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). You **must** add `StripePaymentSheet` to your **app target** (SPM or CocoaPods). The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without it the app will crash at presentation time.
+
+**Braintree packages (SPM only):** Required for Braintree PayPal and Venmo flows when using **Swift Package Manager**. Because `SpreedlyBraintree` is distributed as a binary `.xcframework` with no transitive SPM dependencies, you must add BraintreeCore, BraintreePayPal, BraintreeVenmo, and BraintreeDataCollector to your app target with **Embed & Sign**. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash). **CocoaPods** users do **not** need to add Braintree separately — `pod 'SpreedlyBraintree'` already includes the required Braintree subspecs as transitive dependencies.
+
+---
+
+## Required Info.plist Entries
+
+Add these entries to your app's `Info.plist`:
+
+| Key | When Required | Purpose |
+|-----|--------------|---------|
+| `NSCameraUsageDescription` | Always | **Required by the Stripe iOS SDK.** The `StripePaymentSheet` module includes built-in card scanning functionality that references camera APIs internally. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
+| `CFBundleURLTypes` | Offsite, Stripe APM, Braintree, Gateway-Specific 3DS | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe/3DS flows, and `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo. |
+| `LSApplicationQueriesSchemes` | Braintree Venmo only | Include `com.venmo.touch.v2` so the app can query whether Venmo is installed. **Without this, Venmo payments will silently fail.** |
+
+> **All three keys should be added to every target** (Swift and Objective-C) that integrates the SDK. The Objective-C target must also include `CFBundleURLSchemes` with `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if it uses Braintree.
+
+**Why is `NSCameraUsageDescription` required?** The Stripe iOS SDK (`StripePaymentSheet`) bundles card-scanning functionality that references camera APIs. Apple's static analysis flags these references during App Store review and rejects the build (`ITMS-90683`) if this key is missing — even if your app never invokes the card scanner. Because the Spreedly SDK depends on Stripe for APM payments, you must include this key.
+
+**Example XML snippet:**
+
+```xml
+<!-- Required because the Stripe SDK references camera APIs for card scanning -->
+<key>NSCameraUsageDescription</key>
+<string>This app may use the camera to scan payment cards or identity documents when you choose a supported payment method.</string>
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>com.your-app.sdk.offsite</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>yourapp</string>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree</string>
+        </array>
+    </dict>
+</array>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>com.venmo.touch.v2</string>
+</array>
+```
+
+---
+
+## Required App Setup
+
+### URL Handling
+
+Your app must handle incoming URLs for offsite payments (PayPal, Sprel) and Braintree return flows. Register the same URL scheme in `CFBundleURLTypes` (see above).
+
+**SwiftUI:**
+
+```swift
+var body: some Scene {
+    WindowGroup {
+        ContentView()
+            .screenPrevention()
+            .onOpenURL { url in
+                #if canImport(SpreedlyBraintree)
+                if BraintreeURLHandler.handleOpen(url: url) { return }
+                #endif
+                let handled = Spreedly.shared().handleOffsiteReturn(url: url)
+                if !handled {
+                    // Handle other custom URL navigations
+                }
+            }
+    }
+}
+```
+
+**UIKit / Objective-C (SceneDelegate — recommended):**
+
+For scene-based apps (the default since iOS 14), handle URLs in `SceneDelegate`:
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyBraintree/SpreedlyBraintree-Swift.h>  // Only if using Braintree
+
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    NSURL *url = URLContexts.allObjects.firstObject.URL;
+    if (!url) return;
+
+    // Braintree must be checked first (if using PayPal/Venmo)
+    if ([BraintreeURLHandlerObjC handleOpenWithUrl:url]) return;
+
+    BOOL isSpreedlyURL = [[Spreedly shared] handleOffsiteReturnWithUrl:url];
+    if (!isSpreedlyURL) {
+        // Handle other custom URL navigations
+    }
+}
+```
+
+**UIKit / Objective-C (AppDelegate — non-scene apps only):**
+
+For apps not using `UIScene`, handle URLs in `AppDelegate`:
+
+```objc
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    BOOL isSpreedlyURL = [[Spreedly shared] handleOffsiteReturnWithUrl:url];
+    if (!isSpreedlyURL) {
+        // Handle other custom URL navigations
+    }
+    return isSpreedlyURL;
+}
+```
+
+> **Important:** In Objective-C, the Braintree URL handler class is `BraintreeURLHandlerObjC` (not `BraintreeURLHandler`). In Swift, use `BraintreeURLHandler`.
+
+### Screen Prevention
+
+Apply `.screenPrevention()` on your root view (SwiftUI) or wrap with `wrapInSecureViewControllerWithPlaceholderText:` (UIKit/ObjC) to prevent screenshots and screen recording during payment flows. This is a best practice for PCI compliance.
+
+**UIKit / Objective-C screen prevention:**
+
+```objc
+UIViewController *secureVC = [navigationController wrapInSecureViewControllerWithPlaceholderText:@""];
+self.window.rootViewController = secureVC;
+```
+
+---
+
+## Basic Setup
+
+The SDK uses a two-step initialization pattern. Both steps are required before any payment operations.
+
+**Important:** `Spreedly.setup(config:)` is mandatory and must be called with `environmentKey`, `forterSiteId` (for 3DS), and signature parameters (`nonce`, `signature`, `certificateToken`, `timestamp`) before any tokenization or payment operation. This includes `createCreditCard()`, `submitOffsitePayment()`, `recachePaymentMethod()`, presenting `CardFormDropIn`, and any 3DS challenge flows. `Spreedly.initializeSDK()` alone is not sufficient.
+
+### Step 1: Initialize SDK at App Launch
+
+Call `Spreedly.initializeSDK()` when your app launches:
+
+**SwiftUI (recommended):**
+
+```swift
+import SwiftUI
+import SpreedlyCore
+import SpreedlyUI
+#if canImport(SpreedlyBraintree)
+import SpreedlyBraintree
+#endif
+
+@main
+struct YourApp: App {
+    init() {
+        Spreedly.initializeSDK()
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .screenPrevention()
+                .onOpenURL { url in
+                    #if canImport(SpreedlyBraintree)
+                    if BraintreeURLHandler.handleOpen(url: url) { return }
+                    #endif
+                    let handled = Spreedly.shared().handleOffsiteReturn(url: url)
+                    if !handled {
+                        // Handle other custom URL navigations
+                    }
+                }
+        }
+    }
+}
+```
+
+> **Note:** `SpreedlySecurity` is a transitive dependency of `SpreedlyCore` and does not need a direct import unless you use `SecureValueContainer` or other security APIs directly.
+
+**UIKit (AppDelegate):**
+
+```swift
+import SpreedlyCore
+
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    Spreedly.initializeSDK()
+    return true
+}
+```
+
+### Step 2: Configure with Credentials (Mandatory)
+
+Call `Spreedly.setup(config:)` with all required parameters before any payment requests. `SpreedlyConfig` initializer: `init(environmentKey:forterSiteId:certificateToken:nonce:signature:timestamp:)`.
+
+- `environmentKey` (required)
+- `forterSiteId` (required for 3DS support)
+- `certificateToken` (required)
+- `nonce` (required)
+- `signature` (required)
+- `timestamp` (required)
+
+```swift
+class SpreedlyConfigManager {
+    static let shared = SpreedlyConfigManager()
+
+    private let environmentKey = "your_environment_key"  // REQUIRED
+    private let forterSiteId = "your_forter_site_id"     // REQUIRED for 3DS support
+
+    func configureSpreedly() async {
+        do {
+            let signatureParams = try await fetchSignatureFromBackend()
+
+            Spreedly.setup(config: SpreedlyConfig(
+                environmentKey: environmentKey,
+                forterSiteId: forterSiteId,
+                certificateToken: signatureParams.certificateToken,
+                nonce: signatureParams.nonce,
+                signature: signatureParams.signature,
+                timestamp: String(signatureParams.timestamp)
+            ))
+        } catch {
+            print("Failed to configure Spreedly: \(error)")
+        }
+    }
+}
+
+// Fetch signature parameters from your backend before each payment session
+func fetchSignatureFromBackend() async throws -> SignatureParameters {
+    // Your implementation here
+}
+```
+
+**Note:** The example app uses `SignatureSecurityService` for demonstration. In production, fetch signature parameters from your own backend.
+
+**Singleton pattern:** Both `static let shared` and `static var shared` with a `setup()` method are valid patterns for your config manager.
+
+**Datadog logging:** To control Datadog log verbosity, call `Spreedly.setDatadogLogLevel(_: LogLevel)` (e.g. `Spreedly.setDatadogLogLevel(.debug)` or `Spreedly.setDatadogLogLevel(.warn)`). Use this in addition to `Spreedly.setLogLevel(_:)` if your app uses Datadog for observability.
+
+Call `configureSpreedly()` before presenting any payment form or initiating any payment operation (for example, when the user navigates to checkout).
+
+### Objective-C Setup
+
+**Step 1: Initialize SDK**
+
+For scene-based apps (default since iOS 14), initialize in your `SceneDelegate`:
+
+```objc
+// SceneDelegate.m
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+#import <SpreedlyUI/SpreedlyUI-Swift.h>
+
+- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
+    if ([scene isKindOfClass:[UIWindowScene class]]) {
+        UIWindowScene *windowScene = (UIWindowScene *)scene;
+        self.window = [[UIWindow alloc] initWithWindowScene:windowScene];
+
+        // Initialize SDK
+        [Spreedly initializeSDK];
+
+        UIViewController *rootVC = [[YourRootViewController alloc] init];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:rootVC];
+
+        // Wrap for screen prevention (PCI compliance)
+        UIViewController *secureVC = [navController wrapInSecureViewControllerWithPlaceholderText:@""];
+        self.window.rootViewController = secureVC;
+        [self.window makeKeyAndVisible];
+    }
+}
+```
+
+For non-scene apps, initialize in `AppDelegate`:
+
+```objc
+// AppDelegate.m
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Spreedly initializeSDK];
+    return YES;
+}
+```
+
+**Step 2: Configure with Credentials**
+
+Create `SpreedlyConfig` with `initWithEnvironmentKey:` and set properties, then call `[Spreedly setupWithConfig:]`:
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+
+- (void)configureSpreedlyWithCompletion:(void (^)(BOOL success, NSError * _Nullable error))completion {
+    // Fetch signature parameters from your backend, then:
+    SpreedlyConfig *config = [[SpreedlyConfig alloc] initWithEnvironmentKey:@"your_environment_key"];
+    config.forterSiteId = @"your_forter_site_id";
+    config.certificateToken = signatureParams.certificateToken;
+    config.nonce = signatureParams.nonce;
+    config.signature = signatureParams.signature;
+    config.timestamp = [NSString stringWithFormat:@"%ld", (long)signatureParams.timestamp];
+
+    [Spreedly setupWithConfig:config];
+    if (completion) completion(YES, nil);
+}
+```
+
+Call this before presenting any payment form or initiating any payment operation.
+
+---
+
+## Module Dependency Table
+
+| Module | Purpose |
+|--------|---------|
+| SpreedlyCore | Core payment processing, API client, network, security |
+| SpreedlySecurity | Encryption, secure storage, SecureValueContainer |
+| SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS, CVV recaching |
+| SpreedlyStripeAPM | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
+| SpreedlyBraintree | PayPal/Venmo via Braintree |
+
+---
+
+## Testing and Sandbox
+
+### Test Environment
+
+Use your **test environment key** (from the Spreedly dashboard) during development. Test transactions are free and do not process real payments.
+
+### Test Card Numbers
+
+| Card Brand | Number | CVV | Expiry |
+|------------|--------|-----|--------|
+| Visa | `4111111111111111` | Any 3 digits | Any future date |
+| Mastercard | `5555555555554444` | Any 3 digits | Any future date |
+| American Express | `378282246310005` | Any 4 digits | Any future date |
+| Discover | `6011111111111117` | Any 3 digits | Any future date |
+
+### Test vs Production
+
+- **Test mode**: Use your test environment key. Transactions appear in the Spreedly test dashboard. No real charges.
+- **Production mode**: Use your production environment key. Real charges are processed.
+
+Switch between environments by changing the `environmentKey` in `SpreedlyConfig`. No code changes are required beyond the key.
+
+### Verifying Your Integration
+
+1. Use a test card number from the table above
+2. Complete the payment flow
+3. Check `PaymentResult.token` — a successful tokenization returns a token starting with a recognizable prefix
+4. Verify the token appears in your Spreedly test dashboard
+
+---
+
+## Choosing Your Integration Path
+
+| Goal | Guide |
+|------|-------|
+| Pre-built payment form, minimal code | [Express Checkout](express-checkout.md) |
+| Custom field layout and brand-specific UI | [Custom Payment Forms](custom-payment-forms.md) |
+| 3D Secure authentication (multi-gateway) | [3DS Global](3ds-global.md) |
+| 3D Secure with gateway-specific flow (e.g. Worldpay) | [3DS Gateway-Specific](3ds-gateway-specific.md) |
+| PayPal / Sprel via Safari redirect | [Offsite Payments](offsite-payments.md) |
+| PayPal / Venmo via native Braintree | [Braintree APM](braintree-apm.md) |
+| iDEAL, Bancontact, EPS, SEPA via Stripe | [Stripe APM](stripe-apm.md) |
+| Pix, Boleto, OXXO, NuPay via EBANX | [EBANX APM](ebanx-apm.md) |
+| CVV re-entry for saved cards | [Recaching](recaching.md) |
+| Objective-C integration | [Objective-C](objective-c.md) |
+
+---
+
+## Conditional Imports for Optional Modules
+
+> **Note:** The example app imports `SPLAccessibility` for accessibility identifiers used in UI testing. This module is optional and can be omitted in your production app.
+
+If your app only uses some SDK modules (e.g., Braintree or Forter3DS), use `#if canImport` to avoid compile errors when the optional module is not linked:
+
+```swift
+#if canImport(SpreedlyBraintree)
+import SpreedlyBraintree
+#endif
+
+#if canImport(Forter3DS)
+import Forter3DS
+#endif
+```
+
+This pattern is used in the example app and is recommended for any optional dependency (SpreedlyBraintree, SpreedlyStripeAPM, Forter3DS).
+
+---
+
+## Next Steps
+
+- **[Express Checkout Guide](express-checkout.md)** – Integrate the pre-built `CardFormDropIn` payment form
+- **[Custom Fields Guide](custom-payment-forms.md)** – Build custom payment forms with `SPLTextField`
+
+---
+
+## Related Documentation
+
+| Guide | Description |
+|-------|-------------|
+| [express-checkout.md](express-checkout.md) | Pre-built CardFormDropIn payment form integration |
+| [custom-payment-forms.md](custom-payment-forms.md) | Building custom payment forms with SPLTextField |
+| [3ds-global.md](3ds-global.md) | 3DS Global (Forter) authentication flow |
+| [offsite-payments.md](offsite-payments.md) | Offsite payments (PayPal, Sprel) via Safari |
+| [stripe-apm.md](stripe-apm.md) | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
+| [braintree-apm.md](braintree-apm.md) | Braintree (PayPal/Venmo) |
+| [error-handling.md](error-handling.md) | Error types, handling patterns, troubleshooting |
+| [theme-and-styling.md](theme-and-styling.md) | Theming, customization, light/dark mode |
