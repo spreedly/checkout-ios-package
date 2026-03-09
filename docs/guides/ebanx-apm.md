@@ -589,7 +589,7 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
 // MARK: - Purchase (Merchant Backend Call)
 
 - (void)purchaseWithToken:(NSString *)paymentMethodToken {
-    PurchaseAPIClient *client = [[SpreedlyConfigManager shared] createEbanxPurchaseAPIClient];
+    PurchaseAPIClient *client = [[SpreedlyConfigManager shared] createPurchaseAPIClient];
     NSDecimalNumber *amount = [NSDecimalNumber numberWithInt:9900];
     [client ebanxPurchaseWithPaymentMethodToken:paymentMethodToken
                                          amount:amount

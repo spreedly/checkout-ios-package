@@ -1,10 +1,10 @@
-## [1.1.1] - 2026-03-09
+## [1.1.2] - 2026-03-09
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1223 update version references and documentation for 1.1.0 release (#205)
+- HC-1223 fix Xcode Cloud build by migrating to SPM and generating xcconfig on CI (#206)
 
 ### Change Requests
   - HC-1223
@@ -12,7 +12,7 @@
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.1.1 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.1.2 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -20,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.1")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.2")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.1.1'
+pod 'Spreedly', '~> 1.1.2'
 ```
 
 ---
