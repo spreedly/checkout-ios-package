@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyStripeAPM'
-  s.version          = '1.0.31'
+  s.version          = '1.1.0'
   s.summary          = 'Stripe APM module for the Spreedly iOS SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Proprietary', :text => 'Licensed for internal use only.' }

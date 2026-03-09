@@ -519,9 +519,9 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 /// This means validation passed and the payment method creation request
 /// has been initiated. The actual result will be communicated through the
 /// PaymentResult flow.
-@property (nonatomic) BOOL isProcessing;
+@property (nonatomic, readonly) BOOL isProcessing;
 /// Indicates that payment processing could not start due to validation failures.
-@property (nonatomic) BOOL isValidationFailed;
+@property (nonatomic, readonly) BOOL isValidationFailed;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Creates a processing result indicating that payment processing has started successfully.
@@ -542,7 +542,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 @end
 
 /// Represents the various states and outcomes of a payment process.
-/// This class works seamlessly with both Swift and Objective-C, providing
+/// This class works with both Swift and Objective-C, providing
 /// a unified API for payment result handling.
 /// <h2>Usage Examples</h2>
 /// <h3>Swift Usage:</h3>
@@ -599,33 +599,33 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @interface PaymentResult : NSObject
 /// Indicates if this is the initial state (before processing begins).
-@property (nonatomic) BOOL isInitial;
+@property (nonatomic, readonly) BOOL isInitial;
 /// Indicates if the payment completed successfully.
-@property (nonatomic) BOOL isSuccess;
+@property (nonatomic, readonly) BOOL isSuccess;
 /// Indicates if the payment was canceled by the user.
-@property (nonatomic) BOOL isCanceled;
+@property (nonatomic, readonly) BOOL isCanceled;
 /// Indicates if the payment failed.
-@property (nonatomic) BOOL isFailure;
+@property (nonatomic, readonly) BOOL isFailure;
 /// The payment method token (only available for successful payments).
-@property (nonatomic, copy) NSString * _Nullable token;
+@property (nonatomic, readonly, copy) NSString * _Nullable token;
 /// The transaction state (when available).
-@property (nonatomic, copy) NSString * _Nullable state;
+@property (nonatomic, readonly, copy) NSString * _Nullable state;
 /// Indicates if the card should be retained for future payments (only available for successful payments from CardFormDropIn).
 /// This value is passed from UI to merchant and is not sent to the API.
 /// Defaults to false. Always false for recache operations.
-@property (nonatomic) BOOL shouldRetain;
+@property (nonatomic, readonly) BOOL shouldRetain;
 /// Braintree payment nonce returned by the Braintree SDK after PayPal/Venmo authorization.
 /// When non-nil, the merchant must forward this nonce to their backend which calls
 /// Spreedly’s <code>/confirm.json</code> endpoint to complete the transaction.
 /// Only present for Braintree payment flows.
-@property (nonatomic, copy) NSString * _Nullable nonce;
+@property (nonatomic, readonly, copy) NSString * _Nullable nonce;
 /// Braintree device fingerprint data for fraud detection.
 /// Should be forwarded alongside the nonce to the merchant backend for <code>/confirm.json</code>.
 /// May be nil if device data collection failed (non-fatal).
 /// Only present for Braintree payment flows.
-@property (nonatomic, copy) NSString * _Nullable deviceData;
+@property (nonatomic, readonly, copy) NSString * _Nullable deviceData;
 /// Detailed failure information (only available for failed payments).
-@property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
+@property (nonatomic, readonly, strong) FailedDetails * _Nullable failureDetails;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Creates an initial state result.
@@ -965,25 +965,25 @@ SWIFT_CLASS("_TtC12SpreedlyCore19StripeAPMTypeHelper")
 @end
 
 /// Represents the various states and outcomes of a 3DS challenge process.
-/// This class works seamlessly with both Swift and Objective-C, providing
+/// This class works with both Swift and Objective-C, providing
 /// a unified API for 3DS challenge result handling, consistent with PaymentResult.
 /// Important: ECI/CAVV/XID values are NOT provided by Forter SDK callback.
 /// Transaction completion is handled automatically by the SDK via internal API calls.
 SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 @interface ThreeDSChallengeResult : NSObject
 /// Indicates if the challenge completed successfully.
-@property (nonatomic) BOOL isSuccess;
+@property (nonatomic, readonly) BOOL isSuccess;
 /// Indicates if the challenge was canceled by the user.
-@property (nonatomic) BOOL isCanceled;
+@property (nonatomic, readonly) BOOL isCanceled;
 /// Indicates if the challenge failed.
-@property (nonatomic) BOOL isFailure;
+@property (nonatomic, readonly) BOOL isFailure;
 /// The managed order token (only available for successful challenges).
-@property (nonatomic, copy) NSString * _Nullable managedOrderToken;
+@property (nonatomic, readonly, copy) NSString * _Nullable managedOrderToken;
 /// Error if challenge failed (from Forter SDK challengeCompleted(error:) callback).
 /// nil if challenge completed successfully.
-@property (nonatomic) NSError * _Nullable error;
+@property (nonatomic, readonly) NSError * _Nullable error;
 /// Detailed failure information (only available for failed challenges).
-@property (nonatomic, strong) FailedDetails * _Nullable failureDetails;
+@property (nonatomic, readonly, strong) FailedDetails * _Nullable failureDetails;
 /// Creates a successful challenge result.
 /// \param managedOrderToken The managed order token from the challenge
 ///
