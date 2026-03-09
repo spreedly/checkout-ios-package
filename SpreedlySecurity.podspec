@@ -2,11 +2,11 @@ Pod::Spec.new do |s|
   s.name             = 'SpreedlySecurity'
   s.version          = '1.1.0'
   s.summary          = 'SpreedlySecurity is the security framework of the Spreedly SDK.'
-  s.homepage         = 'https://github.com/Capillary/hydra-sdk-ios-packages'
+  s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Proprietary', :text => 'Licensed for internal use only.' }
   s.authors          = 'Capillary, Inc.'
   s.source           = { :git => 'https://github.com/spreedly/checkout-ios-package', :tag => s.version }
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '14.0'
   s.swift_version    = '5.10'
 
   s.vendored_frameworks = 'Frameworks/SpreedlySecurity.xcframework'
