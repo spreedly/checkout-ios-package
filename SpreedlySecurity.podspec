@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlySecurity'
-  s.version          = '1.1.2'
+  s.version          = '1.1.3'
   s.summary          = 'SpreedlySecurity is the security framework of the Spreedly SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Proprietary', :text => 'Licensed for internal use only.' }
