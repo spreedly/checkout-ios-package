@@ -35,10 +35,7 @@ Update the CVV for saved payment methods without re-entering full card details.
 
 ### Benefits
 
-- **PCI Compliant:** CVV never passes through your application code
-- **Less data entry:** No need to re-enter full card details
-- **Secure:** SDK handles all sensitive data
-- **Customizable:** Match your brand's look and feel
+CVV never passes through your application code. The SDK handles all sensitive data collection and transmission. Customers re-enter only CVV, not full card details. Theming supports brand customization.
 
 ---
 
@@ -205,7 +202,7 @@ let config = RecacheConfig(cardInfo: cardInfo)
             // Use result.token for your payment processing
         } else if result.isFailure {
             if let failureDetails = result.failureDetails {
-                print("Recaching failed: \(failureDetails.getDescription())")
+                print("Recaching failed: \(sanitizeForDisplay(failureDetails.getDescription()))")
             }
             showCVVRecaching = false
         }
@@ -316,7 +313,7 @@ struct SavedCardsView: View {
                     print("CVV recached successfully")
                 } else if result.isFailure {
                     if let failureDetails = result.failureDetails {
-                        print("Recaching failed: \(failureDetails.getDescription())")
+                        print("Recaching failed: \(sanitizeForDisplay(failureDetails.getDescription()))")
                     }
                     showCVVRecaching = false
                 }
@@ -407,7 +404,7 @@ Use `CVVRecachingViewController` with alloc/init and the same parameters. Implem
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [Spreedly.shared setPaymentDelegate:self];
+    [[Spreedly shared] setPaymentDelegate:self];
 }
 
 - (void)updateCVVTapped {
@@ -462,7 +459,7 @@ Use `CVVRecachingViewController` with alloc/init and the same parameters. Implem
         }
     } else if (result.isFailure) {
         if (result.failureDetails) {
-            NSLog(@"Recaching failed: %@", [result.failureDetails getDescription]);
+            NSLog(@"Recaching failed: %@", sanitizeForDisplay([result.failureDetails getDescription]));
         }
         if (self.presentedViewController) {
             [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
@@ -484,7 +481,7 @@ The SDK supports two presentation modes via `ScreenPresentationMode`:
 | `.bottomSheet` | Slides up from bottom (recommended for mobile) |
 | `.dialog` | Centered dialog overlay |
 
-For dialog mode, use the SDK's `.crossDissolveFullScreenCover()` View extension instead of `.sheet()` (this provides the dimmed background for centered dialog presentation):
+For dialog mode, use the SDK's `.crossDissolveFullScreenCover()` View extension instead of `.sheet()` (which gives you the dimmed background for centered dialog presentation):
 
 ```swift
 .crossDissolveFullScreenCover(isPresented: $showCVVRecaching) {
@@ -720,4 +717,3 @@ Call `ValidationParamReset.reset()` in `onDisappear` to reset validation paramet
 | [error-handling.md](error-handling.md) | Error types, handling patterns, troubleshooting |
 | [theme-and-styling.md](theme-and-styling.md) | Theming and customization |
 | [security.md](security.md) | Security best practices |
-| [RECACHING_FLOW.md](../development/RECACHING_FLOW.md) | Detailed flow diagrams for CVV recaching |

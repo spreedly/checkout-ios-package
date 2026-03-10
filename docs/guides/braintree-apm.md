@@ -412,7 +412,7 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 #import <SpreedlyUI/SpreedlyUI-Swift.h>
 #import <SpreedlyBraintree/SpreedlyBraintree-Swift.h>
 #import "SpreedlyConfigManager.h"
-#import "SpreedlyPurchaseAPIClient.h"
+#import "PurchaseAPIClient.h"
 #import "PurchaseModels.h"
 
 @interface BraintreePaymentViewController () <SpreedlyPaymentDelegate>
@@ -428,7 +428,7 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 }
 
 - (void)startBraintreeFlow {
-    SpreedlyPurchaseAPIClient *client = [[SpreedlyConfigManager shared] createPurchaseAPIClient];
+    PurchaseAPIClient *client = [[SpreedlyConfigManager shared] createPurchaseAPIClient];
     [client braintreePurchaseWithAmount:amountInCents
                            currencyCode:@"USD"
                             redirectUrl:@"yourapp://com.yourapp/braintree/checkout"
@@ -536,5 +536,4 @@ Example references: `BraintreePaymentFlowView` (SwiftUI) and `BraintreePaymentFl
 - [offsite-payments.md](offsite-payments.md) – Safari-based PayPal and Sprel checkout
 - [stripe-apm.md](stripe-apm.md) – Stripe alternative payment methods (iDEAL, Bancontact)
 - [ebanx-apm.md](ebanx-apm.md) – EBANX payments (Pix, Boleto, OXXO, NuPay)
-- [getting-started.md](getting-started.md) – Installation and basic setup
-- [BRAINTREE_FLOW.md](../development/BRAINTREE_FLOW.md) – Detailed flow diagrams for Braintree PayPal/Venmo
+- [getting-started.md](getting-started.md) -- Installation and basic setup

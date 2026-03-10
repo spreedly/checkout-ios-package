@@ -29,7 +29,7 @@ Handle payment errors, validation failures, and network issues properly.
 
 ## Introduction
 
-The Spreedly iOS SDK provides a structured error handling system that categorizes errors into distinct types and delivers them through synchronous and asynchronous flows. Understanding these flows and error types helps build reliable payment experiences.
+The Spreedly iOS SDK categorizes errors into distinct types and delivers them through synchronous and asynchronous flows. Understanding these flows and error types helps build reliable payment experiences.
 
 The error handling flow involves three main components:
 
@@ -230,7 +230,7 @@ CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
     }];
 
 // Success/failure comes via paymentDelegate:
-[Spreedly.shared setPaymentDelegate:self];
+[[Spreedly shared] setPaymentDelegate:self];
 // Implement paymentDidComplete: to receive PaymentResult
 ```
 

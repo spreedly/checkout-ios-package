@@ -656,6 +656,5 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
 
 ## Related Documentation
 
-- [offsite-payments.md](offsite-payments.md) — Custom URL scheme setup, offsite flow details
-- [stripe-apm.md](stripe-apm.md) — Alternative payment methods via Stripe
-- [EBANX_FLOW.md](../development/EBANX_FLOW.md) — Detailed flow diagrams for EBANX payments
+- [offsite-payments.md](offsite-payments.md) -- Custom URL scheme setup, offsite flow details
+- [stripe-apm.md](stripe-apm.md) -- Alternative payment methods via Stripe
