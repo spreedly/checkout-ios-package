@@ -2,34 +2,14 @@
 // swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
 // swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlySecurity
 // swift-module-flags-ignorable:  -interface-compiler-version 6.1.2
-import CommonCrypto
 import CryptoKit
 import Foundation
 import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public protocol SpreedlyEncryptionProtocol {
-  func isValidSHA256Hash(_ hash: Swift.String) -> Swift.Bool
-  func encryptAES(_ data: Swift.String) -> Swift.String
-  func decryptAES(_ encryptedData: Swift.String) -> Swift.String?
-  func isValidAESEncryptedData(_ encryptedData: Swift.String) -> Swift.Bool
-}
-@_hasMissingDesignatedInitializers public class SPLSecurity : SpreedlySecurity.SpreedlyEncryptionProtocol {
-  public static let shared: SpreedlySecurity.SPLSecurity
-  public func isValidSHA256Hash(_ hash: Swift.String) -> Swift.Bool
-  public func encryptAES(_ data: Swift.String) -> Swift.String
-  public func decryptAES(_ encryptedData: Swift.String) -> Swift.String?
-  public func isValidAESEncryptedData(_ encryptedData: Swift.String) -> Swift.Bool
-  public func encryptAES(_ data: Swift.String, withKey key: CryptoKit.SymmetricKey) -> Swift.String
-  public func decryptAES(_ encryptedData: Swift.String, withKey key: CryptoKit.SymmetricKey) -> Swift.String?
-  public func generateNewKey() -> CryptoKit.SymmetricKey
-  public func secureStore(_ key: Swift.String, value: Swift.String)
-  public func secureRetrieve(_ key: Swift.String) -> Swift.String?
-  public func clearSecureStorage()
-  public func secureClear(_ data: inout Swift.String)
-  @objc deinit
-}
+import os.log
+import os
 public enum SPLSecureContainerKey {
   public static let number: Swift.String
   public static let firstName: Swift.String
@@ -58,5 +38,26 @@ public enum SPLSecureContainerKey {
     get
   }
   public func clearValues()
+  @objc deinit
+}
+public protocol SpreedlyEncryptionProtocol {
+  func isValidSHA256Hash(_ hash: Swift.String) -> Swift.Bool
+  func encryptAES(_ data: Swift.String) -> Swift.String?
+  func decryptAES(_ encryptedData: Swift.String) -> Swift.String?
+  func isValidAESEncryptedData(_ encryptedData: Swift.String) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class SPLSecurity : SpreedlySecurity.SpreedlyEncryptionProtocol {
+  public static let shared: SpreedlySecurity.SPLSecurity
+  public func isValidSHA256Hash(_ hash: Swift.String) -> Swift.Bool
+  public func encryptAES(_ data: Swift.String) -> Swift.String?
+  public func decryptAES(_ encryptedData: Swift.String) -> Swift.String?
+  public func isValidAESEncryptedData(_ encryptedData: Swift.String) -> Swift.Bool
+  public func encryptAES(_ data: Swift.String, withKey key: CryptoKit.SymmetricKey) -> Swift.String?
+  public func decryptAES(_ encryptedData: Swift.String, withKey key: CryptoKit.SymmetricKey) -> Swift.String?
+  public func generateNewKey() -> CryptoKit.SymmetricKey
+  public func secureStore(_ key: Swift.String, value: Swift.String)
+  public func secureRetrieve(_ key: Swift.String) -> Swift.String?
+  public func clearSecureStorage()
+  public func secureClear(_ data: inout Swift.String)
   @objc deinit
 }

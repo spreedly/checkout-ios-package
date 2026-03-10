@@ -84,7 +84,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.3")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.0")
 ],
 targets: [
     .target(
