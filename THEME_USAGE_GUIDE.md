@@ -1,6 +1,6 @@
 # SpreedlyUI Theme Usage Guide
 
-This comprehensive guide covers all the ways to set themes in SpreedlyUI components across Swift and Objective-C implementations.
+This guide covers all the ways to set themes in SpreedlyUI components across Swift and Objective-C implementations.
 
 ## Table of Contents
 
@@ -46,7 +46,7 @@ When you set separate light and dark themes (either globally or on components), 
 - **Detects the device's current color scheme** (light or dark mode)
 - **Applies the appropriate theme** based on the color scheme
 - **Updates the theme in real-time** when the color scheme changes (e.g., when user switches in Settings or Control Center)
-- **Works seamlessly** with iOS system dark mode settings
+- **Works with** iOS system dark mode settings
 
 **Note**: Theme switching happens automatically - you don't need to manually detect color scheme changes or update themes. The components react to `@Environment(\.colorScheme)` changes automatically using SwiftUI's reactive system.
 
@@ -954,7 +954,7 @@ SpreedlyThemeManager.setGlobalTheme(hexTheme)
 
 ## Accessibility Support
 
-The SpreedlyUI SDK provides comprehensive accessibility support with automatic Dynamic Type scaling and runtime theme updates.
+The SpreedlyUI SDK includes accessibility support with automatic Dynamic Type scaling and runtime theme updates.
 
 ### Font System
 
@@ -1146,4 +1146,4 @@ enum ThemeOption: String, CaseIterable {
 
 ---
 
-This guide provides comprehensive coverage of all theme setting options in SpreedlyUI. For additional support or questions, refer to the SpreedlyUI documentation or contact the development team.
+This guide covers all theme setting options in SpreedlyUI. For additional support or questions, refer to the SpreedlyUI documentation or contact the development team.

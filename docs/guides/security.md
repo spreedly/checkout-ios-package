@@ -29,7 +29,7 @@ Protect sensitive payment data with screen prevention, secure storage, and PCI c
 
 ## Introduction
 
-The Spreedly iOS SDK provides security features to help you achieve PCI DSS compliance and protect sensitive payment information. It covers screen prevention, secure value collection, API key handling, token storage, and other security practices for integrating the SDK into your application.
+The Spreedly iOS SDK provides security features to meet PCI DSS requirements and protect sensitive payment information. It covers screen prevention, secure value collection, API key handling, token storage, and other security practices for integrating the SDK into your application.
 
 ---
 
@@ -170,7 +170,7 @@ self.window.rootViewController = secureVC;
 
 ## Secure Value Collection
 
-The SDK uses `SecureValueContainer` to handle sensitive fields such as card number and CVV. This ensures that sensitive data never passes through your application code in plain text.
+The SDK uses `SecureValueContainer` to handle sensitive fields such as card number and CVV. Sensitive data never passes through your application code in plain text.
 
 - **SecureValueContainer** handles card number and CVV collection
 - **CVV is never stored locally**; it is only transmitted securely to Spreedly
@@ -263,7 +263,7 @@ Payment method tokens returned by Spreedly are non-sensitive and can be stored f
 
 ## PCI Compliance
 
-The SDK is designed to help you reduce PCI DSS scope:
+The SDK helps you reduce PCI DSS scope:
 
 - **Sensitive data handling**: Card number and CVV are collected and processed within `SecureValueContainer`; no card data passes through your application code
 - **No card data in merchant app**: Sensitive cardholder data is encrypted and transmitted directly to Spreedly
@@ -297,22 +297,47 @@ When using Combine publishers (for example, `subscribeToPaymentResults`), cancel
 
 The SDK's logging system automatically redacts sensitive data:
 
-- **Card numbers** are sanitized in log output
-- **API keys** and credentials are redacted
-- **CVV** and other sensitive fields are never logged
+- **Card numbers** (13-19 digit PANs) are sanitized in log output
+- **Expiry dates** are redacted when preceded by expiry-related keywords
+- **API keys**, environment keys, and credentials are redacted
+- **CVV/CVC** and other sensitive fields are never logged
+- **Phone numbers** and emails are redacted in sensitive contexts
+- **Card data in JSON payloads** (e.g. `"number": "4111..."`) is caught
 
 ### Production Recommendations
 
-- Set log level to `.warn` or `.error` in production
+- Set log level to `.none` or `.error` in production
 - Never log CVV or full card numbers
-- Use appropriate log levels (avoid `logDebug` and `logVerbose` in production)
+- Avoid `logDebug` and `logVerbose` in production builds
 
 ```swift
 #if DEBUG
 Spreedly.setLogLevel(.debug)
 #else
-Spreedly.setLogLevel(.warn)
+Spreedly.setLogLevel(.none)
 #endif
+```
+
+### os_log Persistence
+
+The SDK uses Apple's unified logging (`os_log`) for console output. Be aware that `os_log` output can persist in the system log store and may be exported via `sysdiagnose` or accessed through device management profiles. For production apps, set the log level to `.none` to suppress all SDK console output, or `.error` to capture only failures.
+
+### Third-Party SDK Logging
+
+The Spreedly SDK does not control logging from third-party SDKs it depends on (Braintree, Stripe, Datadog). These SDKs have their own logging systems that may output payment-related information. You should configure these independently:
+
+- **Braintree**: Refer to [Braintree iOS SDK documentation](https://developer.paypal.com/braintree/docs/start/hello-client/ios/v5) for logging configuration.
+- **Stripe**: Refer to [Stripe iOS SDK documentation](https://docs.stripe.com/payments/accept-a-payment?platform=ios) for controlling log output.
+- **Datadog**: The Spreedly SDK initializes Datadog via a build-time injected client token. Spreedly sanitizes all messages before sending. If you also use Datadog directly in your app, ensure your own logs do not contain PCI data.
+
+### rawErrorResponse Handling
+
+`FailedDetails.rawErrorResponse` may contain raw JSON from the Spreedly API. While the SDK does not log this field, if your app accesses `rawErrorResponse` directly (e.g. for debugging), always pass it through `sanitizeForDisplay()` before logging or displaying:
+
+```swift
+if let rawResponse = failureDetails.rawErrorResponse {
+    print("Debug: \(sanitizeForDisplay(rawResponse))")
+}
 ```
 
 ---

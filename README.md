@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.1.0-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.1.3-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -25,7 +25,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.0")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.3")
 ]
 ```
 
@@ -135,7 +135,7 @@ Get started quickly with the [Getting Started Guide](docs/guides/getting-started
 - **Modern UI** -- SwiftUI with extensive theming and dark mode support
 - **Express Checkout & Hosted Fields** -- Flexible integration options
 - **UIKit & Objective-C** -- Full support for UIKit-based and Objective-C apps
-- **Security** -- TLS certificate pinning, screen prevention, encrypted fields
+- **Security** -- HTTPS/TLS, screen prevention, encrypted fields
 
 ## Known Issues
 

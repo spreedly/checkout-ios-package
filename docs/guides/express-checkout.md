@@ -240,7 +240,7 @@ Create `CardFormDropInViewController` with `initWithOtherFields:yearFormat:nameD
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [Spreedly.shared setPaymentDelegate:self];
+    [[Spreedly shared] setPaymentDelegate:self];
 }
 
 - (void)showPaymentForm {
@@ -289,7 +289,7 @@ CardFormDropIn(
             // Validation passed and request started; show loading
         } else if result.isValidationFailed {
             // Validation failed; show field errors
-            print(result.getDescription())
+            print(sanitizeForDisplay(result.getDescription()))
         }
     }
 )
@@ -436,7 +436,7 @@ let cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
 ### Objective-C Example
 
 ```objc
-[Spreedly.shared setPaymentDelegate:self];
+[[Spreedly shared] setPaymentDelegate:self];
 
 - (void)paymentDidComplete:(PaymentResult *)result {
     if (result.isSuccess) {
@@ -524,5 +524,4 @@ cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
 - [custom-payment-forms.md](custom-payment-forms.md) – Building custom forms with SPLTextField
 - [theme-and-styling.md](theme-and-styling.md) – Theming and customization
 - [error-handling.md](error-handling.md) – Error types and handling patterns
-- [security.md](security.md) – Screen prevention, PCI compliance, security practices
-- [CARD_TOKENIZATION_FLOW.md](../development/CARD_TOKENIZATION_FLOW.md) – Detailed flow diagrams for card tokenization
+- [security.md](security.md) -- Screen prevention, PCI compliance, security practices

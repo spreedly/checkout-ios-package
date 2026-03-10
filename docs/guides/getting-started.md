@@ -28,7 +28,7 @@ Before integrating the Spreedly iOS SDK, ensure you have:
 
 - **iOS 14.0+** deployment target
 - **Xcode 16.4** for development
-- **Swift 6.1** for Swift projects
+- **Swift 5.10+** for Swift projects
 - **Spreedly Account** with API credentials
 - **Valid Environment Key** from the Spreedly dashboard
 
@@ -84,7 +84,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.0")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.3")
 ],
 targets: [
     .target(
@@ -113,12 +113,12 @@ Add to your `Podfile`. Source is `https://github.com/spreedly/checkout-ios-packa
 target 'YourApp' do
   use_frameworks!
 
-  pod 'SpreedlyCore', '~> 1.0'
-  pod 'SpreedlySecurity', '~> 1.0'
-  pod 'SpreedlyUI', '~> 1.0'
+  pod 'SpreedlyCore', '~> 1.1'
+  pod 'SpreedlySecurity', '~> 1.1'
+  pod 'SpreedlyUI', '~> 1.1'
   # Add these only if needed:
-  # pod 'SpreedlyStripeAPM', '~> 1.0'
-  # pod 'SpreedlyBraintree', '~> 1.0'
+  # pod 'SpreedlyStripeAPM', '~> 1.1'
+  # pod 'SpreedlyBraintree', '~> 1.1'
 end
 ```
 
@@ -375,7 +375,7 @@ class SpreedlyConfigManager {
                 timestamp: String(signatureParams.timestamp)
             ))
         } catch {
-            print("Failed to configure Spreedly: \(error)")
+            print("Failed to configure Spreedly: \(sanitizeForDisplay(error.localizedDescription))")
         }
     }
 }
@@ -470,6 +470,14 @@ Call this before presenting any payment form or initiating any payment operation
 | SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS, CVV recaching |
 | SpreedlyStripeAPM | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
 | SpreedlyBraintree | PayPal/Venmo via Braintree |
+
+> **SpreedlyAnalytics** is an internal module used by SpreedlyCore for logging and Datadog integration. You do not need to import or interact with it directly.
+
+---
+
+## Localization
+
+The SDK ships with **English strings only** (`en.lproj`). All user-facing labels, validation messages, and button titles are localized through `.strings` files in each module. To support additional languages, add your own `Localizable.strings` files for the desired locales in your app bundle. The SDK uses `NSLocalizedString` with its own bundle, so you can override keys by providing matching keys in your app's localization files.
 
 ---
 

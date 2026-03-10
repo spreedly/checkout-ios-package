@@ -1,9 +1,20 @@
+# Changelog
+
+All notable changes to the Spreedly iOS SDK will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+No unreleased changes.
+
 ## [1.1.3] - 2026-03-09
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
-### Changes
+### Changed
 - HC-1223 fix TestFlight validation by removing nested framework embed from SPLAccessibility (#207)
 
 ### Change Requests
@@ -25,19 +36,79 @@ This release has been documented for PCI DSS compliance requirements:
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.1.3'
+pod 'SpreedlyCore', '~> 1.1'
+pod 'SpreedlyUI', '~> 1.1'
+pod 'SpreedlySecurity', '~> 1.1'
 ```
 
----
+## [1.1.2] - 2026-03-09
 
-# Changelog
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
 
-All notable changes to the Spreedly iOS SDK will be documented in this file.
+### Changed
+- HC-1223 fix Xcode Cloud build by migrating to SPM and generating xcconfig on CI (#206)
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### Change Requests
+  - HC-1223
 
-## [Unreleased]
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.1.2 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.2")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore', '~> 1.1'
+pod 'SpreedlyUI', '~> 1.1'
+pod 'SpreedlySecurity', '~> 1.1'
+```
+
+## [1.1.1] - 2026-03-09
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changed
+- HC-1223 update version references and documentation for 1.1.0 release (#205)
+
+### Change Requests
+  - HC-1223
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.1.1 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.1")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore', '~> 1.1'
+pod 'SpreedlyUI', '~> 1.1'
+pod 'SpreedlySecurity', '~> 1.1'
+```
+
+## [1.1.0] - 2026-03-09
+
+### Release Type
+**Minor Version** (New features - backward compatible)
 
 ### Added
 
@@ -79,12 +150,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Card Brand Detection**: 50+ card brands with BIN pattern matching, Luhn validation, and brand-specific rules
     - Visa, Mastercard, Amex, Discover, JCB, Maestro, UnionPay, Elo, Dankort, Mada, Verve, and more
     - Custom validation algorithms for Naranja, Creditel, Passcard/Edenred
-- **Theming**: Comprehensive theming system with light/dark mode support
+- **Theming**: Full theming system with light/dark mode support
     - `SpreedlyTheme` with colors, typography, spacing, border radius, shadows
     - Predefined `SpreedlyLightTheme` and `SpreedlyDarkTheme`
     - Dynamic Type and Bold Text accessibility support
 - **Localization**: Localized strings for Core, UI, Braintree, and Stripe APM modules
 - **DocC Documentation**: Documentation catalogs for SpreedlyCore, SpreedlyUI, SpreedlySecurity, and SpreedlyAnalytics
+
+### Security
+
+- Removed hardcoded Datadog client token from source; now injected at build time via CI secret
+- Extended `LogSanitizer` to cover 13-19 digit PANs, expiry dates, environment keys, JSON card payloads, and phone numbers
+- Added `clearSensitiveData()` on `CreditCardDataImpl` to zero PAN, CVV, and expiry after API calls
+- Changed `encryptAES()` to return `nil` on failure instead of empty string for fail-safe handling
+- Masked payment tokens in all example app views using `maskedToken()`
+- Sanitized error messages via `sanitizeForDisplay()` / `LogSanitizer` before logging or UI display
+- Added error logging when `SecureValueContainer` encryption fails
+
+### Changed
+
+- HC-1223 fix Build Validation failures in test-and-lint CI workflow (#203)
+- HC-1193: Add expanded documentation, expand test coverage, and cleanup SDK structure (#202)
+- HC-1209: iOS optimize ci/cd time (#201)
+- HC-1216 Migrate gateway-specific 3DS challenge from WKWebView to SFSafariViewController (#200)
+- HC-1209: Optimize CI Workflows for CodeQL and Testing (#199)
+- Datadog initialization now skips gracefully when no client token is configured (local/debug builds)
+- `SecureValueContainer.registerValue` guards against encryption failure with diagnostic logging
+- Improved thread safety in `GatewaySpecific3DSLifecycle` with dedicated `NSLock` for state transitions
+- Extracted `insertProcessingToken` / `removeProcessingToken` helpers in `Spreedly` for safer lock usage
+- Fixed expiration date two-digit year pivot (years 50-99 now map to 1900s)
+- Replaced deprecated `UIApplication.shared.windows` with `connectedScenes` in theme detection
+- Canceled previous Stripe APM checkout before presenting a new one to prevent stale state
+- Downgraded swift-tools-version from 6.1 to 6.0 for broader compatibility
+
+### Documentation
+
+- Updated security guide with os_log persistence warnings, third-party SDK logging guidance, and `rawErrorResponse` handling
+- Recommended `.none` log level for production builds
+- Updated CocoaPods install examples to `~> 1.1` across README and getting-started guide
+- Fixed broken markdown link in Stripe flow doc
+- Removed outdated migration guide from SpreedlyUI DocC catalog
+- Added CVV recaching accessibility hints
+
+### Change Requests
+  - HC-1193
+  - HC-1209
+  - HC-1216
+  - HC-1223
+  - HC-1231
+  - HC-1233
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.1.0 - Minor Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.0")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore', '~> 1.1'
+pod 'SpreedlyUI', '~> 1.1'
+pod 'SpreedlySecurity', '~> 1.1'
+```
 
 ## [1.0.0] - 2026-03-08
 
