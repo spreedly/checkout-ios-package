@@ -478,7 +478,7 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
 };
 
 /// Represents the immediate result of a payment processing attempt.
-/// This class captures the synchronous result of calling processPayment(),
+/// Returned synchronously from processPayment().
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
 /// through the PaymentResult flow.
 /// Compatible with both Swift and Objective-C.
@@ -761,8 +761,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
-/// This enum categorizes the various error conditions that can occur when making
-/// API requests to Spreedly, providing a type-safe way to handle specific error scenarios.
+/// Categorizes error conditions from Spreedly API requests.
 /// Compatible with both Swift and Objective-C.
 /// <h2>Usage</h2>
 /// <h3>Creating from NetworkError (Preferred):</h3>
@@ -1496,7 +1495,7 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
 };
 
 /// Represents the immediate result of a payment processing attempt.
-/// This class captures the synchronous result of calling processPayment(),
+/// Returned synchronously from processPayment().
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
 /// through the PaymentResult flow.
 /// Compatible with both Swift and Objective-C.
@@ -1779,8 +1778,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @end
 
 /// Specific API error types that can be returned by the Spreedly API.
-/// This enum categorizes the various error conditions that can occur when making
-/// API requests to Spreedly, providing a type-safe way to handle specific error scenarios.
+/// Categorizes error conditions from Spreedly API requests.
 /// Compatible with both Swift and Objective-C.
 /// <h2>Usage</h2>
 /// <h3>Creating from NetworkError (Preferred):</h3>

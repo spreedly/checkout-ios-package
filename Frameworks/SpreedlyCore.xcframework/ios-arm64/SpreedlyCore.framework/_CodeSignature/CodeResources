@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/SpreedlyCore-Swift.h</key>
 		<data>
-		vUVjbA2v9k/ej8ioZedQ5of2cSU=
+		LGIUBjw4gTE11F//TwJNpDZZgm4=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -14,23 +14,23 @@
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		8OkTF77vMRhBjg0hE7ezTVJESGQ=
+		sIDj1vmVgQbmMA4wkZ8y+gMjwNc=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		R16ChLDiEDv+/O6NjUGoBhpHDNk=
+		z0hTVJoxl/YTWGlLi2XnnePijHI=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		gL4oJmJJqKdeScP3+FnfqXnTm5M=
+		XDzeP3BHAwNlRaK1Ui2TL8yltvs=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		R16ChLDiEDv+/O6NjUGoBhpHDNk=
+		z0hTVJoxl/YTWGlLi2XnnePijHI=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		dtmI6Egs3LhxNV/+FBu01aa4P88=
+		6TYqubsKHOZl3jKZT0ejWwuFuLA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -52,42 +52,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tzmQaxbjCLeOWr9droJKzXEsBOmMsxR9c/q2etQDjA0=
+			+NG6HkgKKPBnsY9/KaE7ECpjse6u0o3SQQzn7mBC5Qc=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			e1AS71wsUMllFiRaVIFR0gMgteXvUibvpuKdogpKGAQ=
+			76T2QtRHDLCjf9q7q6P4vZX4LumD7mGOtlxoaO69YQY=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HGJJFGLBoc+N6rI85KiQGE590JRp2aVX8cQNTq/zlFA=
+			cRo7YS1C79LFRGZI8DacSFuF0fZ4kja6n3BQlkSrARc=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qiN8LnhVx5FkHmKgLw0HLcbuUBhNeH6+ZAJC6WczDjE=
+			PgK1pRjYQvwxH5W+XEg4emNS6387AQ0xMP9W9PS9gDs=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HGJJFGLBoc+N6rI85KiQGE590JRp2aVX8cQNTq/zlFA=
+			cRo7YS1C79LFRGZI8DacSFuF0fZ4kja6n3BQlkSrARc=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dt7GrE4NszAcY767j2uBx7RB2zdbKwJ5nRDqf15iwWc=
+			TwmyXzDqp/eT5FbF1qhgRNd9CcBJ+0Hn6WN1V8eQDVc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

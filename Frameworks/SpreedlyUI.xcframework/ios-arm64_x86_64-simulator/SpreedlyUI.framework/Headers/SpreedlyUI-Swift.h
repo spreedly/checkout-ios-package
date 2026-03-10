@@ -315,7 +315,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class SPLThemeConfig;
 @class NSCoder;
 /// UIKit wrapper for CVVRecachingView to enable Objective-C integration.
-/// Provides Objective-C compatible API for CVV recaching functionality.
+/// Objective-C API for CVV recaching.
 SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @interface CVVRecachingViewController : UIViewController
 @property (nonatomic, copy) NSString * _Nonnull labelText;
@@ -434,7 +434,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 
 @class UIColor;
 /// Objective-C compatible theme configuration class
-/// Provides a bridge between UIKit colors and SwiftUI themes
+/// Bridges UIKit colors to SwiftUI themes for Objective-C callers
 SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @interface SPLThemeConfig : NSObject
 @property (nonatomic, strong) UIColor * _Nullable primaryColor;
@@ -512,7 +512,7 @@ typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
 };
 
 /// Objective-C compatible theme manager
-/// This class provides Objective-C accessible methods for theme management
+/// Objective-C API for theme management
 SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 @interface SpreedlyThemeManagerObjC : NSObject
 /// Set global theme with separate light and dark themes using SPLThemeConfig
@@ -951,7 +951,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class SPLThemeConfig;
 @class NSCoder;
 /// UIKit wrapper for CVVRecachingView to enable Objective-C integration.
-/// Provides Objective-C compatible API for CVV recaching functionality.
+/// Objective-C API for CVV recaching.
 SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @interface CVVRecachingViewController : UIViewController
 @property (nonatomic, copy) NSString * _Nonnull labelText;
@@ -1070,7 +1070,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 
 @class UIColor;
 /// Objective-C compatible theme configuration class
-/// Provides a bridge between UIKit colors and SwiftUI themes
+/// Bridges UIKit colors to SwiftUI themes for Objective-C callers
 SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @interface SPLThemeConfig : NSObject
 @property (nonatomic, strong) UIColor * _Nullable primaryColor;
@@ -1148,7 +1148,7 @@ typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
 };
 
 /// Objective-C compatible theme manager
-/// This class provides Objective-C accessible methods for theme management
+/// Objective-C API for theme management
 SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 @interface SpreedlyThemeManagerObjC : NSObject
 /// Set global theme with separate light and dark themes using SPLThemeConfig

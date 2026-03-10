@@ -704,4 +704,5 @@ Call `ValidationParamReset.reset()` to reset validation parameters to their defa
 
 - [express-checkout.md](express-checkout.md) – Pre-built payment form with `CardFormDropIn`
 - [theme-and-styling.md](theme-and-styling.md) – Theming and customization
-- [objective-c.md](objective-c.md) -- Objective-C integration with delegates and wrappers
+- [objective-c.md](objective-c.md) – Objective-C integration with delegates and wrappers
+- [CARD_TOKENIZATION_FLOW.md](../development/CARD_TOKENIZATION_FLOW.md) – Detailed flow diagrams for card tokenization
