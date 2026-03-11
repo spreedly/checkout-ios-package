@@ -48,15 +48,15 @@ When you present `DoChallengeIfNeeded`, the SDK manages two internal phases auto
 | Phase | Mechanism | User-visible? |
 |-------|-----------|---------------|
 | **Device fingerprint** | Hidden WKWebView (background, non-interactive) | No — runs silently |
-| **Challenge** | `SFSafariViewController` | Yes — Safari opens with a visible URL bar |
+| **Challenge** | `ASWebAuthenticationSession` | Yes — system-managed secure browser with visible URL bar |
 
 **Device fingerprint:** The SDK injects a hidden 1×1 WKWebView to collect device fingerprint data. This is non-interactive and follows industry standard practice for 3DS device data collection.
 
-**Challenge (`SFSafariViewController`):** When the gateway requires user interaction (e.g. OTP entry or biometric verification), the SDK automatically presents `SFSafariViewController` on top of your challenge view. The visible URL bar prevents phishing during sensitive input, and Safari's cookie sandbox follows Apple's recommended approach for authentication flows.
+**Challenge (`ASWebAuthenticationSession`):** When the gateway requires user interaction (e.g. OTP entry or biometric verification), the SDK presents `ASWebAuthenticationSession` — Apple's endorsed API for web-based authentication. The browser shows the bank's domain (anti-phishing) and intercepts the callback URL scheme automatically, so **no `Info.plist` registration or `onOpenURL` handler is needed** for the default flow. Challenge completion is detected by status polling (every 2 seconds). The `redirect_url` triggers the auth session callback, providing immediate dismissal.
 
-**User cancellation via Safari:** If the user taps **"Done"** in `SFSafariViewController` during the challenge, the SDK treats it as a failure and emits `ThreeDSChallengeResult` with `isFailure == true`. The error message will contain `"3DS challenge canceled by user"`. Handle this in your `isFailure` branch.
+**User cancellation:** If the user taps **"Cancel"** in the authentication session during the challenge, the SDK treats it as a failure and emits `ThreeDSChallengeResult` with `isFailure == true`. The error message will contain `"3DS challenge canceled by user"`. Handle this in your `isFailure` branch.
 
-> **Note:** You do not need to manage Safari presentation or dismissal. The SDK handles this automatically. Your `DoChallengeIfNeeded` view displays a loading spinner while both phases run; Safari is presented on top when the challenge phase begins.
+> **Note:** You do not need to manage the auth session presentation or dismissal. The SDK handles this automatically. Your `DoChallengeIfNeeded` view displays a loading spinner while both phases run; the auth session is presented on top when the challenge phase begins. No `Info.plist` URL scheme or `onOpenURL` handler is required for the default flow.
 
 ---
 
@@ -68,13 +68,13 @@ Same as global 3DS, plus:
 2. Ensure `Spreedly.initializeSDK()` is called at app launch (e.g., in your `App.init()` or `AppDelegate`).
 3. Call `Spreedly.setup(config:)` with environment key and signature parameters before any 3DS calls.
 4. A gateway that requires gateway-specific 3DS (e.g. Worldpay).
-5. **Custom URL scheme registered in `Info.plist`** — The 3DS challenge uses `SFSafariViewController`, which redirects back to your app via a custom URL scheme. See [Info.plist entries](getting-started.md#required-infoplist-entries) in the Getting Started guide.
+5. **No `Info.plist` URL scheme needed for 3DS.** The SDK uses `ASWebAuthenticationSession`, which intercepts the callback internally. Only register `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds` in `Info.plist` if you use the external Safari escape hatch.
 6. When creating the purchase/authorize on your backend, include these parameters:
 
 | Parameter | Value | Purpose |
 |-----------|-------|---------|
 | `attempt_3dsecure` | `true` | Tells Spreedly to attempt 3DS authentication |
-| `redirect_url` | Your custom URL scheme (e.g. `yourapp://3ds/return`) | Where Safari redirects after the challenge completes |
+| `redirect_url` | *(Recommended)* Use `GatewaySpecific3DSIntegration.redirectUrl()` | Triggers the auth session callback for immediate dismissal. The SDK also detects completion via polling as a fallback. |
 | `callback_url` | Your backend URL | For server-to-server notifications |
 | `channel` | `"app"` | Identifies this as a mobile transaction |
 
@@ -89,14 +89,16 @@ The SDK detects that gateway-specific 3DS is needed from the transaction respons
     "amount": 1999,
     "currency_code": "USD",
     "attempt_3dsecure": true,
-    "redirect_url": "yourapp://3ds/return",
+    "redirect_url": "yourapp.spreedly3ds://3ds/redirect",
     "callback_url": "https://yourbackend.com/callback",
     "channel": "app"
   }
 }
 ```
 
-**Example SDK purchase call (from your app):**
+> **Note:** `redirect_url` is recommended. Including it triggers the `ASWebAuthenticationSession` callback for immediate dismissal. The SDK also detects challenge completion via polling as a fallback.
+
+**Example SDK purchase call (Swift):**
 
 ```swift
 let response = try await client.purchase(
@@ -104,16 +106,53 @@ let response = try await client.purchase(
     amount: amountInCents,
     currencyCode: "USD",
     useGatewaySpecific3DS: true,
-    redirectUrl: "yourapp://3ds/return"
+    redirectUrl: GatewaySpecific3DSIntegration.redirectUrl()
 )
 ```
+
+**Example SDK purchase call (Objective-C):**
+
+```objc
+NSString *redirectUrl = [GatewaySpecific3DSObjCBridge redirectUrl];
+
+[client purchaseWithPaymentMethodToken:card.paymentMethodToken
+                                amount:amountInCents
+                          currencyCode:@"USD"
+                  useGatewaySpecific3DS:YES
+                           redirectUrl:redirectUrl
+                            completion:^(PurchaseResponse *response, NSError *error) {
+    // Handle response
+}];
+```
+
+### Redirect URL Helpers
+
+The SDK provides helpers to generate a standardized redirect URL based on your app's bundle identifier. This follows the same convention as the Android SDK.
+
+| Method | Returns |
+|--------|---------|
+| `GatewaySpecific3DSIntegration.deepLinkScheme` | `{bundleId}.spreedly3ds` |
+| `GatewaySpecific3DSIntegration.redirectUrl()` | `{bundleId}.spreedly3ds://3ds/redirect` |
+| `GatewaySpecific3DSIntegration.redirectUrl(path: "custom")` | `{bundleId}.spreedly3ds://custom` |
+
+**Objective-C equivalents:**
+
+| Method | Returns |
+|--------|---------|
+| `GatewaySpecific3DSObjCBridge.deepLinkScheme` | `{bundleId}.spreedly3ds` |
+| `[GatewaySpecific3DSObjCBridge redirectUrl]` | `{bundleId}.spreedly3ds://3ds/redirect` |
+| `[GatewaySpecific3DSObjCBridge redirectUrlWithPath:@"custom"]` | `{bundleId}.spreedly3ds://custom` |
+
+In the **default flow** (`ASWebAuthenticationSession`), the SDK intercepts this redirect automatically — **no `Info.plist` registration or `onOpenURL` handler is needed**.
+
+If you use the **external Safari escape hatch** (opening the challenge in Safari.app), you must also register the scheme in `Info.plist` and handle the URL in `onOpenURL`.
 
 ---
 
 ## Flow
 
 1. **Backend purchase/authorize** returns `transaction.token`.
-2. **App presents** `DoChallengeIfNeeded` with the transaction token. The SDK shows a loading spinner, runs device fingerprint in a hidden WKWebView, and auto-presents `SFSafariViewController` if a challenge is required (see [How the Challenge Works](#how-the-challenge-works)).
+2. **App presents** `DoChallengeIfNeeded` with the transaction token. The SDK shows a loading spinner, runs device fingerprint in a hidden WKWebView, and auto-presents `ASWebAuthenticationSession` if a challenge is required (see [How the Challenge Works](#how-the-challenge-works)).
 3. **SDK emits** `GatewaySpecific3DSTriggerCompletion` when your backend must call `/complete.json`.
 4. **App calls** `GatewaySpecific3DSIntegration.finalizeTransaction(for:transaction:)` with the `/complete.json` response.
 5. **SDK emits** `ThreeDSChallengeResult` with the final outcome.
@@ -523,7 +562,7 @@ The SDK polls `status.json` every 2 seconds for up to approximately 20 seconds (
 - For any other state (`pending`, `failed`, etc.), call `GatewaySpecific3DSIntegration.finalizeTransaction(for:transaction:)` so the SDK can emit `ThreeDSChallengeResult`.
 - Always handle all `ThreeDSChallengeResult` outcomes in your subscriber: `isSuccess`, `isFailure`, `isCanceled`.
 - In `subscribeToThreeDSChallengeResults`, explicitly branch on `isSuccess`/`isFailure`/`isCanceled` so you know where to show success, show errors, or treat user cancel.
-- **Safari "Done" cancellation:** If the user taps "Done" in `SFSafariViewController` during the challenge, the SDK emits `isFailure` (not `isCanceled`) with an error message containing `"3DS challenge canceled by user"`. Check for this string in your `isFailure` handler if you want to distinguish user cancellation from other failures.
+- **Auth session cancellation:** If the user taps "Cancel" in the authentication session during the challenge, the SDK emits `isFailure` (not `isCanceled`) with an error message containing `"3DS challenge canceled by user"`. Check for this string in your `isFailure` handler if you want to distinguish user cancellation from other failures.
 - `isCanceled` is emitted only when `GatewaySpecific3DSIntegration.cancelFlow(for:)` is called programmatically.
 - If the error message contains `"Forced Failure"` (case-insensitive), use your normal error handling to decide what to display to the user.
 
@@ -535,9 +574,9 @@ The SDK polls `status.json` every 2 seconds for up to approximately 20 seconds (
 
 > **Deprecated:** This method always returns `nil` and should not be used.
 
-`GatewaySpecific3DSIntegration.getChallengeContainerView(for:)` previously returned the `WKWebView` used for the challenge. Since the challenge is now presented via `SFSafariViewController`, this method **always returns `nil`**.
+`GatewaySpecific3DSIntegration.getChallengeContainerView(for:)` previously returned the `WKWebView` used for the challenge. Since the challenge is now presented via `ASWebAuthenticationSession`, this method **always returns `nil`**.
 
-If your code calls `getChallengeContainerView`, you can safely remove those calls. No replacement is needed — the SDK manages Safari presentation and dismissal automatically.
+If your code calls `getChallengeContainerView`, you can safely remove those calls. No replacement is needed — the SDK manages the auth session presentation and dismissal automatically.
 
 ---
 
@@ -552,9 +591,9 @@ If your code calls `getChallengeContainerView`, you can safely remove those call
 **Final result not received**
 
 - Ensure `SpreedlyThreeDSChallengeDelegate` is set (Objective-C) or you are subscribed to `subscribeToThreeDSChallengeResults` (Swift) before presenting the challenge.
-- Do not cancel the subscription in `onDisappear` while the challenge is still active. `SFSafariViewController` is presented on top of your `DoChallengeIfNeeded` view, which can trigger `onDisappear` events on the underlying view. Canceling the subscription at that point will prevent you from receiving the final result.
+- Do not cancel the subscription in `onDisappear` while the challenge is still active. `ASWebAuthenticationSession` is presented on top of your `DoChallengeIfNeeded` view, which can trigger `onDisappear` events on the underlying view. Canceling the subscription at that point will prevent you from receiving the final result.
 
-**User taps "Done" in Safari**
+**User taps "Cancel" in the auth session**
 
 - This is treated as a failure. The SDK emits `ThreeDSChallengeResult` with `isFailure == true` and an error containing `"3DS challenge canceled by user"`.
 - Ensure your `isFailure` handler accounts for this scenario (e.g. showing "Payment canceled" instead of a generic error).

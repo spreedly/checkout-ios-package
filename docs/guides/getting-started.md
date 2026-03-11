@@ -84,7 +84,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.0")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.4")
 ],
 targets: [
     .target(
@@ -175,7 +175,7 @@ Add these entries to your app's `Info.plist`:
 | Key | When Required | Purpose |
 |-----|--------------|---------|
 | `NSCameraUsageDescription` | Always | **Required by the Stripe iOS SDK.** The `StripePaymentSheet` module includes built-in card scanning functionality that references camera APIs internally. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
-| `CFBundleURLTypes` | Offsite, Stripe APM, Braintree, Gateway-Specific 3DS | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe/3DS flows, and `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo. |
+| `CFBundleURLTypes` | Offsite, Stripe APM, Braintree; optional for Gateway-Specific 3DS | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe flows, `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo, and optionally `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds` for Gateway-Specific 3DS (improves UX but the SDK detects 3DS completion via polling regardless). |
 | `LSApplicationQueriesSchemes` | Braintree Venmo only | Include `com.venmo.touch.v2` so the app can query whether Venmo is installed. **Without this, Venmo payments will silently fail.** |
 
 > **All three keys should be added to every target** (Swift and Objective-C) that integrates the SDK. The Objective-C target must also include `CFBundleURLSchemes` with `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if it uses Braintree.
@@ -199,6 +199,8 @@ Add these entries to your app's `Info.plist`:
         <array>
             <string>yourapp</string>
             <string>$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree</string>
+            <!-- Optional: for faster Safari dismissal after Gateway-Specific 3DS challenge -->
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds</string>
         </array>
     </dict>
 </array>

@@ -549,6 +549,23 @@ For gateway-specific 3DS (e.g., Worldpay), use `GatewaySpecific3DSObjCBridge` to
 
 - **`finalizeTransactionForTransactionToken:completeResponseData:error:`** — Finalizes a gateway-specific 3DS transaction with the transaction token and the complete response data from the challenge.
 
+### Redirect URL Helpers
+
+The SDK provides helpers to generate a standardized redirect URL for 3DS. The redirect URL is optional — the SDK detects challenge completion via polling regardless — but including it improves UX by dismissing Safari faster.
+
+```objc
+// Get the deep-link scheme (e.g. "com.example.app.spreedly3ds")
+NSString *scheme = GatewaySpecific3DSObjCBridge.deepLinkScheme;
+
+// Get a full redirect URL with default path (e.g. "com.example.app.spreedly3ds://3ds/redirect")
+NSString *redirectUrl = [GatewaySpecific3DSObjCBridge redirectUrl];
+
+// Get a full redirect URL with custom path
+NSString *customRedirectUrl = [GatewaySpecific3DSObjCBridge redirectUrlWithPath:@"3ds/complete"];
+```
+
+Register the scheme in your `Info.plist` under `CFBundleURLSchemes` and forward incoming URLs via `handleOffsiteReturnWithUrl:` (see [URL Handling](#url-handling)).
+
 See [3ds-gateway-specific.md](3ds-gateway-specific.md) for the full flow and setup.
 
 ---

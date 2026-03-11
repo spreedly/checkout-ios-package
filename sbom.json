@@ -3,7 +3,7 @@
   "specVersion": "1.5",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-03-10T14:17:49Z",
+    "timestamp": "2026-03-11T00:00:00Z",
     "tools": [
       {
         "vendor": "GitHub Actions",
@@ -23,7 +23,7 @@
         },
         {
           "name": "build:commit",
-          "value": "c944cf36fb01972cdc9b0be6b6011c9564300bdd"
+          "value": "4078d1df2d716545b1154733c2b91b3f50acceb4"
         },
         {
           "name": "build:repository",
@@ -35,7 +35,7 @@
         },
         {
           "name": "build:run_id",
-          "value": "22906954329"
+          "value": "22864948635"
         }
       ]
     }
@@ -129,8 +129,8 @@
     {
       "type": "library",
       "name": "dd-sdk-ios",
-      "version": "3.1.0",
-      "purl": "pkg:github/DataDog/dd-sdk-ios@3.1.0",
+      "version": "3.7.0",
+      "purl": "pkg:github/DataDog/dd-sdk-ios@3.7.0",
       "scope": "optional",
       "properties": [
         {
@@ -138,12 +138,71 @@
           "value": "direct"
         }
       ]
+    },
+    {
+      "type": "library",
+      "name": "stripe-ios-spm",
+      "version": "25.7.0",
+      "purl": "pkg:github/stripe/stripe-ios-spm@25.7.0",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "dependency:type",
+          "value": "direct"
+        },
+        {
+          "name": "dependency:module",
+          "value": "SpreedlyStripeAPM"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "braintree_ios",
+      "version": "7.4.0",
+      "purl": "pkg:github/braintree/braintree_ios@7.4.0",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "dependency:type",
+          "value": "direct"
+        },
+        {
+          "name": "dependency:module",
+          "value": "SpreedlyBraintree"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "forter-ios",
+      "version": "2.1.0",
+      "purl": "pkg:bitbucket/forter-mobile/forter-ios@2.1.0",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "dependency:type",
+          "value": "direct"
+        },
+        {
+          "name": "dependency:linking",
+          "value": "weak"
+        },
+        {
+          "name": "dependency:module",
+          "value": "SpreedlyCore"
+        }
+      ]
     }
   ],
   "dependencies": [
     {
       "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.1.4",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.1.4",
+        "pkg:github/DataDog/dd-sdk-ios@3.7.0",
+        "pkg:bitbucket/forter-mobile/forter-ios@2.1.0"
+      ]
     },
     {
       "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.1.4",
@@ -151,15 +210,24 @@
     },
     {
       "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.1.4",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.1.4",
+        "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.1.4"
+      ]
     },
     {
       "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyStripeAPM@v1.1.4",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.1.4",
+        "pkg:github/stripe/stripe-ios-spm@25.7.0"
+      ]
     },
     {
       "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyBraintree@v1.1.4",
-      "dependsOn": []
+      "dependsOn": [
+        "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.1.4",
+        "pkg:github/braintree/braintree_ios@7.4.0"
+      ]
     }
   ]
 }
