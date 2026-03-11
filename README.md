@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.1.3-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.1.4-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -25,7 +25,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.3")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.4")
 ]
 ```
 
@@ -82,7 +82,9 @@ Replace `{GitToken}` with your GitHub personal access token that has read access
 
 ## Integration Guides
 
-Get started quickly with the [Getting Started Guide](docs/guides/getting-started.md), then follow the guide for your use case:
+Get started quickly with the [Getting Started Guide](docs/guides/getting-started.md), then follow the guide for your use case.
+
+> **API Reference:** DocC documentation catalogs are included in the source SDK for SpreedlyCore, SpreedlyUI, SpreedlySecurity, and SpreedlyAnalytics. Build them locally with `xcodebuild docbuild` or browse inline in Xcode via **Product > Build Documentation**.
 
 ### Payments
 
@@ -108,7 +110,17 @@ Get started quickly with the [Getting Started Guide](docs/guides/getting-started
 - **[Custom Payment Forms](docs/guides/custom-payment-forms.md)** -- Build custom payment forms with SPLTextField
 - **[Theme & Styling](docs/guides/theme-and-styling.md)** -- Customize colors, typography, and dark mode
 - **[Security](docs/guides/security.md)** -- Screen prevention and PCI compliance
+- **[Privacy](docs/guides/privacy.md)** -- Data handling, privacy manifest, and App Store compliance
 - **[Objective-C](docs/guides/objective-c.md)** -- Objective-C integration with delegates and wrappers
+- **[Troubleshooting](docs/guides/troubleshooting.md)** -- Common issues and solutions
+
+## SDK Lifecycle
+
+| Major Version | Status | Released | Deprecated | End-of-Life |
+|---|---|---|---|---|
+| 1.x.x | Active | March 2026 | --- | --- |
+
+More information about versioning and the SDK lifecycle can be found in the [CHANGELOG](CHANGELOG.md) and [MIGRATION](MIGRATION.md) guide.
 
 ## Compatibility
 
@@ -152,6 +164,9 @@ Get started quickly with the [Getting Started Guide](docs/guides/getting-started
 - **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-sdk/issues)
 - **Package Verification**: [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
+- **Migration Guide**: [MIGRATION.md](MIGRATION.md)
+- **Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Security**: [SECURITY.md](SECURITY.md)
 
 ## License
 

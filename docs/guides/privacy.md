@@ -1,6 +1,4 @@
-# Platform-Specific Privacy Requirements
-
-## Overview
+# Privacy and Data Handling - Spreedly iOS SDK
 
 This document outlines the privacy requirements and data handling practices for the Spreedly iOS SDK. The SDK is designed with privacy-first principles, ensuring that sensitive payment card data is processed securely and never stored persistently.
 
@@ -72,14 +70,8 @@ When using the Spreedly iOS SDK, you should include in your app's privacy policy
 - That data transmission is encrypted
 - That no user tracking or analytics is performed by the SDK
 
-## Support
+## Related Documentation
 
-For questions about privacy and data handling:
-- Review the [Spreedly Privacy Policy](https://www.spreedly.com/privacy)
-- Contact Spreedly support for privacy-related inquiries
-- Review the [Integration Guide](INTEGRATION_GUIDE.md) for implementation details
-
-## Version History
-
-- **1.0.0** (Initial Release): Initial privacy documentation and PrivacyInfo.xcprivacy manifest
-
+- [Security](security.md) -- Screen prevention and PCI compliance
+- [Getting Started](getting-started.md) -- Installation and initialization
+- [Spreedly Privacy Policy](https://www.spreedly.com/privacy)
