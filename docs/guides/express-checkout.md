@@ -289,7 +289,7 @@ CardFormDropIn(
             // Validation passed and request started; show loading
         } else if result.isValidationFailed {
             // Validation failed; show field errors
-            print(sanitizeForDisplay(result.getDescription()))
+            print(result.getDescription())
         }
     }
 )

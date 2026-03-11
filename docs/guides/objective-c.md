@@ -99,7 +99,7 @@ Adopt the `SpreedlyPaymentDelegate` protocol to receive payment results:
         }
     } else if (result.isFailure) {
         if (result.failureDetails) {
-            NSLog(@"Payment failed: %@", sanitizeForDisplay([result.failureDetails getDescription]));
+            NSLog(@"Payment failed: %@", [result.failureDetails getDescription]);
         }
     }
 }
@@ -127,7 +127,7 @@ CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
         if (result.isProcessing) {
             // Validation passed, request started; show loading
         } else if (result.isValidationFailed) {
-            NSLog(@"Validation failed: %@", sanitizeForDisplay([result getDescription]));
+            NSLog(@"Validation failed: %@", [result getDescription]);
         }
     }];
 
@@ -139,7 +139,7 @@ UIViewController *secureVC = [dropInVC wrapInSecureViewControllerWithPlaceholder
     if (result.isSuccess) {
         // Use result.token for your payment processing
     } else if (result.isFailure) {
-        NSLog(@"Payment failed: %@", sanitizeForDisplay([result.failureDetails getDescription]));
+        NSLog(@"Payment failed: %@", [result.failureDetails getDescription]);
     }
 }
 ```
@@ -168,7 +168,7 @@ CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
         if (result.isProcessing) {
             // Validation passed, request started; show loading
         } else if (result.isValidationFailed) {
-            NSLog(@"Validation failed: %@", sanitizeForDisplay([result getDescription]));
+            NSLog(@"Validation failed: %@", [result getDescription]);
         }
     }];
 
@@ -219,7 +219,7 @@ CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
         if (result.isProcessing) {
             // Validation passed, request started; show loading
         } else if (result.isValidationFailed) {
-            NSLog(@"Validation failed: %@", sanitizeForDisplay([result getDescription]));
+            NSLog(@"Validation failed: %@", [result getDescription]);
         }
     }];
 
@@ -597,10 +597,10 @@ PaymentProcessingResult *processingResult = [[Spreedly shared]
 
 if (processingResult.isValidationFailed) {
     if (processingResult.invalidFields.count > 0) {
-        NSLog(@"Invalid SDK fields: %@", sanitizeForDisplay([processingResult.invalidFields description]));
+        NSLog(@"Invalid SDK fields: %@", [processingResult.invalidFields description]);
     }
     if (processingResult.invalidAdditionalFields.count > 0) {
-        NSLog(@"Invalid additional fields: %@", sanitizeForDisplay([processingResult.invalidAdditionalFields description]));
+        NSLog(@"Invalid additional fields: %@", [processingResult.invalidAdditionalFields description]);
     }
 }
 ```

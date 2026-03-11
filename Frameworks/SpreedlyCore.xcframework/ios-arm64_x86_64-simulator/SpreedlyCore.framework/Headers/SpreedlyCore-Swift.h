@@ -440,6 +440,15 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 /// throws:
 /// NSError if decoding fails or transaction is missing
 + (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
+/// Deep-link scheme for 3DS browser returns (e.g. <code>com.example.app.spreedly3ds</code>).
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull deepLinkScheme;)
++ (NSString * _Nonnull)deepLinkScheme SWIFT_WARN_UNUSED_RESULT;
+/// Builds a redirect URL with the default path (<code>3ds/redirect</code>).
++ (NSString * _Nonnull)redirectUrl SWIFT_WARN_UNUSED_RESULT;
+/// Builds a redirect URL with a custom path.
+/// \param path Path component (e.g. <code>"3ds/complete"</code>).
+///
++ (NSString * _Nonnull)redirectUrlWithPath:(NSString * _Nonnull)path SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -672,6 +681,9 @@ enum ValidationParam : NSInteger;
 @class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
+/// Masks a token for safe display: shows first 4 and last 4 characters.
+/// Requires at least 4 hidden characters to avoid near-full exposure of short tokens.
++ (NSString * _Nonnull)maskedToken:(NSString * _Nonnull)token SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 /// Objective-C compatible delegate for payment result callbacks
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
@@ -760,6 +772,16 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)emitThreeDSChallengeResult:(ThreeDSChallengeResult * _Nonnull)result;
 @end
 
+@class SpreedlyLoggerConfiguration;
+@interface Spreedly (SWIFT_EXTENSION(SpreedlyCore))
+/// Disable all console output. Datadog and custom logger unaffected.
++ (void)disableLogging;
+/// <code>true</code> when console logging is active (level != <code>.none</code>).
++ (BOOL)isLoggingEnabled SWIFT_WARN_UNUSED_RESULT;
+/// Apply a <code>SpreedlyLoggerConfiguration</code> preset — sets both console and Datadog levels.
++ (void)configureLogging:(SpreedlyLoggerConfiguration * _Nonnull)config;
+@end
+
 /// Specific API error types that can be returned by the Spreedly API.
 /// Categorizes error conditions from Spreedly API requests.
 /// Compatible with both Swift and Objective-C.
@@ -828,21 +850,64 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
 @property (nonatomic, copy) NSString * _Nullable timestamp;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
+/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
+/// React Native bridges should set this to <code>"react_native"</code>.
+@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
 @end
 
+/// Configuration for the Spreedly SDK, providing credentials and optional 3DS/Forter settings.
 SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @interface SpreedlyConfig : NSObject <SpreedlyConfigGenerator>
+/// Spreedly environment key used to authenticate API requests.
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
+/// Forter site ID for 3DS fraud detection. Required only when using Forter-powered Global 3DS.
 @property (nonatomic, copy) NSString * _Nullable forterSiteId;
+/// Certificate token for HMAC signature-based authentication.
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
+/// One-time nonce combined with timestamp and certificateToken to generate the request signature.
 @property (nonatomic, copy) NSString * _Nullable nonce;
+/// HMAC-SHA256 signature computed from nonce + timestamp + certificateToken.
 @property (nonatomic, copy) NSString * _Nullable signature;
+/// UTC timestamp paired with nonce for signature validation. Must be within the server’s tolerance window.
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp OBJC_DESIGNATED_INITIALIZER;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
+/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
+/// React Native bridges should set this to <code>"react_native"</code>.
+@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(NSString * _Nullable)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
 /// Objective-C compatible convenience initializer
 /// \param environmentKey Spreedly environment key
 ///
 - (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Preset logging configurations matching Android’s <code>LoggerConfiguration</code>.
+/// Use with <code>Spreedly.configureLogging(_:)</code>. Fluent builders return new copies.
+/// seealso:
+/// <code>getting-started.md</code> → “Logging & Observability” for usage examples.
+/// seealso:
+/// <code>SDK_TECHNICAL_SPECIFICATION.md</code> → Section 10.2 for presets table.
+SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyLoggerConfiguration")
+@interface SpreedlyLoggerConfiguration : NSObject
+/// Console off, Datadog at <code>.warn</code>. Recommended for production.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull production;)
++ (SpreedlyLoggerConfiguration * _Nonnull)production SWIFT_WARN_UNUSED_RESULT;
+/// Console on at <code>.debug</code>. Good default for development.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull debug;)
++ (SpreedlyLoggerConfiguration * _Nonnull)debug SWIFT_WARN_UNUSED_RESULT;
+/// Console on at <code>.verbose</code>. Maximum detail.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull verbose;)
++ (SpreedlyLoggerConfiguration * _Nonnull)verbose SWIFT_WARN_UNUSED_RESULT;
+/// All logging off.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull disabled;)
++ (SpreedlyLoggerConfiguration * _Nonnull)disabled SWIFT_WARN_UNUSED_RESULT;
+/// New config with console <em>enabled</em>, same level.
+- (SpreedlyLoggerConfiguration * _Nonnull)enable SWIFT_WARN_UNUSED_RESULT;
+/// New config with console <em>disabled</em>, same level.
+- (SpreedlyLoggerConfiguration * _Nonnull)disable SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1457,6 +1522,15 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 /// throws:
 /// NSError if decoding fails or transaction is missing
 + (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
+/// Deep-link scheme for 3DS browser returns (e.g. <code>com.example.app.spreedly3ds</code>).
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull deepLinkScheme;)
++ (NSString * _Nonnull)deepLinkScheme SWIFT_WARN_UNUSED_RESULT;
+/// Builds a redirect URL with the default path (<code>3ds/redirect</code>).
++ (NSString * _Nonnull)redirectUrl SWIFT_WARN_UNUSED_RESULT;
+/// Builds a redirect URL with a custom path.
+/// \param path Path component (e.g. <code>"3ds/complete"</code>).
+///
++ (NSString * _Nonnull)redirectUrlWithPath:(NSString * _Nonnull)path SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1689,6 +1763,9 @@ enum ValidationParam : NSInteger;
 @class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
+/// Masks a token for safe display: shows first 4 and last 4 characters.
+/// Requires at least 4 hidden characters to avoid near-full exposure of short tokens.
++ (NSString * _Nonnull)maskedToken:(NSString * _Nonnull)token SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 /// Objective-C compatible delegate for payment result callbacks
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
@@ -1777,6 +1854,16 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)emitThreeDSChallengeResult:(ThreeDSChallengeResult * _Nonnull)result;
 @end
 
+@class SpreedlyLoggerConfiguration;
+@interface Spreedly (SWIFT_EXTENSION(SpreedlyCore))
+/// Disable all console output. Datadog and custom logger unaffected.
++ (void)disableLogging;
+/// <code>true</code> when console logging is active (level != <code>.none</code>).
++ (BOOL)isLoggingEnabled SWIFT_WARN_UNUSED_RESULT;
+/// Apply a <code>SpreedlyLoggerConfiguration</code> preset — sets both console and Datadog levels.
++ (void)configureLogging:(SpreedlyLoggerConfiguration * _Nonnull)config;
+@end
+
 /// Specific API error types that can be returned by the Spreedly API.
 /// Categorizes error conditions from Spreedly API requests.
 /// Compatible with both Swift and Objective-C.
@@ -1845,21 +1932,64 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
 @property (nonatomic, copy) NSString * _Nullable timestamp;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
+/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
+/// React Native bridges should set this to <code>"react_native"</code>.
+@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
 @end
 
+/// Configuration for the Spreedly SDK, providing credentials and optional 3DS/Forter settings.
 SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @interface SpreedlyConfig : NSObject <SpreedlyConfigGenerator>
+/// Spreedly environment key used to authenticate API requests.
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
+/// Forter site ID for 3DS fraud detection. Required only when using Forter-powered Global 3DS.
 @property (nonatomic, copy) NSString * _Nullable forterSiteId;
+/// Certificate token for HMAC signature-based authentication.
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
+/// One-time nonce combined with timestamp and certificateToken to generate the request signature.
 @property (nonatomic, copy) NSString * _Nullable nonce;
+/// HMAC-SHA256 signature computed from nonce + timestamp + certificateToken.
 @property (nonatomic, copy) NSString * _Nullable signature;
+/// UTC timestamp paired with nonce for signature validation. Must be within the server’s tolerance window.
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp OBJC_DESIGNATED_INITIALIZER;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
+/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
+/// React Native bridges should set this to <code>"react_native"</code>.
+@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(NSString * _Nullable)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
 /// Objective-C compatible convenience initializer
 /// \param environmentKey Spreedly environment key
 ///
 - (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Preset logging configurations matching Android’s <code>LoggerConfiguration</code>.
+/// Use with <code>Spreedly.configureLogging(_:)</code>. Fluent builders return new copies.
+/// seealso:
+/// <code>getting-started.md</code> → “Logging & Observability” for usage examples.
+/// seealso:
+/// <code>SDK_TECHNICAL_SPECIFICATION.md</code> → Section 10.2 for presets table.
+SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyLoggerConfiguration")
+@interface SpreedlyLoggerConfiguration : NSObject
+/// Console off, Datadog at <code>.warn</code>. Recommended for production.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull production;)
++ (SpreedlyLoggerConfiguration * _Nonnull)production SWIFT_WARN_UNUSED_RESULT;
+/// Console on at <code>.debug</code>. Good default for development.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull debug;)
++ (SpreedlyLoggerConfiguration * _Nonnull)debug SWIFT_WARN_UNUSED_RESULT;
+/// Console on at <code>.verbose</code>. Maximum detail.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull verbose;)
++ (SpreedlyLoggerConfiguration * _Nonnull)verbose SWIFT_WARN_UNUSED_RESULT;
+/// All logging off.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLoggerConfiguration * _Nonnull disabled;)
++ (SpreedlyLoggerConfiguration * _Nonnull)disabled SWIFT_WARN_UNUSED_RESULT;
+/// New config with console <em>enabled</em>, same level.
+- (SpreedlyLoggerConfiguration * _Nonnull)enable SWIFT_WARN_UNUSED_RESULT;
+/// New config with console <em>disabled</em>, same level.
+- (SpreedlyLoggerConfiguration * _Nonnull)disable SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

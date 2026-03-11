@@ -307,18 +307,6 @@ let theme = SpreedlyThemeManager.createThemeFromAndroidConfig(
 
 This maps Android-style theme parameters to `SpreedlyColors` and `SpreedlyBorderRadius`, so you can share the same design tokens across iOS and Android.
 
-#### Android Color Mapping
-
-| Android Concept | SpreedlyUI Property | Description |
-|---|---|---|
-| `primaryColor` | `primary` | Main brand color for buttons, links, and highlights |
-| `secondaryColor` | `secondary` | Secondary brand color for accents and borders |
-| `formBorderColor` | `border` | Color for form field borders |
-| `formBackgroundColor` | `background` | Background color for form containers |
-| `fieldBackgroundColor` | `surface` | Background color for individual input fields |
-| `fieldLabelColor` | `textSecondary` | Color for field labels and placeholder text |
-| `borderRadius` | `borderRadius` | Corner radius for form elements |
-
 ### SpreedlyTypography Properties
 
 Use `SpreedlyFont.system(size:weight:design:)` or `SpreedlyFont.custom(fontName:size:weight:design:)` for typography. Properties: `titleFont`, `subtitleFont`, `bodyFont`, `captionFont`, `buttonFont`, `fieldFont`.
@@ -470,60 +458,6 @@ CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
 [self presentViewController:recachingVC animated:YES completion:nil];
 ```
 
-### CardFormDropInViewController (Objective-C)
-
-```objc
-#import <SpreedlyUI/SpreedlyUI-Swift.h>
-
-SPLThemeConfig *lightThemeConfig = [[SPLThemeConfig alloc]
-    initWithPrimaryColorHex:@"#0077C8"
-    secondaryColorHex:@"#AFB4B5"
-    formBorderColorHex:@"#D9D9D9"
-    formBackgroundColorHex:@"#FFFFFF"
-    fieldBackgroundColorHex:@"#F8F9FA"
-    fieldLabelColorHex:@"#6C757D"
-    borderRadius:8.0];
-
-SPLThemeConfig *darkThemeConfig = [[SPLThemeConfig alloc]
-    initWithPrimaryColorHex:@"#00A0FF"
-    secondaryColorHex:@"#6C757D"
-    formBorderColorHex:@"#4A4A4A"
-    formBackgroundColorHex:@"#1C1C1E"
-    fieldBackgroundColorHex:@"#2C2C2E"
-    fieldLabelColorHex:@"#AEAEB2"
-    borderRadius:8.0];
-
-CardFormDropInViewController *dropInVC = [[CardFormDropInViewController alloc]
-    initWithOtherFields:@[]
-    yearFormat:YearFormatFourDigit
-    nameDisplayMode:DropInNameDisplayModeSeparateFields
-    lightThemeConfig:lightThemeConfig
-    darkThemeConfig:darkThemeConfig
-    onProcessingResult:^(PaymentProcessingResult *result) {
-        // Handle result
-    }];
-```
-
-### SPLTextFieldViewController (Objective-C)
-
-```objc
-#import <SpreedlyUI/SpreedlyUI-Swift.h>
-
-SPLTextFieldViewController *textFieldVC = [[SPLTextFieldViewController alloc]
-    initWithField:FormFieldTypeFullName
-    title:@"Full Name"
-    isRequired:YES
-    placeholder:@"Enter your full name"
-    keyboardType:UIKeyboardTypeDefault
-    textContentType:UITextContentTypeName
-    lightThemeConfig:lightThemeConfig
-    darkThemeConfig:darkThemeConfig
-    onValidationChange:^(BOOL isValid) {
-        // Handle validation
-    }
-    onFocus:nil];
-```
-
 ---
 
 ## Light and Dark Mode
@@ -570,19 +504,6 @@ CardFormDropIn(
 ### Dynamic Type
 
 The SDK respects the user's Dynamic Type settings. Text sizes scale automatically based on the system font size preference. No additional configuration is required.
-
-#### Font Mapping
-
-Each `SpreedlyTypography` font type maps to an iOS text style for optimal accessibility scaling:
-
-| Font Type | Text Style | Base Size |
-|---|---|---|
-| `titleFont` | `.largeTitle` | 32pt |
-| `subtitleFont` | `.title2` | 18pt |
-| `bodyFont` | `.body` | 16pt |
-| `captionFont` | `.caption1` | 12pt |
-| `buttonFont` | `.headline` | 20pt |
-| `fieldFont` | `.body` | 18pt |
 
 ### Bold Text
 

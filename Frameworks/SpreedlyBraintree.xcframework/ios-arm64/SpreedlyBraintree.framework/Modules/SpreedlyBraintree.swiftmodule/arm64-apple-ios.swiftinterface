@@ -10,6 +10,11 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@objc @_inheritsConvenienceInitializers @objcMembers public class BraintreeURLHandlerObjC : ObjectiveC.NSObject {
+  @objc(handleOpenWithUrl:) public static func handleOpen(url: Foundation.URL) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
 @objc @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyBraintreeCheckout : ObjectiveC.NSObject {
   @objc public static var isAvailable: Swift.Bool {
     @objc get
@@ -28,9 +33,4 @@ public enum BraintreeURLHandler {
   public static let schemeSuffix: Swift.String
   @discardableResult
   public static func handleOpen(url: Foundation.URL) -> Swift.Bool
-}
-@objc @_inheritsConvenienceInitializers @objcMembers public class BraintreeURLHandlerObjC : ObjectiveC.NSObject {
-  @objc(handleOpenWithUrl:) public static func handleOpen(url: Foundation.URL) -> Swift.Bool
-  @objc override dynamic public init()
-  @objc deinit
 }
