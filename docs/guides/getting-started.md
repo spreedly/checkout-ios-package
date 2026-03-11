@@ -175,8 +175,8 @@ Add these entries to your app's `Info.plist`:
 | Key | When Required | Purpose |
 |-----|--------------|---------|
 | `NSCameraUsageDescription` | Always | **Required by the Stripe iOS SDK.** The `StripePaymentSheet` module includes built-in card scanning functionality that references camera APIs internally. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
-| `CFBundleURLTypes` | Offsite, Stripe APM, Braintree; optional for Gateway-Specific 3DS | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe flows, `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo, and optionally `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds` for Gateway-Specific 3DS (improves UX but the SDK detects 3DS completion via polling regardless). |
-| `LSApplicationQueriesSchemes` | Braintree Venmo only | Include `com.venmo.touch.v2` so the app can query whether Venmo is installed. **Without this, Venmo payments will silently fail.** |
+| `CFBundleURLTypes` | Offsite, Stripe APM, Braintree | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe flows and `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo. **Gateway-Specific 3DS no longer needs a URL scheme** — the SDK uses `ASWebAuthenticationSession`, which handles the callback internally. |
+| `LSApplicationQueriesSchemes` | Braintree PayPal/Venmo | Include `paypal` so the SDK can detect the PayPal app for App Switch. Optionally include `com.venmo.touch.v2` (Braintree v6 legacy; v7 Venmo uses Universal Links and does not call `canOpenURL`). |
 
 > **All three keys should be added to every target** (Swift and Objective-C) that integrates the SDK. The Objective-C target must also include `CFBundleURLSchemes` with `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if it uses Braintree.
 
@@ -199,13 +199,12 @@ Add these entries to your app's `Info.plist`:
         <array>
             <string>yourapp</string>
             <string>$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree</string>
-            <!-- Optional: for faster Safari dismissal after Gateway-Specific 3DS challenge -->
-            <string>$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds</string>
         </array>
     </dict>
 </array>
 <key>LSApplicationQueriesSchemes</key>
 <array>
+    <string>paypal</string>
     <string>com.venmo.touch.v2</string>
 </array>
 ```
@@ -375,9 +374,10 @@ class SpreedlyConfigManager {
                 nonce: signatureParams.nonce,
                 signature: signatureParams.signature,
                 timestamp: String(signatureParams.timestamp)
+                // sdkPlatform: "ios"  // default; pass "react_native" for RN bridges
             ))
         } catch {
-            print("Failed to configure Spreedly: \(sanitizeForDisplay(error.localizedDescription))")
+            print("Failed to configure Spreedly: \(error.localizedDescription)")
         }
     }
 }
@@ -392,9 +392,92 @@ func fetchSignatureFromBackend() async throws -> SignatureParameters {
 
 **Singleton pattern:** Both `static let shared` and `static var shared` with a `setup()` method are valid patterns for your config manager.
 
-**Datadog logging:** To control Datadog log verbosity, call `Spreedly.setDatadogLogLevel(_: LogLevel)` (e.g. `Spreedly.setDatadogLogLevel(.debug)` or `Spreedly.setDatadogLogLevel(.warn)`). Use this in addition to `Spreedly.setLogLevel(_:)` if your app uses Datadog for observability.
-
 Call `configureSpreedly()` before presenting any payment form or initiating any payment operation (for example, when the user navigates to checkout).
+
+### Logging & Observability (Optional)
+
+The SDK provides a full logging API matching the Android SDK for cross-platform parity.
+
+**Quick preset (recommended):**
+
+```swift
+// During development
+Spreedly.configureLogging(.debug)
+
+// In production (disables console, Datadog at .warn only)
+Spreedly.configureLogging(.production)
+```
+
+| Preset | Console (os_log) | Min Level |
+|--------|-----------------|-----------|
+| `.production` | Off | `.warn` |
+| `.debug` | On | `.debug` |
+| `.verbose` | On | `.verbose` |
+| `.disabled` | Off | `.none` |
+
+**Fine-grained control:**
+
+```swift
+Spreedly.setLogLevel(.info)             // Console (os_log) level
+Spreedly.setDatadogLogLevel(.warn)      // Datadog level (independent)
+Spreedly.enableLogging()                // Enable console at .debug
+Spreedly.disableLogging()               // Disable console
+let enabled = Spreedly.isLoggingEnabled()
+```
+
+**Custom logger — forward SDK logs to your own backend:**
+
+Implement the `SpreedlyLogger` protocol and inject it. All messages are PCI-sanitized before delivery (card numbers, CVV, tokens are redacted). The SDK holds a **weak** reference, so you must keep a strong reference elsewhere.
+
+```swift
+final class MyCrashlyticsLogger: SpreedlyLogger {
+    var minLogLevel: LogLevel = .warn
+
+    func verbose(tag: String, message: String, error: Error?) { }
+    func debug(tag: String, message: String, error: Error?)   { }
+    func info(tag: String, message: String, error: Error?)    { }
+    func warn(tag: String, message: String, error: Error?) {
+        Crashlytics.crashlytics().log("[\(tag)] \(message)")
+    }
+    func error(tag: String, message: String, error: Error?) {
+        Crashlytics.crashlytics().log("[\(tag)] \(message)")
+        if let error { Crashlytics.crashlytics().record(error: error) }
+    }
+    func isLoggable(level: LogLevel) -> Bool {
+        level.shouldLog(minLevel: minLogLevel)
+    }
+}
+
+// Keep a strong reference
+let logger = MyCrashlyticsLogger()
+Spreedly.setLogger(logger)
+
+// Remove later if needed
+Spreedly.setLogger(nil)
+```
+
+**Objective-C:**
+
+```objc
+[Spreedly configureLogging:SpreedlyLoggerConfiguration.debug];
+[Spreedly setLogLevel:LogLevelWarn];
+[Spreedly setDatadogLogLevel:LogLevelError];
+```
+
+**React Native:** Set `sdkPlatform` to `"react_native"` in `SpreedlyConfig` so telemetry events are tagged correctly. All logging APIs above work the same from the native bridge.
+
+> **SDK developers: Datadog logging behavior**
+>
+> The Datadog logger defaults to `.debug` level when `DatadogConfig.clientToken` is non-empty. Diagnostic logs and structured telemetry events (e.g. `sdk_initialized`, `tokenization_success`) flow to Datadog immediately without any merchant call. If you see no logs reaching Datadog, check these in order:
+>
+> 1. **Client token is empty** — `DatadogConfig.clientToken` is `""` in local builds. CI overwrites it; for local testing you must set it manually.
+> 2. **Datadog modules not linked** — the `#if canImport(DatadogCore) && canImport(DatadogLogs)` guard strips all Datadog code if the packages are missing from the target.
+> 3. **Log level set to `.none`** — calling `setDatadogLogLevel(.none)` silences all logs _and_ telemetry events because `emitEvent()` respects the same level gate.
+> 4. **Early events dropped** — telemetry events like `sdk_initialized` fire during `Spreedly.initializeSDK()`. If a caller resets the Datadog log level to `.none` before that point, these events are lost. The default `.debug` level prevents this.
+>
+> These conditions apply equally to the native iOS SDK and the React Native bridge.
+
+See [Security — Logging Security](security.md#logging-security) for production recommendations and PCI compliance details.
 
 ### Objective-C Setup
 

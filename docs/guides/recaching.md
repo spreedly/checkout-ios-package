@@ -202,7 +202,7 @@ let config = RecacheConfig(cardInfo: cardInfo)
             // Use result.token for your payment processing
         } else if result.isFailure {
             if let failureDetails = result.failureDetails {
-                print("Recaching failed: \(sanitizeForDisplay(failureDetails.getDescription()))")
+                print("Recaching failed: \(failureDetails.getDescription())")
             }
             showCVVRecaching = false
         }
@@ -313,7 +313,7 @@ struct SavedCardsView: View {
                     print("CVV recached successfully")
                 } else if result.isFailure {
                     if let failureDetails = result.failureDetails {
-                        print("Recaching failed: \(sanitizeForDisplay(failureDetails.getDescription()))")
+                        print("Recaching failed: \(failureDetails.getDescription())")
                     }
                     showCVVRecaching = false
                 }
@@ -459,7 +459,7 @@ Use `CVVRecachingViewController` with alloc/init and the same parameters. Implem
         }
     } else if (result.isFailure) {
         if (result.failureDetails) {
-            NSLog(@"Recaching failed: %@", sanitizeForDisplay([result.failureDetails getDescription]));
+            NSLog(@"Recaching failed: %@", [result.failureDetails getDescription]);
         }
         if (self.presentedViewController) {
             [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];

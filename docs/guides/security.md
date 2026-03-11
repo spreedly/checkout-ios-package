@@ -295,7 +295,7 @@ When using Combine publishers (for example, `subscribeToPaymentResults`), cancel
 
 ## Logging Security
 
-The SDK's logging system automatically redacts sensitive data:
+The SDK's logging system automatically redacts sensitive data via `LogSanitizer`:
 
 - **Card numbers** (13-19 digit PANs) are sanitized in log output
 - **Expiry dates** are redacted when preceded by expiry-related keywords
@@ -303,24 +303,74 @@ The SDK's logging system automatically redacts sensitive data:
 - **CVV/CVC** and other sensitive fields are never logged
 - **Phone numbers** and emails are redacted in sensitive contexts
 - **Card data in JSON payloads** (e.g. `"number": "4111..."`) is caught
+- **URL path tokens** (`transactions/TOKEN/...`) are masked — both versioned (`/v1/transactions/TOKEN`) and non-versioned paths are caught
+- **Token identification heuristic**: a path segment is treated as a token only if it is 6+ characters _and_ contains at least one digit, which prevents false positives on endpoint names like `restricted`
+
+### URL Token Sanitization (Defense in Depth)
+
+URL path tokens are sanitized at two layers:
+
+1. **`NetworkClient.extractEndpointPath()`** masks token-like segments _before_ the message is even constructed. This is the primary defense.
+2. **`LogSanitizer`** regex catches any tokens that survive in the final log string. The regex matches `transactions/<token>` and `payment_methods/<token>` with or without a `/v1/` prefix.
+
+Both layers use the same heuristic: a segment is a token candidate if it is 6+ alphanumeric characters containing at least one digit. This avoids masking legitimate endpoint names (e.g. `payment_methods/restricted`).
+
+If you add new API endpoints that contain sensitive identifiers in the URL path, update both `extractEndpointPath()` in `NetworkClient.swift` and the `urlPathTokenPattern` regex in `SpreedlyLogger.swift`.
 
 ### Production Recommendations
 
-- Set log level to `.none` or `.error` in production
-- Never log CVV or full card numbers
-- Avoid `logDebug` and `logVerbose` in production builds
+Use `SpreedlyLoggerConfiguration` presets for one-step setup:
 
 ```swift
 #if DEBUG
-Spreedly.setLogLevel(.debug)
+Spreedly.configureLogging(.debug)     // console on, min .debug
 #else
-Spreedly.setLogLevel(.none)
+Spreedly.configureLogging(.production) // console off, Datadog at .warn
 #endif
+```
+
+Or use fine-grained control:
+
+```swift
+Spreedly.setLogLevel(.none)           // suppress all console output
+Spreedly.setDatadogLogLevel(.error)   // Datadog receives errors only
+Spreedly.disableLogging()             // equivalent to setLogLevel(.none)
+```
+
+- Avoid `.debug` and `.verbose` in production builds
+- Never log CVV or full card numbers in your own code
+
+### Custom Logger PCI Compliance
+
+When you inject a custom logger via `Spreedly.setLogger(_:)`:
+
+- **All messages are sanitized** before delivery — card numbers, CVV, tokens, API keys, and PII are redacted by `LogSanitizer` before your code receives them
+- **Error objects** are passed as-is so you can inspect `NSError` domain/code
+- The SDK holds a **weak** reference — keep a strong reference elsewhere
+- Your logger's own `minLogLevel` is respected, so set it to `.warn` or `.error` in production to minimize noise
+
+```swift
+// Production-safe custom logger
+final class ProductionLogger: SpreedlyLogger {
+    var minLogLevel: LogLevel = .error  // only errors in production
+
+    func verbose(tag: String, message: String, error: Error?) { }
+    func debug(tag: String, message: String, error: Error?)   { }
+    func info(tag: String, message: String, error: Error?)    { }
+    func warn(tag: String, message: String, error: Error?)    { }
+    func error(tag: String, message: String, error: Error?) {
+        // Safe to log — message is already PCI-sanitized by the SDK
+        YourObservabilityService.logError(tag: tag, message: message, error: error)
+    }
+    func isLoggable(level: LogLevel) -> Bool {
+        level.shouldLog(minLevel: minLogLevel)
+    }
+}
 ```
 
 ### os_log Persistence
 
-The SDK uses Apple's unified logging (`os_log`) for console output. Be aware that `os_log` output can persist in the system log store and may be exported via `sysdiagnose` or accessed through device management profiles. For production apps, set the log level to `.none` to suppress all SDK console output, or `.error` to capture only failures.
+The SDK uses Apple's unified logging (`os_log`) for console output. Be aware that `os_log` output can persist in the system log store and may be exported via `sysdiagnose` or accessed through device management profiles. For production apps, use `Spreedly.configureLogging(.production)` or `Spreedly.disableLogging()` to suppress all SDK console output.
 
 ### Third-Party SDK Logging
 
@@ -330,15 +380,11 @@ The Spreedly SDK does not control logging from third-party SDKs it depends on (B
 - **Stripe**: Refer to [Stripe iOS SDK documentation](https://docs.stripe.com/payments/accept-a-payment?platform=ios) for controlling log output.
 - **Datadog**: The Spreedly SDK initializes Datadog via a build-time injected client token. Spreedly sanitizes all messages before sending. If you also use Datadog directly in your app, ensure your own logs do not contain PCI data.
 
-### rawErrorResponse Handling
+### Error Message Sanitization
 
-`FailedDetails.rawErrorResponse` may contain raw JSON from the Spreedly API. While the SDK does not log this field, if your app accesses `rawErrorResponse` directly (e.g. for debugging), always pass it through `sanitizeForDisplay()` before logging or displaying:
+The SDK automatically sanitizes all public-facing error messages in `FailedDetails`, `APIErrorHandler`, and logging. Merchants no longer need to call `sanitizeForDisplay()` — error descriptions returned by `getDescription()` and similar APIs are already safe to log or display.
 
-```swift
-if let rawResponse = failureDetails.rawErrorResponse {
-    print("Debug: \(sanitizeForDisplay(rawResponse))")
-}
-```
+For displaying masked payment tokens in your UI (e.g., "•••• 4242"), use `Spreedly.maskedToken(_:)`. For logging, use the SDK's `logInfo`/`logError` functions, which auto-sanitize output.
 
 ---
 

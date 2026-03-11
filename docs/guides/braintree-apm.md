@@ -104,28 +104,60 @@ Step 4: Backend calls /confirm.json
 
 ## URL Handling
 
-When the user returns from the PayPal or Venmo app, iOS can open your app via a custom URL scheme or universal link. Forward the URL to the SDK; no Braintree-specific logic is required beyond the handler call.
+When the user returns from the PayPal or Venmo app, iOS can open your app via a custom URL scheme or Universal Link. Forward the URL to the SDK; no Braintree-specific logic is required beyond the handler call.
 
-### Custom URL Scheme
+### Custom URL Scheme (Required)
 
 Register in **Info.plist**: `CFBundleURLSchemes` = `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree`
 
 Example: `com.yourapp.spreedly.braintree://...`
 
-### LSApplicationQueriesSchemes (Venmo)
+This serves as a fallback when Universal Links don't work (e.g. AASA file not hosted, or user has not visited the domain).
 
-For Venmo, add `LSApplicationQueriesSchemes` so iOS can check if Venmo is installed:
+### LSApplicationQueriesSchemes
+
+Add `LSApplicationQueriesSchemes` to detect installed payment apps:
 
 ```xml
 <key>LSApplicationQueriesSchemes</key>
 <array>
+    <!-- Braintree v7: PayPal app detection -->
+    <string>paypal</string>
+    <!-- Braintree v6 legacy: Venmo app detection (optional in v7) -->
     <string>com.venmo.touch.v2</string>
 </array>
 ```
 
+- **`paypal`** — Required for Braintree v7. The `BTPayPalClient` uses this to check if the PayPal app is installed for App Switch. Without it, PayPal always falls back to the browser flow.
+- **`com.venmo.touch.v2`** — Legacy from Braintree v6. In v7, `BTVenmoClient` uses Universal Links and does not call `canOpenURL`. Including it is harmless but no longer necessary for v7 Venmo.
+
 ### Universal Links
 
-If you configure an associated domain for the return host (e.g. `https://spreedly.com/braintree/return?...`), iOS opens your app directly. Same handling: forward the URL to `BraintreeURLHandler.handleOpen(url:)`.
+The SDK hardcodes `https://spreedly.com/braintree/return` as the Universal Link base URL. This is passed to `BTPayPalClient` and `BTVenmoClient` automatically — **you do not configure this URL**.
+
+For Universal Links to work, **two things** must be true:
+
+1. **Merchant:** Add `applinks:spreedly.com` to the Associated Domains entitlement in your app's `.entitlements` file.
+2. **Spreedly (infrastructure):** Host an `apple-app-site-association` (AASA) file at `https://spreedly.com/.well-known/apple-app-site-association` that includes your app's team ID and bundle identifier.
+
+> **Current status:** The AASA file may not be hosted yet. Check `https://spreedly.com/.well-known/apple-app-site-association` to verify. See the impact below.
+
+**Impact without a working AASA file:**
+
+- **PayPal:** Falls back to the custom URL scheme (`{bundleId}.spreedly.braintree`). App Switch still works.
+- **Venmo:** **Returns will fail silently.** Braintree v7 `BTVenmoClient` uses Universal Links **only** — there is no custom URL scheme fallback. The Venmo app opens but cannot redirect back to your app.
+
+> **Venmo Warning:** Until the AASA file at `spreedly.com` is confirmed hosted and working, Venmo integration through Braintree is unreliable. Test Venmo returns thoroughly before shipping to production. PayPal is unaffected (has custom scheme fallback).
+
+### URL Reference Table
+
+| What | Value | Where to Configure |
+|------|-------|--------------------|
+| Universal Link (SDK-managed) | `https://spreedly.com/braintree/return` | No merchant action — SDK hardcodes this |
+| Associated Domain | `applinks:spreedly.com` | `.entitlements` file (required for Venmo, recommended for PayPal) |
+| Custom URL scheme (fallback) | `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` | `Info.plist` > `CFBundleURLSchemes` |
+| PayPal app detection (v7) | `paypal` | `Info.plist` > `LSApplicationQueriesSchemes` |
+| Venmo app detection (v6 legacy) | `com.venmo.touch.v2` | Optional in v7 |
 
 ### Handler Order
 
@@ -136,7 +168,7 @@ If you configure an associated domain for the return host (e.g. `https://spreedl
 | Mechanism | Description | What you do |
 |-----------|-------------|-------------|
 | **Custom URL scheme** | `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` | Register in Info.plist. In `onOpenURL` or SceneDelegate, call `BraintreeURLHandler.handleOpen(url:)` first; if it returns `true`, return. Otherwise call `handleOffsiteReturn(url:)`. |
-| **Universal link** | e.g. `https://spreedly.com/braintree/return?...` | Same as above: forward URL to `BraintreeURLHandler.handleOpen(url:)` first. |
+| **Universal Link** | `https://spreedly.com/braintree/return?...` | Same as above: forward URL to `BraintreeURLHandler.handleOpen(url:)` first. Add `applinks:spreedly.com` to Associated Domains. |
 
 ---
 
@@ -519,11 +551,19 @@ Example references: `BraintreePaymentFlowView` (SwiftUI) and `BraintreePaymentFl
 - Verify Braintree packages (BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector) are added to your app target
 - If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` will publish a failure
 
-### App not opening on redirect
+### App not opening on redirect (PayPal)
 
 - Verify `CFBundleURLTypes` is correctly configured in `Info.plist` with `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree`
 - Ensure `BraintreeURLHandler.handleOpen(url:)` is called first in your URL handler
 - Test that `onOpenURL` (SwiftUI) or `scene:openURLContexts:` (UIKit) is invoked when opening the app via the redirect URL
+- Add `paypal` to `LSApplicationQueriesSchemes` so the SDK can detect the PayPal app
+
+### App not opening on redirect (Venmo)
+
+- Braintree v7 Venmo uses Universal Links **only** — no custom URL scheme fallback
+- Verify `applinks:spreedly.com` is in your Associated Domains entitlement
+- Confirm the AASA file is hosted at `https://spreedly.com/.well-known/apple-app-site-association`
+- If the AASA file is not hosted, Venmo returns **will not work**. See the [Venmo warning](#universal-links) above.
 
 ### CFBundleDisplayName error
 
@@ -538,3 +578,4 @@ Example references: `BraintreePaymentFlowView` (SwiftUI) and `BraintreePaymentFl
 - [ebanx-apm.md](ebanx-apm.md) – EBANX payments (Pix, Boleto, OXXO, NuPay)
 - [getting-started.md](getting-started.md) – Installation and basic setup
 - [BRAINTREE_FLOW.md](../development/BRAINTREE_FLOW.md) – Detailed flow diagrams for Braintree PayPal/Venmo
+- [BRAINTREE_UNIVERSAL_LINK_FLOW.md](../development/BRAINTREE_UNIVERSAL_LINK_FLOW.md) – Universal Link vs custom URL scheme flows, AASA status, and 3DS comparison

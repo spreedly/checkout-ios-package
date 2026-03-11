@@ -34,7 +34,7 @@
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		KrBt3RpJOdJuRbe0/TwJgH+sgto=
+		rJtYZzHZ/g+9UnReaUmwgrE+1wI=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -95,7 +95,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		0TS1ikosDwZYnlom80XJGQZ7Y7M=
+		14LjxBn2tqODF2TB65+BrGEdLVk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -194,11 +194,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KrBt3RpJOdJuRbe0/TwJgH+sgto=
+			rJtYZzHZ/g+9UnReaUmwgrE+1wI=
 			</data>
 			<key>hash2</key>
 			<data>
-			jS2WaJdWc357CHN+n6+pVfMt41QOsMI+YgAqf/6rdxg=
+			8w1/LmZdpOIiZKxOWokxW/T5Msx9rbZfRFyMbJ+SCu4=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
@@ -350,11 +350,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0TS1ikosDwZYnlom80XJGQZ7Y7M=
+			14LjxBn2tqODF2TB65+BrGEdLVk=
 			</data>
 			<key>hash2</key>
 			<data>
-			LdjBO/B/BPM6fcslOR6XTbVFUMB9o/4xWz+6a5xiXEg=
+			oGhOdsr2Vnv/JtNCvIlflHep2NadvFpaB0bllXqz+v0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>

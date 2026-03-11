@@ -68,7 +68,7 @@ Same as global 3DS, plus:
 2. Ensure `Spreedly.initializeSDK()` is called at app launch (e.g., in your `App.init()` or `AppDelegate`).
 3. Call `Spreedly.setup(config:)` with environment key and signature parameters before any 3DS calls.
 4. A gateway that requires gateway-specific 3DS (e.g. Worldpay).
-5. **No `Info.plist` URL scheme needed for 3DS.** The SDK uses `ASWebAuthenticationSession`, which intercepts the callback internally. Only register `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds` in `Info.plist` if you use the external Safari escape hatch.
+5. **No `Info.plist` URL scheme needed for 3DS.** The SDK uses `ASWebAuthenticationSession`, which intercepts the callback internally. Only register `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds` in `Info.plist` if you use the [external Safari escape hatch](../development/BRAINTREE_UNIVERSAL_LINK_FLOW.md#7b-alternative-merchant-opens-challenge-in-external-safari-app).
 6. When creating the purchase/authorize on your backend, include these parameters:
 
 | Parameter | Value | Purpose |
@@ -143,9 +143,11 @@ The SDK provides helpers to generate a standardized redirect URL based on your a
 | `[GatewaySpecific3DSObjCBridge redirectUrl]` | `{bundleId}.spreedly3ds://3ds/redirect` |
 | `[GatewaySpecific3DSObjCBridge redirectUrlWithPath:@"custom"]` | `{bundleId}.spreedly3ds://custom` |
 
+Pass the redirect URL in your backend purchase/authorize request. The gateway uses it to redirect after the challenge completes.
+
 In the **default flow** (`ASWebAuthenticationSession`), the SDK intercepts this redirect automatically — **no `Info.plist` registration or `onOpenURL` handler is needed**.
 
-If you use the **external Safari escape hatch** (opening the challenge in Safari.app), you must also register the scheme in `Info.plist` and handle the URL in `onOpenURL`.
+If you use the **external Safari escape hatch** (opening the challenge in Safari.app), you must also register the scheme in `Info.plist` and handle the URL in `onOpenURL`. See the [URL Return Flows doc](../development/BRAINTREE_UNIVERSAL_LINK_FLOW.md#7b-alternative-merchant-opens-challenge-in-external-safari-app) for details.
 
 ---
 
