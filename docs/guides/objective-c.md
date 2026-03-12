@@ -24,7 +24,8 @@ Integrate the Spreedly iOS SDK into Objective-C projects using delegates and UIV
 16. [URL Handling](#url-handling)
 17. [Cleanup and Teardown](#cleanup-and-teardown)
 18. [Submit Label Values](#submit-label-values)
-19. [Related Documentation](#related-documentation)
+19. [Telemetry Events](#telemetry-events)
+20. [Related Documentation](#related-documentation)
 
 ---
 
@@ -549,22 +550,7 @@ For gateway-specific 3DS (e.g., Worldpay), use `GatewaySpecific3DSObjCBridge` to
 
 - **`finalizeTransactionForTransactionToken:completeResponseData:error:`** — Finalizes a gateway-specific 3DS transaction with the transaction token and the complete response data from the challenge.
 
-### Redirect URL Helpers
-
-The SDK provides helpers to generate a standardized redirect URL for 3DS. The redirect URL is optional — the SDK detects challenge completion via polling regardless — but including it improves UX by dismissing Safari faster.
-
-```objc
-// Get the deep-link scheme (e.g. "com.example.app.spreedly3ds")
-NSString *scheme = GatewaySpecific3DSObjCBridge.deepLinkScheme;
-
-// Get a full redirect URL with default path (e.g. "com.example.app.spreedly3ds://3ds/redirect")
-NSString *redirectUrl = [GatewaySpecific3DSObjCBridge redirectUrl];
-
-// Get a full redirect URL with custom path
-NSString *customRedirectUrl = [GatewaySpecific3DSObjCBridge redirectUrlWithPath:@"3ds/complete"];
-```
-
-Register the scheme in your `Info.plist` under `CFBundleURLSchemes` and forward incoming URLs via `handleOffsiteReturnWithUrl:` (see [URL Handling](#url-handling)).
+No `redirect_url`, Info.plist scheme, or `onOpenURL` handler is needed for gateway-specific 3DS. The SDK uses `ASWebAuthenticationSession` which stays in-app, and polling detects the terminal state and dismisses the session automatically.
 
 See [3ds-gateway-specific.md](3ds-gateway-specific.md) for the full flow and setup.
 
@@ -909,6 +895,63 @@ When using Objective-C, use the integer raw values for `SpreedlySubmitLabel`:
 | 6 | SpreedlySubmitLabelJoin | Join |
 | 7 | SpreedlySubmitLabelRoute | Route |
 | 8 | SpreedlySubmitLabelContinue | Continue |
+
+---
+
+## Telemetry Events
+
+Use `SpreedlyTelemetryObjCBridge` to emit structured telemetry events from Objective-C. Each method mirrors a `TelemetryEvents` Swift builder with ObjC-compatible signatures.
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+
+// Track a method invocation from your module
+[SpreedlyTelemetryObjCBridge sdkMethodInvokedWithMethodName:@"checkout" module:@"my-app"];
+
+// Report a successful payment with duration
+[SpreedlyTelemetryObjCBridge paymentMethodCreatedWithDurationMs:1200
+                                              paymentMethodType:@"credit_card"];
+
+// Report a payment failure
+[SpreedlyTelemetryObjCBridge paymentMethodFailedWithErrorCode:@"validation_error"
+                                                 errorMessage:@"Card number invalid"
+                                                    errorType:@"client_validation"
+                                                   durationMs:1200];
+
+// API request with optional status code (pass nil when unavailable)
+[SpreedlyTelemetryObjCBridge apiRequestCompletedWithHttpMethod:@"POST"
+                                                           url:@"payment_methods"
+                                                    durationMs:350
+                                                       success:YES
+                                                    statusCode:@(200)];
+```
+
+**Default parameters:** Swift default parameters are not available in Objective-C. The bridge provides separate overloads instead. For example, `paymentMethodCreated` has two variants:
+
+```objc
+// Without paymentMethodType (defaults to "credit_card")
+[SpreedlyTelemetryObjCBridge paymentMethodCreatedWithDurationMs:800];
+
+// With explicit paymentMethodType
+[SpreedlyTelemetryObjCBridge paymentMethodCreatedWithDurationMs:800
+                                              paymentMethodType:@"bank_account"];
+```
+
+**Optional integers:** Parameters that are `Int?` in Swift become `NSNumber *` in the bridge. Pass `nil` when the value is not available (e.g., `statusCode` when a request fails without an HTTP response).
+
+**Duration tracking:**
+
+```objc
+// Start timing
+[[FlowDurationTracker shared] startWithKey:@"my_flow"];
+
+// ... your flow logic ...
+
+// Get elapsed milliseconds (returns -1 if no mark exists)
+int64_t ms = [[FlowDurationTracker shared] elapsedMsWithKey:@"my_flow"];
+```
+
+See [Structured Telemetry Events](getting-started.md#structured-telemetry-events) for the full event reference table and detailed usage guidance.
 
 ---
 

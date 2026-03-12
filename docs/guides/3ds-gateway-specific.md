@@ -52,7 +52,7 @@ When you present `DoChallengeIfNeeded`, the SDK manages two internal phases auto
 
 **Device fingerprint:** The SDK injects a hidden 1×1 WKWebView to collect device fingerprint data. This is non-interactive and follows industry standard practice for 3DS device data collection.
 
-**Challenge (`ASWebAuthenticationSession`):** When the gateway requires user interaction (e.g. OTP entry or biometric verification), the SDK presents `ASWebAuthenticationSession` — Apple's endorsed API for web-based authentication. The browser shows the bank's domain (anti-phishing) and intercepts the callback URL scheme automatically, so **no `Info.plist` registration or `onOpenURL` handler is needed** for the default flow. Challenge completion is detected by status polling (every 2 seconds). The `redirect_url` triggers the auth session callback, providing immediate dismissal.
+**Challenge (`ASWebAuthenticationSession`):** When the gateway requires user interaction (e.g. OTP entry or biometric verification), the SDK presents `ASWebAuthenticationSession` — Apple's endorsed API for web-based authentication. The browser shows the bank's domain (anti-phishing) and stays in-app; **no `Info.plist` registration, redirect URL, or `onOpenURL` handler is needed**. Challenge completion is detected by status polling (every 2 seconds), which dismisses the session automatically.
 
 **User cancellation:** If the user taps **"Cancel"** in the authentication session during the challenge, the SDK treats it as a failure and emits `ThreeDSChallengeResult` with `isFailure == true`. The error message will contain `"3DS challenge canceled by user"`. Handle this in your `isFailure` branch.
 
@@ -68,15 +68,13 @@ Same as global 3DS, plus:
 2. Ensure `Spreedly.initializeSDK()` is called at app launch (e.g., in your `App.init()` or `AppDelegate`).
 3. Call `Spreedly.setup(config:)` with environment key and signature parameters before any 3DS calls.
 4. A gateway that requires gateway-specific 3DS (e.g. Worldpay).
-5. **No `Info.plist` URL scheme needed for 3DS.** The SDK uses `ASWebAuthenticationSession`, which intercepts the callback internally. Only register `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly3ds` in `Info.plist` if you use the [external Safari escape hatch](../development/BRAINTREE_UNIVERSAL_LINK_FLOW.md#7b-alternative-merchant-opens-challenge-in-external-safari-app).
+5. **No `Info.plist` URL scheme, redirect URL, or `onOpenURL` handler needed for 3DS.** The SDK uses `ASWebAuthenticationSession`, which stays in-app. Polling detects the terminal state and dismisses the session automatically.
 6. When creating the purchase/authorize on your backend, include these parameters:
 
 | Parameter | Value | Purpose |
 |-----------|-------|---------|
 | `attempt_3dsecure` | `true` | Tells Spreedly to attempt 3DS authentication |
-| `redirect_url` | *(Recommended)* Use `GatewaySpecific3DSIntegration.redirectUrl()` | Triggers the auth session callback for immediate dismissal. The SDK also detects completion via polling as a fallback. |
 | `callback_url` | Your backend URL | For server-to-server notifications |
-| `channel` | `"app"` | Identifies this as a mobile transaction |
 
 The SDK detects that gateway-specific 3DS is needed from the transaction response.
 
@@ -89,65 +87,12 @@ The SDK detects that gateway-specific 3DS is needed from the transaction respons
     "amount": 1999,
     "currency_code": "USD",
     "attempt_3dsecure": true,
-    "redirect_url": "yourapp.spreedly3ds://3ds/redirect",
-    "callback_url": "https://yourbackend.com/callback",
-    "channel": "app"
+    "callback_url": "https://yourbackend.com/callback"
   }
 }
 ```
 
-> **Note:** `redirect_url` is recommended. Including it triggers the `ASWebAuthenticationSession` callback for immediate dismissal. The SDK also detects challenge completion via polling as a fallback.
-
-**Example SDK purchase call (Swift):**
-
-```swift
-let response = try await client.purchase(
-    paymentMethodToken: card.paymentMethodToken,
-    amount: amountInCents,
-    currencyCode: "USD",
-    useGatewaySpecific3DS: true,
-    redirectUrl: GatewaySpecific3DSIntegration.redirectUrl()
-)
-```
-
-**Example SDK purchase call (Objective-C):**
-
-```objc
-NSString *redirectUrl = [GatewaySpecific3DSObjCBridge redirectUrl];
-
-[client purchaseWithPaymentMethodToken:card.paymentMethodToken
-                                amount:amountInCents
-                          currencyCode:@"USD"
-                  useGatewaySpecific3DS:YES
-                           redirectUrl:redirectUrl
-                            completion:^(PurchaseResponse *response, NSError *error) {
-    // Handle response
-}];
-```
-
-### Redirect URL Helpers
-
-The SDK provides helpers to generate a standardized redirect URL based on your app's bundle identifier. This follows the same convention as the Android SDK.
-
-| Method | Returns |
-|--------|---------|
-| `GatewaySpecific3DSIntegration.deepLinkScheme` | `{bundleId}.spreedly3ds` |
-| `GatewaySpecific3DSIntegration.redirectUrl()` | `{bundleId}.spreedly3ds://3ds/redirect` |
-| `GatewaySpecific3DSIntegration.redirectUrl(path: "custom")` | `{bundleId}.spreedly3ds://custom` |
-
-**Objective-C equivalents:**
-
-| Method | Returns |
-|--------|---------|
-| `GatewaySpecific3DSObjCBridge.deepLinkScheme` | `{bundleId}.spreedly3ds` |
-| `[GatewaySpecific3DSObjCBridge redirectUrl]` | `{bundleId}.spreedly3ds://3ds/redirect` |
-| `[GatewaySpecific3DSObjCBridge redirectUrlWithPath:@"custom"]` | `{bundleId}.spreedly3ds://custom` |
-
-Pass the redirect URL in your backend purchase/authorize request. The gateway uses it to redirect after the challenge completes.
-
-In the **default flow** (`ASWebAuthenticationSession`), the SDK intercepts this redirect automatically — **no `Info.plist` registration or `onOpenURL` handler is needed**.
-
-If you use the **external Safari escape hatch** (opening the challenge in Safari.app), you must also register the scheme in `Info.plist` and handle the URL in `onOpenURL`. See the [URL Return Flows doc](../development/BRAINTREE_UNIVERSAL_LINK_FLOW.md#7b-alternative-merchant-opens-challenge-in-external-safari-app) for details.
+**Note:** The purchase/authorize call is made by your **backend** to the Spreedly REST API — the iOS SDK does not provide a `purchase()` method. Your backend creates the transaction and returns the `transaction.token` and state to your app, which then uses the SDK for 3DS challenge handling.
 
 ---
 
@@ -189,7 +134,6 @@ When showing error messages during gateway-specific flows, use your normal error
 |-------|---------|
 | `GatewaySpecific3DSTriggerCompletion` | The SDK needs your backend to call `/complete.json`. The event provides the transaction token. |
 | `ThreeDSChallengeResult` | Final 3DS outcome (success, failure, or canceled). Handle all three cases in your subscriber. |
-| `gatewaySpecific3DSChallengeReadyPublisher` / `subscribeToGatewaySpecific3DSChallengeReady(_:)` | Notifies when the challenge UI is ready to be displayed. Subscribe before starting the flow to receive the event when the challenge view can be presented. |
 
 ---
 
@@ -221,11 +165,8 @@ The lifecycle manager for gateway-specific 3DS flows. Obtain an instance via `Ga
 
 - **`start()`** — Starts the lifecycle (device fingerprint, polling, etc.).
 - **`finalize(transaction:)`** — Finalizes the flow with the transaction from `/complete.json`. Use when your backend has returned the complete response.
-- **`stop()`** — Stops the lifecycle and cleans up resources.
 
-### Public Property
-
-- **`state`** (read-only) — The current state of the lifecycle. Use this to query progress or determine if the flow is still active.
+> **Note:** `stop()` and `state` are internal to the SDK. Use `GatewaySpecific3DSIntegration.cancelFlow(for:)` to programmatically cancel a flow, and subscribe to `ThreeDSChallengeResult` to observe the final outcome.
 
 ---
 
@@ -508,7 +449,7 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
             return;
         }
 
-        // Parse the /complete.json response using PurchaseResponse.fromJSONData:error:
+        // Parse the /complete.json response using your own model (PurchaseResponse is not part of the SDK)
         NSError *parseErr = nil;
         PurchaseResponse *completeResponse = [PurchaseResponse fromJSONData:responseData error:&parseErr];
         if (completeResponse.transaction &&
@@ -619,4 +560,4 @@ If your code calls `getChallengeContainerView`, you can safely remove those call
 
 - [3ds-global.md](3ds-global.md) - Global 3DS (Forter) flow and full comparison table
 - [error-handling.md](error-handling.md) - Error types and handling patterns
-- [3DS_GATEWAY_SPECIFIC_FLOW.md](../development/3DS_GATEWAY_SPECIFIC_FLOW.md) – Detailed flow diagrams for gateway-specific 3DS including device fingerprint, trigger/finalize, challenge lifecycle, and decision flows
+- [3DS Gateway-Specific Flow](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/3DS_GATEWAY_SPECIFIC_FLOW.md) – Detailed flow diagrams for gateway-specific 3DS including device fingerprint, trigger/finalize, challenge lifecycle, and decision flows
