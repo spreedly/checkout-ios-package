@@ -507,11 +507,11 @@ The SDK respects the user's Dynamic Type settings. Text sizes scale automaticall
 
 ### Bold Text
 
-When the user enables Bold Text in iOS settings, the SDK components automatically use bolder font weights.
+When the user enables Bold Text in iOS settings, the SDK components automatically use bolder font weights. `CardFormDropIn`, `SPLTextField`, and `CVVRecachingView` manage Bold Text and Dynamic Type observers internally and refresh typography when settings change — no extra setup is needed when using these components.
 
 ### Refreshing on Accessibility Changes
 
-If your app uses custom themes with `SpreedlyTypography`, listen for Dynamic Type and Bold Text changes and refresh the theme so typography updates immediately:
+If your app uses custom themes with `SpreedlyTypography` **outside** of SDK components (e.g., in your own views that reference SDK theme objects), listen for Dynamic Type and Bold Text changes and refresh the theme so typography updates immediately:
 
 ```swift
 // Listen for content size category and bold text changes

@@ -15,10 +15,11 @@ Set up the Spreedly iOS SDK in your project in under 15 minutes.
 7. [Basic Setup](#basic-setup)
 8. [Module Dependency Table](#module-dependency-table)
 9. [Testing and Sandbox](#testing-and-sandbox)
-10. [Choosing Your Integration Path](#choosing-your-integration-path)
-11. [Conditional Imports for Optional Modules](#conditional-imports-for-optional-modules)
-12. [Next Steps](#next-steps)
-13. [Related Documentation](#related-documentation)
+10. [Payment Methods at a Glance](#payment-methods-at-a-glance)
+11. [Choosing Your Integration Path](#choosing-your-integration-path)
+12. [Conditional Imports for Optional Modules](#conditional-imports-for-optional-modules)
+13. [Next Steps](#next-steps)
+14. [Related Documentation](#related-documentation)
 
 ---
 
@@ -79,6 +80,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
    - Or individual libraries: **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**
    - **SpreedlyStripeAPM** (optional, for Stripe APM)
    - **SpreedlyBraintree** (optional, for Braintree PayPal/Venmo)
+   - **SpreedlyForter3DS** (optional, for 3DS Global — auto-resolves Forter dependency)
 
 **Add via Package.swift:**
 
@@ -95,9 +97,10 @@ targets: [
             // .product(name: "SpreedlyCore", package: "checkout-ios-package"),
             // .product(name: "SpreedlySecurity", package: "checkout-ios-package"),
             // .product(name: "SpreedlyUI", package: "checkout-ios-package")
-            // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
+            // Optional: add when using Stripe APM, Braintree, or 3DS Global
             // .product(name: "SpreedlyStripeAPM", package: "checkout-ios-package"),
-            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package")
+            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package"),
+            // .product(name: "SpreedlyForter3DS", package: "checkout-ios-package"),
         ]
     )
 ]
@@ -119,10 +122,18 @@ target 'YourApp' do
   # Add these only if needed:
   # pod 'SpreedlyStripeAPM', '~> 1.1'
   # pod 'SpreedlyBraintree', '~> 1.1'
+  # pod 'SpreedlyForter3DS', '~> 1.1'  # requires spreedly-podspecs source (see below)
 end
 ```
 
 Then run `pod install`.
+
+**Forter 3DS via CocoaPods:** `SpreedlyForter3DS` depends on `Forter3DS`, which is not on CocoaPods trunk. Add the Spreedly private spec repo as a source at the top of your Podfile:
+
+```ruby
+source 'https://github.com/spreedly/spreedly-podspecs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+```
 
 **Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead of version specifiers:
 
@@ -136,6 +147,7 @@ target 'YourApp' do
   # Add these only if needed:
   # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
   # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  # pod 'SpreedlyForter3DS', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
 end
 ```
 
@@ -154,13 +166,13 @@ Replace `{GitToken}` with your GitHub personal access token that has read access
 
 Add these only when you need the corresponding features:
 
-| Feature | Package | URL | Version |
-|---------|---------|-----|---------|
-| 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
+| Feature | Package | How to Add | Version |
+|---------|---------|------------|---------|
+| 3DS Global | SpreedlyForter3DS | Select `SpreedlyForter3DS` from checkout-ios-package (SPM) or `pod 'SpreedlyForter3DS'` (CocoaPods) | 1.1.4+ |
 | Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
 | Braintree (PayPal/Venmo) — SPM only | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector | `https://github.com/braintree/braintree_ios.git` | 7.0.0+ |
 
-**Forter3DS (3DS Global):** Required for 3DS authentication. Add as a direct dependency to your app target. Without it, the app will crash when 3DS is required.
+**Forter3DS (3DS Global):** Required for 3DS authentication. Use `SpreedlyForter3DS` (recommended) to have Forter3DS resolved automatically as a transitive dependency. For SPM, select the `SpreedlyForter3DS` product from the Spreedly package. For CocoaPods, add `pod 'SpreedlyForter3DS'` with the `spreedly-podspecs` source. Alternatively, you can still add Forter3DS manually from `https://bitbucket.org/forter-mobile/forter-ios.git` (2.1.0+). Without Forter3DS, the app will crash when 3DS is required.
 
 **StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). You **must** add `StripePaymentSheet` to your **app target** (SPM or CocoaPods). The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without it the app will crash at presentation time.
 
@@ -274,6 +286,30 @@ For apps not using `UIScene`, handle URLs in `AppDelegate`:
 ```
 
 > **Important:** In Objective-C, the Braintree URL handler class is `BraintreeURLHandlerObjC` (not `BraintreeURLHandler`). In Swift, use `BraintreeURLHandler`.
+
+**React Native:** In React Native, URL handling happens on the native side. Forward URLs from `AppDelegate` to the Spreedly SDK before React Navigation or other RN deep-link handlers process them:
+
+```swift
+// In your AppDelegate.swift (React Native)
+override func application(_ app: UIApplication, open url: URL,
+                          options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    if BraintreeURLHandler.handleOpen(url: url) { return true }
+    if Spreedly.shared().handleOffsiteReturn(url: url) { return true }
+    return RCTLinkingManager.application(app, open: url, options: options)
+}
+```
+
+**URL Handling Troubleshooting:**
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| App doesn't open after payment | Scheme not registered | Verify `CFBundleURLSchemes` in Info.plist matches your `redirect_url` scheme exactly |
+| Braintree redirect handled as offsite | Wrong handler order | Call `BraintreeURLHandler.handleOpen(url:)` **before** `handleOffsiteReturn(url:)` |
+| Venmo silently fails | Missing query scheme | Add `com.venmo.touch.v2` to `LSApplicationQueriesSchemes` |
+| App Store rejection `ITMS-90683` | Missing camera key | Add `NSCameraUsageDescription` to Info.plist (required by Stripe SDK) |
+| `CFBundleDisplayName must be non-nil` | Missing display name | Set `CFBundleDisplayName` in Info.plist |
+| `handleOffsiteReturn` never fires | Handler not wired up | Ensure `onOpenURL` (SwiftUI) or `scene:openURLContexts:` (UIKit) forwards all URLs to the SDK |
+| 3DS auth session doesn't auto-dismiss | Polling delay or network issue | The SDK uses `ASWebAuthenticationSession` which dismisses automatically on terminal state. Check network connectivity. |
 
 ### Screen Prevention
 
@@ -479,6 +515,116 @@ Spreedly.setLogger(nil)
 
 See [Security — Logging Security](security.md#logging-security) for production recommendations and PCI compliance details.
 
+### Structured Telemetry Events
+
+In addition to unstructured log messages (`logInfo`, `logDebug`, etc.), the SDK provides **structured telemetry events** via `TelemetryEvents`. These are typed, attribute-based events that flow to Datadog for querying, alerting, and dashboards. Each event has named parameters with enforced types — no raw strings or dictionaries.
+
+**Auto-emitted events:** The SDK automatically emits telemetry at the right lifecycle points when you use its built-in components. For example, presenting a `CardFormDropIn` emits `paymentSheetPresented`, completing a payment emits `paymentMethodCreated`, and so on. You do not need to emit these manually when using the pre-built UI.
+
+**When to emit manually:** Call `TelemetryEvents` directly when you:
+- Build a custom payment flow that bypasses the pre-built UI
+- Wrap the SDK in a bridge layer and want to track entry points
+- Measure custom durations around your own logic
+
+**Swift:**
+
+```swift
+import SpreedlyCore
+
+TelemetryEvents.sdkMethodInvoked(methodName: "checkout", module: "my-app")
+
+FlowDurationTracker.shared.start(key: "custom_payment")
+// ... your payment logic ...
+let durationMs = FlowDurationTracker.shared.elapsedMs(key: "custom_payment")
+TelemetryEvents.paymentMethodCreated(durationMs: durationMs, paymentMethodType: "credit_card")
+
+TelemetryEvents.paymentMethodFailed(
+    errorCode: "validation_error",
+    errorMessage: "Card number invalid",
+    errorType: "client_validation",
+    durationMs: durationMs
+)
+```
+
+**Objective-C** (via `SpreedlyTelemetryObjCBridge`):
+
+```objc
+#import <SpreedlyCore/SpreedlyCore-Swift.h>
+
+[SpreedlyTelemetryObjCBridge sdkMethodInvokedWithMethodName:@"checkout" module:@"my-app"];
+
+[SpreedlyTelemetryObjCBridge paymentMethodCreatedWithDurationMs:1200
+                                              paymentMethodType:@"credit_card"];
+
+[SpreedlyTelemetryObjCBridge paymentMethodFailedWithErrorCode:@"validation_error"
+                                                 errorMessage:@"Card number invalid"
+                                                    errorType:@"client_validation"
+                                                   durationMs:1200];
+```
+
+> **Note:** For Objective-C, optional `Int` parameters (e.g., `statusCode` in `apiRequestCompleted`) become `NSNumber *` — pass `nil` when the value is not available. Swift default parameters are exposed as separate overloads (e.g., `paymentMethodCreatedWithDurationMs:` and `paymentMethodCreatedWithDurationMs:paymentMethodType:`).
+
+#### Event Reference
+
+| Category | Event | Method | Key Parameters |
+|----------|-------|--------|----------------|
+| SDK Lifecycle | SDK initialized | `sdkInitialized(durationMs:datadogEnabled:threedsRegistered:)` | `duration_ms`, `datadog_enabled`, `threeds_registered` |
+| | SDK init failed | `sdkInitFailed(durationMs:errorType:)` | `duration_ms`, `error_type` |
+| | SDK configured | `sdkConfigured(activeModules:paymentMethodTypes:)` | `active_modules`, `payment_method_types` |
+| Payment | Payment method created | `paymentMethodCreated(durationMs:paymentMethodType:)` | `duration_ms`, `payment_method_type` |
+| | Payment method failed | `paymentMethodFailed(errorCode:errorMessage:errorType:durationMs:)` | `error_code`, `error_message`, `error_type`, `duration_ms` |
+| | Payment failure | `paymentFailure(errorCode:errorMessage:environmentKey:)` | `error_code`, `error_message`, `environment_key` |
+| | Recache succeeded | `recacheSucceeded(durationMs:)` | `duration_ms` |
+| | Recache failed | `recacheFailed(errorCode:durationMs:)` | `error_code`, `duration_ms` |
+| Network | API request completed | `apiRequestCompleted(httpMethod:url:durationMs:success:statusCode:)` | `http_method`, `url`, `duration_ms`, `success`, `status_code` |
+| UI | Payment sheet presented | `paymentSheetPresented(module:)` | `module` |
+| | Payment sheet dismissed | `paymentSheetDismissed(reason:module:)` | `reason`, `module` |
+| | Hosted field interaction | `hostedFieldInteraction(fieldType:action:)` | `field_type`, `action` |
+| | Validation failed | `validationFailed(fieldErrors:errorCount:module:)` | `field_errors`, `error_count`, `module` |
+| 3DS | 3DS started | `threedsStarted(flowType:gatewayType:)` | `flow_type`, `gateway_type` |
+| | 3DS flow routed | `threedsFlowRouted(threedsType:gatewayType:hasManagedOrderToken:)` | `threeds_type`, `gateway_type`, `has_managed_order_token` |
+| | 3DS completed | `threedsCompleted(flowType:durationMs:success:outcome:gatewayType:errorCode:)` | `flow_type`, `duration_ms`, `success`, `outcome` |
+| APM / Offsite | APM checkout completed | `apmCheckoutCompleted(provider:paymentType:success:durationMs:)` | `provider`, `payment_type`, `success`, `duration_ms` |
+| | Offsite payment completed | `offsitePaymentCompleted(paymentMethodType:success:durationMs:)` | `payment_method_type`, `success`, `duration_ms` |
+| Usage | SDK method invoked | `sdkMethodInvoked(methodName:module:)` | `method_name`, `module` |
+
+#### Duration Tracking
+
+Use `FlowDurationTracker.shared` to measure elapsed time with a monotonic clock (immune to NTP adjustments):
+
+```swift
+FlowDurationTracker.shared.start(key: "my_flow")
+// ... your flow logic ...
+let ms = FlowDurationTracker.shared.elapsedMs(key: "my_flow")
+```
+
+- `start(key:)` records the current time for the given key (overwrites if already started)
+- `elapsedMs(key:)` returns elapsed milliseconds and removes the mark; returns `-1` if no mark exists
+- Marks older than 30 minutes are automatically pruned to prevent memory leaks from abandoned flows
+
+#### Datadog Requirement
+
+Telemetry events only flow to Datadog when `DatadogConfig.clientToken` is non-empty. In CI this is injected automatically. For local development, set it manually or telemetry calls will be silently discarded. See the [Datadog logging behavior](#logging--observability-optional) note above.
+
+#### Platform Filtering
+
+Every telemetry event includes a `sdk_platform` global attribute, set via `SpreedlyConfig.sdkPlatform` at init time. Native iOS apps default to `"ios"` — no action needed. Bridge layers should pass their own identifier so events are distinguishable in Datadog:
+
+```swift
+SpreedlyConfig(
+    environmentKey: environmentKey,
+    sdkPlatform: "react_native"
+)
+```
+
+| Filter | Shows |
+|--------|-------|
+| `@sdk_platform:ios` | Native iOS events only |
+| `@sdk_platform:react_native` | Events from the React Native bridge |
+| `@sdk_platform:*` | All events regardless of surface |
+
+The attribute resets to `"ios"` on each `Spreedly.setup()` call unless overridden.
+
 ### Objective-C Setup
 
 **Step 1: Initialize SDK**
@@ -555,6 +701,7 @@ Call this before presenting any payment form or initiating any payment operation
 | SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS, CVV recaching |
 | SpreedlyStripeAPM | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
 | SpreedlyBraintree | PayPal/Venmo via Braintree |
+| SpreedlyForter3DS | 3DS Global via Forter (auto-resolves Forter3DS dependency) |
 
 > **SpreedlyAnalytics** is an internal module used by SpreedlyCore for logging and Datadog integration. You do not need to import or interact with it directly.
 
@@ -594,6 +741,30 @@ Switch between environments by changing the `environmentKey` in `SpreedlyConfig`
 2. Complete the payment flow
 3. Check `PaymentResult.token` — a successful tokenization returns a token starting with a recognizable prefix
 4. Verify the token appears in your Spreedly test dashboard
+
+---
+
+## Payment Methods at a Glance
+
+| Gateway | Payment Methods | SDK Module | Tokenization? | Checkout UI | Return Value |
+|---------|----------------|------------|---------------|-------------|--------------|
+| **Stripe** | iDEAL, Bancontact, EPS, P24, SEPA Debit | `SpreedlyStripeAPM` | No | Native PaymentSheet | Result state |
+| **Braintree** | PayPal, Venmo | `SpreedlyBraintree` | No | Native Braintree UI | Nonce |
+| **EBANX** | Pix, Boleto, OXXO, NuPay, NuPay Recurrent, Rapipago | `SpreedlyUI` (offsite) | Yes | Safari | Token |
+| **Offsite** | PayPal, Sprel | `SpreedlyUI` (offsite) | Yes | Safari | Token |
+| **Gateway-Specific 3DS** | Card (e.g. Worldpay) | `SpreedlyCore` | N/A | Safari (challenge) | Transaction result |
+
+### Backend Requirements Quick Reference
+
+| Step | Stripe APM | Braintree | EBANX | Offsite | Gateway 3DS |
+|------|-----------|-----------|-------|---------|-------------|
+| Tokenize | — | — | Backend | Backend | Backend (card) |
+| Purchase | `payment_method_type: "stripe_apm"` | `payment_method_type: "paypal"/"venmo"` | Standard + `gateway_specific_fields.ebanx` | Standard | `attempt_3dsecure: true` |
+| Confirm | — | `/confirm.json` with nonce | — | — | — |
+| Complete | — | — | — | — | `/complete.json` on trigger |
+| Extra fields | `apm_types`, `channel: "app"` | `offsite_sync: true` | `ebanx.document` | — | `channel: "app"` |
+
+See each gateway's integration guide for full backend request examples and SDK configuration.
 
 ---
 
