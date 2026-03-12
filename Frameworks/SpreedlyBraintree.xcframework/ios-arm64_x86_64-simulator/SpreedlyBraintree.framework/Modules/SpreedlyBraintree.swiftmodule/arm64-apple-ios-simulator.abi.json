@@ -16,6 +16,16 @@
       },
       {
         "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
         "declKind": "Import",
@@ -686,13 +696,6 @@
       },
       {
         "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree"
-      },
-      {
-        "kind": "Import",
         "name": "SpreedlyCore",
         "printedName": "SpreedlyCore",
         "declKind": "Import",
@@ -737,16 +740,6 @@
         "declAttributes": [
           "AccessControl"
         ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "RawDocComment"
-        ]
       }
     ],
     "json_format_version": 8
@@ -769,14 +762,14 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyBraintree\/SpreedlyBraintree\/SpreedlyBraintreeCheckout.swift",
       "kind": "BooleanLiteral",
-      "offset": 2249,
+      "offset": 2196,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyBraintree\/SpreedlyBraintree\/Internal\/BraintreeFlowController.swift",
       "kind": "StringLiteral",
-      "offset": 298,
+      "offset": 283,
       "length": 39,
       "value": "\"https:\/\/spreedly.com\/braintree\/return\""
     }

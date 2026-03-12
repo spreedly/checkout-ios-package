@@ -2,7 +2,6 @@
 // swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
 // swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyBraintree
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
-import Combine
 import Foundation
 import SpreedlyCore
 import Swift
@@ -10,6 +9,11 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public enum BraintreeURLHandler {
+  public static let schemeSuffix: Swift.String
+  @discardableResult
+  public static func handleOpen(url: Foundation.URL) -> Swift.Bool
+}
 @objc @_inheritsConvenienceInitializers @objcMembers public class BraintreeURLHandlerObjC : ObjectiveC.NSObject {
   @objc(handleOpenWithUrl:) public static func handleOpen(url: Foundation.URL) -> Swift.Bool
   @objc override dynamic public init()
@@ -28,9 +32,4 @@ import _SwiftConcurrencyShims
   @objc(presentWithConfig:) public static func present(config: SpreedlyCore.BraintreeCheckoutConfig)
   @objc(presentWithConfig:from:) public static func present(config: SpreedlyCore.BraintreeCheckoutConfig, from viewController: UIKit.UIViewController)
   @objc deinit
-}
-public enum BraintreeURLHandler {
-  public static let schemeSuffix: Swift.String
-  @discardableResult
-  public static func handleOpen(url: Foundation.URL) -> Swift.Bool
 }

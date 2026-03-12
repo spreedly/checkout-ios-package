@@ -440,15 +440,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 /// throws:
 /// NSError if decoding fails or transaction is missing
 + (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
-/// Deep-link scheme for 3DS browser returns (e.g. <code>com.example.app.spreedly3ds</code>).
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull deepLinkScheme;)
-+ (NSString * _Nonnull)deepLinkScheme SWIFT_WARN_UNUSED_RESULT;
-/// Builds a redirect URL with the default path (<code>3ds/redirect</code>).
-+ (NSString * _Nonnull)redirectUrl SWIFT_WARN_UNUSED_RESULT;
-/// Builds a redirect URL with a custom path.
-/// \param path Path component (e.g. <code>"3ds/complete"</code>).
-///
-+ (NSString * _Nonnull)redirectUrlWithPath:(NSString * _Nonnull)path SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -925,6 +916,39 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 /// \param result The payment result containing success/failure information
 ///
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
+@end
+
+SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
+@interface SpreedlyTelemetryObjCBridge : NSObject
++ (void)sdkInitializedWithDurationMs:(int64_t)durationMs datadogEnabled:(BOOL)datadogEnabled threedsRegistered:(BOOL)threedsRegistered;
++ (void)sdkInitFailedWithDurationMs:(int64_t)durationMs errorType:(NSString * _Nonnull)errorType;
++ (void)sdkConfiguredWithActiveModules:(NSString * _Nonnull)activeModules paymentMethodTypes:(NSString * _Nonnull)paymentMethodTypes;
++ (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs;
++ (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
++ (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs;
++ (void)paymentFailureWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage environmentKey:(NSString * _Nonnull)environmentKey;
++ (void)recacheSucceededWithDurationMs:(int64_t)durationMs;
++ (void)recacheFailedWithErrorCode:(NSString * _Nonnull)errorCode durationMs:(int64_t)durationMs;
++ (void)apiRequestCompletedWithHttpMethod:(NSString * _Nonnull)httpMethod url:(NSString * _Nonnull)url durationMs:(int64_t)durationMs success:(BOOL)success statusCode:(NSNumber * _Nullable)statusCode;
++ (void)apiRequestCompletedWithHttpMethod:(NSString * _Nonnull)httpMethod url:(NSString * _Nonnull)url durationMs:(int64_t)durationMs success:(BOOL)success statusCode:(NSNumber * _Nullable)statusCode errorType:(NSString * _Nullable)errorType;
++ (void)paymentSheetPresented;
++ (void)paymentSheetPresentedWithModule:(NSString * _Nonnull)module_;
++ (void)paymentSheetDismissedWithReason:(NSString * _Nonnull)reason;
++ (void)paymentSheetDismissedWithReason:(NSString * _Nonnull)reason module:(NSString * _Nonnull)module_;
++ (void)hostedFieldInteractionWithFieldType:(NSString * _Nonnull)fieldType action:(NSString * _Nonnull)action;
++ (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount;
++ (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount module:(NSString * _Nonnull)module_;
++ (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType;
++ (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType gatewayType:(NSString * _Nullable)gatewayType;
++ (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
++ (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType gatewayType:(NSString * _Nullable)gatewayType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
++ (void)threedsCompletedWithFlowType:(NSString * _Nonnull)flowType durationMs:(int64_t)durationMs success:(BOOL)success outcome:(NSString * _Nonnull)outcome;
++ (void)threedsCompletedWithFlowType:(NSString * _Nonnull)flowType durationMs:(int64_t)durationMs success:(BOOL)success outcome:(NSString * _Nonnull)outcome gatewayType:(NSString * _Nullable)gatewayType errorCode:(NSString * _Nullable)errorCode;
++ (void)apmCheckoutCompletedWithProvider:(NSString * _Nonnull)provider paymentType:(NSString * _Nonnull)paymentType success:(BOOL)success durationMs:(int64_t)durationMs;
++ (void)offsitePaymentCompletedWithPaymentMethodType:(NSString * _Nonnull)paymentMethodType success:(BOOL)success durationMs:(int64_t)durationMs;
++ (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName;
++ (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName module:(NSString * _Nonnull)module_;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 /// Objective-C compatible delegate for receiving 3DS challenge result updates
@@ -1522,15 +1546,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 /// throws:
 /// NSError if decoding fails or transaction is missing
 + (BOOL)finalizeTransactionWithTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error SWIFT_DEPRECATED_MSG("Use finalizeTransactionForTransactionToken:completeResponseData:error: instead.");
-/// Deep-link scheme for 3DS browser returns (e.g. <code>com.example.app.spreedly3ds</code>).
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull deepLinkScheme;)
-+ (NSString * _Nonnull)deepLinkScheme SWIFT_WARN_UNUSED_RESULT;
-/// Builds a redirect URL with the default path (<code>3ds/redirect</code>).
-+ (NSString * _Nonnull)redirectUrl SWIFT_WARN_UNUSED_RESULT;
-/// Builds a redirect URL with a custom path.
-/// \param path Path component (e.g. <code>"3ds/complete"</code>).
-///
-+ (NSString * _Nonnull)redirectUrlWithPath:(NSString * _Nonnull)path SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -2007,6 +2022,39 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 /// \param result The payment result containing success/failure information
 ///
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
+@end
+
+SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
+@interface SpreedlyTelemetryObjCBridge : NSObject
++ (void)sdkInitializedWithDurationMs:(int64_t)durationMs datadogEnabled:(BOOL)datadogEnabled threedsRegistered:(BOOL)threedsRegistered;
++ (void)sdkInitFailedWithDurationMs:(int64_t)durationMs errorType:(NSString * _Nonnull)errorType;
++ (void)sdkConfiguredWithActiveModules:(NSString * _Nonnull)activeModules paymentMethodTypes:(NSString * _Nonnull)paymentMethodTypes;
++ (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs;
++ (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
++ (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs;
++ (void)paymentFailureWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage environmentKey:(NSString * _Nonnull)environmentKey;
++ (void)recacheSucceededWithDurationMs:(int64_t)durationMs;
++ (void)recacheFailedWithErrorCode:(NSString * _Nonnull)errorCode durationMs:(int64_t)durationMs;
++ (void)apiRequestCompletedWithHttpMethod:(NSString * _Nonnull)httpMethod url:(NSString * _Nonnull)url durationMs:(int64_t)durationMs success:(BOOL)success statusCode:(NSNumber * _Nullable)statusCode;
++ (void)apiRequestCompletedWithHttpMethod:(NSString * _Nonnull)httpMethod url:(NSString * _Nonnull)url durationMs:(int64_t)durationMs success:(BOOL)success statusCode:(NSNumber * _Nullable)statusCode errorType:(NSString * _Nullable)errorType;
++ (void)paymentSheetPresented;
++ (void)paymentSheetPresentedWithModule:(NSString * _Nonnull)module_;
++ (void)paymentSheetDismissedWithReason:(NSString * _Nonnull)reason;
++ (void)paymentSheetDismissedWithReason:(NSString * _Nonnull)reason module:(NSString * _Nonnull)module_;
++ (void)hostedFieldInteractionWithFieldType:(NSString * _Nonnull)fieldType action:(NSString * _Nonnull)action;
++ (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount;
++ (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount module:(NSString * _Nonnull)module_;
++ (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType;
++ (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType gatewayType:(NSString * _Nullable)gatewayType;
++ (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
++ (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType gatewayType:(NSString * _Nullable)gatewayType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
++ (void)threedsCompletedWithFlowType:(NSString * _Nonnull)flowType durationMs:(int64_t)durationMs success:(BOOL)success outcome:(NSString * _Nonnull)outcome;
++ (void)threedsCompletedWithFlowType:(NSString * _Nonnull)flowType durationMs:(int64_t)durationMs success:(BOOL)success outcome:(NSString * _Nonnull)outcome gatewayType:(NSString * _Nullable)gatewayType errorCode:(NSString * _Nullable)errorCode;
++ (void)apmCheckoutCompletedWithProvider:(NSString * _Nonnull)provider paymentType:(NSString * _Nonnull)paymentType success:(BOOL)success durationMs:(int64_t)durationMs;
++ (void)offsitePaymentCompletedWithPaymentMethodType:(NSString * _Nonnull)paymentMethodType success:(BOOL)success durationMs:(int64_t)durationMs;
++ (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName;
++ (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName module:(NSString * _Nonnull)module_;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 /// Objective-C compatible delegate for receiving 3DS challenge result updates

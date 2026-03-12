@@ -80,7 +80,6 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
    - Or individual libraries: **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**
    - **SpreedlyStripeAPM** (optional, for Stripe APM)
    - **SpreedlyBraintree** (optional, for Braintree PayPal/Venmo)
-   - **SpreedlyForter3DS** (optional, for 3DS Global — auto-resolves Forter dependency)
 
 **Add via Package.swift:**
 
@@ -97,10 +96,9 @@ targets: [
             // .product(name: "SpreedlyCore", package: "checkout-ios-package"),
             // .product(name: "SpreedlySecurity", package: "checkout-ios-package"),
             // .product(name: "SpreedlyUI", package: "checkout-ios-package")
-            // Optional: add when using Stripe APM, Braintree, or 3DS Global
+            // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
             // .product(name: "SpreedlyStripeAPM", package: "checkout-ios-package"),
-            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package"),
-            // .product(name: "SpreedlyForter3DS", package: "checkout-ios-package"),
+            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package")
         ]
     )
 ]
@@ -122,18 +120,10 @@ target 'YourApp' do
   # Add these only if needed:
   # pod 'SpreedlyStripeAPM', '~> 1.1'
   # pod 'SpreedlyBraintree', '~> 1.1'
-  # pod 'SpreedlyForter3DS', '~> 1.1'  # requires spreedly-podspecs source (see below)
 end
 ```
 
 Then run `pod install`.
-
-**Forter 3DS via CocoaPods:** `SpreedlyForter3DS` depends on `Forter3DS`, which is not on CocoaPods trunk. Add the Spreedly private spec repo as a source at the top of your Podfile:
-
-```ruby
-source 'https://github.com/spreedly/spreedly-podspecs.git'
-source 'https://github.com/CocoaPods/Specs.git'
-```
 
 **Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead of version specifiers:
 
@@ -147,7 +137,6 @@ target 'YourApp' do
   # Add these only if needed:
   # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
   # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-  # pod 'SpreedlyForter3DS', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
 end
 ```
 
@@ -166,13 +155,13 @@ Replace `{GitToken}` with your GitHub personal access token that has read access
 
 Add these only when you need the corresponding features:
 
-| Feature | Package | How to Add | Version |
-|---------|---------|------------|---------|
-| 3DS Global | SpreedlyForter3DS | Select `SpreedlyForter3DS` from checkout-ios-package (SPM) or `pod 'SpreedlyForter3DS'` (CocoaPods) | 1.1.4+ |
+| Feature | Package | URL | Version |
+|---------|---------|-----|---------|
+| 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
 | Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
 | Braintree (PayPal/Venmo) — SPM only | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector | `https://github.com/braintree/braintree_ios.git` | 7.0.0+ |
 
-**Forter3DS (3DS Global):** Required for 3DS authentication. Use `SpreedlyForter3DS` (recommended) to have Forter3DS resolved automatically as a transitive dependency. For SPM, select the `SpreedlyForter3DS` product from the Spreedly package. For CocoaPods, add `pod 'SpreedlyForter3DS'` with the `spreedly-podspecs` source. Alternatively, you can still add Forter3DS manually from `https://bitbucket.org/forter-mobile/forter-ios.git` (2.1.0+). Without Forter3DS, the app will crash when 3DS is required.
+**Forter3DS (3DS Global):** Required for 3DS authentication. Add as a direct dependency to your app target. Without it, the app will crash when 3DS is required.
 
 **StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). You **must** add `StripePaymentSheet` to your **app target** (SPM or CocoaPods). The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without it the app will crash at presentation time.
 
@@ -531,13 +520,16 @@ In addition to unstructured log messages (`logInfo`, `logDebug`, etc.), the SDK 
 ```swift
 import SpreedlyCore
 
+// Track a method invocation from your module
 TelemetryEvents.sdkMethodInvoked(methodName: "checkout", module: "my-app")
 
+// Measure a custom payment flow duration
 FlowDurationTracker.shared.start(key: "custom_payment")
 // ... your payment logic ...
 let durationMs = FlowDurationTracker.shared.elapsedMs(key: "custom_payment")
 TelemetryEvents.paymentMethodCreated(durationMs: durationMs, paymentMethodType: "credit_card")
 
+// Report a payment failure with context
 TelemetryEvents.paymentMethodFailed(
     errorCode: "validation_error",
     errorMessage: "Card number invalid",
@@ -551,11 +543,14 @@ TelemetryEvents.paymentMethodFailed(
 ```objc
 #import <SpreedlyCore/SpreedlyCore-Swift.h>
 
+// Track a method invocation
 [SpreedlyTelemetryObjCBridge sdkMethodInvokedWithMethodName:@"checkout" module:@"my-app"];
 
+// Report a successful payment with duration
 [SpreedlyTelemetryObjCBridge paymentMethodCreatedWithDurationMs:1200
                                               paymentMethodType:@"credit_card"];
 
+// Report a failure
 [SpreedlyTelemetryObjCBridge paymentMethodFailedWithErrorCode:@"validation_error"
                                                  errorMessage:@"Card number invalid"
                                                     errorType:@"client_validation"
@@ -595,7 +590,7 @@ Use `FlowDurationTracker.shared` to measure elapsed time with a monotonic clock 
 ```swift
 FlowDurationTracker.shared.start(key: "my_flow")
 // ... your flow logic ...
-let ms = FlowDurationTracker.shared.elapsedMs(key: "my_flow")
+let ms = FlowDurationTracker.shared.elapsedMs(key: "my_flow") // milliseconds as Int64
 ```
 
 - `start(key:)` records the current time for the given key (overwrites if already started)
@@ -613,9 +608,11 @@ Every telemetry event includes a `sdk_platform` global attribute, set via `Spree
 ```swift
 SpreedlyConfig(
     environmentKey: environmentKey,
-    sdkPlatform: "react_native"
+    sdkPlatform: "react_native"  // or any custom identifier
 )
 ```
+
+**Datadog queries:**
 
 | Filter | Shows |
 |--------|-------|
@@ -701,7 +698,6 @@ Call this before presenting any payment form or initiating any payment operation
 | SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS, CVV recaching |
 | SpreedlyStripeAPM | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
 | SpreedlyBraintree | PayPal/Venmo via Braintree |
-| SpreedlyForter3DS | 3DS Global via Forter (auto-resolves Forter3DS dependency) |
 
 > **SpreedlyAnalytics** is an internal module used by SpreedlyCore for logging and Datadog integration. You do not need to import or interact with it directly.
 

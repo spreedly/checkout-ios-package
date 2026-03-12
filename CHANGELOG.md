@@ -1,19 +1,18 @@
-## [1.1.5] - 2026-03-11
+## [1.1.6] - 2026-03-12
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- [HC-1234] [HC-1231] Add telemetry events, refactor 3DS challenge presenter, and update docs (#209)
+- HC-1242 Refactor SDK internals: fix thread safety bugs, clean up dead code, and migrate telemetry to typed events (#210)
 
 ### Change Requests
-  - HC-1231
-  - HC-1234
+  - HC-1242
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.1.5 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.1.6 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -21,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.5")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.6")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.1.5'
+pod 'Spreedly', '~> 1.1.6'
 ```
 
 ---
@@ -42,13 +41,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **`sdk_platform` global telemetry attribute**: New `sdkPlatform` field on `SpreedlyConfig` (default `"ios"`). React Native bridges pass `"react_native"` to distinguish integration surface in Datadog (`@sdk_platform:ios` vs `@sdk_platform:react_native`).
+- HC-1234 **`sdk_platform` global telemetry attribute**: New `sdkPlatform` field on `SpreedlyConfig` (default `"ios"`). React Native bridges pass `"react_native"` to distinguish integration surface in Datadog (`@sdk_platform:ios` vs `@sdk_platform:react_native`).
+- HC-1242 **`TelemetryEventsObjCBridge`**: ObjC-compatible wrapper exposing typed `TelemetryEvents` methods so ObjC consumers and bridge layers can emit telemetry without Swift-only API.
+- HC-1242 **Braintree test coverage**: Added `BraintreeCheckoutFlowTests`, `BraintreeFlowResultTests`, and `BraintreePaymentTypeTests` for checkout flow, result mapping, and payment type handling.
+
+### Fixed
+
+- HC-1242 **NetworkSession broken continuation**: `URLSessionNetworkSession.performRequest(_:with:)` never resumed its continuation, causing callers to hang indefinitely. Now delegates to the primary `performRequest(_:)`.
+- HC-1242 **Memory leak in Bold Text observers**: `SPLTextField` and `CardFormDropIn` registered `boldTextStatusDidChangeNotification` observers but never stored or removed them. Observers are now tracked and cleaned up in `onDisappear`.
+- HC-1242 **Race condition in LoggerManager**: `getEnvironmentKey()` was called on the caller's thread outside the logger queue, creating a data race when Spreedly config changed concurrently. Now called inside the serialized queue block.
+- HC-1242 **Thread safety in GatewaySpecific3DSLifecycle**: `currentState` was read and written from multiple threads without synchronization. Now protected by `stateLock` via a thread-safe computed property.
+- HC-1242 **APIErrorHandler design bug**: `clearFieldError(for:)` silently called `clearGeneralError()`, discarding unrelated general errors when any field error was cleared. Field-level clears are now isolated.
+- HC-1242 **CardFormDropIn timing hack**: Replaced 50ms `asyncAfter` delay (race condition with `clearAllErrors()`) with deterministic `DispatchQueue.main.async` sequencing.
+- HC-1242 **ObjC Stripe APM delegate leak**: `StripeAPMPaymentFlowViewController` did not nil-out `paymentDelegate` on dealloc, risking dangling-pointer callbacks. Added `dealloc` cleanup.
+- HC-1242 **CI Package.resolved stale pin**: `ci_post_clone.sh` now deletes the existing `Package.resolved` before `xcodebuild -resolvePackageDependencies` so SPM performs a fresh resolution instead of honouring outdated pins.
+
+### Changed
+
+- HC-1242 **Telemetry migrated to typed events**: Replaced inline `emitTelemetryEvent(_:level:attributes:)` calls across SpreedlyUI with type-safe `TelemetryEvents.*` static methods (e.g. `TelemetryEvents.paymentSheetPresented()`, `.validationFailed(fieldErrors:errorCount:)`).
+- HC-1242 **Lazy log evaluation**: All public log functions (`logVerbose`, `logDebug`, `logInfo`, `logWarn`, `logError`) now use `@autoclosure` for the message parameter with an early `isLevelEnabled` guard, avoiding string interpolation when the level is suppressed.
+- HC-1242 **NetworkClient simplified**: Removed unnecessary `withCheckedThrowingContinuation { queue.async { Task { } } }` triple-wrapping in `DefaultNetworkClient.performRequest`. Now calls `executeRequest` directly via async/await.
+- HC-1242 **Removed deprecated `String.hashValue`**: `SpreedlyLogger` Datadog attributes no longer include `message_hash` (non-deterministic across process launches since Swift 4.2). `unique_id` already provides deduplication.
+- HC-1242 **Removed force unwraps**: `MockNetworkSession` uses `guard let` + thrown errors instead of `!`. `Spreedly.tokenFormatRegex` uses `try!` on the known-valid constant pattern instead of a `try?` + `!` fallback chain.
+- HC-1242 **Dead code cleanup**: Removed commented-out PayPal/Venmo/Cryptocurrency/BankAccount/ApplePay/GooglePay payment method code from `BasePaymentMethodRequest` and `ConvenienceRequests`. Removed duplicate `.notConnectedToInternet` switch case, unused `CommonCrypto` import, `BlurBackgroundView`, `iconName(for:)`, unused `ValidatedField` methods (`reset`, `forceValidate`, `validate`) and `apiError` parameter, iOS 14 availability fallbacks (deployment target already >=14), and commented-out theme manager methods.
+- HC-1242 **Example app cleanup**: Deleted `SpreedlyDevBridge.swift` (bridge APIs now in published SDK) and `TempFile.swift`. Removed unused `channel`/`redirectUrl` from gateway-specific purchase requests in both Swift and ObjC examples. Added Braintree URL scheme and PayPal/Venmo query schemes to ObjC Info.plist.
+- HC-1242 **Test cleanup**: Removed 9 zero-value tests in `Forter3DSIntegrationTests` that only asserted `XCTAssertTrue(true)`. Renamed `Forter3DSDelegateErrorPathTests` to `Forter3DSDelegateMockErrorPathTests` for clarity.
+- HC-1242 **Removed `GATEWAY_CHANGES.md`**: Deleted the redundant cross-gateway overview doc. Moved the unique cross-cutting content (payment methods comparison table, backend requirements quick reference, URL handling troubleshooting, React Native URL handling) into `guides/getting-started.md`. Replaced with `GATEWAY_SPECIFIC_FLOWCHARTS.md` containing detailed flow diagrams.
 
 ## [1.1.4] - 2026-03-11
 
 ### Changed
-- HC-1234 add telemetry events and attributes for payment flows, 3DS, network, and error tracking
-- HC-1233 audit fixes: version consistency, SBOM updates, documentation sync, PCI compliance improvements
+- HC-1234 Add telemetry events and attributes for payment flows, 3DS, network, and error tracking
+- HC-1233 Audit fixes: version consistency, SBOM updates, documentation sync, PCI compliance improvements
 
 ## [1.1.3] - 2026-03-09
 

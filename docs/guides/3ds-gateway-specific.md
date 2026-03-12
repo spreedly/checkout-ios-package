@@ -560,4 +560,4 @@ If your code calls `getChallengeContainerView`, you can safely remove those call
 
 - [3ds-global.md](3ds-global.md) - Global 3DS (Forter) flow and full comparison table
 - [error-handling.md](error-handling.md) - Error types and handling patterns
-- [3DS Gateway-Specific Flow](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/3DS_GATEWAY_SPECIFIC_FLOW.md) – Detailed flow diagrams for gateway-specific 3DS including device fingerprint, trigger/finalize, challenge lifecycle, and decision flows
+- [3DS_GATEWAY_SPECIFIC_FLOW.md](../development/3DS_GATEWAY_SPECIFIC_FLOW.md) – Detailed flow diagrams for gateway-specific 3DS including device fingerprint, trigger/finalize, challenge lifecycle, and decision flows
