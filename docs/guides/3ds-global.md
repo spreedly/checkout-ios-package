@@ -50,15 +50,37 @@ Add 3D Secure authentication to protect against fraudulent card payments.
 
 The Forter3DS dependency **MUST** be added to your app target. Without it, the app will crash when 3DS is required.
 
-**Add via Swift Package Manager:**
+**Option A: SPM via SpreedlyForter3DS (Recommended)**
 
-1. File → Swift Packages → Add Package Dependency
+The simplest approach is to add the `SpreedlyForter3DS` product from the Spreedly distribution package. This auto-resolves the Forter dependency:
+
+1. File → Add Package Dependencies
+2. Enter repository URL: `https://github.com/spreedly/checkout-ios-package`
+3. Add the `SpreedlyForter3DS` product to your app target
+4. Ensure "Embed & Sign" is set in "Frameworks, Libraries, and Embedded Content"
+
+**Option B: SPM via direct Forter3DS dependency**
+
+Alternatively, add `Forter3DS` directly from the Forter repository:
+
+1. File → Add Package Dependencies
 2. Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
 3. Set dependency rule to "Up to Next Major Version" (minimum 2.1.0)
 4. Add `Forter3DS` product to your app target
 5. Ensure "Embed & Sign" is set in "Frameworks, Libraries, and Embedded Content"
 
-**Add via Package.swift:**
+**Option C: CocoaPods**
+
+Add `pod 'SpreedlyForter3DS'` to your Podfile. Because `Forter3DS` is not on CocoaPods trunk, you must also add the Spreedly private spec repo:
+
+```ruby
+source 'https://github.com/spreedly/spreedly-podspecs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
+pod 'SpreedlyForter3DS', '~> 1.1'
+```
+
+**Add via Package.swift (Option B):**
 
 ```swift
 dependencies: [

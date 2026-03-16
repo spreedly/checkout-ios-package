@@ -422,7 +422,7 @@ Use `.next` for intermediate fields and `.done` for the last field.
 
 For billing and shipping data, use `createCreditCard(additionalFields:metadata:)` and the `AdditionalField` enum. Non-sensitive fields can be regular `TextField`s; only card data must use `SPLTextField`.
 
-### createCreditCard(additionalFields:metadata:)
+### createCreditCard(additionalFields:metadata:shouldRetain:)
 
 ```swift
 let processingResult = Spreedly.shared().createCreditCard(
@@ -437,7 +437,8 @@ let processingResult = Spreedly.shared().createCreditCard(
         .phoneNumber: "+1234567890",
         .email: "john.doe@example.com"
     ],
-    metadata: ["orderId": "12345"]
+    metadata: ["orderId": "12345"],
+    shouldRetain: true  // pass true to retain the payment method for future use
 )
 ```
 
@@ -646,7 +647,7 @@ struct CustomPaymentForm: View {
 }
 ```
 
-`shouldRetain` in `PaymentResult` is only set by `CardFormDropIn`. In custom forms, track the user's choice locally and use it to decide whether to save the token.
+In custom forms, pass the user's choice via the `shouldRetain` parameter on `createCreditCard(additionalFields:metadata:shouldRetain:)`. When `shouldRetain` is `true`, Spreedly retains the payment method for future use. The value is also available in `PaymentResult.shouldRetain` on success.
 
 ---
 

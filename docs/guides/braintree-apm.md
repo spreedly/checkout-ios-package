@@ -179,7 +179,7 @@ For Universal Links to work, **two things** must be true:
 | 1 | Backend: create Braintree purchase | Merchant backend | Get `transaction_token` and `client_token` (in `gateway_specific_response_fields.braintree.client_token`) |
 | 2 | `BraintreeURLHandler.handleOpen(url:)` / `BraintreeURLHandlerObjC.handleOpenWithUrl:` | SpreedlyBraintree | Forward return URL from PayPal/Venmo so SDK can complete the flow |
 | 3 | `BraintreeCheckoutConfig(transactionToken:paymentType:merchantDisplayName:clientToken:amount:currencyCode:)` | SpreedlyCore | Build config for checkout (`merchantDisplayName` can be `""`) |
-| 4 | `SpreedlyBraintreeCheckout.present(config:)` / `presentWithConfig:` | SpreedlyBraintree | Present PayPal or Venmo flow (SDK finds topmost VC) |
+| 4 | `SpreedlyBraintreeCheckout.present(config:)` / `present(config:from:)` / `presentWithConfig:` | SpreedlyBraintree | Present PayPal or Venmo flow. The no-argument variant finds the topmost VC automatically. Use `present(config:from:)` if you need to specify the presenting view controller (e.g., in complex navigation hierarchies). |
 | 5 | `Spreedly.shared().subscribeToPaymentResults { }` (Swift) or `SpreedlyPaymentDelegate.paymentDidComplete:` (UIKit/ObjC) | SpreedlyCore | Receive `PaymentResult` with nonce. Send nonce to backend to confirm with `/confirm.json`. |
 | 6 | Backend: POST confirm with nonce (+ device_data) | Merchant backend | Complete the transaction |
 
@@ -238,7 +238,25 @@ Content-Type: application/json
 }
 ```
 
-For Venmo use `"payment_method_type": "venmo"` and e.g. `"venmo_flow_type": "multi_use"` in `gateway_specific_fields.braintree`. Response includes `transaction.token` and `transaction.gateway_specific_response_fields.braintree.client_token`. The `redirect_url` and `callback_url` are required for the PayPal/Venmo flow to redirect back to your app.
+For Venmo use `"payment_method_type": "venmo"` and e.g. `"venmo_flow_type": "multi_use"` in `gateway_specific_fields.braintree`. The `redirect_url` and `callback_url` are required for the PayPal/Venmo flow to redirect back to your app.
+
+**Response (relevant fields):**
+
+```json
+{
+  "transaction": {
+    "token": "AbCd1234...",
+    "state": "processing",
+    "gateway_specific_response_fields": {
+      "braintree": {
+        "client_token": "eyJ2ZXJzaW9uIjoyLCJhdXRo..."
+      }
+    }
+  }
+}
+```
+
+Extract `transaction.token` and `transaction.gateway_specific_response_fields.braintree.client_token` for use in `BraintreeCheckoutConfig`.
 
 ---
 
@@ -308,10 +326,10 @@ struct BraintreePaymentView: View {
         successMessage = nil
 
         Task {
-            let client = SpreedlyConfigManager.shared.createPurchaseAPIClient()
+            // Replace with your own backend client that calls the Spreedly purchase API
             let paymentType = BraintreePaymentType(string: selectedPaymentType) ?? .paypal
-            let response = try await client.braintreePurchase(
-                amount: product.price * AppConstants.centsPerDollar,
+            let response = try await YourBackend.braintreePurchase(
+                amount: amountInCents,
                 currencyCode: "USD",
                 redirectUrl: "yourapp://com.yourapp/braintree/checkout",
                 callbackUrl: "https://yourbackend.com/braintree/callback",
@@ -343,9 +361,9 @@ struct BraintreePaymentView: View {
             successMessage = "Payment authorized; confirming..."
             Task {
                 do {
-                    let apiClient = SpreedlyConfigManager.shared.createPurchaseAPIClient()
+                    // Replace with your own backend client that calls the Spreedly confirm API
                     let paymentType = BraintreePaymentType(string: selectedPaymentType) ?? .paypal
-                    let confirmResponse = try await apiClient.braintreeConfirm(
+                    let confirmResponse = try await YourBackend.braintreeConfirm(
                         transactionToken: result.token ?? "",
                         state: "Successful",
                         nonce: nonce,
@@ -387,10 +405,9 @@ class BraintreePaymentViewController: UIViewController, SpreedlyPaymentDelegate 
     }
 
     func startBraintreeFlow() {
-        guard let product = selectedProduct else { return }
-        let client = SpreedlyConfigManager.shared.createPurchaseAPIClient()
+        // Replace with your own backend client that calls the Spreedly purchase API
         let paymentType = BraintreePaymentType(string: selectedPaymentType) ?? .paypal
-        client.braintreePurchase(amount: product.price, currencyCode: "USD", redirectUrl: "yourapp://braintree/return", callbackUrl: "https://yourbackend.com/callback", paymentMethodType: paymentType.rawValueString) { [weak self] response, error in
+        YourBackend.braintreePurchase(amount: amountInCents, currencyCode: "USD", redirectUrl: "yourapp://braintree/return", callbackUrl: "https://yourbackend.com/callback", paymentMethodType: paymentType.rawValueString) { [weak self] response, error in
             guard let self = self, let tx = response?.transaction,
                   let clientToken = tx.gatewaySpecificResponseFields?.braintree?.clientToken else { return }
             DispatchQueue.main.async {
@@ -402,10 +419,10 @@ class BraintreePaymentViewController: UIViewController, SpreedlyPaymentDelegate 
 
     func paymentDidComplete(_ result: PaymentResult) {
         if result.isSuccess, let nonce = result.nonce {
-            let apiClient = SpreedlyConfigManager.shared.createPurchaseAPIClient()
+            // Replace with your own backend client that calls the Spreedly confirm API
             let paymentType = BraintreePaymentType(string: selectedPaymentType) ?? .paypal
             Task {
-                let _ = try await apiClient.braintreeConfirm(
+                let _ = try await YourBackend.braintreeConfirm(
                     transactionToken: result.token ?? "",
                     state: "Successful",
                     nonce: nonce,
@@ -443,9 +460,8 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 #import <SpreedlyCore/SpreedlyCore-Swift.h>
 #import <SpreedlyUI/SpreedlyUI-Swift.h>
 #import <SpreedlyBraintree/SpreedlyBraintree-Swift.h>
-#import "SpreedlyConfigManager.h"
-#import "PurchaseAPIClient.h"
-#import "PurchaseModels.h"
+// Import your own backend API client
+#import "YourBackendAPIClient.h"
 
 @interface BraintreePaymentViewController () <SpreedlyPaymentDelegate>
 @property (nonatomic, copy) NSString *pendingTransactionToken;
@@ -460,8 +476,8 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 }
 
 - (void)startBraintreeFlow {
-    PurchaseAPIClient *client = [[SpreedlyConfigManager shared] createPurchaseAPIClient];
-    [client braintreePurchaseWithAmount:amountInCents
+    // Replace with your own backend client that calls the Spreedly purchase API
+    [YourBackendAPIClient braintreePurchaseWithAmount:amountInCents
                            currencyCode:@"USD"
                             redirectUrl:@"yourapp://com.yourapp/braintree/checkout"
                             callbackUrl:@"https://yourbackend.com/braintree/callback"
@@ -485,8 +501,8 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 - (void)paymentDidComplete:(PaymentResult *)result {
     if (result.isSuccess && result.nonce.length > 0) {
         __weak typeof(self) weakSelf = self;
-        PurchaseAPIClient *client = [[SpreedlyConfigManager shared] createPurchaseAPIClient];
-        [client braintreeConfirmWithTransactionToken:self.pendingTransactionToken
+        // Replace with your own backend client that calls the Spreedly confirm API
+        [YourBackendAPIClient braintreeConfirmWithTransactionToken:self.pendingTransactionToken
                                                state:@"Successful"
                                                nonce:result.nonce
                                           deviceData:result.deviceData

@@ -26,7 +26,7 @@
 		</data>
 		<key>ios-arm64/SpreedlySecurity.framework/SpreedlySecurity</key>
 		<data>
-		KtAOgAX31UmwN+AnmrQhuML77dA=
+		+6To3zwTHq3rR0oH0+HVEUDqz2M=
 		</data>
 		<key>ios-arm64/SpreedlySecurity.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -138,11 +138,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KtAOgAX31UmwN+AnmrQhuML77dA=
+			+6To3zwTHq3rR0oH0+HVEUDqz2M=
 			</data>
 			<key>hash2</key>
 			<data>
-			zY9v+Ix92vrrAF1tBlfme1aEl5sH9MXpeOPRSIAkgwY=
+			0vdSFjQ+Z6qM2DPsOj5OmHxUctCwkIo/AXfnHKDPSWg=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlySecurity.framework/_CodeSignature/CodeResources</key>

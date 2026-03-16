@@ -79,14 +79,17 @@ The Spreedly SDK includes Stripe APM support via **weak linking** (same pattern 
 
 1. In Xcode, select **File > Add Package Dependencies...**
 2. Enter the repository URL: `https://github.com/stripe/stripe-ios-spm`
-3. Select the `StripePaymentSheet` product
-4. Add it to your app target with **Embed & Sign**
+3. Set the version requirement to **25.0.0** or later (the Spreedly SDK is built against `~> 25.0`)
+4. Select the `StripePaymentSheet` product
+5. Add it to your app target with **Embed & Sign**
 
 #### CocoaPods
 
 ```ruby
-pod 'StripePaymentSheet'
+pod 'StripePaymentSheet', '~> 25.0'
 ```
+
+> **Version compatibility:** The `SpreedlyStripeAPM` podspec depends on `StripePaymentSheet ~> 25.0`. If you use CocoaPods, the version is resolved automatically. For SPM, ensure you use a compatible major version (25.x).
 
 ---
 
@@ -127,7 +130,7 @@ After the user completes authentication in Safari (e.g., iDEAL bank auth), they 
 | # | Method | Module | Purpose |
 |---|--------|--------|---------|
 | 1 | Backend: create pending purchase | Merchant backend | Get `client_secret` and `transaction_token` |
-| 2 | `SpreedlyStripeAPMCheckout.present(config:)` | SpreedlyStripeAPM | Present Stripe PaymentSheet |
+| 2 | `SpreedlyStripeAPMCheckout.present(config:)` / `present(config:from:)` | SpreedlyStripeAPM | Present Stripe PaymentSheet. The no-argument variant finds the topmost VC automatically. Use `present(config:from:)` to specify the presenting view controller. |
 | 3 | `SpreedlyStripeAPMCheckout.handleStripeReturnURL(_: URL) -> Bool` | SpreedlyStripeAPM | Handle Stripe redirect URL; returns `true` if the URL was handled |
 | 4 | `subscribeToPaymentResults` | SpreedlyCore | Receive payment result |
 | 5 | `handleOffsiteReturn(url:)` | SpreedlyCore | Handle redirect when app re-opens |
@@ -172,7 +175,23 @@ Content-Type: application/json
 }
 ```
 
-**Response:** `transaction.token`, `transaction.state` (must be `"pending"`), `transaction.gateway_specific_response_fields.stripe_payment_intents.client_secret`.
+**Response (relevant fields):**
+
+```json
+{
+  "transaction": {
+    "token": "AbCd1234...",
+    "state": "pending",
+    "gateway_specific_response_fields": {
+      "stripe_payment_intents": {
+        "client_secret": "pi_3abc123_secret_xyz789..."
+      }
+    }
+  }
+}
+```
+
+Extract `transaction.token` (the Spreedly transaction token) and `transaction.gateway_specific_response_fields.stripe_payment_intents.client_secret` (the Stripe PaymentIntent client secret) for use in `StripeAPMConfig`.
 
 **`redirect_url`:** Can be a Spreedly-hosted URL (e.g. `https://spreedly.com/stripe-apm/redirect`) or your custom scheme (e.g. `myapp://stripe-redirect`). See [redirect_url vs returnURL Clarification](#redirect_url-vs-returnurl-clarification).
 
@@ -473,7 +492,7 @@ typedef NS_ENUM(NSInteger, StripeAPMStage) {
 
 - **No tokenization step:** Unlike EBANX/PayPal, Stripe APM does not use `submitOffsitePayment()`. The pending purchase is created directly on the backend.
 
-- **SDK finds topmost VC:** Call `SpreedlyStripeAPMCheckout.present(config:)` with only the config. The SDK finds the topmost view controller (same approach as `SpreedlyOffsiteCheckout.present(transactionToken:)`), so you do not need to pass a presenter.
+- **SDK finds topmost VC:** Call `SpreedlyStripeAPMCheckout.present(config:)` with only the config. The SDK finds the topmost view controller automatically. If your app has a complex navigation hierarchy where automatic detection doesn't work, use `SpreedlyStripeAPMCheckout.present(config:from:)` and pass the presenting view controller explicitly.
 
 - **URL handling:** Use `handleOffsiteReturn(url:)` in `onOpenURL` (SwiftUI) or in `SceneDelegate` (UIKit/Objective-C). The SDK forwards Stripe redirect URLs internally; no Stripe-specific code is required in the app.
 
