@@ -63,6 +63,7 @@ Minimal SwiftUI implementation:
 ```swift
 import SwiftUI
 import Combine
+import SpreedlyCore
 import SpreedlyUI
 
 struct CheckoutView: View {
@@ -298,6 +299,8 @@ CardFormDropIn(
 ### 2. `subscribeToPaymentResults` (Swift) / `paymentDelegate` (Obj-C) → Actual payment result
 
 Success (with token) and failure (with error) come through this channel, **not** `onProcessingResult`.
+
+> **Thread safety:** `subscribeToPaymentResults` callbacks are always dispatched on the **main thread** (`DispatchQueue.main`). You can safely update UI directly in the callback without wrapping in `DispatchQueue.main.async`.
 
 ```swift
 import Combine

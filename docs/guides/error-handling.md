@@ -34,7 +34,7 @@ The Spreedly iOS SDK categorizes errors into distinct types and delivers them th
 The error handling flow involves three main components:
 
 - **PaymentProcessingResult**: Immediate synchronous response from `createCreditCard()` or `submitOffsitePayment()` indicating validation status
-- **PaymentResult**: Final result delivered asynchronously through `subscribeToPaymentResults` or the delegate
+- **PaymentResult**: Final result delivered asynchronously through `subscribeToPaymentResults` or the delegate. `subscribeToPaymentResults` callbacks are always dispatched on the **main thread**.
 - **FailedDetails**: Detailed failure information for debugging and user feedback
 
 ---
@@ -60,13 +60,17 @@ Delivered asynchronously via `subscribeToPaymentResults` or the delegate, repres
 
 | Property | Type | Description |
 |----------|------|-------------|
+| `isInitial` | Bool | `true` for the initial value emitted by `paymentResultPublisher` before any payment is attempted. Ignore this state when handling results; it indicates no payment has been processed yet. |
 | `isSuccess` | Bool | Payment succeeded |
+| `isCanceled` | Bool | User canceled the payment flow (e.g., dismissed the form, canceled a 3DS challenge, or backed out of an APM flow). Handle this as a non-error state — allow the user to retry. |
 | `isFailure` | Bool | Payment failed |
 | `token` | String? | Payment method token |
 | `paymentResponse` | PaymentMethodResponse? | Full response object |
 | `shouldRetain` | Bool | Whether to save card (CardFormDropIn only) |
 | `failureDetails` | FailedDetails? | Error details when failed |
 | `state` | String? | Transaction state (for offsite/APM flows) |
+
+> **Three mutually exclusive states:** `isSuccess`, `isCanceled`, and `isFailure` are mutually exclusive. Exactly one will be `true` on any non-initial `PaymentResult`. Always check all three in your result handler. `isInitial` is a separate property that is only `true` for the first value emitted by the Combine publisher (`paymentResultPublisher`) — `subscribeToPaymentResults` filters this out automatically.
 
 ### FailedDetails
 
@@ -375,6 +379,20 @@ If the challenge times out, the result will typically be a failure with a networ
 **Error:** "Spreedly instance not initialized. Call Spreedly.initializeSDK() or Spreedly.setup(config:) first."
 
 **Solution:** Call `Spreedly.setup(config:)` with valid credentials before any payment operation. Ensure setup runs at app launch or before presenting payment UI.
+
+### Missing Configuration (`setup` Not Called)
+
+If you call `Spreedly.shared()` without first calling `Spreedly.setup(config:)`, the SDK auto-initializes with a default (empty) configuration and logs a warning. Subsequent API calls (e.g., `createCreditCard`, `submitOffsitePayment`) will fail because the environment key is missing.
+
+**Behavior by flow:**
+
+| Operation | Failure Mode |
+|-----------|-------------|
+| `Spreedly.setup(config:)` with nil/empty `environmentKey` | Logs error, triggers `assertionFailure` (crashes in debug builds, silently returns in release) |
+| `createCreditCard(...)` without setup | Validation passes, but the API call fails with an authentication error via `PaymentResult.failure` |
+| `submitOffsitePayment(...)` without setup | Returns `PaymentProcessingResult.validationFailed()` and emits `PaymentResult.failure` with message "Spreedly configuration is missing" |
+
+**Solution:** Always call `Spreedly.setup(config:)` with a valid `environmentKey` before any payment operation. In debug builds, a missing environment key will crash with `assertionFailure` to surface the issue early.
 
 ### Invalid Credentials
 

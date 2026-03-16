@@ -291,7 +291,9 @@ let theme = SpreedlyThemeManager.createCustomTheme(
 
 ### SpreedlyThemeManager.createThemeFromAndroidConfig
 
-For cross-platform consistency, create an iOS theme from Android theme configuration using hex color strings:
+This method is for **cross-platform apps** that share theme configuration between iOS and Android. It accepts hex color strings (the format used by the Android SDK's theme system) and maps them to the iOS SDK's `SpreedlyColors` and `SpreedlyBorderRadius`. If your app is iOS-only, you can skip this and use `SpreedlyTheme` directly.
+
+Create an iOS theme from Android theme configuration:
 
 ```swift
 let theme = SpreedlyThemeManager.createThemeFromAndroidConfig(

@@ -28,7 +28,7 @@ Set up the Spreedly iOS SDK in your project in under 15 minutes.
 Before integrating the Spreedly iOS SDK, ensure you have:
 
 - **iOS 14.0+** deployment target
-- **Xcode 16.4** for development
+- **Xcode 16.1** minimum, **16.4** recommended
 - **Swift 5.10+** for Swift projects
 - **Spreedly Account** with API credentials
 - **Valid Environment Key** from the Spreedly dashboard
@@ -85,7 +85,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.4")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.6")
 ],
 targets: [
     .target(
@@ -161,7 +161,18 @@ Add these only when you need the corresponding features:
 | Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
 | Braintree (PayPal/Venmo) — SPM only | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector | `https://github.com/braintree/braintree_ios.git` | 7.0.0+ |
 
-**Forter3DS (3DS Global):** Required for 3DS authentication. Add as a direct dependency to your app target. Without it, the app will crash when 3DS is required.
+**Forter3DS (3DS Global):** Required for 3DS authentication. The recommended approach depends on your dependency manager:
+
+- **SPM (recommended):** Add the `SpreedlyForter3DS` product from the `checkout-ios-package` repository to your app target. This automatically resolves the Forter dependency — no need to add `forter-ios` manually.
+- **SPM (manual):** Alternatively, add `Forter3DS` directly from `https://bitbucket.org/forter-mobile/forter-ios.git` (2.1.0+) to your app target with **Embed & Sign**.
+- **CocoaPods:** Add `pod 'SpreedlyForter3DS'` to your Podfile. Because `Forter3DS` is not on CocoaPods trunk, you must also add the Spreedly private spec repo as a source at the top of your Podfile:
+
+```ruby
+source 'https://github.com/spreedly/spreedly-podspecs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+```
+
+Without the Forter3DS dependency, the app will crash when 3DS is required.
 
 **StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). You **must** add `StripePaymentSheet` to your **app target** (SPM or CocoaPods). The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without it the app will crash at presentation time.
 
@@ -175,13 +186,13 @@ Add these entries to your app's `Info.plist`:
 
 | Key | When Required | Purpose |
 |-----|--------------|---------|
-| `NSCameraUsageDescription` | Always | **Required by the Stripe iOS SDK.** The `StripePaymentSheet` module includes built-in card scanning functionality that references camera APIs internally. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
+| `NSCameraUsageDescription` | Stripe APM only | **Required only if your app target links `StripePaymentSheet`.** The `StripePaymentSheet` module includes built-in card scanning functionality that references camera APIs internally. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. If you do not use Stripe APM, you do not need this key. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
 | `CFBundleURLTypes` | Offsite, Stripe APM, Braintree | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe flows and `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo. **Gateway-Specific 3DS no longer needs a URL scheme** — the SDK uses `ASWebAuthenticationSession`, which handles the callback internally. |
 | `LSApplicationQueriesSchemes` | Braintree PayPal/Venmo | Include `paypal` so the SDK can detect the PayPal app for App Switch. Optionally include `com.venmo.touch.v2` (Braintree v6 legacy; v7 Venmo uses Universal Links and does not call `canOpenURL`). |
 
 > **All three keys should be added to every target** (Swift and Objective-C) that integrates the SDK. The Objective-C target must also include `CFBundleURLSchemes` with `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if it uses Braintree.
 
-**Why is `NSCameraUsageDescription` required?** The Stripe iOS SDK (`StripePaymentSheet`) bundles card-scanning functionality that references camera APIs. Apple's static analysis flags these references during App Store review and rejects the build (`ITMS-90683`) if this key is missing — even if your app never invokes the card scanner. Because the Spreedly SDK depends on Stripe for APM payments, you must include this key.
+**Why is `NSCameraUsageDescription` required for Stripe APM?** The Stripe iOS SDK (`StripePaymentSheet`) bundles card-scanning functionality that references camera APIs. Apple's static analysis flags these references during App Store review and rejects the build (`ITMS-90683`) if this key is missing — even if your app never invokes the card scanner. If your app uses Stripe APM (via `SpreedlyStripeAPM`), you must include this key. If you only use card tokenization, Braintree, or offsite payments, this key is not needed.
 
 **Example XML snippet:**
 
@@ -357,7 +368,7 @@ struct YourApp: App {
 }
 ```
 
-> **Note:** `SpreedlySecurity` is a transitive dependency of `SpreedlyCore` and does not need a direct import unless you use `SecureValueContainer` or other security APIs directly.
+> **Note:** `SpreedlySecurity` is a required dependency of the SDK. If you use the all-in-one `Spreedly` SPM product, it is included automatically. If you add `SpreedlyCore` individually, you must also add `SpreedlySecurity` to your app target — binary xcframeworks cannot declare transitive SPM dependencies. You only need `import SpreedlySecurity` if you use `SecureValueContainer` or other security APIs directly.
 
 **UIKit (AppDelegate):**
 
@@ -372,14 +383,17 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ### Step 2: Configure with Credentials (Mandatory)
 
-Call `Spreedly.setup(config:)` with all required parameters before any payment requests. `SpreedlyConfig` initializer: `init(environmentKey:forterSiteId:certificateToken:nonce:signature:timestamp:)`.
+Call `Spreedly.setup(config:)` with all required parameters before any payment requests. `SpreedlyConfig` initializer: `init(environmentKey:forterSiteId:certificateToken:nonce:signature:timestamp:sdkPlatform:)`.
 
-- `environmentKey` (required)
-- `forterSiteId` (required for 3DS support)
-- `certificateToken` (required)
-- `nonce` (required)
-- `signature` (required)
-- `timestamp` (required)
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `environmentKey` | Yes | Your Spreedly environment key (test or production) |
+| `forterSiteId` | Yes (for 3DS) | Your Forter site ID. Required if your integration uses 3D Secure. Pass `nil` if you do not use 3DS. |
+| `certificateToken` | Yes | Certificate token fetched from your backend |
+| `nonce` | Yes | Unique nonce for request signing, fetched from your backend |
+| `signature` | Yes | HMAC signature, fetched from your backend |
+| `timestamp` | Yes | Timestamp of signature generation, fetched from your backend |
+| `sdkPlatform` | No | Identifies the integration surface in telemetry logs. Defaults to `"ios"` for native apps. Set to `"react_native"` if calling from a React Native bridge, or any custom string for other wrappers. All telemetry events are tagged with this value as the `sdk_platform` attribute. |
 
 ```swift
 class SpreedlyConfigManager {
@@ -398,8 +412,8 @@ class SpreedlyConfigManager {
                 certificateToken: signatureParams.certificateToken,
                 nonce: signatureParams.nonce,
                 signature: signatureParams.signature,
-                timestamp: String(signatureParams.timestamp)
-                // sdkPlatform: "ios"  // default; pass "react_native" for RN bridges
+                timestamp: String(signatureParams.timestamp),
+                sdkPlatform: "ios"  // default for native iOS; use "react_native" for RN bridges
             ))
         } catch {
             print("Failed to configure Spreedly: \(error.localizedDescription)")
@@ -701,6 +715,21 @@ Call this before presenting any payment form or initiating any payment operation
 
 > **SpreedlyAnalytics** is an internal module used by SpreedlyCore for logging and Datadog integration. You do not need to import or interact with it directly.
 
+### Transitive Dependencies
+
+`SpreedlyCore` pulls in the following third-party dependencies automatically. You do not need to add them manually, but you should be aware of them for binary size planning and potential version conflicts:
+
+| Dependency | Version | Pulled By | Purpose |
+|------------|---------|-----------|---------|
+| DatadogCore | ~> 3.1.0 | SpreedlyCore | Observability and structured telemetry |
+| DatadogLogs | ~> 3.1.0 | SpreedlyCore | Log forwarding to Datadog |
+
+**Binary size impact:** The Datadog frameworks add approximately 4-8 MB to your app binary.
+
+**Version conflicts:** If your app already uses the Datadog iOS SDK, ensure your version is compatible with `~> 3.1.0`. SPM and CocoaPods will report a conflict if the versions are incompatible.
+
+**Opting out:** Datadog telemetry is active only when `DatadogConfig.clientToken` is non-empty. In local builds the client token defaults to `""`, so no data flows to Datadog unless explicitly configured.
+
 ---
 
 ## Localization
@@ -798,6 +827,26 @@ import Forter3DS
 ```
 
 This pattern is used in the example app and is recommended for any optional dependency (SpreedlyBraintree, SpreedlyStripeAPM, Forter3DS).
+
+---
+
+## Cleanup and Reset
+
+When you need to reset SDK state — for example, on user logout, environment switch, or before reinitializing with a new configuration — call:
+
+```swift
+Spreedly.shared().reset()
+```
+
+This clears internal state, cancels any pending operations, and resets validation parameters. After calling `reset()`, you must call `initializeSDK()` and `setup(config:)` again before making any further SDK calls.
+
+If you only need to reset validation parameters (e.g., to allow re-submission after a validation failure), use:
+
+```swift
+ValidationParamReset.reset()
+```
+
+This clears cached validation state without requiring full reinitialization.
 
 ---
 

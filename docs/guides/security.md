@@ -174,7 +174,7 @@ The SDK uses `SecureValueContainer` to handle sensitive fields such as card numb
 
 - **SecureValueContainer** handles card number and CVV collection
 - **CVV is never stored locally**; it is only transmitted securely to Spreedly
-- Sensitive data is encrypted using **AES-256-GCM** via CryptoKit
+- Sensitive data is encrypted using industry-standard encryption via Apple's CryptoKit framework
 - When using SDK UI components, `SecureValueContainer` is managed automatically
 - `SecureValueContainer` cleans up after use
 

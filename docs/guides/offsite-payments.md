@@ -42,10 +42,8 @@ Offsite payments let users pay via external providers such as PayPal and Sprel. 
 
 - `paypal` - PayPal checkout
 - `sprel` - Sprel checkout
-- `nupayRecurrent` - NuPay Recurrent
-- `rapipago` - Rapipago
 
-For EBANX providers (Pix, Boleto, OXXO, NuPay, NuPay Recurrent, Rapipago), see [ebanx-apm.md](ebanx-apm.md).
+For EBANX providers (Pix, Boleto, OXXO, NuPay, NuPay Recurrent, Rapipago), see [ebanx-apm.md](ebanx-apm.md). EBANX methods use `submitOffsitePayment` under the hood but have additional configuration requirements covered in that guide.
 
 ---
 
@@ -185,7 +183,20 @@ The `callback_url` is a server-to-server webhook. The gateway POSTs the transact
 ## Flow
 
 1. **Create payment method:** Call `submitOffsitePayment(config:)` to receive `payment_method_token` via `PaymentResult`.
-2. **Purchase on backend:** Call your purchase API with `payment_method_token`, `redirect_url`, and `callback_url` to receive `transaction_token`.
+2. **Purchase on backend:** Call your purchase API with `payment_method_token`, `redirect_url`, and `callback_url` to receive `transaction_token`. Your backend response will contain the transaction token needed by the SDK:
+
+```json
+{
+  "transaction": {
+    "token": "AbCd1234...",
+    "state": "pending",
+    "checkout_url": "https://checkout.example.com/..."
+  }
+}
+```
+
+Extract `transaction.token` for use in `SpreedlyOffsiteCheckout.present(transactionToken:)`.
+
 3. **Present checkout:** Call `SpreedlyOffsiteCheckout.present(transactionToken:)`. The SDK fetches the checkout URL and presents Safari directly.
 4. **Handle return:** User completes payment. On redirect (or Done tap), the SDK checks status and emits `PaymentResult`.
 
@@ -487,7 +498,7 @@ typedef NS_ENUM(NSInteger, OffsiteStage) {
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| `paymentMethodType` | Yes | `.paypal`, `.sprel`, `.nupayRecurrent`, `.rapipago` (EBANX types: see [ebanx-apm.md](ebanx-apm.md)) |
+| `paymentMethodType` | Yes | `.paypal`, `.sprel` (for EBANX types like `.nupayRecurrent`, `.rapipago`, see [ebanx-apm.md](ebanx-apm.md)) |
 | `email` | No | Customer email |
 | `fullName` | No | Full name |
 | `firstName` | No | First name |
@@ -501,7 +512,7 @@ typedef NS_ENUM(NSInteger, OffsiteStage) {
 | `city` | No | City |
 | `state` | No | State/region |
 | `zip` | No | Postal code |
-| `redirectUrl` | No | Used in the purchase API call, not in payment method creation |
+| `redirectUrl` | No (tokenization), **Yes** (purchase) | Not required for `submitOffsitePayment()` (tokenization step), but your backend **must** include `redirect_url` in the Spreedly purchase API call. Without it, the payment provider cannot redirect the user back to your app after checkout. |
 
 #### DocumentId
 

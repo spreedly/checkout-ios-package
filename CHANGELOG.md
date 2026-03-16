@@ -1,18 +1,19 @@
-## [1.1.8] - 2026-03-13
+## [1.1.9] - 2026-03-16
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1249 Fix Xcode Cloud TestFlight build by editing Package.resolved in-place (#211)
+- HC-1251 Refactoring, workflows, docs, and HC-1249 TestFlight fix (#212)
 
 ### Change Requests
   - HC-1249
+  - HC-1251
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.1.8 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.1.9 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -20,12 +21,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.8")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.1.9")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.1.8'
+pod 'Spreedly', '~> 1.1.9'
 ```
 
 ---
@@ -47,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- HC-1251 **Card number field paste and display**: Pasted input (e.g. `4111-1111-1111-1111` or `4111.1111.1111.1111`) was shown with dashes/dots and non-digits were accepted. The field now normalizes all input to digits only and displays with space-separated groups only (e.g. `4111 1111 1111 1111`). Masked state also uses space formatting.
 - HC-1242 **NetworkSession broken continuation**: `URLSessionNetworkSession.performRequest(_:with:)` never resumed its continuation, causing callers to hang indefinitely. Now delegates to the primary `performRequest(_:)`.
 - HC-1242 **Memory leak in Bold Text observers**: `SPLTextField` and `CardFormDropIn` registered `boldTextStatusDidChangeNotification` observers but never stored or removed them. Observers are now tracked and cleaned up in `onDisappear`.
 - HC-1242 **Race condition in LoggerManager**: `getEnvironmentKey()` was called on the caller's thread outside the logger queue, creating a data race when Spreedly config changed concurrently. Now called inside the serialized queue block.
@@ -54,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HC-1242 **APIErrorHandler design bug**: `clearFieldError(for:)` silently called `clearGeneralError()`, discarding unrelated general errors when any field error was cleared. Field-level clears are now isolated.
 - HC-1242 **CardFormDropIn timing hack**: Replaced 50ms `asyncAfter` delay (race condition with `clearAllErrors()`) with deterministic `DispatchQueue.main.async` sequencing.
 - HC-1242 **ObjC Stripe APM delegate leak**: `StripeAPMPaymentFlowViewController` did not nil-out `paymentDelegate` on dealloc, risking dangling-pointer callbacks. Added `dealloc` cleanup.
-- HC-1249 **Xcode Cloud TestFlight build failure**: `ci_post_clone.sh` was deleting `Package.resolved` to force a fresh SPM resolution, but Xcode Cloud requires the file to exist (automatic resolution is disabled). The script now edits the `checkout-ios-package` version in-place via `python3`, preserving `forter-ios` and `stripe-ios-spm` pins. `xcodebuild -resolvePackageDependencies` then corrects the revision SHA to match the new version. Post-resolve validation also handles the case where `checkout-ios-package` isn't a direct SPM dependency gracefully.
+- HC-1249 **Xcode Cloud TestFlight build failure**: `Package.resolved` was stale (pinned to an older `checkout-ios-package` version) and Xcode Cloud ignores runtime modifications made by `ci_post_clone.sh`. The `checkout-ios-package` release workflow now updates `Package.resolved` in `checkout-ios-sdk`, runs `xcodebuild -resolvePackageDependencies` to correct the revision SHA and originHash, commits the result, and creates the `testflight-*` tag on that commit. Xcode Cloud clones at the tag and gets a correct `Package.resolved` from the start. `ci_post_clone.sh` was simplified to only generate `SpreedlyKeys.xcconfig` and verify `Package.resolved` is present — all stale Package.resolved editing logic was removed.
 
 ### Changed
 
