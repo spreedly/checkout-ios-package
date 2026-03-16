@@ -4,9 +4,12 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
   create-sdk-tag:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout SDK repository
         uses: actions/checkout@v4
@@ -15,23 +18,92 @@ jobs:
           token: ${{ secrets.SDK_REPO_TOKEN }}
           fetch-depth: 0
 
-      - name: Create tag for TestFlight build
+      - name: Configure git for private package access
         run: |
-          # Set up git config
+          # xcodebuild needs credentials to fetch checkout-ios-package (private repo)
+          git config --global url."https://x-access-token:${{ secrets.SDK_REPO_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Update Package.resolved to released version
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          RESOLVED_FILE="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+
+          echo "📦 Updating checkout-ios-package to version $RELEASE_VERSION in Package.resolved"
+
+          if [ ! -f "$RESOLVED_FILE" ]; then
+            echo "❌ Package.resolved not found at $RESOLVED_FILE"
+            exit 1
+          fi
+
+          python3 -c "
+          import json, sys
+
+          version = sys.argv[1]
+          path = sys.argv[2]
+
+          with open(path) as f:
+              data = json.load(f)
+
+          for pin in data.get('pins', []):
+              if pin['identity'] == 'checkout-ios-package':
+                  old = pin['state'].get('version', 'unknown')
+                  pin['state']['version'] = version
+                  print(f'Updated checkout-ios-package: {old} -> {version}')
+                  break
+          else:
+              print('ERROR: checkout-ios-package not found in Package.resolved')
+              sys.exit(1)
+
+          data.pop('originHash', None)
+
+          with open(path, 'w') as f:
+              json.dump(data, f, indent=2)
+              f.write('\n')
+          " "$RELEASE_VERSION" "$RESOLVED_FILE"
+
+          # xcodebuild -resolvePackageDependencies corrects the revision SHA
+          # and regenerates originHash to match the new version.
+          cd Example/SpreedlySDKExample
+          MAX_RETRIES=3
+          RETRY_DELAY=15
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "🔧 Resolving dependencies (attempt $i/$MAX_RETRIES)..."
+            if xcodebuild -resolvePackageDependencies \
+                -project SpreedlySDKExample.xcodeproj \
+                -scheme SpreedlySDKExample; then
+              echo "✅ Dependencies resolved successfully"
+              break
+            fi
+            if [ $i -eq $MAX_RETRIES ]; then
+              echo "❌ Failed to resolve dependencies after $MAX_RETRIES attempts"
+              exit 1
+            fi
+            echo "⚠️ Resolve failed, retrying in ${RETRY_DELAY}s..."
+            sleep $RETRY_DELAY
+          done
+
+          echo "📋 Updated Package.resolved:"
+          cat "../../$RESOLVED_FILE"
+
+      - name: Create TestFlight tag with updated Package.resolved
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name }}
+        run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          
-          # Create tag name from release tag
-          TAG_NAME="testflight-${{ github.event.release.tag_name }}"
-          echo "Creating tag: $TAG_NAME"
-          
-          # Check if tag already exists
-          if git show-ref --verify --quiet refs/tags/$TAG_NAME; then
-            echo "Tag $TAG_NAME already exists, skipping creation"
+
+          RESOLVED_FILE="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+          TAG_NAME="testflight-${RELEASE_VERSION}"
+
+          git add "$RESOLVED_FILE"
+          git commit -m "Update Package.resolved to checkout-ios-package ${RELEASE_VERSION}" || echo "ℹ️ No changes to commit (Package.resolved already up to date)"
+
+          if git show-ref --verify --quiet "refs/tags/$TAG_NAME"; then
+            echo "⚠️ Tag $TAG_NAME already exists, skipping creation"
           else
-            echo "Creating new tag $TAG_NAME on main branch"
-            git tag -a $TAG_NAME -m "TestFlight build for checkout-ios-package ${{ github.event.release.tag_name }}"
-            git push origin $TAG_NAME
-            echo "✅ Tag $TAG_NAME created and pushed successfully!"
-            echo "🚀 This will trigger your Xcode Cloud build for TestFlight!"
+            echo "🏷️ Creating tag: $TAG_NAME"
+            git tag -a "$TAG_NAME" -m "TestFlight build for checkout-ios-package ${RELEASE_VERSION}"
+            git push origin "$TAG_NAME"
+            echo "✅ Tag $TAG_NAME created and pushed"
           fi
