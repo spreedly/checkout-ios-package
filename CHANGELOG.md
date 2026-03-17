@@ -1,18 +1,18 @@
-## [1.2.1] - 2026-03-17
+## [1.2.2] - 2026-03-17
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1263 Add source field to payment method creation, migrate sdkPlatform to typed enum, and harden PCI log sanitization (#213)
+- HC-1265 Documentation audit and fix SpreedlyStripeAPM build (#215)
 
 ### Change Requests
-  - HC-1263
+  - HC-1265
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.2.1 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.2.2 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -20,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.1")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.2")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.2.1'
+pod 'Spreedly', '~> 1.2.2'
 ```
 
 ---
@@ -39,10 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-
-- HC-1265 **Documentation audit (Forter 3DS)**: Corrected install instructions for Forter3DS. The `SpreedlyForter3DS` module does not exist yet; docs now direct merchants to add Forter3DS directly — SPM from `https://bitbucket.org/forter-mobile/forter-ios.git`, CocoaPods via `pod 'Forter3DS', :git => '...'`. Removed all references to the non-existent SpreedlyForter3DS pod. Added Forter3DS to the optional modules list in getting-started. Clarified that a dedicated SpreedlyForter3DS module is planned for a future release.
-
 ### Added
 
 - HC-1234 **`sdk_platform` global telemetry attribute**: New `sdkPlatform` field on `SpreedlyConfig` (default `.ios`). React Native bridges pass `.reactNative` to distinguish integration surface in Datadog.
@@ -52,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- HC-1179 **Stripe APM pending vs processing discrepancy**: iOS showed "pending" for Stripe APM payments (e.g. iDEAL, SEPA) while Android and Web showed "processing". The SDK now awaits Spreedly's transaction redirect endpoint (`GET .../transaction/{token}/redirect`) before the first status poll, matching Android's approach. In web flows this redirect happens naturally via the browser; for native PaymentSheet flows the SDK triggers it programmatically so Spreedly can sync status with Stripe before polling.
 - HC-1263 **`setConfig()` not propagating `sdkPlatform`**: When the SDK was already initialized, calling `Spreedly.setup()` again took the `setConfig()` path which updated the config object but never set `GlobalAttributes.shared.sdkPlatform`. This caused telemetry and the `source` field to keep the stale platform value (e.g. `"checkout-ios"`) even when `.reactNative` was passed. Now `setConfig()` propagates `sdkPlatform` to `GlobalAttributes`.
 - HC-1251 **Card number field paste and display**: Pasted input (e.g. `4111-1111-1111-1111` or `4111.1111.1111.1111`) was shown with dashes/dots and non-digits were accepted. The field now normalizes all input to digits only and displays with space-separated groups only (e.g. `4111 1111 1111 1111`). Masked state also uses space formatting.
 - HC-1242 **NetworkSession broken continuation**: `URLSessionNetworkSession.performRequest(_:with:)` never resumed its continuation, causing callers to hang indefinitely. Now delegates to the primary `performRequest(_:)`.
@@ -65,6 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Documentation audit**: Optional Dependencies table now lists SpreedlyBraintree as primary Braintree module (not Braintree sub-packages). Added explicit "Do not use pod SpreedlyForter3DS" warning. Synced checkout-ios-package getting-started with SdkPlatform enum (not strings). Clarified Info.plist keys (add per integration, not all three). Updated Venmo AASA warning to reflect current status.
+- HC-1265 **Documentation audit (Forter 3DS)**: Corrected install instructions for Forter3DS. The `SpreedlyForter3DS` module does not exist yet; docs now direct merchants to add Forter3DS directly — SPM from `https://bitbucket.org/forter-mobile/forter-ios.git`, CocoaPods via `pod 'Forter3DS', :git => '...'`. Removed all references to the non-existent SpreedlyForter3DS pod. Added Forter3DS to the optional modules list in getting-started. Clarified that a dedicated SpreedlyForter3DS module is planned for a future release.
 - HC-1263 **`sdkPlatform` is now a `SdkPlatform` enum**: Replaced the `String?` parameter on `SpreedlyConfig` and `SpreedlyConfigGenerator` with a type-safe `SdkPlatform` enum (`.ios`, `.reactNative`). The enum's `value` property (`"checkout-ios"` / `"checkout-react-native"`) is used for both Datadog telemetry and the Core API `source` field. **Breaking**: callers passing `sdkPlatform: "react_native"` must change to `sdkPlatform: .reactNative`.
 - HC-1242 **Telemetry migrated to typed events**: Replaced inline `emitTelemetryEvent(_:level:attributes:)` calls across SpreedlyUI with type-safe `TelemetryEvents.*` static methods (e.g. `TelemetryEvents.paymentSheetPresented()`, `.validationFailed(fieldErrors:errorCount:)`).
 - HC-1242 **Lazy log evaluation**: All public log functions (`logVerbose`, `logDebug`, `logInfo`, `logWarn`, `logError`) now use `@autoclosure` for the message parameter with an early `isLevelEnabled` guard, avoiding string interpolation when the level is suppressed.

@@ -14,6 +14,323 @@ import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@_Concurrency.MainActor @preconcurrency public struct CardBrandIcon : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 40, showBackground: Swift.Bool = true)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI13CardBrandIconV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct AnimatedCardBrandIcon : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI21AnimatedCardBrandIconV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct ValidatedCardBrandIcon : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, isValid: Swift.Bool, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI22ValidatedCardBrandIconV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct LoadingCardBrandIcon : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, isLoading: Swift.Bool, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI20LoadingCardBrandIconV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct TooltipCardBrandIcon : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI20TooltipCardBrandIconV4bodyQrvp", 0) __
+}
+
+public enum SPLAccessibilityIdentifiers {
+  public enum SPLHostedField {
+    public static let cardNumberField: Swift.String
+    public static let fullNameField: Swift.String
+    public static let firstNameField: Swift.String
+    public static let lastNameField: Swift.String
+    public static let expirationMonthField: Swift.String
+    public static let expirationYearField: Swift.String
+    public static let expirationDateField: Swift.String
+    public static let cvcField: Swift.String
+    public static let addressLine1Field: Swift.String
+    public static let addressLine2Field: Swift.String
+    public static let cityField: Swift.String
+    public static let stateField: Swift.String
+    public static let zipCodeField: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+    public static let formContainer: Swift.String
+    public static let validationMessage: Swift.String
+    public static let cardBrandIcon: Swift.String
+  }
+  public enum CardFormDropIn {
+    public static let header: Swift.String
+    public static let container: Swift.String
+    public static let errorMessage: Swift.String
+    public static let submitButton: Swift.String
+    public static let footer: Swift.String
+  }
+  public enum Common {
+    public static let loadingIndicator: Swift.String
+    public static let successIcon: Swift.String
+    public static let errorIcon: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+  public enum CVVRecaching {
+    public static let sheetTitle: Swift.String
+    public static let viewContainer: Swift.String
+    public static let errorMessage: Swift.String
+    public static let confirmButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+  public enum ThreeDS {
+    public static let loadingView: Swift.String
+    public static let loadingIndicator: Swift.String
+    public static let loadingMessage: Swift.String
+    public static let unavailableView: Swift.String
+    public static let unavailableIcon: Swift.String
+    public static let unavailableTitle: Swift.String
+    public static let unavailableMessage: Swift.String
+    public static let challengeContainer: Swift.String
+  }
+}
+public enum SPLAccessibilityHints {
+  public enum SPLHostedField {
+    public static let cardNumberField: Swift.String
+    public static let fullNameField: Swift.String
+    public static let firstNameField: Swift.String
+    public static let lastNameField: Swift.String
+    public static let expirationMonthField: Swift.String
+    public static let expirationYearField: Swift.String
+    public static let expirationDateField: Swift.String
+    public static let cvcField: Swift.String
+    public static let addressLine1Field: Swift.String
+    public static let addressLine2Field: Swift.String
+    public static let cityField: Swift.String
+    public static let stateField: Swift.String
+    public static let zipCodeField: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+    public static let formContainer: Swift.String
+    public static let validationMessage: Swift.String
+    public static let cardBrandIcon: Swift.String
+  }
+  public enum CardFormDropIn {
+    public static let header: Swift.String
+    public static let container: Swift.String
+    public static let errorMessage: Swift.String
+    public static let submitButton: Swift.String
+    public static let footer: Swift.String
+  }
+  public enum CVVRecaching {
+    public static let cvvField: Swift.String
+    public static let confirmButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+  public enum Common {
+    public static let loadingIndicator: Swift.String
+    public static let successIcon: Swift.String
+    public static let errorIcon: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+  public enum ThreeDS {
+    public static let loadingMessage: Swift.String
+    public static let unavailableTitle: Swift.String
+    public static let unavailableMessage: Swift.String
+    public static let challengeContainer: Swift.String
+  }
+}
+public enum SPLAccessibilityLabels {
+  public enum CardFormDropIn {
+    public static let header: Swift.String
+    public static let container: Swift.String
+    public static let submitButton: Swift.String
+    public static let footer: Swift.String
+  }
+  public enum SPLHostedField {
+    public static let cardNumberField: Swift.String
+    public static let fullNameField: Swift.String
+    public static let firstNameField: Swift.String
+    public static let lastNameField: Swift.String
+    public static let expirationMonthField: Swift.String
+    public static let expirationYearField: Swift.String
+    public static let expirationDateField: Swift.String
+    public static let cvcField: Swift.String
+    public static let addressLine1Field: Swift.String
+    public static let addressLine2Field: Swift.String
+    public static let cityField: Swift.String
+    public static let stateField: Swift.String
+    public static let zipCodeField: Swift.String
+    public static let submitButton: Swift.String
+    public static let cancelButton: Swift.String
+    public static let formContainer: Swift.String
+    public static let validationMessage: Swift.String
+    public static let cardBrandIcon: Swift.String
+  }
+  public enum CVVRecaching {
+    public static let confirmButton: Swift.String
+    public static let cancelButton: Swift.String
+  }
+  public enum ThreeDS {
+    public static let loadingMessage: Swift.String
+    public static let unavailableTitle: Swift.String
+    public static let unavailableMessage: Swift.String
+    public static let challengeContainer: Swift.String
+  }
+}
+@objc public enum DropInNameDisplayMode : Swift.Int {
+  case singleField = 0
+  case separateFields = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_Concurrency.MainActor @preconcurrency public struct SPLTextField : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public let type: SpreedlyCore.FormFieldType
+  @_Concurrency.MainActor @preconcurrency public let title: Swift.String?
+  @_Concurrency.MainActor @preconcurrency public let isRequired: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public let keyboardType: UIKit.UIKeyboardType
+  @_Concurrency.MainActor @preconcurrency public let textContentType: UIKit.UITextContentType?
+  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public let onValidationChange: ((Swift.Bool) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public let onSubmit: (() -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public let submitLabel: SpreedlyUI.SpreedlySubmitLabel?
+  @_Concurrency.MainActor @preconcurrency public let shouldFocus: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public let onFocus: (() -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public var isValid: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var isValidForced: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var errorMessage: Swift.String? {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public var hasValue: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public init(type: SpreedlyCore.FormFieldType = .firstName, title: Swift.String? = nil, isRequired: Swift.Bool = false, placeholder: Swift.String? = nil, keyboardType: UIKit.UIKeyboardType? = nil, textContentType: UIKit.UITextContentType? = nil, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, yearFormat: SpreedlyUI.YearFormat = .fourDigit, onValidationChange: ((Swift.Bool) -> Swift.Void)? = nil, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, shouldFocus: Swift.Bool = false, onFocus: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public init(type: SpreedlyCore.FormFieldType = .firstName, title: Swift.String? = nil, isRequired: Swift.Bool = false, placeholder: Swift.String? = nil, keyboardType: UIKit.UIKeyboardType? = nil, textContentType: UIKit.UITextContentType? = nil, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)? = nil, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, shouldFocus: Swift.Bool = false, onFocus: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public func clear()
+  @_Concurrency.MainActor @preconcurrency public var inputLength: Swift.Int {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public func reset()
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI12SPLTextFieldV4bodyQrvp", 0) __
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class SPLTextFieldViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency public var field: SpreedlyCore.FormFieldType
+  @objc @_Concurrency.MainActor @preconcurrency public var fieldTitle: Swift.String?
+  @objc @_Concurrency.MainActor @preconcurrency public var isRequired: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var yearFormat: SpreedlyUI.YearFormat
+  @objc @_Concurrency.MainActor @preconcurrency public var placeholder: Swift.String?
+  @objc @_Concurrency.MainActor @preconcurrency public var keyboardType: UIKit.UIKeyboardType
+  @objc @_Concurrency.MainActor @preconcurrency public var textContentType: UIKit.UITextContentType?
+  @objc @_Concurrency.MainActor @preconcurrency public var onValidationChange: ((Swift.Bool) -> Swift.Void)?
+  @objc @_Concurrency.MainActor @preconcurrency public var onSubmit: (() -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public var submitLabel: SpreedlyUI.SpreedlySubmitLabel?
+  @objc @_Concurrency.MainActor @preconcurrency public var shouldFocus: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var onFocus: (() -> Swift.Void)?
+  @objc @_Concurrency.MainActor @preconcurrency public var isValid: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var errorMessage: Swift.String? {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var hasValue: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var inputLength: Swift.Int {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onFocus: (() -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)?, submitLabel: SpreedlyUI.SpreedlySubmitLabel, onFocus: (() -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, themeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onFocus: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, onFocus: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, themeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, onFocus: (() -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onFocus: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, onFocus: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @objc @_Concurrency.MainActor @preconcurrency public func clear()
+  @objc @_Concurrency.MainActor @preconcurrency public func reset()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func becomeFirstResponder() -> Swift.Bool
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func resignFirstResponder() -> Swift.Bool
+  @objc deinit
+}
+@objc public enum YearFormat : Swift.Int, Swift.CaseIterable {
+  case twoDigit = 2
+  case fourDigit = 4
+  public var format: Swift.String {
+    get
+  }
+  public var placeholder: Swift.String {
+    get
+  }
+  public var maxLength: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyUI.YearFormat]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyUI.YearFormat] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class DoChallengeIfNeededViewController : UIKit.UIViewController, UIKit.UIAdaptivePresentationControllerDelegate {
+  @objc @_Concurrency.MainActor @preconcurrency public init(transactionToken: Swift.String, onDismiss: (() -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(transactionToken: Swift.String)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor @preconcurrency @objc public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class LocalizationHelper {
+  public static func localizedString(for key: Swift.String) -> Swift.String
+  public static func localizedString(for key: Swift.String, defaultValue: Swift.String) -> Swift.String
+  @objc deinit
+}
+@objc public enum OffsiteGateway : Swift.Int {
+  case paypal
+  case stripePaymentIntent
+  case pix
+  case boletoBancario
+  case nupay
+  case nupayRecurrent
+  case oxxo
+  case rapipago
+  case sprel
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyOffsiteCheckout : ObjectiveC.NSObject, SafariServices.SFSafariViewControllerDelegate {
+  @objc public static func present(transactionToken: Swift.String)
+  @objc public func safariViewControllerDidFinish(_ controller: SafariServices.SFSafariViewController)
+  @objc deinit
+}
 public protocol SpreedlyTheme {
   var colors: SpreedlyUI.SpreedlyColors { get }
   var typography: SpreedlyUI.SpreedlyTypography { get }
@@ -155,6 +472,92 @@ extension SwiftUICore.View {
     get
   }
 }
+@_Concurrency.MainActor @preconcurrency public struct DoChallengeIfNeeded : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(transactionToken: Swift.String, onDismiss: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI19DoChallengeIfNeededV4bodyQrvp", 0) __
+}
+extension SpreedlyCore.FormFieldType {
+  public var requiredMessage: Swift.String {
+    get
+  }
+  public var placeholder: Swift.String {
+    get
+  }
+  public var accessibilityIdentifier: Swift.String {
+    get
+  }
+  public var accessibilityLabel: Swift.String {
+    get
+  }
+  public var accessibilityHint: Swift.String {
+    get
+  }
+  public var keyboardType: UIKit.UIKeyboardType {
+    get
+  }
+  public var contentType: UIKit.UITextContentType? {
+    get
+  }
+  public func canPerformAction(_ selector: ObjectiveC.Selector) -> Swift.Bool
+  public func conditionalValidationRules(isRequired: Swift.Bool = true, yearFormat: SpreedlyUI.YearFormat = .fourDigit, cardType: SpreedlyUI.CardType? = nil) -> [any SpreedlyUI.ValidationRule]
+}
+@objc public class FormField : ObjectiveC.NSObject {
+  final public let id: Swift.String
+  final public let title: Swift.String
+  final public let placeholder: Swift.String
+  final public let type: SpreedlyCore.FormFieldType
+  final public let isRequired: Swift.Bool
+  @objc public init(id: Swift.String, title: Swift.String, type: SpreedlyCore.FormFieldType, placeholder: Swift.String? = nil, isRequired: Swift.Bool = true)
+  public var requiredMessage: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_Concurrency.MainActor @preconcurrency public struct CardFormDropIn : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public let yearFormat: SpreedlyUI.YearFormat
+  @_Concurrency.MainActor @preconcurrency public let nameDisplayMode: SpreedlyUI.DropInNameDisplayMode
+  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI14CardFormDropInV4bodyQrvp", 0) __
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class CardFormDropInViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency public var yearFormat: SpreedlyUI.YearFormat
+  @objc @_Concurrency.MainActor @preconcurrency public var nameDisplayMode: SpreedlyUI.DropInNameDisplayMode
+  @objc @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [])
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, themeConfig: SpreedlyUI.SPLThemeConfig?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @objc deinit
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyCVVRecachingView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyUI.RecacheConfig, paymentMethodToken: Swift.String, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, allowBlankName: Swift.Bool = false, allowExpiredDate: Swift.Bool = false, allowBlankDate: Swift.Bool = false, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil, onDismiss: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI0A16CVVRecachingViewV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct CrossDissolveFullScreenCover<Content> : SwiftUI.UIViewControllerRepresentable where Content : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func makeUIViewController(context: SpreedlyUI.CrossDissolveFullScreenCover<Content>.Context) -> UIKit.UIViewController
+  @_Concurrency.MainActor @preconcurrency public func updateUIViewController(_ uiViewController: UIKit.UIViewController, context: SpreedlyUI.CrossDissolveFullScreenCover<Content>.Context)
+  public typealias Body = Swift.Never
+  public typealias Coordinator = Swift.Void
+  public typealias UIViewControllerType = UIKit.UIViewController
+}
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func crossDissolveFullScreenCover<Content>(isPresented: SwiftUICore.Binding<Swift.Bool>, @SwiftUICore.ViewBuilder content: @escaping () -> Content) -> some SwiftUICore.View where Content : SwiftUICore.View
+  
+}
 @_inheritsConvenienceInitializers @objc public class SPLThemeConfig : ObjectiveC.NSObject {
   @objc public var primaryColor: UIKit.UIColor?
   @objc public var secondaryColor: UIKit.UIColor?
@@ -199,6 +602,23 @@ extension SpreedlyUI.SpreedlyThemeManager {
   @objc override dynamic public init()
   @objc deinit
 }
+@_Concurrency.MainActor @preconcurrency public struct CVVRecachingView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public var onDismiss: (() -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency public let config: SpreedlyUI.RecacheConfig
+  @_Concurrency.MainActor @preconcurrency public let paymentMethodToken: Swift.String
+  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
+  @_Concurrency.MainActor @preconcurrency public let allowBlankName: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public let allowExpiredDate: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public let allowBlankDate: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyUI.RecacheConfig, paymentMethodToken: Swift.String, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, allowBlankName: Swift.Bool = false, allowExpiredDate: Swift.Bool = false, allowBlankDate: Swift.Bool = false, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil, onDismiss: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI16CVVRecachingViewV4bodyQrvp", 0) __
+}
+
 public struct ValidationResult {
   public let isValid: Swift.Bool
   public let errorMessage: Swift.String?
@@ -312,6 +732,56 @@ extension SpreedlyUI.ValidationUtils {
   public func validateAdditionalField(_ field: SpreedlyCore.AdditionalField, value: Swift.String, allowBlankName: Swift.Bool?) -> (isValid: Swift.Bool, errorMessage: Swift.String?)
   @objc deinit
 }
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func screenPrevention(placeholderText: Swift.String = "") -> some SwiftUICore.View
+  
+}
+@_inheritsConvenienceInitializers @objc @_Concurrency.MainActor @preconcurrency public class ScreenPreventionSecureView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency public var isSecure: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var placeholderText: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var contentView: UIKit.UIView! {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency dynamic public func wrapInSecureViewController(placeholderText: Swift.String = "") -> UIKit.UIViewController
+}
+public enum ScreenPresentationMode : Swift.Hashable {
+  case bottomSheet
+  case dialog
+  public static func == (a: SpreedlyUI.ScreenPresentationMode, b: SpreedlyUI.ScreenPresentationMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct SavedCardInfo {
+  public let lastFourDigits: Swift.String
+  public let cardType: Swift.String
+  public let cardBrand: Swift.String?
+  public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String? = nil)
+}
+public struct RecacheConfig {
+  public let recachePresentationMode: SpreedlyUI.ScreenPresentationMode
+  public let cardInfo: SpreedlyUI.SavedCardInfo
+  public let labelText: Swift.String
+  public let placeholderText: Swift.String
+  public let buttonText: Swift.String
+  public let cancelButtonText: Swift.String
+  public init(cardInfo: SpreedlyUI.SavedCardInfo, presentationMode: SpreedlyUI.ScreenPresentationMode = .bottomSheet, labelText: Swift.String? = nil, placeholderText: Swift.String? = nil, buttonText: Swift.String? = nil, cancelButtonText: Swift.String? = nil)
+}
+public struct ValidationConstants {
+  public static let maxFieldLength: Swift.Int
+}
 @_Concurrency.MainActor @preconcurrency public struct ValidatedField<Content> : SwiftUICore.View where Content : SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public let fieldId: Swift.String
   @_Concurrency.MainActor @preconcurrency public let title: Swift.String?
@@ -384,195 +854,21 @@ extension SpreedlyUI.ValidationUtils {
     get
   }
 }
-public enum SPLAccessibilityIdentifiers {
-  public enum SPLHostedField {
-    public static let cardNumberField: Swift.String
-    public static let fullNameField: Swift.String
-    public static let firstNameField: Swift.String
-    public static let lastNameField: Swift.String
-    public static let expirationMonthField: Swift.String
-    public static let expirationYearField: Swift.String
-    public static let expirationDateField: Swift.String
-    public static let cvcField: Swift.String
-    public static let addressLine1Field: Swift.String
-    public static let addressLine2Field: Swift.String
-    public static let cityField: Swift.String
-    public static let stateField: Swift.String
-    public static let zipCodeField: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-    public static let formContainer: Swift.String
-    public static let validationMessage: Swift.String
-    public static let cardBrandIcon: Swift.String
-  }
-  public enum CardFormDropIn {
-    public static let header: Swift.String
-    public static let container: Swift.String
-    public static let errorMessage: Swift.String
-    public static let submitButton: Swift.String
-    public static let footer: Swift.String
-  }
-  public enum Common {
-    public static let loadingIndicator: Swift.String
-    public static let successIcon: Swift.String
-    public static let errorIcon: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-  public enum CVVRecaching {
-    public static let sheetTitle: Swift.String
-    public static let viewContainer: Swift.String
-    public static let errorMessage: Swift.String
-    public static let confirmButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-  public enum ThreeDS {
-    public static let loadingView: Swift.String
-    public static let loadingIndicator: Swift.String
-    public static let loadingMessage: Swift.String
-    public static let unavailableView: Swift.String
-    public static let unavailableIcon: Swift.String
-    public static let unavailableTitle: Swift.String
-    public static let unavailableMessage: Swift.String
-    public static let challengeContainer: Swift.String
-  }
-}
-public enum SPLAccessibilityHints {
-  public enum SPLHostedField {
-    public static let cardNumberField: Swift.String
-    public static let fullNameField: Swift.String
-    public static let firstNameField: Swift.String
-    public static let lastNameField: Swift.String
-    public static let expirationMonthField: Swift.String
-    public static let expirationYearField: Swift.String
-    public static let expirationDateField: Swift.String
-    public static let cvcField: Swift.String
-    public static let addressLine1Field: Swift.String
-    public static let addressLine2Field: Swift.String
-    public static let cityField: Swift.String
-    public static let stateField: Swift.String
-    public static let zipCodeField: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-    public static let formContainer: Swift.String
-    public static let validationMessage: Swift.String
-    public static let cardBrandIcon: Swift.String
-  }
-  public enum CardFormDropIn {
-    public static let header: Swift.String
-    public static let container: Swift.String
-    public static let errorMessage: Swift.String
-    public static let submitButton: Swift.String
-    public static let footer: Swift.String
-  }
-  public enum CVVRecaching {
-    public static let cvvField: Swift.String
-    public static let confirmButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-  public enum Common {
-    public static let loadingIndicator: Swift.String
-    public static let successIcon: Swift.String
-    public static let errorIcon: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-  public enum ThreeDS {
-    public static let loadingMessage: Swift.String
-    public static let unavailableTitle: Swift.String
-    public static let unavailableMessage: Swift.String
-    public static let challengeContainer: Swift.String
-  }
-}
-public enum SPLAccessibilityLabels {
-  public enum CardFormDropIn {
-    public static let header: Swift.String
-    public static let container: Swift.String
-    public static let submitButton: Swift.String
-    public static let footer: Swift.String
-  }
-  public enum SPLHostedField {
-    public static let cardNumberField: Swift.String
-    public static let fullNameField: Swift.String
-    public static let firstNameField: Swift.String
-    public static let lastNameField: Swift.String
-    public static let expirationMonthField: Swift.String
-    public static let expirationYearField: Swift.String
-    public static let expirationDateField: Swift.String
-    public static let cvcField: Swift.String
-    public static let addressLine1Field: Swift.String
-    public static let addressLine2Field: Swift.String
-    public static let cityField: Swift.String
-    public static let stateField: Swift.String
-    public static let zipCodeField: Swift.String
-    public static let submitButton: Swift.String
-    public static let cancelButton: Swift.String
-    public static let formContainer: Swift.String
-    public static let validationMessage: Swift.String
-    public static let cardBrandIcon: Swift.String
-  }
-  public enum CVVRecaching {
-    public static let confirmButton: Swift.String
-    public static let cancelButton: Swift.String
-  }
-  public enum ThreeDS {
-    public static let loadingMessage: Swift.String
-    public static let unavailableTitle: Swift.String
-    public static let unavailableMessage: Swift.String
-    public static let challengeContainer: Swift.String
-  }
-}
-@_Concurrency.MainActor @preconcurrency public struct CardBrandIcon : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 40, showBackground: Swift.Bool = true)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI13CardBrandIconV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct AnimatedCardBrandIcon : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI21AnimatedCardBrandIconV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct ValidatedCardBrandIcon : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, isValid: Swift.Bool, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI22ValidatedCardBrandIconV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct LoadingCardBrandIcon : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, isLoading: Swift.Bool, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI20LoadingCardBrandIconV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct TooltipCardBrandIcon : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(cardType: SpreedlyUI.CardType, size: CoreFoundation.CGFloat = 32, showBackground: Swift.Bool = true)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI20TooltipCardBrandIconV4bodyQrvp", 0) __
-}
-
-@objc public enum DropInNameDisplayMode : Swift.Int {
-  case singleField = 0
-  case separateFields = 1
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@_Concurrency.MainActor @preconcurrency public struct DoChallengeIfNeeded : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(transactionToken: Swift.String, onDismiss: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI19DoChallengeIfNeededV4bodyQrvp", 0) __
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class CVVRecachingViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency public var labelText: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public var placeholderText: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public var buttonText: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public var cancelButtonText: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public var paymentMethodToken: Swift.String
+  @objc @_Concurrency.MainActor @preconcurrency public var allowBlankName: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var allowExpiredDate: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var allowBlankDate: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String?, paymentMethodToken: Swift.String, presentationMode: Swift.Int, labelText: Swift.String?, placeholderText: Swift.String?, buttonText: Swift.String?, cancelButtonText: Swift.String?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
+  @objc @_Concurrency.MainActor @preconcurrency convenience public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String?, paymentMethodToken: Swift.String, presentationMode: Swift.Int, labelText: Swift.String?, placeholderText: Swift.String?, buttonText: Swift.String?, cancelButtonText: Swift.String?, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @objc deinit
 }
 extension SwiftUICore.Color {
   public init(hex: Swift.String)
@@ -580,49 +876,6 @@ extension SwiftUICore.Color {
   public init(red: Swift.Int, green: Swift.Int, blue: Swift.Int, alpha: Swift.Double = 1.0)
   public func withOpacity(_ opacity: Swift.Double) -> SwiftUICore.Color
   public func toUIColor() -> UIKit.UIColor
-}
-@_inheritsConvenienceInitializers @objc @_Concurrency.MainActor @preconcurrency public class ScreenPreventionSecureView : UIKit.UIView {
-  @objc @_Concurrency.MainActor @preconcurrency public var isSecure: Swift.Bool {
-    @objc get
-    @objc set
-  }
-  @objc @_Concurrency.MainActor @preconcurrency public var placeholderText: Swift.String {
-    @objc get
-    @objc set
-  }
-  @objc @_Concurrency.MainActor @preconcurrency public var contentView: UIKit.UIView! {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
-  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc deinit
-}
-extension UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency dynamic public func wrapInSecureViewController(placeholderText: Swift.String = "") -> UIKit.UIViewController
-}
-public enum ScreenPresentationMode : Swift.Hashable {
-  case bottomSheet
-  case dialog
-  public static func == (a: SpreedlyUI.ScreenPresentationMode, b: SpreedlyUI.ScreenPresentationMode) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
-public struct SavedCardInfo {
-  public let lastFourDigits: Swift.String
-  public let cardType: Swift.String
-  public let cardBrand: Swift.String?
-  public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String? = nil)
-}
-public struct RecacheConfig {
-  public let recachePresentationMode: SpreedlyUI.ScreenPresentationMode
-  public let cardInfo: SpreedlyUI.SavedCardInfo
-  public let labelText: Swift.String
-  public let placeholderText: Swift.String
-  public let buttonText: Swift.String
-  public let cancelButtonText: Swift.String
-  public init(cardInfo: SpreedlyUI.SavedCardInfo, presentationMode: SpreedlyUI.ScreenPresentationMode = .bottomSheet, labelText: Swift.String? = nil, placeholderText: Swift.String? = nil, buttonText: Swift.String? = nil, cancelButtonText: Swift.String? = nil)
 }
 public enum CardType : Swift.String, Swift.CaseIterable {
   case visa
@@ -736,264 +989,6 @@ public enum CardValidationError : Swift.String, Swift.CaseIterable {
     get
   }
 }
-extension SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public func screenPrevention(placeholderText: Swift.String = "") -> some SwiftUICore.View
-  
-}
-@_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class DoChallengeIfNeededViewController : UIKit.UIViewController, UIKit.UIAdaptivePresentationControllerDelegate {
-  @objc @_Concurrency.MainActor @preconcurrency public init(transactionToken: Swift.String, onDismiss: (() -> Swift.Void)? = nil)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(transactionToken: Swift.String)
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @_Concurrency.MainActor @preconcurrency @objc public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
-  @objc deinit
-}
-@_Concurrency.MainActor @preconcurrency public struct SpreedlyCVVRecachingView : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyUI.RecacheConfig, paymentMethodToken: Swift.String, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, allowBlankName: Swift.Bool = false, allowExpiredDate: Swift.Bool = false, allowBlankDate: Swift.Bool = false, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil, onDismiss: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI0A16CVVRecachingViewV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct CrossDissolveFullScreenCover<Content> : SwiftUI.UIViewControllerRepresentable where Content : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public func makeUIViewController(context: SpreedlyUI.CrossDissolveFullScreenCover<Content>.Context) -> UIKit.UIViewController
-  @_Concurrency.MainActor @preconcurrency public func updateUIViewController(_ uiViewController: UIKit.UIViewController, context: SpreedlyUI.CrossDissolveFullScreenCover<Content>.Context)
-  public typealias Body = Swift.Never
-  public typealias Coordinator = Swift.Void
-  public typealias UIViewControllerType = UIKit.UIViewController
-}
-extension SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public func crossDissolveFullScreenCover<Content>(isPresented: SwiftUICore.Binding<Swift.Bool>, @SwiftUICore.ViewBuilder content: @escaping () -> Content) -> some SwiftUICore.View where Content : SwiftUICore.View
-  
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class CVVRecachingViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency public var labelText: Swift.String
-  @objc @_Concurrency.MainActor @preconcurrency public var placeholderText: Swift.String
-  @objc @_Concurrency.MainActor @preconcurrency public var buttonText: Swift.String
-  @objc @_Concurrency.MainActor @preconcurrency public var cancelButtonText: Swift.String
-  @objc @_Concurrency.MainActor @preconcurrency public var paymentMethodToken: Swift.String
-  @objc @_Concurrency.MainActor @preconcurrency public var allowBlankName: Swift.Bool
-  @objc @_Concurrency.MainActor @preconcurrency public var allowExpiredDate: Swift.Bool
-  @objc @_Concurrency.MainActor @preconcurrency public var allowBlankDate: Swift.Bool
-  @objc @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String?, paymentMethodToken: Swift.String, presentationMode: Swift.Int, labelText: Swift.String?, placeholderText: Swift.String?, buttonText: Swift.String?, cancelButtonText: Swift.String?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(lastFourDigits: Swift.String, cardType: Swift.String, cardBrand: Swift.String?, paymentMethodToken: Swift.String, presentationMode: Swift.Int, labelText: Swift.String?, placeholderText: Swift.String?, buttonText: Swift.String?, cancelButtonText: Swift.String?, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @objc deinit
-}
-@_hasMissingDesignatedInitializers public class LocalizationHelper {
-  public static func localizedString(for key: Swift.String) -> Swift.String
-  public static func localizedString(for key: Swift.String, defaultValue: Swift.String) -> Swift.String
-  @objc deinit
-}
-@_Concurrency.MainActor @preconcurrency public struct SPLTextField : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public let type: SpreedlyCore.FormFieldType
-  @_Concurrency.MainActor @preconcurrency public let title: Swift.String?
-  @_Concurrency.MainActor @preconcurrency public let isRequired: Swift.Bool
-  @_Concurrency.MainActor @preconcurrency public let keyboardType: UIKit.UIKeyboardType
-  @_Concurrency.MainActor @preconcurrency public let textContentType: UIKit.UITextContentType?
-  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public let onValidationChange: ((Swift.Bool) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public let onSubmit: (() -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public let submitLabel: SpreedlyUI.SpreedlySubmitLabel?
-  @_Concurrency.MainActor @preconcurrency public let shouldFocus: Swift.Bool
-  @_Concurrency.MainActor @preconcurrency public let onFocus: (() -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public var isValid: Swift.Bool {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency public var isValidForced: Swift.Bool {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency public var errorMessage: Swift.String? {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency public var hasValue: Swift.Bool {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency public init(type: SpreedlyCore.FormFieldType = .firstName, title: Swift.String? = nil, isRequired: Swift.Bool = false, placeholder: Swift.String? = nil, keyboardType: UIKit.UIKeyboardType? = nil, textContentType: UIKit.UITextContentType? = nil, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, yearFormat: SpreedlyUI.YearFormat = .fourDigit, onValidationChange: ((Swift.Bool) -> Swift.Void)? = nil, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, shouldFocus: Swift.Bool = false, onFocus: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public init(type: SpreedlyCore.FormFieldType = .firstName, title: Swift.String? = nil, isRequired: Swift.Bool = false, placeholder: Swift.String? = nil, keyboardType: UIKit.UIKeyboardType? = nil, textContentType: UIKit.UITextContentType? = nil, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)? = nil, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, shouldFocus: Swift.Bool = false, onFocus: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency public func clear()
-  @_Concurrency.MainActor @preconcurrency public var inputLength: Swift.Int {
-    get
-  }
-  @_Concurrency.MainActor @preconcurrency public func reset()
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI12SPLTextFieldV4bodyQrvp", 0) __
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class SPLTextFieldViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency public var field: SpreedlyCore.FormFieldType
-  @objc @_Concurrency.MainActor @preconcurrency public var fieldTitle: Swift.String?
-  @objc @_Concurrency.MainActor @preconcurrency public var isRequired: Swift.Bool
-  @objc @_Concurrency.MainActor @preconcurrency public var yearFormat: SpreedlyUI.YearFormat
-  @objc @_Concurrency.MainActor @preconcurrency public var placeholder: Swift.String?
-  @objc @_Concurrency.MainActor @preconcurrency public var keyboardType: UIKit.UIKeyboardType
-  @objc @_Concurrency.MainActor @preconcurrency public var textContentType: UIKit.UITextContentType?
-  @objc @_Concurrency.MainActor @preconcurrency public var onValidationChange: ((Swift.Bool) -> Swift.Void)?
-  @objc @_Concurrency.MainActor @preconcurrency public var onSubmit: (() -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public var submitLabel: SpreedlyUI.SpreedlySubmitLabel?
-  @objc @_Concurrency.MainActor @preconcurrency public var shouldFocus: Swift.Bool
-  @objc @_Concurrency.MainActor @preconcurrency public var onFocus: (() -> Swift.Void)?
-  @objc @_Concurrency.MainActor @preconcurrency public var isValid: Swift.Bool {
-    @objc get
-  }
-  @objc @_Concurrency.MainActor @preconcurrency public var errorMessage: Swift.String? {
-    @objc get
-  }
-  @objc @_Concurrency.MainActor @preconcurrency public var hasValue: Swift.Bool {
-    @objc get
-  }
-  @objc @_Concurrency.MainActor @preconcurrency public var inputLength: Swift.Int {
-    @objc get
-  }
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onFocus: (() -> Swift.Void)? = nil)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)?, submitLabel: SpreedlyUI.SpreedlySubmitLabel, onFocus: (() -> Swift.Void)? = nil)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, themeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onFocus: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, onFocus: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, themeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, onFocus: (() -> Swift.Void)? = nil)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onFocus: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool, placeholder: Swift.String?, keyboardType: UIKit.UIKeyboardType = .default, textContentType: UIKit.UITextContentType? = nil, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onValidationChange: ((Swift.Bool) -> Swift.Void)?, onSubmit: (() -> Swift.Void)? = nil, submitLabel: SpreedlyUI.SpreedlySubmitLabel? = nil, onFocus: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @objc @_Concurrency.MainActor @preconcurrency public func clear()
-  @objc @_Concurrency.MainActor @preconcurrency public func reset()
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func becomeFirstResponder() -> Swift.Bool
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func resignFirstResponder() -> Swift.Bool
-  @objc deinit
-}
-@_Concurrency.MainActor @preconcurrency public struct CVVRecachingView : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public var onDismiss: (() -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public let config: SpreedlyUI.RecacheConfig
-  @_Concurrency.MainActor @preconcurrency public let paymentMethodToken: Swift.String
-  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public let allowBlankName: Swift.Bool
-  @_Concurrency.MainActor @preconcurrency public let allowExpiredDate: Swift.Bool
-  @_Concurrency.MainActor @preconcurrency public let allowBlankDate: Swift.Bool
-  @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyUI.RecacheConfig, paymentMethodToken: Swift.String, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, allowBlankName: Swift.Bool = false, allowExpiredDate: Swift.Bool = false, allowBlankDate: Swift.Bool = false, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil, onDismiss: (() -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI16CVVRecachingViewV4bodyQrvp", 0) __
-}
-
-@objc public enum OffsiteGateway : Swift.Int {
-  case paypal
-  case stripePaymentIntent
-  case pix
-  case boletoBancario
-  case nupay
-  case nupayRecurrent
-  case oxxo
-  case rapipago
-  case sprel
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyOffsiteCheckout : ObjectiveC.NSObject, SafariServices.SFSafariViewControllerDelegate {
-  @objc public static func present(transactionToken: Swift.String)
-  @objc public func safariViewControllerDidFinish(_ controller: SafariServices.SFSafariViewController)
-  @objc deinit
-}
-@objc public enum YearFormat : Swift.Int, Swift.CaseIterable {
-  case twoDigit = 2
-  case fourDigit = 4
-  public var format: Swift.String {
-    get
-  }
-  public var placeholder: Swift.String {
-    get
-  }
-  public var maxLength: Swift.Int {
-    get
-  }
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [SpreedlyUI.YearFormat]
-  public typealias RawValue = Swift.Int
-  nonisolated public static var allCases: [SpreedlyUI.YearFormat] {
-    get
-  }
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-extension SpreedlyCore.FormFieldType {
-  public var requiredMessage: Swift.String {
-    get
-  }
-  public var placeholder: Swift.String {
-    get
-  }
-  public var accessibilityIdentifier: Swift.String {
-    get
-  }
-  public var accessibilityLabel: Swift.String {
-    get
-  }
-  public var accessibilityHint: Swift.String {
-    get
-  }
-  public var keyboardType: UIKit.UIKeyboardType {
-    get
-  }
-  public var contentType: UIKit.UITextContentType? {
-    get
-  }
-  public func canPerformAction(_ selector: ObjectiveC.Selector) -> Swift.Bool
-  public func conditionalValidationRules(isRequired: Swift.Bool = true, yearFormat: SpreedlyUI.YearFormat = .fourDigit, cardType: SpreedlyUI.CardType? = nil) -> [any SpreedlyUI.ValidationRule]
-}
-@objc public class FormField : ObjectiveC.NSObject {
-  final public let id: Swift.String
-  final public let title: Swift.String
-  final public let placeholder: Swift.String
-  final public let type: SpreedlyCore.FormFieldType
-  final public let isRequired: Swift.Bool
-  @objc public init(id: Swift.String, title: Swift.String, type: SpreedlyCore.FormFieldType, placeholder: Swift.String? = nil, isRequired: Swift.Bool = true)
-  public var requiredMessage: Swift.String? {
-    get
-  }
-  @objc deinit
-}
-public struct ValidationConstants {
-  public static let maxFieldLength: Swift.Int
-}
-@_Concurrency.MainActor @preconcurrency public struct CardFormDropIn : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public let yearFormat: SpreedlyUI.YearFormat
-  @_Concurrency.MainActor @preconcurrency public let nameDisplayMode: SpreedlyUI.DropInNameDisplayMode
-  @_Concurrency.MainActor @preconcurrency public let lightTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
-  @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI14CardFormDropInV4bodyQrvp", 0) __
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor @preconcurrency public class CardFormDropInViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor @preconcurrency public var yearFormat: SpreedlyUI.YearFormat
-  @objc @_Concurrency.MainActor @preconcurrency public var nameDisplayMode: SpreedlyUI.DropInNameDisplayMode
-  @objc @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
-  @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [])
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, themeConfig: SpreedlyUI.SPLThemeConfig?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
-  @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, lightThemeConfig: SpreedlyUI.SPLThemeConfig?, darkThemeConfig: SpreedlyUI.SPLThemeConfig?, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
-  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
-  @objc deinit
-}
-extension SpreedlyUI.ValidatedField : Swift.Sendable {}
-extension SpreedlyUI.ValidatedTextField : Swift.Sendable {}
-extension SpreedlyUI.SpreedlySubmitLabel : Swift.Equatable {}
-extension SpreedlyUI.SpreedlySubmitLabel : Swift.Hashable {}
-extension SpreedlyUI.SpreedlySubmitLabel : Swift.RawRepresentable {}
 extension SpreedlyUI.CardBrandIcon : Swift.Sendable {}
 extension SpreedlyUI.AnimatedCardBrandIcon : Swift.Sendable {}
 extension SpreedlyUI.ValidatedCardBrandIcon : Swift.Sendable {}
@@ -1002,21 +997,26 @@ extension SpreedlyUI.TooltipCardBrandIcon : Swift.Sendable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.Equatable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.Hashable {}
 extension SpreedlyUI.DropInNameDisplayMode : Swift.RawRepresentable {}
+extension SpreedlyUI.SPLTextField : Swift.Sendable {}
+extension SpreedlyUI.YearFormat : Swift.Equatable {}
+extension SpreedlyUI.YearFormat : Swift.Hashable {}
+extension SpreedlyUI.YearFormat : Swift.RawRepresentable {}
+extension SpreedlyUI.OffsiteGateway : Swift.Equatable {}
+extension SpreedlyUI.OffsiteGateway : Swift.Hashable {}
+extension SpreedlyUI.OffsiteGateway : Swift.RawRepresentable {}
 extension SpreedlyUI.DoChallengeIfNeeded : Swift.Sendable {}
+extension SpreedlyUI.CardFormDropIn : Swift.Sendable {}
+extension SpreedlyUI.SpreedlyCVVRecachingView : Swift.Sendable {}
+extension SpreedlyUI.CrossDissolveFullScreenCover : Swift.Sendable {}
+extension SpreedlyUI.CVVRecachingView : Swift.Sendable {}
+extension SpreedlyUI.ValidatedField : Swift.Sendable {}
+extension SpreedlyUI.ValidatedTextField : Swift.Sendable {}
+extension SpreedlyUI.SpreedlySubmitLabel : Swift.Equatable {}
+extension SpreedlyUI.SpreedlySubmitLabel : Swift.Hashable {}
+extension SpreedlyUI.SpreedlySubmitLabel : Swift.RawRepresentable {}
 extension SpreedlyUI.CardType : Swift.Equatable {}
 extension SpreedlyUI.CardType : Swift.Hashable {}
 extension SpreedlyUI.CardType : Swift.RawRepresentable {}
 extension SpreedlyUI.CardValidationError : Swift.Equatable {}
 extension SpreedlyUI.CardValidationError : Swift.Hashable {}
 extension SpreedlyUI.CardValidationError : Swift.RawRepresentable {}
-extension SpreedlyUI.SpreedlyCVVRecachingView : Swift.Sendable {}
-extension SpreedlyUI.CrossDissolveFullScreenCover : Swift.Sendable {}
-extension SpreedlyUI.SPLTextField : Swift.Sendable {}
-extension SpreedlyUI.CVVRecachingView : Swift.Sendable {}
-extension SpreedlyUI.OffsiteGateway : Swift.Equatable {}
-extension SpreedlyUI.OffsiteGateway : Swift.Hashable {}
-extension SpreedlyUI.OffsiteGateway : Swift.RawRepresentable {}
-extension SpreedlyUI.YearFormat : Swift.Equatable {}
-extension SpreedlyUI.YearFormat : Swift.Hashable {}
-extension SpreedlyUI.YearFormat : Swift.RawRepresentable {}
-extension SpreedlyUI.CardFormDropIn : Swift.Sendable {}
