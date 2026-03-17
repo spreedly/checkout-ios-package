@@ -14,7 +14,7 @@
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		1kMGrcVMuJa0f2tpbe8TigwxlGE=
+		3mBBAgWMfMmzHyMiFYMq3eHQ5po=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		g8Be6jtR8Im+abfydmLaGblnEdA=
+		LGFvyPVIH1gJHB5PWm9HUdfENn4=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
-		yxKQgNDmpWFE39MqOuHl6y5kxIQ=
+		Nn2IRznZK5w/nk4TW6GzmV3nCQ4=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -95,11 +95,11 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		QfaPld1X3fs3YNh0Eks0puB0mx8=
+		/KXh6VTm8Aah+jNIY/MaF68wI4Q=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
-		Kw1X6tiRCjyx/sxmNImRJtupyCw=
+		UL4V9R6YxI/iB9OlYYKlSCuFsxQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -139,11 +139,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1kMGrcVMuJa0f2tpbe8TigwxlGE=
+			3mBBAgWMfMmzHyMiFYMq3eHQ5po=
 			</data>
 			<key>hash2</key>
 			<data>
-			scQhMtkmn5pGzrdKD19AiH+ZD5kR8+2kSn0/Xd3PNzc=
+			rL7cK9GLVnVZMoF8b59vq7zbtqfJXQgRS5LfqKNi3tk=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
@@ -194,22 +194,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			g8Be6jtR8Im+abfydmLaGblnEdA=
+			LGFvyPVIH1gJHB5PWm9HUdfENn4=
 			</data>
 			<key>hash2</key>
 			<data>
-			4PAnwoTTZsl0cfFvNOq9W4eYgj8Mgo1tdbeEqU377fo=
+			TOqIq3VO2PjYq6BXvvHcLd3JqiPKr0o4TdaDUuousP4=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			yxKQgNDmpWFE39MqOuHl6y5kxIQ=
+			Nn2IRznZK5w/nk4TW6GzmV3nCQ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			iAfnASmzyTweCzsDaIEZ67GAw5oriq6JodiuUFblw0U=
+			cERN3B4BPwGul8HvP3JbDVZUUXtOc2yN/7Q0jZLgqPI=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
@@ -350,22 +350,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QfaPld1X3fs3YNh0Eks0puB0mx8=
+			/KXh6VTm8Aah+jNIY/MaF68wI4Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			XwOxgX0/Mxd0biBF7GDNsvjZtWzEz2f4YWG+oQAAkb0=
+			/x5JYQ7fwxnsA7pc1zf6Dfm2UMDLT4qD4M35SWozJC4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Kw1X6tiRCjyx/sxmNImRJtupyCw=
+			UL4V9R6YxI/iB9OlYYKlSCuFsxQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			6vSiWTPztFBb3Ds4E/GD099gQl0vkYuhvPqid6Nq6V4=
+			qJjewT2EcGhE2NyR0LEETNzwMEoFq3fw6LdSkenBE6A=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
