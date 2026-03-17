@@ -30,6 +30,8 @@ Integrate gateway-driven 3DS authentication for gateways like Worldpay.
 
 Use gateway-specific 3DS when your payment gateway explicitly requires its own 3DS implementation. Examples include Worldpay and other gateways that handle 3DS authentication through their own flow rather than the global Forter-based flow.
 
+> **Module note:** Gateway-Specific 3DS logic currently lives inside `SpreedlyCore` (lifecycle, device fingerprint, trigger/finalize) and `SpreedlyUI` (challenge presentation via `ASWebAuthenticationSession`). It is **not a separate SDK module yet**. We plan to extract it into a dedicated `SpreedlyGateway3DS` module in a future release so merchants who don't use gateway-specific 3DS can exclude it entirely. Unlike 3DS Global, this flow does not require the third-party `Forter3DS` framework.
+
 ### Global vs Gateway-Specific Comparison
 
 | Flow | Backend responsibility | App responsibility |

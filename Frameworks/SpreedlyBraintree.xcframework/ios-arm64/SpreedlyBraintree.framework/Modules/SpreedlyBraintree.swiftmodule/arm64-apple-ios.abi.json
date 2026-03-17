@@ -6,6 +6,93 @@
     "children": [
       {
         "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree"
+      },
+      {
+        "kind": "Import",
+        "name": "BraintreeCore",
+        "printedName": "BraintreeCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "BraintreePayPal",
+        "printedName": "BraintreePayPal",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "BraintreeVenmo",
+        "printedName": "BraintreeVenmo",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "BraintreeDataCollector",
+        "printedName": "BraintreeDataCollector",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyBraintree",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -653,98 +740,18 @@
             "mangledName": "$ss28CustomDebugStringConvertibleP"
           }
         ]
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlyCore",
-        "printedName": "SpreedlyCore",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree"
-      },
-      {
-        "kind": "Import",
-        "name": "BraintreeCore",
-        "printedName": "BraintreeCore",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "AccessControl"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "BraintreePayPal",
-        "printedName": "BraintreePayPal",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "AccessControl"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "BraintreeVenmo",
-        "printedName": "BraintreeVenmo",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "AccessControl"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "BraintreeDataCollector",
-        "printedName": "BraintreeDataCollector",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "AccessControl"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "SpreedlyBraintree",
-        "declAttributes": [
-          "RawDocComment"
-        ]
       }
     ],
     "json_format_version": 8
   },
   "ConstValues": [
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyBraintree\/SpreedlyBraintree\/Internal\/BraintreeFlowController.swift",
+      "kind": "StringLiteral",
+      "offset": 283,
+      "length": 39,
+      "value": "\"https:\/\/spreedly.com\/braintree\/return\""
+    },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyBraintree\/SpreedlyBraintree\/BraintreeURLHandler.swift",
       "kind": "StringLiteral",
@@ -765,13 +772,6 @@
       "offset": 2196,
       "length": 5,
       "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyBraintree\/SpreedlyBraintree\/Internal\/BraintreeFlowController.swift",
-      "kind": "StringLiteral",
-      "offset": 283,
-      "length": 39,
-      "value": "\"https:\/\/spreedly.com\/braintree\/return\""
     }
   ]
 }
