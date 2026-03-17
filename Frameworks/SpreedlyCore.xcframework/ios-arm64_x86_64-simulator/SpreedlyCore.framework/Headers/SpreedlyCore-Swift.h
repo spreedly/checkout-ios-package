@@ -662,6 +662,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Identifies the integration surface using the Spreedly checkout SDK.
+/// The <code>value</code> property is sent as both the Datadog <code>sdk_platform</code> telemetry attribute
+/// and the <code>source</code> field on payment method creation requests to Core.
+typedef SWIFT_ENUM(NSInteger, SdkPlatform, open) {
+  SdkPlatformIos = 0,
+  SdkPlatformReactNative = 1,
+};
+
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
@@ -841,10 +849,10 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
-/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
-/// React Native bridges should set this to <code>"react_native"</code>.
-@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>)
+/// and as the <code>source</code> field on payment method creation requests to Core.
+/// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
+@property (nonatomic) enum SdkPlatform sdkPlatform;
 @end
 
 /// Configuration for the Spreedly SDK, providing credentials and optional 3DS/Forter settings.
@@ -862,11 +870,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @property (nonatomic, copy) NSString * _Nullable signature;
 /// UTC timestamp paired with nonce for signature validation. Must be within the server’s tolerance window.
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
-/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
-/// React Native bridges should set this to <code>"react_native"</code>.
-@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(NSString * _Nullable)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>)
+/// and as the <code>source</code> field on payment method creation requests to Core.
+/// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
+@property (nonatomic) enum SdkPlatform sdkPlatform;
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(enum SdkPlatform)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
 /// Objective-C compatible convenience initializer
 /// \param environmentKey Spreedly environment key
 ///
@@ -1768,6 +1776,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Identifies the integration surface using the Spreedly checkout SDK.
+/// The <code>value</code> property is sent as both the Datadog <code>sdk_platform</code> telemetry attribute
+/// and the <code>source</code> field on payment method creation requests to Core.
+typedef SWIFT_ENUM(NSInteger, SdkPlatform, open) {
+  SdkPlatformIos = 0,
+  SdkPlatformReactNative = 1,
+};
+
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
@@ -1947,10 +1963,10 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 @property (nonatomic, copy) NSString * _Nullable nonce;
 @property (nonatomic, copy) NSString * _Nullable signature;
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
-/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
-/// React Native bridges should set this to <code>"react_native"</code>.
-@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>)
+/// and as the <code>source</code> field on payment method creation requests to Core.
+/// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
+@property (nonatomic) enum SdkPlatform sdkPlatform;
 @end
 
 /// Configuration for the Spreedly SDK, providing credentials and optional 3DS/Forter settings.
@@ -1968,11 +1984,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @property (nonatomic, copy) NSString * _Nullable signature;
 /// UTC timestamp paired with nonce for signature validation. Must be within the server’s tolerance window.
 @property (nonatomic, copy) NSString * _Nullable timestamp;
-/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>).
-/// Defaults to <code>nil</code> (resolved as <code>"ios"</code> by the telemetry layer).
-/// React Native bridges should set this to <code>"react_native"</code>.
-@property (nonatomic, copy) NSString * _Nullable sdkPlatform;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(NSString * _Nullable)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
+/// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>)
+/// and as the <code>source</code> field on payment method creation requests to Core.
+/// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
+@property (nonatomic) enum SdkPlatform sdkPlatform;
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(enum SdkPlatform)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
 /// Objective-C compatible convenience initializer
 /// \param environmentKey Spreedly environment key
 ///

@@ -26,6 +26,8 @@ Add 3D Secure authentication to protect against fraudulent card payments.
 
 3DS Global uses the Forter SDK to provide unified 3D Secure authentication across multiple payment gateways. The SDK manages the challenge flow end-to-end: it fetches the managed order token, presents the challenge UI when required, calls completion APIs, and emits the final result based on the status API response.
 
+> **Module note:** 3DS Global logic currently lives inside `SpreedlyCore` (coordination and API calls) and `SpreedlyUI` (challenge presentation). It is **not a separate SDK module yet**. We plan to extract it into a dedicated `SpreedlyForter3DS` module in a future release so merchants who don't use 3DS can exclude it entirely. The third-party `Forter3DS` framework is already an optional runtime dependency that merchants add separately (see [Prerequisites](#prerequisites)).
+
 ### When to Use
 
 - You need multi-gateway support with a single 3DS implementation

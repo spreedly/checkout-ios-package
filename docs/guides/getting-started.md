@@ -393,7 +393,9 @@ Call `Spreedly.setup(config:)` with all required parameters before any payment r
 | `nonce` | Yes | Unique nonce for request signing, fetched from your backend |
 | `signature` | Yes | HMAC signature, fetched from your backend |
 | `timestamp` | Yes | Timestamp of signature generation, fetched from your backend |
-| `sdkPlatform` | No | Identifies the integration surface in telemetry logs. Defaults to `"ios"` for native apps. Set to `"react_native"` if calling from a React Native bridge, or any custom string for other wrappers. All telemetry events are tagged with this value as the `sdk_platform` attribute. |
+| `sdkPlatform` | No | Identifies the integration surface in telemetry and the `source` field on payment method creation requests. Defaults to `.ios` for native apps. Set to `.reactNative` if calling from a React Native bridge. Uses the `SdkPlatform` enum. |
+
+> **Migration note (breaking change):** `sdkPlatform` was previously a `String?` parameter. It is now a type-safe `SdkPlatform` enum. If you were passing `sdkPlatform: "react_native"`, change to `sdkPlatform: .reactNative`. Native iOS apps that omitted the parameter are unaffected — the default changed from `nil` to `.ios`, which produces the same behavior. In Objective-C, use `SdkPlatformIos` or `SdkPlatformReactNative`.
 
 ```swift
 class SpreedlyConfigManager {
@@ -413,7 +415,7 @@ class SpreedlyConfigManager {
                 nonce: signatureParams.nonce,
                 signature: signatureParams.signature,
                 timestamp: String(signatureParams.timestamp),
-                sdkPlatform: "ios"  // default for native iOS; use "react_native" for RN bridges
+                sdkPlatform: .ios  // default for native iOS; use .reactNative for RN bridges
             ))
         } catch {
             print("Failed to configure Spreedly: \(error.localizedDescription)")
@@ -432,6 +434,30 @@ func fetchSignatureFromBackend() async throws -> SignatureParameters {
 **Singleton pattern:** Both `static let shared` and `static var shared` with a `setup()` method are valid patterns for your config manager.
 
 Call `configureSpreedly()` before presenting any payment form or initiating any payment operation (for example, when the user navigates to checkout).
+
+#### React Native Bridge Setup
+
+If you are integrating the iOS SDK through a React Native bridge, you **must** pass `sdkPlatform: .reactNative` so the SDK correctly identifies the integration surface in telemetry and in the `source` field on all payment method creation requests:
+
+```swift
+Spreedly.setup(config: SpreedlyConfig(
+    environmentKey: environmentKey,
+    forterSiteId: forterSiteId,
+    certificateToken: params.certificateToken,
+    nonce: params.nonce,
+    signature: params.signature,
+    timestamp: params.timestamp,
+    sdkPlatform: .reactNative
+))
+```
+
+In Objective-C:
+
+```objc
+config.sdkPlatform = SdkPlatformReactNative;
+```
+
+Without this, all telemetry and API requests will be tagged as `"checkout-ios"` instead of `"checkout-react-native"`, making it impossible to distinguish native iOS events from React Native events in Datadog.
 
 ### Logging & Observability (Optional)
 
@@ -503,7 +529,7 @@ Spreedly.setLogger(nil)
 [Spreedly setDatadogLogLevel:LogLevelError];
 ```
 
-**React Native:** Set `sdkPlatform` to `"react_native"` in `SpreedlyConfig` so telemetry events are tagged correctly. All logging APIs above work the same from the native bridge.
+**React Native:** Set `sdkPlatform` to `.reactNative` in `SpreedlyConfig` so telemetry events and payment method `source` fields are tagged correctly. All logging APIs above work the same from the native bridge.
 
 > **SDK developers: Datadog logging behavior**
 >
@@ -617,12 +643,12 @@ Telemetry events only flow to Datadog when `DatadogConfig.clientToken` is non-em
 
 #### Platform Filtering
 
-Every telemetry event includes a `sdk_platform` global attribute, set via `SpreedlyConfig.sdkPlatform` at init time. Native iOS apps default to `"ios"` — no action needed. Bridge layers should pass their own identifier so events are distinguishable in Datadog:
+Every telemetry event includes a `sdk_platform` global attribute, set via `SpreedlyConfig.sdkPlatform` at init time. Native iOS apps default to `.ios` — no action needed. The React Native bridge passes `.reactNative` so events are distinguishable in Datadog:
 
 ```swift
 SpreedlyConfig(
     environmentKey: environmentKey,
-    sdkPlatform: "react_native"  // or any custom identifier
+    sdkPlatform: .reactNative
 )
 ```
 
@@ -630,11 +656,11 @@ SpreedlyConfig(
 
 | Filter | Shows |
 |--------|-------|
-| `@sdk_platform:ios` | Native iOS events only |
-| `@sdk_platform:react_native` | Events from the React Native bridge |
+| `@sdk_platform:checkout-ios` | Native iOS events only |
+| `@sdk_platform:checkout-react-native` | Events from the React Native bridge |
 | `@sdk_platform:*` | All events regardless of surface |
 
-The attribute resets to `"ios"` on each `Spreedly.setup()` call unless overridden.
+The attribute resets to `.ios` (value `"checkout-ios"`) on each `Spreedly.setup()` call unless overridden.
 
 ### Objective-C Setup
 
@@ -693,6 +719,8 @@ Create `SpreedlyConfig` with `initWithEnvironmentKey:` and set properties, then 
     config.nonce = signatureParams.nonce;
     config.signature = signatureParams.signature;
     config.timestamp = [NSString stringWithFormat:@"%ld", (long)signatureParams.timestamp];
+    // config.sdkPlatform = SdkPlatformIos;          // default — native iOS
+    // config.sdkPlatform = SdkPlatformReactNative;   // use for React Native bridges
 
     [Spreedly setupWithConfig:config];
     if (completion) completion(YES, nil);
@@ -709,11 +737,26 @@ Call this before presenting any payment form or initiating any payment operation
 |--------|---------|
 | SpreedlyCore | Core payment processing, API client, network, security |
 | SpreedlySecurity | Encryption, secure storage, SecureValueContainer |
-| SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS, CVV recaching |
+| SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS challenge UI, CVV recaching |
 | SpreedlyStripeAPM | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
 | SpreedlyBraintree | PayPal/Venmo via Braintree |
 
 > **SpreedlyAnalytics** is an internal module used by SpreedlyCore for logging and Datadog integration. You do not need to import or interact with it directly.
+
+> **3DS Note:** Both 3DS Global (Forter) and Gateway-Specific 3DS logic currently live inside `SpreedlyCore` (coordination, API calls, lifecycle) and `SpreedlyUI` (challenge presentation). They are **not separate modules yet**. We plan to extract them into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific 3DS) in a future release. This will let merchants who don't use 3DS avoid pulling in those dependencies entirely. Today, the `Forter3DS` third-party SDK is already an optional runtime dependency -- see [Optional Dependencies](#optional-dependencies).
+
+### Why Separate Modules?
+
+With a fat SDK, every feature we add increases the size of the binary, which eventually increases the size of the merchant's app. Not every merchant needs PayPal, Stripe APMs, or 3D Secure -- so we don't force them to include it.
+
+Merchants only install what they actually use:
+
+- **Smaller apps** -- unused payment methods add zero bytes to the final binary.
+- **Full control** -- merchants pick which gateways and flows to include.
+- **Faster builds** -- fewer dependencies mean less code to compile.
+- **No unwanted transitive deps** -- no dependency on Stripe, Braintree, or Forter unless the merchant opts in.
+
+This is standard practice across major mobile payment SDKs (Stripe, Braintree, Adyen all do the same).
 
 ### Transitive Dependencies
 
