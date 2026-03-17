@@ -70,6 +70,8 @@ config.nonce = nonce;
 config.signature = signature;
 config.certificateToken = certificateToken;
 config.timestamp = timestamp;
+// config.sdkPlatform = SdkPlatformIos;          // default — native iOS
+// config.sdkPlatform = SdkPlatformReactNative;   // use for React Native bridges
 [Spreedly setupWithConfig:config];
 ```
 

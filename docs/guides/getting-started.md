@@ -80,6 +80,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
    - Or individual libraries: **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**
    - **SpreedlyStripeAPM** (optional, for Stripe APM)
    - **SpreedlyBraintree** (optional, for Braintree PayPal/Venmo)
+   - **Forter3DS** (optional, for 3DS Global) — add separately from `https://bitbucket.org/forter-mobile/forter-ios.git`; not part of the Spreedly package
 
 **Add via Package.swift:**
 
@@ -99,6 +100,9 @@ targets: [
             // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
             // .product(name: "SpreedlyStripeAPM", package: "checkout-ios-package"),
             // .product(name: "SpreedlyBraintree", package: "checkout-ios-package")
+            // Optional: add when using 3DS Global — add Forter3DS from Bitbucket (not in Spreedly package):
+            // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0"),
+            // .product(name: "Forter3DS", package: "forter-ios")
         ]
     )
 ]
@@ -159,24 +163,22 @@ Add these only when you need the corresponding features:
 |---------|---------|-----|---------|
 | 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
 | Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
-| Braintree (PayPal/Venmo) — SPM only | BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector | `https://github.com/braintree/braintree_ios.git` | 7.0.0+ |
+| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.1.x |
 
-**Forter3DS (3DS Global):** Required for 3DS authentication. The recommended approach depends on your dependency manager:
+**Forter3DS (3DS Global):** Required for 3DS authentication. Add Forter3DS directly from Forter's Bitbucket repository. **Do not use** `pod 'SpreedlyForter3DS'` — use the Forter Bitbucket URL below. A dedicated `SpreedlyForter3DS` module is planned for a future release but is not yet available for standard CocoaPods usage.
 
-- **SPM (recommended):** Add the `SpreedlyForter3DS` product from the `checkout-ios-package` repository to your app target. This automatically resolves the Forter dependency — no need to add `forter-ios` manually.
-- **SPM (manual):** Alternatively, add `Forter3DS` directly from `https://bitbucket.org/forter-mobile/forter-ios.git` (2.1.0+) to your app target with **Embed & Sign**.
-- **CocoaPods:** Add `pod 'SpreedlyForter3DS'` to your Podfile. Because `Forter3DS` is not on CocoaPods trunk, you must also add the Spreedly private spec repo as a source at the top of your Podfile:
+- **SPM:** Add `Forter3DS` directly from `https://bitbucket.org/forter-mobile/forter-ios.git` (2.1.0+) to your app target with **Embed & Sign**. File → Add Package Dependencies → enter the URL → add the `Forter3DS` product to your app target.
+- **CocoaPods:** Add `Forter3DS` directly from Forter's Bitbucket repository (it is not on CocoaPods trunk):
 
 ```ruby
-source 'https://github.com/spreedly/spreedly-podspecs.git'
-source 'https://github.com/CocoaPods/Specs.git'
+pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git', :tag => '2.1.0'
 ```
 
 Without the Forter3DS dependency, the app will crash when 3DS is required.
 
 **StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). You **must** add `StripePaymentSheet` to your **app target** (SPM or CocoaPods). The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without it the app will crash at presentation time.
 
-**Braintree packages (SPM only):** Required for Braintree PayPal and Venmo flows when using **Swift Package Manager**. Because `SpreedlyBraintree` is distributed as a binary `.xcframework` with no transitive SPM dependencies, you must add BraintreeCore, BraintreePayPal, BraintreeVenmo, and BraintreeDataCollector to your app target with **Embed & Sign**. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash). **CocoaPods** users do **not** need to add Braintree separately — `pod 'SpreedlyBraintree'` already includes the required Braintree subspecs as transitive dependencies.
+**SpreedlyBraintree (Braintree PayPal/Venmo):** Use `SpreedlyBraintree` as your primary module — add it from `checkout-ios-package` (SPM or CocoaPods). **SPM only:** Because `SpreedlyBraintree` is distributed as a binary `.xcframework` with no transitive SPM dependencies, you must also add BraintreeCore, BraintreePayPal, BraintreeVenmo, and BraintreeDataCollector from `https://github.com/braintree/braintree_ios.git` (7.0.0+) to your app target with **Embed & Sign**. **CocoaPods:** `pod 'SpreedlyBraintree'` already includes the required Braintree subspecs as transitive dependencies — no separate Braintree pods needed. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash).
 
 ---
 
@@ -190,7 +192,7 @@ Add these entries to your app's `Info.plist`:
 | `CFBundleURLTypes` | Offsite, Stripe APM, Braintree | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe flows and `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo. **Gateway-Specific 3DS no longer needs a URL scheme** — the SDK uses `ASWebAuthenticationSession`, which handles the callback internally. |
 | `LSApplicationQueriesSchemes` | Braintree PayPal/Venmo | Include `paypal` so the SDK can detect the PayPal app for App Switch. Optionally include `com.venmo.touch.v2` (Braintree v6 legacy; v7 Venmo uses Universal Links and does not call `canOpenURL`). |
 
-> **All three keys should be added to every target** (Swift and Objective-C) that integrates the SDK. The Objective-C target must also include `CFBundleURLSchemes` with `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if it uses Braintree.
+> **Add keys based on your integration:** `NSCameraUsageDescription` only if you use Stripe APM. `CFBundleURLTypes` for Offsite, Stripe APM, or Braintree (include `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if using Braintree). `LSApplicationQueriesSchemes` only if you use Braintree PayPal/Venmo. Add these to every target (Swift and Objective-C) that integrates the corresponding modules.
 
 **Why is `NSCameraUsageDescription` required for Stripe APM?** The Stripe iOS SDK (`StripePaymentSheet`) bundles card-scanning functionality that references camera APIs. Apple's static analysis flags these references during App Store review and rejects the build (`ITMS-90683`) if this key is missing — even if your app never invokes the card scanner. If your app uses Stripe APM (via `SpreedlyStripeAPM`), you must include this key. If you only use card tokenization, Braintree, or offsite payments, this key is not needed.
 
@@ -393,7 +395,9 @@ Call `Spreedly.setup(config:)` with all required parameters before any payment r
 | `nonce` | Yes | Unique nonce for request signing, fetched from your backend |
 | `signature` | Yes | HMAC signature, fetched from your backend |
 | `timestamp` | Yes | Timestamp of signature generation, fetched from your backend |
-| `sdkPlatform` | No | Identifies the integration surface in telemetry logs. Defaults to `"ios"` for native apps. Set to `"react_native"` if calling from a React Native bridge, or any custom string for other wrappers. All telemetry events are tagged with this value as the `sdk_platform` attribute. |
+| `sdkPlatform` | No | Identifies the integration surface in telemetry and the `source` field on payment method creation requests. Defaults to `.ios` for native apps. Set to `.reactNative` if calling from a React Native bridge. Uses the `SdkPlatform` enum. |
+
+> **Migration note (breaking change):** `sdkPlatform` was previously a `String?` parameter. It is now a type-safe `SdkPlatform` enum. If you were passing `sdkPlatform: "react_native"`, change to `sdkPlatform: .reactNative`. Native iOS apps that omitted the parameter are unaffected — the default changed from `nil` to `.ios`, which produces the same behavior. In Objective-C, use `SdkPlatformIos` or `SdkPlatformReactNative`.
 
 ```swift
 class SpreedlyConfigManager {
@@ -413,7 +417,7 @@ class SpreedlyConfigManager {
                 nonce: signatureParams.nonce,
                 signature: signatureParams.signature,
                 timestamp: String(signatureParams.timestamp),
-                sdkPlatform: "ios"  // default for native iOS; use "react_native" for RN bridges
+                sdkPlatform: .ios  // default for native iOS; use .reactNative for RN bridges
             ))
         } catch {
             print("Failed to configure Spreedly: \(error.localizedDescription)")
@@ -432,6 +436,30 @@ func fetchSignatureFromBackend() async throws -> SignatureParameters {
 **Singleton pattern:** Both `static let shared` and `static var shared` with a `setup()` method are valid patterns for your config manager.
 
 Call `configureSpreedly()` before presenting any payment form or initiating any payment operation (for example, when the user navigates to checkout).
+
+#### React Native Bridge Setup
+
+If you are integrating the iOS SDK through a React Native bridge, you **must** pass `sdkPlatform: .reactNative` so the SDK correctly identifies the integration surface in telemetry and in the `source` field on all payment method creation requests:
+
+```swift
+Spreedly.setup(config: SpreedlyConfig(
+    environmentKey: environmentKey,
+    forterSiteId: forterSiteId,
+    certificateToken: params.certificateToken,
+    nonce: params.nonce,
+    signature: params.signature,
+    timestamp: params.timestamp,
+    sdkPlatform: .reactNative
+))
+```
+
+In Objective-C:
+
+```objc
+config.sdkPlatform = SdkPlatformReactNative;
+```
+
+Without this, all telemetry and API requests will be tagged as `"checkout-ios"` instead of `"checkout-react-native"`, making it impossible to distinguish native iOS events from React Native events in Datadog.
 
 ### Logging & Observability (Optional)
 
@@ -503,7 +531,7 @@ Spreedly.setLogger(nil)
 [Spreedly setDatadogLogLevel:LogLevelError];
 ```
 
-**React Native:** Set `sdkPlatform` to `"react_native"` in `SpreedlyConfig` so telemetry events are tagged correctly. All logging APIs above work the same from the native bridge.
+**React Native:** Set `sdkPlatform` to `.reactNative` in `SpreedlyConfig` so telemetry events and payment method `source` fields are tagged correctly. All logging APIs above work the same from the native bridge.
 
 > **SDK developers: Datadog logging behavior**
 >
@@ -617,12 +645,12 @@ Telemetry events only flow to Datadog when `DatadogConfig.clientToken` is non-em
 
 #### Platform Filtering
 
-Every telemetry event includes a `sdk_platform` global attribute, set via `SpreedlyConfig.sdkPlatform` at init time. Native iOS apps default to `"ios"` — no action needed. Bridge layers should pass their own identifier so events are distinguishable in Datadog:
+Every telemetry event includes a `sdk_platform` global attribute, set via `SpreedlyConfig.sdkPlatform` at init time. Native iOS apps default to `.ios` — no action needed. The React Native bridge passes `.reactNative` so events are distinguishable in Datadog:
 
 ```swift
 SpreedlyConfig(
     environmentKey: environmentKey,
-    sdkPlatform: "react_native"  // or any custom identifier
+    sdkPlatform: .reactNative
 )
 ```
 
@@ -630,11 +658,11 @@ SpreedlyConfig(
 
 | Filter | Shows |
 |--------|-------|
-| `@sdk_platform:ios` | Native iOS events only |
-| `@sdk_platform:react_native` | Events from the React Native bridge |
+| `@sdk_platform:checkout-ios` | Native iOS events only |
+| `@sdk_platform:checkout-react-native` | Events from the React Native bridge |
 | `@sdk_platform:*` | All events regardless of surface |
 
-The attribute resets to `"ios"` on each `Spreedly.setup()` call unless overridden.
+The attribute resets to `.ios` (value `"checkout-ios"`) on each `Spreedly.setup()` call unless overridden.
 
 ### Objective-C Setup
 
@@ -693,6 +721,8 @@ Create `SpreedlyConfig` with `initWithEnvironmentKey:` and set properties, then 
     config.nonce = signatureParams.nonce;
     config.signature = signatureParams.signature;
     config.timestamp = [NSString stringWithFormat:@"%ld", (long)signatureParams.timestamp];
+    // config.sdkPlatform = SdkPlatformIos;          // default — native iOS
+    // config.sdkPlatform = SdkPlatformReactNative;   // use for React Native bridges
 
     [Spreedly setupWithConfig:config];
     if (completion) completion(YES, nil);
@@ -709,11 +739,26 @@ Call this before presenting any payment form or initiating any payment operation
 |--------|---------|
 | SpreedlyCore | Core payment processing, API client, network, security |
 | SpreedlySecurity | Encryption, secure storage, SecureValueContainer |
-| SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS, CVV recaching |
+| SpreedlyUI | Payment forms (CardFormDropIn, SPLTextField), 3DS challenge UI, CVV recaching |
 | SpreedlyStripeAPM | Stripe APM (iDEAL, Bancontact, EPS, P24, SEPA) |
 | SpreedlyBraintree | PayPal/Venmo via Braintree |
 
 > **SpreedlyAnalytics** is an internal module used by SpreedlyCore for logging and Datadog integration. You do not need to import or interact with it directly.
+
+> **3DS Note:** Both 3DS Global (Forter) and Gateway-Specific 3DS logic currently live inside `SpreedlyCore` (coordination, API calls, lifecycle) and `SpreedlyUI` (challenge presentation). They are **not separate modules yet**. We plan to extract them into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific 3DS) in a future release. This will let merchants who don't use 3DS avoid pulling in those dependencies entirely. Today, the `Forter3DS` third-party SDK is already an optional runtime dependency -- see [Optional Dependencies](#optional-dependencies).
+
+### Why Separate Modules?
+
+With a fat SDK, every feature we add increases the size of the binary, which eventually increases the size of the merchant's app. Not every merchant needs PayPal, Stripe APMs, or 3D Secure -- so we don't force them to include it.
+
+Merchants only install what they actually use:
+
+- **Smaller apps** -- unused payment methods add zero bytes to the final binary.
+- **Full control** -- merchants pick which gateways and flows to include.
+- **Faster builds** -- fewer dependencies mean less code to compile.
+- **No unwanted transitive deps** -- no dependency on Stripe, Braintree, or Forter unless the merchant opts in.
+
+This is standard practice across major mobile payment SDKs (Stripe, Braintree, Adyen all do the same).
 
 ### Transitive Dependencies
 
