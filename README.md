@@ -151,7 +151,7 @@ More information about versioning and the SDK lifecycle can be found in the [CHA
 
 ## Known Issues
 
-- **3DS is not a separate module:** Unlike the Android SDK (which publishes `checkout-threeds` as a standalone module), 3DS/Forter support on iOS is embedded within `SpreedlyCore` via weak linking. Merchants must add `Forter3DS` as a direct dependency to their app target for 3DS to function. Extracting 3DS into a dedicated `SpreedlyThreeDS` module is planned for a future release.
+- **3DS is not a separate module:** Unlike the Android SDK (which publishes `checkout-threeds` as a standalone module), 3DS/Forter support on iOS is embedded within `SpreedlyCore` via weak linking. Merchants must add `Forter3DS` as a direct dependency to their app target for 3DS to function. Extracting 3DS into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific) is planned for a future release.
 
 - **Release manifest does not cover all modules:** Checksum verification currently covers the three core frameworks (`SpreedlyCore`, `SpreedlySecurity`, `SpreedlyUI`). The optional modules (`SpreedlyStripeAPM`, `SpreedlyBraintree`) are not yet included. Extending the manifest to all published modules is tracked as future work.
 

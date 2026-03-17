@@ -39,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- HC-1265 **Documentation audit (Forter 3DS)**: Corrected install instructions for Forter3DS. The `SpreedlyForter3DS` module does not exist yet; docs now direct merchants to add Forter3DS directly — SPM from `https://bitbucket.org/forter-mobile/forter-ios.git`, CocoaPods via `pod 'Forter3DS', :git => '...'`. Removed all references to the non-existent SpreedlyForter3DS pod. Added Forter3DS to the optional modules list in getting-started. Clarified that a dedicated SpreedlyForter3DS module is planned for a future release.
+
 ### Added
 
 - HC-1234 **`sdk_platform` global telemetry attribute**: New `sdkPlatform` field on `SpreedlyConfig` (default `.ios`). React Native bridges pass `.reactNative` to distinguish integration surface in Datadog.

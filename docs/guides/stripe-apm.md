@@ -113,6 +113,8 @@ Add a custom URL scheme to your app's `Info.plist` for redirect-based APMs. Exam
 </array>
 ```
 
+> **Braintree users:** If your app also uses Braintree (PayPal/Venmo), you must add a separate URL scheme: `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree`. See [getting-started.md](getting-started.md#required-infoplist-entries) for the complete `CFBundleURLTypes` setup including both Stripe and Braintree schemes.
+
 After the user completes authentication in Safari (e.g., iDEAL bank auth), they are redirected back into your app. The same `handleOffsiteReturn(url:)` call you already use for offsite payments handles Stripe APM redirects too. In **SwiftUI** use `onOpenURL`; in **UIKit/Objective-C** handle the URL in `SceneDelegate` (or `AppDelegate`). See the platform examples below.
 
 > **Note:** Stripe return URL handling is done via the SDK's URL pre-handler (`Spreedly.shared().setURLPreHandler`). When you present the Stripe PaymentSheet, the SDK registers a pre-handler that forwards Stripe redirect URLs to `SpreedlyStripeAPMCheckout.handleStripeReturnURL(_:)`. Your app's `onOpenURL` or `SceneDelegate` should still forward URLs to `handleOffsiteReturn(url:)`, which invokes the pre-handler chain.

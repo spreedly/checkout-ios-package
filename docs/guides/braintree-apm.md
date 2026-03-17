@@ -140,14 +140,14 @@ For Universal Links to work, **two things** must be true:
 1. **Merchant:** Add `applinks:spreedly.com` to the Associated Domains entitlement in your app's `.entitlements` file.
 2. **Spreedly (infrastructure):** Host an `apple-app-site-association` (AASA) file at `https://spreedly.com/.well-known/apple-app-site-association` that includes your app's team ID and bundle identifier.
 
-> **Current status:** The AASA file may not be hosted yet. Check `https://spreedly.com/.well-known/apple-app-site-association` to verify. See the impact below.
+> **Current status:** The AASA file at `https://spreedly.com/.well-known/apple-app-site-association` exists but may not include Braintree/Venmo app-link paths. Verify the file includes your app's associated domains for the `braintree/return` path before relying on Venmo Universal Links. See the impact below.
 
 **Impact without a working AASA file:**
 
 - **PayPal:** Falls back to the custom URL scheme (`{bundleId}.spreedly.braintree`). App Switch still works.
 - **Venmo:** **Returns will fail silently.** Braintree v7 `BTVenmoClient` uses Universal Links **only** — there is no custom URL scheme fallback. The Venmo app opens but cannot redirect back to your app.
 
-> **Venmo Warning:** Until the AASA file at `spreedly.com` is confirmed hosted and working, Venmo integration through Braintree is unreliable. Test Venmo returns thoroughly before shipping to production. PayPal is unaffected (has custom scheme fallback).
+> **Venmo Warning:** Until the AASA file at `spreedly.com` includes Braintree/Venmo app-link paths and is confirmed working, Venmo integration through Braintree is unreliable. Test Venmo returns thoroughly before shipping to production. PayPal is unaffected (has custom scheme fallback).
 
 ### URL Reference Table
 
