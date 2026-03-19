@@ -10,6 +10,7 @@ permissions:
 jobs:
   create-sdk-tag:
     runs-on: macos-latest
+    timeout-minutes: 50
     steps:
       - name: Checkout SDK repository
         uses: actions/checkout@v4
@@ -22,6 +23,14 @@ jobs:
         run: |
           # xcodebuild needs credentials to fetch checkout-ios-package (private repo)
           git config --global url."https://x-access-token:${{ secrets.SDK_REPO_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Cache Swift Package Manager
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-macos-release-${{ runner.os }}
+          restore-keys: |
+            spm-macos-release-
 
       - name: Update Package.resolved to released version
         env:
