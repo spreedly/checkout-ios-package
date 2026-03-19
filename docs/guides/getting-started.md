@@ -108,6 +108,8 @@ targets: [
 
 ### Option 2: CocoaPods
 
+**Option A (Recommended):** Install from the remote package using a version or Git reference. This is the standard approach for production and matches how most teams consume SDKs.
+
 Add to your `Podfile`. Source is `https://github.com/spreedly/checkout-ios-package`:
 
 ```ruby
@@ -125,7 +127,9 @@ end
 
 Then run `pod install`.
 
-**Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead of version specifiers:
+If you use **Stripe APM** with CocoaPods, you must also add the [CocoaPods Stripe SPM bundle fix](stripe-apm.md#cocoapods-stripe-spm-bundle-fix) to your Podfile so Stripe resource bundles are copied with the names the SDK expects. With Option A, the script is not on disk—copy it from a release or use a submodule; see the [Stripe APM guide](stripe-apm.md#cocoapods-stripe-spm-bundle-fix).
+
+**Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead of version specifiers (still Option A—remote install):
 
 ```ruby
 target 'YourApp' do
@@ -141,6 +145,8 @@ end
 ```
 
 Replace `{GitToken}` with your GitHub personal access token that has read access to the repository. Then run `pod install`.
+
+**Option B (Local development only):** To develop or test against a local clone of checkout-ios-package, use `:path =>` in your Podfile (e.g. `pod 'SpreedlyCore', :path => '../checkout-ios-package'`). Use that same path in the [Stripe bundle fix](stripe-apm.md#cocoapods-stripe-spm-bundle-fix) `require_relative` so the script is loaded from your clone.
 
 ### Option 3: Manual Framework Integration
 

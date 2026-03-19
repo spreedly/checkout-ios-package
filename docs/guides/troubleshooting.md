@@ -146,6 +146,12 @@ func application(_ app: UIApplication, open url: URL, options: [...]) -> Bool {
 }
 ```
 
+### Stripe APM: CocoaPods bundle crash ("unable to find bundle named Stripe_Stripe*")
+
+**Cause:** With CocoaPods, Stripe ships resource bundles under different names than the Spreedly XCFramework expects. The SDK was built against Stripe via SPM. Same Stripe SDK, different naming by install method—see [Why CocoaPods users need a Stripe bundle fix](../STRIPE_COCOAPODS_BUNDLE_NAMING.md) for root cause and evidence.
+
+**Fix:** Add the [CocoaPods Stripe SPM bundle fix](stripe-apm.md#cocoapods-stripe-spm-bundle-fix) to your Podfile (script in this repo: `scripts/cocoapods_stripe_spm_bundle_fix.rb`). SPM users do not need this.
+
 ### Stripe APM PaymentSheet doesn't appear
 
 **Cause:** The `StripeAPMConfig` is missing required fields, or the purchase hasn't been created on the backend yet.

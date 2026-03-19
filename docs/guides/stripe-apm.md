@@ -27,7 +27,7 @@ Accept European payment methods via Stripe PaymentSheet (iDEAL, Bancontact, EPS,
 
 Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact, EPS, P24, SEPA Debit) using Stripe's native PaymentSheet. Unlike EBANX and other offsite flows, Stripe APM does **not** require a separate payment method tokenization step. Your backend creates a pending purchase directly, and the Stripe PaymentSheet handles APM selection and payment confirmation natively.
 
-**Required for Stripe integration:** You **must** add the **Stripe iOS SDK** (`StripePaymentSheet`) to your **app target** when using Stripe APM. Add it via Swift Package Manager or CocoaPods (see [Prerequisites](#prerequisites)). Without it, presenting the PaymentSheet will crash with: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The Spreedly SDK does not embed Stripe's resource bundle; the app must depend on Stripe so the bundle is included.
+**Required for Stripe integration:** You **must** add the **Stripe iOS SDK** (`StripePaymentSheet`) to your **app target** when using Stripe APM. Add it via Swift Package Manager or CocoaPods (see [Prerequisites](#prerequisites)). Without it, calling `SpreedlyStripeAPMCheckout.present(config: config)` will crash with: `StripePaymentSheet/resource_bundle_accessor.swift:44: Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The Spreedly SDK does not embed Stripe's resource bundle; the app must depend on Stripe so the bundle is included.
 
 ### Offsite vs Stripe APM vs Braintree
 
@@ -90,6 +90,34 @@ pod 'StripePaymentSheet', '~> 25.0'
 ```
 
 > **Version compatibility:** The `SpreedlyStripeAPM` podspec depends on `StripePaymentSheet ~> 25.0`. If you use CocoaPods, the version is resolved automatically. For SPM, ensure you use a compatible major version (25.x).
+>
+> **Crash if omitted:** If `StripePaymentSheet` is not added to your app target, `SpreedlyStripeAPMCheckout.present(config: config)` will crash with: `StripePaymentSheet/resource_bundle_accessor.swift:44: Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. Add the pod (or SPM package) to your app target to include Stripe's resource bundle.
+
+#### CocoaPods: Stripe SPM bundle fix
+
+When using **SpreedlyStripeAPM** with **CocoaPods**, Stripe ships resource bundles under CocoaPods names (e.g. `StripePaymentSheetBundle.bundle`), while the Spreedly XCFramework was built against Stripe via SPM and looks for SPM-style names (e.g. `Stripe_StripePaymentSheet.bundle`). You must add a small `post_install` step so those bundles are copied with the names the SDK expects.
+
+> A fuller explanation—why the names differ, evidence from Stripe’s repos, and why this isn’t a Spreedly defect—is in [STRIPE_COCOAPODS_BUNDLE_NAMING.md](../STRIPE_COCOAPODS_BUNDLE_NAMING.md).
+
+**SPM users:** You do not need this; only CocoaPods installs require it.
+
+Add the following to your Podfile (after your `pod` declarations), then run `pod install`:
+
+```ruby
+post_install do |installer|
+  require_relative '<path-to-checkout-ios-package>/scripts/cocoapods_stripe_spm_bundle_fix'
+  SpreedlyStripeAPM::CocoaPods.apply_stripe_spm_bundle_fix(installer)
+end
+```
+
+**Setting `<path-to-checkout-ios-package>`:**
+
+- **Option A (Recommended) — Git or version-based install:** You use `pod 'SpreedlyStripeAPM', '~> 1.1'` or `:git => '...'`, so the package repo is not on disk. Either copy `scripts/cocoapods_stripe_spm_bundle_fix.rb` from a [release](https://github.com/spreedly/checkout-ios-package/releases) into your repo (e.g. `scripts/`) and use `require_relative 'scripts/cocoapods_stripe_spm_bundle_fix'`, or add **checkout-ios-package** as a git submodule and require from the submodule path.
+- **Option B (Local development only):** If you use `pod 'SpreedlyStripeAPM', :path => '../checkout-ios-package'` (or another relative path), use that same path for `require_relative`: e.g. `require_relative '../checkout-ios-package/scripts/cocoapods_stripe_spm_bundle_fix'`. The path is relative to the directory containing your Podfile.
+
+The script patches the Pods embed script and adds a "Copy Stripe bundle for SPM" Run Script phase to your app target so all required Stripe bundles are present with SPM-expected names at runtime.
+
+**React Native (checkout-react-native):** When the example app or an RN app uses **checkout-ios-package** as a **path** dependency (e.g. local sibling repo), the RN Podfile's `apply_spreedly_stripe_support` automatically delegates to this script, so there is a single source of truth. When the package is installed via **Git** (e.g. `:git => '...', :tag => '1.2.2'`), the RN repo uses its own fallback script because the package repo is not on disk.
 
 ---
 
@@ -504,7 +532,9 @@ typedef NS_ENUM(NSInteger, StripeAPMStage) {
 
 | Issue | Solution |
 |-------|----------|
-| `Fatal error: unable to find bundle named Stripe_StripePaymentSheet` | Add `StripePaymentSheet` to your app target via SPM or CocoaPods. The Spreedly SDK does not embed Stripe's bundle. |
+| Crash at `SpreedlyStripeAPMCheckout.present(config:)` with `StripePaymentSheet/resource_bundle_accessor.swift:44: Fatal error: unable to find bundle named Stripe_StripePaymentSheet` | Add `StripePaymentSheet` to your app target. For CocoaPods: `pod 'StripePaymentSheet', '~> 25.0'`. For SPM: add the `StripePaymentSheet` product from `https://github.com/stripe/stripe-ios-spm`. The Spreedly SDK does not embed Stripe's bundle. |
+| **CocoaPods:** Added `StripePaymentSheet` but still get bundle error | Add the [CocoaPods Stripe SPM bundle fix](#cocoapods-stripe-spm-bundle-fix) to your Podfile. The script in this repo copies Stripe bundles with the names the XCFramework expects. |
+| **Reinstalled `StripePaymentSheet` but still crashes** with the same bundle error | Stale build artifacts can persist after removing and re-adding the pod. Try: (1) **Product → Clean Build Folder** (⇧⌘K), (2) **Delete Derived Data** for the project (Xcode → Settings → Locations → Derived Data → delete your project's folder), (3) **Full CocoaPods reset:** `pod deintegrate`, delete `Pods/` and `Podfile.lock`, then `pod install`, (4) Quit Xcode, reopen the `.xcworkspace`, and build again. If using CocoaPods, also ensure the [CocoaPods Stripe SPM bundle fix](#cocoapods-stripe-spm-bundle-fix) is in your Podfile. |
 | App Store rejection `ITMS-90683` (missing `NSCameraUsageDescription`) | Add `NSCameraUsageDescription` to your app's `Info.plist`. The Stripe SDK's `StripePaymentSheet` module includes card scanning functionality that references camera APIs internally. Apple's static analysis detects these references even if card scanning is never presented to the user. Without this key, App Store and TestFlight submissions will be rejected. |
 | `CFBundleDisplayName must be non-nil` | Set `CFBundleDisplayName` in your app's `Info.plist` with a string value (e.g. your app name). |
 | User not redirected back to app after bank auth | Ensure `redirect_url` in the purchase request matches your custom URL scheme (e.g. `myapp://stripe-redirect`), and that `returnURL` in `StripeAPMConfig` matches. Register the scheme in `Info.plist` under `CFBundleURLTypes`. |
@@ -518,4 +548,4 @@ typedef NS_ENUM(NSInteger, StripeAPMStage) {
 - [offsite-payments.md](offsite-payments.md) - PayPal and Sprel offsite payments
 - [ebanx-apm.md](ebanx-apm.md) - Pix, Boleto, OXXO, NuPay
 - [braintree-apm.md](braintree-apm.md) - PayPal and Venmo via Braintree
-- [STRIPE_FLOW.md](../development/STRIPE_FLOW.md) - Detailed flow diagrams for Stripe APM
+- [STRIPE_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/STRIPE_FLOW.md) – Detailed flow diagrams for Stripe APM

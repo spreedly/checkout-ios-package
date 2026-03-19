@@ -62,10 +62,12 @@ Delivered asynchronously via `subscribeToPaymentResults` or the delegate, repres
 |----------|------|-------------|
 | `isInitial` | Bool | `true` for the initial value emitted by `paymentResultPublisher` before any payment is attempted. Ignore this state when handling results; it indicates no payment has been processed yet. |
 | `isSuccess` | Bool | Payment succeeded |
+| `isPending` | Bool | Transaction is in pending or processing state (when true, use orange/warning UI and title "Pending" or "Processing" instead of "Successful") |
 | `isCanceled` | Bool | User canceled the payment flow (e.g., dismissed the form, canceled a 3DS challenge, or backed out of an APM flow). Handle this as a non-error state — allow the user to retry. |
 | `isFailure` | Bool | Payment failed |
 | `token` | String? | Payment method token |
 | `paymentResponse` | PaymentMethodResponse? | Full response object |
+| `pendingOrProcessingDisplayTitle` | String? | "Pending" or "Processing" when `isPending` is true; nil otherwise. Use with warning/orange styling. |
 | `shouldRetain` | Bool | Whether to save card (CardFormDropIn only) |
 | `failureDetails` | FailedDetails? | Error details when failed |
 | `state` | String? | Transaction state (for offsite/APM flows) |

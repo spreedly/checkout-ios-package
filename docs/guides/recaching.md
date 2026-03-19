@@ -52,7 +52,7 @@ Before integrating CVV recaching:
 
 ## Quick Start
 
-Minimal SwiftUI example:
+Minimal SwiftUI example (single hardcoded card). For dynamic card lists fetched from your backend, see the [Step-by-Step Integration](#step-by-step-integration) section, which uses `sheet(item:)` to avoid blank sheets.
 
 ```swift
 import SwiftUI
@@ -175,6 +175,7 @@ Before presenting the CVV recaching UI, you need a list of saved payment methods
 - The example app uses `FetchPaymentMethodsAPIClient` to retrieve saved payment methods from a sample backend.
 - `SavedCardInfo` requires `lastFourDigits` and `cardType` (e.g., `"Visa"`, `"Mastercard"`). `cardBrand` is optional.
 - Map your backend response to `SavedCardInfo` instances before passing them to `RecacheConfig`.
+- **Filter to credit cards only:** Recaching applies to saved cards with CVV. Filter your payment methods by `paymentMethodType == "credit_card"` before displaying the list. Non-credit-card payment methods (e.g., bank accounts, APM tokens) do not support CVV recaching.
 
 ```swift
 let cardInfo = SavedCardInfo(
@@ -190,7 +191,7 @@ let config = RecacheConfig(cardInfo: cardInfo)
 
 ### SwiftUI
 
-1. **Present as sheet:** Use `.sheet(isPresented:)` to present the recaching view when the user selects a saved card.
+1. **Present as sheet:** Use `.sheet(item:)` with an optional `Identifiable` struct (e.g., `SelectedCard`) instead of `.sheet(isPresented:)`. This ensures the sheet only presents when you have valid card data, avoiding blank sheets caused by timing or optional unwrapping. Set the item to `nil` in `onDismiss` and when handling success/failure.
 
 2. **Subscribe to payment results before presenting:** Call `Spreedly.shared().subscribeToPaymentResults` in `onAppear` (or before the sheet is shown). Results are delivered asynchronously via this subscription.
 
@@ -230,23 +231,22 @@ import SpreedlyCore
 import Combine
 
 struct SavedCardsView: View {
-    @State private var showCVVRecaching = false
-    @State private var selectedCard: SavedCard?
+    @State private var selectedCard: SelectedCard?
     @State private var paymentResult: PaymentResult?
     @State private var cancellable: AnyCancellable?
 
-    struct SavedCard: Identifiable {
+    struct SelectedCard: Identifiable {
         let id: String
-        let paymentMethodToken: String
+        let token: String
         let lastFourDigits: String
         let cardType: String
         let cardBrand: String?
     }
 
-    let savedCards: [SavedCard] = [
-        SavedCard(
+    let savedCards: [SelectedCard] = [
+        SelectedCard(
             id: "1",
-            paymentMethodToken: "token_123",
+            token: "token_123",
             lastFourDigits: "4242",
             cardType: "Visa",
             cardBrand: "visa"
@@ -257,14 +257,15 @@ struct SavedCardsView: View {
         VStack {
             List(savedCards) { card in
                 Button(action: {
-                    selectedCard = card
                     Task {
                         let result = await SpreedlyConfigManager.shared.generateSignature()
-                        switch result {
-                        case .success:
-                            showCVVRecaching = true
-                        case .failure(let error):
-                            // Handle error
+                        await MainActor.run {
+                            switch result {
+                            case .success:
+                                selectedCard = card
+                            case .failure(let error):
+                                // Handle error
+                            }
                         }
                     }
                 }) {
@@ -276,46 +277,42 @@ struct SavedCardsView: View {
                 }
             }
         }
-        .sheet(isPresented: $showCVVRecaching) {
-            if let card = selectedCard {
-                SpreedlyCVVRecachingView(
-                    config: RecacheConfig(
-                        cardInfo: SavedCardInfo(
-                            lastFourDigits: card.lastFourDigits,
-                            cardType: card.cardType,
-                            cardBrand: card.cardBrand
-                        ),
-                        presentationMode: .bottomSheet
+        .sheet(item: $selectedCard) { card in
+            SpreedlyCVVRecachingView(
+                config: RecacheConfig(
+                    cardInfo: SavedCardInfo(
+                        lastFourDigits: card.lastFourDigits,
+                        cardType: card.cardType,
+                        cardBrand: card.cardBrand
                     ),
-                    paymentMethodToken: card.paymentMethodToken,
-                    allowBlankName: false,
-                    allowExpiredDate: false,
-                    allowBlankDate: false,
-                    onProcessingResult: { result in
-                        if result.isProcessing {
-                            // Show loading indicator
-                        } else if result.isValidationFailed {
-                            // Handle validation errors
-                        }
-                    },
-                    onDismiss: {
-                        showCVVRecaching = false
+                    presentationMode: .bottomSheet
+                ),
+                paymentMethodToken: card.token,
+                allowBlankName: false,
+                allowExpiredDate: false,
+                allowBlankDate: false,
+                onProcessingResult: { result in
+                    if result.isProcessing {
+                        // Show loading indicator
+                    } else if result.isValidationFailed {
+                        // Handle validation errors
                     }
-                )
-                .screenPrevention()
-            }
+                },
+                onDismiss: { selectedCard = nil }
+            )
+            .screenPrevention()
         }
         .onAppear {
             cancellable = Spreedly.shared().subscribeToPaymentResults { result in
                 paymentResult = result
                 if result.isSuccess {
-                    showCVVRecaching = false
+                    selectedCard = nil
                     print("CVV recached successfully")
                 } else if result.isFailure {
                     if let failureDetails = result.failureDetails {
                         print("Recaching failed: \(failureDetails.getDescription())")
                     }
-                    showCVVRecaching = false
+                    selectedCard = nil
                 }
             }
         }
@@ -327,6 +324,8 @@ struct SavedCardsView: View {
     }
 }
 ```
+
+> **Tip:** Using `sheet(item:)` instead of `sheet(isPresented:)` with `if let` content prevents blank sheets. The sheet only presents when `selectedCard` is non-nil, so content is always available. Wrap state updates in `await MainActor.run { }` when setting `selectedCard` from an async context.
 
 ### UIKit
 
@@ -655,11 +654,18 @@ Call `ValidationParamReset.reset()` in `onDisappear` to reset validation paramet
 
 ## Troubleshooting
 
+**Sheet shows blank**
+
+- Use `.sheet(item:)` with an optional `Identifiable` struct instead of `.sheet(isPresented:)` with `if let` content. The latter can show an empty sheet when the optional is nil at presentation time due to SwiftUI state timing.
+- Ensure state updates that set the sheet item (e.g., `selectedCard = card`) run on the main actor. Wrap async code in `await MainActor.run { ... }` before updating `@State`.
+- Filter payment methods to credit cards only (`paymentMethodType == "credit_card"`). Non-credit-card types do not support CVV recaching.
+- Guard against nil tokens: only present the sheet when `paymentMethodToken` is non-nil.
+
 **View doesn't appear**
 
 - Ensure `paymentMethodToken` is valid and not empty
 - Check that `RecacheConfig` is properly initialized with required `cardInfo`
-- Verify the sheet/full-screen cover binding is set to `true`
+- Verify the sheet/full-screen cover binding is set to `true` (or the sheet item is non-nil for `sheet(item:)`)
 - For dialog mode, ensure you use `.crossDissolveFullScreenCover()` instead of `.sheet()`
 - Check that the view is not hidden or covered by other views
 
@@ -717,4 +723,4 @@ Call `ValidationParamReset.reset()` in `onDisappear` to reset validation paramet
 | [error-handling.md](error-handling.md) | Error types, handling patterns, troubleshooting |
 | [theme-and-styling.md](theme-and-styling.md) | Theming and customization |
 | [security.md](security.md) | Security best practices |
-| [RECACHING_FLOW.md](../development/RECACHING_FLOW.md) | Detailed flow diagrams for CVV recaching |
+| [RECACHING_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/RECACHING_FLOW.md) | Detailed flow diagrams for CVV recaching |
