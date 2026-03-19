@@ -55,6 +55,8 @@ pod 'SpreedlyUI', '~> 1.1'
 # pod 'SpreedlyBraintree', '~> 1.1'
 ```
 
+**CocoaPods:** Option A (recommended) is to install from the remote package (version or `:git`). For local development only, use `:path =>` (Option B). See [Getting started](docs/guides/getting-started.md). Using Stripe APM with CocoaPods? Add the [CocoaPods bundle fix](docs/guides/stripe-apm.md#cocoapods-stripe-spm-bundle-fix) to your Podfile.
+
 **Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens):
 
 ```ruby

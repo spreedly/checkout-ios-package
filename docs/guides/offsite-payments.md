@@ -605,4 +605,4 @@ For error handling patterns, see [error-handling.md](error-handling.md).
 - [braintree-apm.md](braintree-apm.md) – Braintree PayPal and Venmo
 - [getting-started.md](getting-started.md) – Installation and basic setup
 - [error-handling.md](error-handling.md) – Error types and handling patterns
-- [OFFSITE_FLOW.md](../development/OFFSITE_FLOW.md) – Detailed flow diagrams for offsite payments
+- [OFFSITE_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/OFFSITE_FLOW.md) – Detailed flow diagrams for offsite payments
