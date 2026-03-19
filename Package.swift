@@ -20,13 +20,59 @@ let package = Package(
         .library(name: "Spreedly", targets: ["SpreedlyCore", "SpreedlySecurity", "SpreedlyUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/DataDog/dd-sdk-ios", from: "3.1.0")
+        .package(url: "https://github.com/DataDog/dd-sdk-ios.git", from: "3.1.0"),
+        .package(url: "https://github.com/stripe/stripe-ios-spm.git", from: "25.0.0"),
+        .package(url: "https://github.com/braintree/braintree_ios.git", from: "7.0.0"),
+        .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
     ],
     targets: [
-        .binaryTarget(name: "SpreedlyCore", path: "./Frameworks/SpreedlyCore.xcframework"),
-        .binaryTarget(name: "SpreedlySecurity", path: "./Frameworks/SpreedlySecurity.xcframework"),
-        .binaryTarget(name: "SpreedlyUI", path: "./Frameworks/SpreedlyUI.xcframework"),
-        .binaryTarget(name: "SpreedlyStripeAPM", path: "./Frameworks/SpreedlyStripeAPM.xcframework"),
-        .binaryTarget(name: "SpreedlyBraintree", path: "./Frameworks/SpreedlyBraintree.xcframework"),
+        // Wrapper targets that combine the binary frameworks with their required dependencies
+        .target(
+            name: "SpreedlyCore",
+            dependencies: [
+                "SpreedlyCoreBinary",
+                .product(name: "DatadogCore", package: "dd-sdk-ios"),
+                .product(name: "DatadogLogs", package: "dd-sdk-ios"),
+                .product(name: "Forter3DS", package: "forter-ios", condition: .when(platforms: [.iOS]))
+            ]
+        ),
+        .target(
+            name: "SpreedlySecurity",
+            dependencies: ["SpreedlySecurityBinary"]
+        ),
+        .target(
+            name: "SpreedlyUI",
+            dependencies: [
+                "SpreedlyUIBinary",
+                "SpreedlyCore",
+                "SpreedlySecurity"
+            ]
+        ),
+        .target(
+            name: "SpreedlyStripeAPM",
+            dependencies: [
+                "SpreedlyStripeAPMBinary",
+                "SpreedlyCore",
+                .product(name: "StripePaymentSheet", package: "stripe-ios-spm")
+            ]
+        ),
+        .target(
+            name: "SpreedlyBraintree",
+            dependencies: [
+                "SpreedlyBraintreeBinary",
+                "SpreedlyCore",
+                .product(name: "BraintreeCore", package: "braintree_ios"),
+                .product(name: "BraintreePayPal", package: "braintree_ios"),
+                .product(name: "BraintreeVenmo", package: "braintree_ios"),
+                .product(name: "BraintreeDataCollector", package: "braintree_ios")
+            ]
+        ),
+
+        // The actual binary targets
+        .binaryTarget(name: "SpreedlyCoreBinary", path: "./Frameworks/SpreedlyCore.xcframework"),
+        .binaryTarget(name: "SpreedlySecurityBinary", path: "./Frameworks/SpreedlySecurity.xcframework"),
+        .binaryTarget(name: "SpreedlyUIBinary", path: "./Frameworks/SpreedlyUI.xcframework"),
+        .binaryTarget(name: "SpreedlyStripeAPMBinary", path: "./Frameworks/SpreedlyStripeAPM.xcframework"),
+        .binaryTarget(name: "SpreedlyBraintreeBinary", path: "./Frameworks/SpreedlyBraintree.xcframework"),
     ]
 )
