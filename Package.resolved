@@ -1,6 +1,15 @@
 {
-  "originHash" : "12a13ee7df4b1ecec81735031fec9f16f06309bc8c50ea999a728ddfc57bf755",
+  "originHash" : "535d64157958507638551719419dc9841e3525783e1c3e244f07bd377dab1f45",
   "pins" : [
+    {
+      "identity" : "braintree_ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/braintree/braintree_ios.git",
+      "state" : {
+        "revision" : "b285ce6f3a9ca684efc40f00d6be8f86a417216b",
+        "version" : "7.5.0"
+      }
+    },
     {
       "identity" : "dd-sdk-ios",
       "kind" : "remoteSourceControl",
@@ -26,6 +35,15 @@
       "state" : {
         "revision" : "0254f941c646b1ed17b243654723d0f071e990d0",
         "version" : "1.12.2"
+      }
+    },
+    {
+      "identity" : "stripe-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stripe/stripe-ios-spm.git",
+      "state" : {
+        "revision" : "932c901c5c97358c8452ceb1e5b0a7db5693591e",
+        "version" : "25.8.0"
       }
     }
   ],
