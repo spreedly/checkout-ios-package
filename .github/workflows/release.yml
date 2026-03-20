@@ -7,10 +7,15 @@ on:
 permissions:
   contents: read
 
+env:
+  RESOLVE_TIMEOUT: 600
+  RESOLVE_MAX_RETRIES: 3
+  RESOLVE_RETRY_DELAY: 15
+
 jobs:
   create-sdk-tag:
     runs-on: macos-latest
-    timeout-minutes: 50
+    timeout-minutes: 30
     steps:
       - name: Checkout SDK repository
         uses: actions/checkout@v4
@@ -21,30 +26,90 @@ jobs:
 
       - name: Configure git for private package access
         run: |
-          # xcodebuild needs credentials to fetch checkout-ios-package (private repo)
           git config --global url."https://x-access-token:${{ secrets.SDK_REPO_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Environment diagnostics
+        run: |
+          echo "=== Release Info ==="
+          echo "Release version: ${{ github.event.release.tag_name }}"
+          echo "Release target:  ${{ github.event.release.target_commitish }}"
+          echo "Triggered by:    ${{ github.actor }}"
+          echo ""
+          echo "=== Xcode ==="
+          xcode-select -p
+          xcodebuild -version
+          swift --version
+          echo ""
+          echo "=== System ==="
+          echo "macOS: $(sw_vers -productVersion)"
+          echo "Disk free: $(df -h / | tail -1 | awk '{print $4}')"
+          echo "Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo ""
+          echo "=== Git ==="
+          echo "SDK branch: $(git branch --show-current)"
+          echo "SDK HEAD:   $(git rev-parse --short HEAD)"
 
       - name: Cache Swift Package Manager
         uses: actions/cache@v4
         with:
           path: ~/Library/Caches/org.swift.swiftpm
-          key: spm-macos-release-${{ runner.os }}
+          key: spm-release-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            spm-macos-release-
+            spm-release-${{ runner.os }}-${{ runner.arch }}-
+            spm-release-${{ runner.os }}-
+
+      - name: SPM cache diagnostics
+        run: |
+          CACHE_DIR=~/Library/Caches/org.swift.swiftpm
+          if [ -d "$CACHE_DIR" ]; then
+            CACHE_SIZE=$(du -sh "$CACHE_DIR" 2>/dev/null | awk '{print $1}')
+            CACHE_COUNT=$(find "$CACHE_DIR" -type f 2>/dev/null | wc -l | tr -d ' ')
+            echo "SPM cache: $CACHE_SIZE ($CACHE_COUNT files)"
+          else
+            echo "SPM cache: EMPTY (cold start -- expect slow resolve)"
+          fi
 
       - name: Update Package.resolved to released version
         env:
           RELEASE_VERSION: ${{ github.event.release.tag_name }}
         run: |
+          set -euo pipefail
+
           RESOLVED_FILE="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
 
-          echo "📦 Updating checkout-ios-package to version $RELEASE_VERSION in Package.resolved"
-
+          echo "=== Step 1: Validate Package.resolved exists ==="
           if [ ! -f "$RESOLVED_FILE" ]; then
-            echo "❌ Package.resolved not found at $RESOLVED_FILE"
+            echo "FATAL: Package.resolved not found at $RESOLVED_FILE"
+            echo "Working directory: $(pwd)"
+            echo "Listing Example/ directory:"
+            find Example -name "Package.resolved" -type f 2>/dev/null || echo "No Package.resolved found anywhere in Example/"
             exit 1
           fi
+          echo "Found: $RESOLVED_FILE ($(wc -c < "$RESOLVED_FILE") bytes)"
 
+          echo ""
+          echo "=== Step 2: Show Package.resolved BEFORE update ==="
+          echo "Current checkout-ios-package pin:"
+          python3 -c "
+          import json, sys
+          with open(sys.argv[1]) as f:
+              data = json.load(f)
+          for pin in data.get('pins', []):
+              if pin['identity'] == 'checkout-ios-package':
+                  print(f'  version:  {pin[\"state\"].get(\"version\", \"unknown\")}')
+                  print(f'  revision: {pin[\"state\"].get(\"revision\", \"unknown\")}')
+                  break
+          else:
+              print('  NOT FOUND in Package.resolved')
+          print(f'Total pins: {len(data.get(\"pins\", []))}')
+          print('All packages:')
+          for pin in data.get('pins', []):
+              v = pin['state'].get('version', 'unknown')
+              print(f'  - {pin[\"identity\"]} @ {v}')
+          " "$RESOLVED_FILE"
+
+          echo ""
+          echo "=== Step 3: Update version to $RELEASE_VERSION ==="
           python3 -c "
           import json, sys
 
@@ -71,48 +136,135 @@ jobs:
               f.write('\n')
           " "$RELEASE_VERSION" "$RESOLVED_FILE"
 
-          # xcodebuild -resolvePackageDependencies corrects the revision SHA
-          # and regenerates originHash to match the new version.
+          echo ""
+          echo "=== Step 4: Resolve SPM dependencies ==="
           cd Example/SpreedlySDKExample
-          MAX_RETRIES=3
-          RETRY_DELAY=15
-          for i in $(seq 1 $MAX_RETRIES); do
-            echo "🔧 Resolving dependencies (attempt $i/$MAX_RETRIES)..."
-            if xcodebuild -resolvePackageDependencies \
+
+          ATTEMPT=0
+          RESOLVE_SUCCESS=0
+          TOTAL_START=$(date +%s)
+
+          while [ $ATTEMPT -lt $RESOLVE_MAX_RETRIES ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo ""
+            echo "--- Attempt $ATTEMPT/$RESOLVE_MAX_RETRIES (timeout: ${RESOLVE_TIMEOUT}s) ---"
+            ATTEMPT_START=$(date +%s)
+
+            xcodebuild -resolvePackageDependencies \
                 -project SpreedlySDKExample.xcodeproj \
-                -scheme SpreedlySDKExample; then
-              echo "✅ Dependencies resolved successfully"
+                -scheme SpreedlySDKExample &
+            XCODE_PID=$!
+
+            ELAPSED=0
+            TIMED_OUT=0
+            while kill -0 $XCODE_PID 2>/dev/null; do
+              sleep 15
+              ELAPSED=$(( $(date +%s) - ATTEMPT_START ))
+              echo "   [${ELAPSED}s] Still resolving... (pid $XCODE_PID)"
+              if [ $ELAPSED -ge $RESOLVE_TIMEOUT ]; then
+                echo "   TIMEOUT: xcodebuild exceeded ${RESOLVE_TIMEOUT}s, killing pid $XCODE_PID"
+                kill -9 $XCODE_PID 2>/dev/null || true
+                wait $XCODE_PID 2>/dev/null || true
+                TIMED_OUT=1
+                break
+              fi
+            done
+
+            if [ $TIMED_OUT -eq 0 ]; then
+              wait $XCODE_PID
+              XCODE_EXIT=$?
+            else
+              XCODE_EXIT=124
+            fi
+
+            ATTEMPT_END=$(date +%s)
+            ATTEMPT_DURATION=$((ATTEMPT_END - ATTEMPT_START))
+            echo "   Attempt $ATTEMPT finished: exit=$XCODE_EXIT, duration=${ATTEMPT_DURATION}s"
+
+            if [ $XCODE_EXIT -eq 0 ]; then
+              RESOLVE_SUCCESS=1
               break
             fi
-            if [ $i -eq $MAX_RETRIES ]; then
-              echo "❌ Failed to resolve dependencies after $MAX_RETRIES attempts"
-              exit 1
+
+            if [ $ATTEMPT -lt $RESOLVE_MAX_RETRIES ]; then
+              if [ $TIMED_OUT -eq 1 ]; then
+                echo "   Attempt timed out. Retrying in ${RESOLVE_RETRY_DELAY}s..."
+              else
+                echo "   Resolve failed (exit $XCODE_EXIT). Retrying in ${RESOLVE_RETRY_DELAY}s..."
+              fi
+              sleep $RESOLVE_RETRY_DELAY
             fi
-            echo "⚠️ Resolve failed, retrying in ${RETRY_DELAY}s..."
-            sleep $RETRY_DELAY
           done
 
-          echo "📋 Updated Package.resolved:"
-          cat "../../$RESOLVED_FILE"
+          TOTAL_END=$(date +%s)
+          TOTAL_DURATION=$((TOTAL_END - TOTAL_START))
+
+          if [ $RESOLVE_SUCCESS -eq 1 ]; then
+            echo ""
+            echo "Dependencies resolved successfully (total: ${TOTAL_DURATION}s)"
+          else
+            echo ""
+            echo "FATAL: Failed to resolve dependencies after $RESOLVE_MAX_RETRIES attempts (total: ${TOTAL_DURATION}s)"
+            echo ""
+            echo "=== Diagnostics ==="
+            echo "Disk free: $(df -h / | tail -1 | awk '{print $4}')"
+            CACHE_DIR=~/Library/Caches/org.swift.swiftpm
+            if [ -d "$CACHE_DIR" ]; then
+              echo "SPM cache size: $(du -sh "$CACHE_DIR" 2>/dev/null | awk '{print $1}')"
+            fi
+            echo "Package.resolved state:"
+            cat "../../$RESOLVED_FILE"
+            exit 1
+          fi
+
+          echo ""
+          echo "=== Step 5: Show Package.resolved AFTER resolve ==="
+          python3 -c "
+          import json, sys
+          with open(sys.argv[1]) as f:
+              data = json.load(f)
+          print(f'Total pins: {len(data.get(\"pins\", []))}')
+          print(f'originHash: {data.get(\"originHash\", \"MISSING\")}')
+          print('All packages:')
+          for pin in data.get('pins', []):
+              v = pin['state'].get('version', 'unknown')
+              r = pin['state'].get('revision', 'unknown')[:7]
+              print(f'  - {pin[\"identity\"]} @ {v} ({r})')
+          " "../../$RESOLVED_FILE"
 
       - name: Create TestFlight tag with updated Package.resolved
         env:
           RELEASE_VERSION: ${{ github.event.release.tag_name }}
         run: |
+          set -euo pipefail
+
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
           RESOLVED_FILE="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
           TAG_NAME="testflight-${RELEASE_VERSION}"
 
+          echo "=== Committing Package.resolved ==="
           git add "$RESOLVED_FILE"
-          git commit -m "Update Package.resolved to checkout-ios-package ${RELEASE_VERSION}" || echo "ℹ️ No changes to commit (Package.resolved already up to date)"
-
-          if git show-ref --verify --quiet "refs/tags/$TAG_NAME"; then
-            echo "⚠️ Tag $TAG_NAME already exists, skipping creation"
+          if git diff --cached --quiet; then
+            echo "No changes to commit (Package.resolved already up to date)"
           else
-            echo "🏷️ Creating tag: $TAG_NAME"
+            git commit -m "Update Package.resolved to checkout-ios-package ${RELEASE_VERSION}"
+            echo "Committed Package.resolved update"
+          fi
+
+          echo ""
+          echo "=== Creating tag: $TAG_NAME ==="
+          if git show-ref --verify --quiet "refs/tags/$TAG_NAME"; then
+            echo "Tag $TAG_NAME already exists, skipping creation"
+          else
             git tag -a "$TAG_NAME" -m "TestFlight build for checkout-ios-package ${RELEASE_VERSION}"
-            git push origin "$TAG_NAME"
-            echo "✅ Tag $TAG_NAME created and pushed"
+            echo "Pushing tag $TAG_NAME to origin..."
+            if git push origin "$TAG_NAME"; then
+              echo "Tag $TAG_NAME created and pushed successfully"
+            else
+              echo "FATAL: Failed to push tag $TAG_NAME"
+              echo "Check that SDK_REPO_TOKEN has push access to spreedly/checkout-ios-sdk"
+              exit 1
+            fi
           fi
