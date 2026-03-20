@@ -7,15 +7,9 @@ on:
 permissions:
   contents: read
 
-env:
-  RESOLVE_TIMEOUT: 600
-  RESOLVE_MAX_RETRIES: 3
-  RESOLVE_RETRY_DELAY: 15
-
 jobs:
   create-sdk-tag:
     runs-on: macos-latest
-    timeout-minutes: 30
     steps:
       - name: Checkout SDK repository
         uses: actions/checkout@v4
@@ -140,80 +134,27 @@ jobs:
           echo "=== Step 4: Resolve SPM dependencies ==="
           cd Example/SpreedlySDKExample
 
-          ATTEMPT=0
-          RESOLVE_SUCCESS=0
-          TOTAL_START=$(date +%s)
+          START=$(date +%s)
 
-          while [ $ATTEMPT -lt $RESOLVE_MAX_RETRIES ]; do
-            ATTEMPT=$((ATTEMPT + 1))
-            echo ""
-            echo "--- Attempt $ATTEMPT/$RESOLVE_MAX_RETRIES (timeout: ${RESOLVE_TIMEOUT}s) ---"
-            ATTEMPT_START=$(date +%s)
+          xcodebuild -resolvePackageDependencies \
+              -project SpreedlySDKExample.xcodeproj \
+              -scheme SpreedlySDKExample &
+          XCODE_PID=$!
 
-            xcodebuild -resolvePackageDependencies \
-                -project SpreedlySDKExample.xcodeproj \
-                -scheme SpreedlySDKExample &
-            XCODE_PID=$!
-
-            ELAPSED=0
-            TIMED_OUT=0
-            while kill -0 $XCODE_PID 2>/dev/null; do
-              sleep 15
-              ELAPSED=$(( $(date +%s) - ATTEMPT_START ))
-              echo "   [${ELAPSED}s] Still resolving... (pid $XCODE_PID)"
-              if [ $ELAPSED -ge $RESOLVE_TIMEOUT ]; then
-                echo "   TIMEOUT: xcodebuild exceeded ${RESOLVE_TIMEOUT}s, killing pid $XCODE_PID"
-                kill -9 $XCODE_PID 2>/dev/null || true
-                wait $XCODE_PID 2>/dev/null || true
-                TIMED_OUT=1
-                break
-              fi
-            done
-
-            if [ $TIMED_OUT -eq 0 ]; then
-              wait $XCODE_PID
-              XCODE_EXIT=$?
-            else
-              XCODE_EXIT=124
-            fi
-
-            ATTEMPT_END=$(date +%s)
-            ATTEMPT_DURATION=$((ATTEMPT_END - ATTEMPT_START))
-            echo "   Attempt $ATTEMPT finished: exit=$XCODE_EXIT, duration=${ATTEMPT_DURATION}s"
-
-            if [ $XCODE_EXIT -eq 0 ]; then
-              RESOLVE_SUCCESS=1
-              break
-            fi
-
-            if [ $ATTEMPT -lt $RESOLVE_MAX_RETRIES ]; then
-              if [ $TIMED_OUT -eq 1 ]; then
-                echo "   Attempt timed out. Retrying in ${RESOLVE_RETRY_DELAY}s..."
-              else
-                echo "   Resolve failed (exit $XCODE_EXIT). Retrying in ${RESOLVE_RETRY_DELAY}s..."
-              fi
-              sleep $RESOLVE_RETRY_DELAY
-            fi
+          while kill -0 $XCODE_PID 2>/dev/null; do
+            sleep 30
+            ELAPSED=$(( $(date +%s) - START ))
+            echo "   [${ELAPSED}s] Still resolving... (pid $XCODE_PID)"
           done
 
-          TOTAL_END=$(date +%s)
-          TOTAL_DURATION=$((TOTAL_END - TOTAL_START))
+          XCODE_EXIT=0
+          wait $XCODE_PID || XCODE_EXIT=$?
+          DURATION=$(( $(date +%s) - START ))
 
-          if [ $RESOLVE_SUCCESS -eq 1 ]; then
-            echo ""
-            echo "Dependencies resolved successfully (total: ${TOTAL_DURATION}s)"
+          if [ $XCODE_EXIT -eq 0 ]; then
+            echo "Dependencies resolved successfully (${DURATION}s)"
           else
-            echo ""
-            echo "FATAL: Failed to resolve dependencies after $RESOLVE_MAX_RETRIES attempts (total: ${TOTAL_DURATION}s)"
-            echo ""
-            echo "=== Diagnostics ==="
-            echo "Disk free: $(df -h / | tail -1 | awk '{print $4}')"
-            CACHE_DIR=~/Library/Caches/org.swift.swiftpm
-            if [ -d "$CACHE_DIR" ]; then
-              echo "SPM cache size: $(du -sh "$CACHE_DIR" 2>/dev/null | awk '{print $1}')"
-            fi
-            echo "Package.resolved state:"
-            cat "../../$RESOLVED_FILE"
+            echo "FATAL: xcodebuild -resolvePackageDependencies failed (exit $XCODE_EXIT, ${DURATION}s)"
             exit 1
           fi
 
