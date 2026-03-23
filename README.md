@@ -46,28 +46,38 @@ Then add the products to your target:
 
 ```ruby
 # Podfile
-pod 'SpreedlyCore', '~> 1.1'
-pod 'SpreedlySecurity', '~> 1.1'
-pod 'SpreedlyUI', '~> 1.1'
+pod 'SpreedlyCore', '~> 1.2'
+pod 'SpreedlySecurity', '~> 1.2'
+pod 'SpreedlyUI', '~> 1.2'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', '~> 1.1'
-# pod 'SpreedlyBraintree', '~> 1.1'
+# pod 'SpreedlyStripeAPM', '~> 1.2'
+# pod 'SpreedlyBraintree', '~> 1.2'
 ```
 
-**CocoaPods:** Option A (recommended) is to install from the remote package (version or `:git`). For local development only, use `:path =>` (Option B). See [Getting started](docs/guides/getting-started.md). Using Stripe APM with CocoaPods? Add the [CocoaPods bundle fix](docs/guides/stripe-apm.md#cocoapods-stripe-spm-bundle-fix) to your Podfile.
+If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
+
+```ruby
+post_install do |installer|
+  stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
+  require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
+  SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
+end
+```
+
+See [Getting Started](docs/guides/getting-started.md) for full Podfile examples including private repository access and local development setup. See [Stripe APM guide](docs/guides/stripe-apm.md#cocoapods-stripe-bundle-patcher) for details on the bundle patcher.
 
 **Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens):
 
 ```ruby
 # Podfile — private repo via Git token
-pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
+pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
+pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
+# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
 ```
 
 Replace `{GitToken}` with your GitHub personal access token that has read access to the repository.
@@ -122,7 +132,7 @@ Get started quickly with the [Getting Started Guide](docs/guides/getting-started
 |---|---|---|---|---|
 | 1.x.x | Active | March 2026 | --- | --- |
 
-More information about versioning and the SDK lifecycle can be found in the [CHANGELOG](CHANGELOG.md) and [MIGRATION](MIGRATION.md) guide.
+More information about versioning and the SDK lifecycle can be found in the [CHANGELOG](CHANGELOG.md).
 
 ## Compatibility
 
@@ -166,7 +176,6 @@ More information about versioning and the SDK lifecycle can be found in the [CHA
 - **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-sdk/issues)
 - **Package Verification**: [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
-- **Migration Guide**: [MIGRATION.md](MIGRATION.md)
 - **Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
 - **Security**: [SECURITY.md](SECURITY.md)
 

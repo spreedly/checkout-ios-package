@@ -8,8 +8,9 @@
 #
 # Usage in Podfile:
 #   post_install do |installer|
-#     require_relative '<path-to-checkout-ios-package>/scripts/cocoapods_stripe_spm_bundle_fix'
-#     SpreedlyStripeAPM::CocoaPods.apply_stripe_spm_bundle_fix(installer)
+#     stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
+#     require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
+#     SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
 #   end
 
 module SpreedlyStripeAPM
@@ -113,7 +114,7 @@ module SpreedlyStripeAPM
     class << self
       # @param installer [Pod::Installer]
       # @param options [Hash] optional :app_target_names (array) to restrict which targets get the Run Script; :project_path to override user project path
-      def apply_stripe_spm_bundle_fix(installer, options = {})
+      def apply_stripe_bundle_patch(installer, options = {})
         installer.aggregate_targets.each do |aggregate_target|
           patch_frameworks_script(installer.sandbox.root, aggregate_target)
           add_run_script_phase(installer, aggregate_target, options)
