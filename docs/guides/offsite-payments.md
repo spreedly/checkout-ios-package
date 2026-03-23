@@ -207,7 +207,7 @@ Extract `transaction.token` for use in `SpreedlyOffsiteCheckout.present(transact
 - **Two responses:** (1) After `submitOffsitePayment` — tokenization; `result.token` is the `payment_method_token`. (2) After checkout — final purchase result; use `result.isSuccess` / `result.state`. Distinguish them with a stage enum.
 - **Braintree URL handler ordering:** If your app also uses Braintree, call `BraintreeURLHandler.handleOpen(url:)` before `handleOffsiteReturn(url:)` in your URL handler.
 - **Do NOT cancel the subscription** in `onDisappear` — Safari on top can trigger disappear events, killing the subscription before the result arrives.
-- **No SDK UI before Safari:** `SpreedlyOffsiteCheckout.present()` opens `SFSafariViewController` directly on the topmost VC — no intermediate sheet or loader. The merchant controls their own loading indicator.
+- **No SDK UI before Safari:** `SpreedlyOffsiteCheckout.present(transactionToken:)` opens `SFSafariViewController` directly on the topmost VC — no intermediate sheet or loader. The merchant controls their own loading indicator.
 
 ---
 
@@ -537,7 +537,7 @@ DocumentId(key: .documentId, value: "853.513.468-93")
 | Check | Action |
 |-------|--------|
 | **Two responses** | Use a stage enum: first = tokenization (use token for purchase), second = checkout outcome |
-| **Transaction nil** | If `response.transaction` is nil after purchase, do not call `SpreedlyOffsiteCheckout.present()`; show error |
+| **Transaction nil** | If `response.transaction` is nil after purchase, do not call `SpreedlyOffsiteCheckout.present(transactionToken:)`; show error |
 | **result.state** | `"processing"` — "Being processed..."; `"gateway_processing_failed"` — "Couldn't complete..."; `"pending"` — "Pending..."; else use `failureDetails` |
 | **redirect_url** | Must use a custom URL scheme registered in `Info.plist`. Gateway appends `transaction_token` on redirect |
 
@@ -605,4 +605,4 @@ For error handling patterns, see [error-handling.md](error-handling.md).
 - [braintree-apm.md](braintree-apm.md) – Braintree PayPal and Venmo
 - [getting-started.md](getting-started.md) – Installation and basic setup
 - [error-handling.md](error-handling.md) – Error types and handling patterns
-- [OFFSITE_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/OFFSITE_FLOW.md) – Detailed flow diagrams for offsite payments
+- [OFFSITE_FLOW.md](../development/OFFSITE_FLOW.md) – Detailed flow diagrams for offsite payments

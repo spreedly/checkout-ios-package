@@ -723,4 +723,4 @@ Call `ValidationParamReset.reset()` in `onDisappear` to reset validation paramet
 | [error-handling.md](error-handling.md) | Error types, handling patterns, troubleshooting |
 | [theme-and-styling.md](theme-and-styling.md) | Theming and customization |
 | [security.md](security.md) | Security best practices |
-| [RECACHING_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/RECACHING_FLOW.md) | Detailed flow diagrams for CVV recaching |
+| [RECACHING_FLOW.md](../development/RECACHING_FLOW.md) | Detailed flow diagrams for CVV recaching |

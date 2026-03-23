@@ -51,32 +51,17 @@ Before integrating Braintree:
 - Ensure `Spreedly.initializeSDK()` is called at app launch (e.g., in your `App.init()` or `AppDelegate`)
 - **Braintree account** with PayPal and/or Venmo enabled
 - **Braintree gateway** configured in Spreedly
-- **Braintree iOS SDK v7.x** — required products: **BraintreeCore**, **BraintreePayPal**, **BraintreeVenmo**, **BraintreeDataCollector** (device data — optional but recommended for risk). How you add them depends on your dependency manager (see sections below).
+- **Braintree iOS SDK v7.x** — resolved transitively when you add `SpreedlyBraintree` (both SPM and CocoaPods). No extra Braintree dependencies needed.
 - **Info.plist:** Set **Bundle display name** (`CFBundleDisplayName`). Some flows (including Venmo) require it to be non-nil; otherwise you may see: *"CFBundleDisplayName must be non-nil. Please set 'Bundle display name' in your Info.plist."*
-- **Weak linking:** The Spreedly SDK compiles without Braintree packages; add them to your app target only if you use Braintree. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` will publish a failure gracefully (no crash) and `BraintreeURLHandler.handleOpen(url:)` will return `false`.
+- **Weak linking:** The Spreedly SDK compiles without Braintree packages; add `SpreedlyBraintree` to your app target only if you use Braintree. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` will publish a failure gracefully (no crash) and `BraintreeURLHandler.handleOpen(url:)` will return `false`.
 
 ### How to Add Braintree (Swift Package Manager)
 
-Because `SpreedlyBraintree` is distributed as a binary `.xcframework`, it cannot declare transitive SPM dependencies. You **must** add the Braintree iOS SDK to your app target yourself:
-
-1. In Xcode: **File → Add Package Dependencies...**
-2. Enter: `https://github.com/braintree/braintree_ios.git`
-3. Select version **7.0.0** or later
-4. Add products **BraintreeCore**, **BraintreePayPal**, **BraintreeVenmo**, and **BraintreeDataCollector** to your app target with **Embed & Sign**
+Add `SpreedlyBraintree` from `checkout-ios-package`. The required Braintree modules (Core, PayPal, Venmo, DataCollector) are resolved as transitive dependencies — no separate Braintree package needed.
 
 ### How to Add Braintree (CocoaPods)
 
-If you use CocoaPods, Braintree is included **automatically** as a transitive dependency of `SpreedlyBraintree`. Adding `pod 'SpreedlyBraintree'` to your Podfile is sufficient — you do **not** need a separate `pod 'Braintree'` entry.
-
-The `SpreedlyBraintree.podspec` already declares these subspecs:
-
-```ruby
-# Already pulled in by pod 'SpreedlyBraintree' — no need to add manually:
-# Braintree/Core ~> 7.0
-# Braintree/PayPal ~> 7.0
-# Braintree/Venmo ~> 7.0
-# Braintree/DataCollector ~> 7.0
-```
+Add `pod 'SpreedlyBraintree'` to your Podfile — Braintree is included **automatically** as a transitive dependency. You do **not** need a separate `pod 'Braintree'` entry.
 
 ---
 
@@ -564,7 +549,7 @@ Example references: `BraintreePaymentFlowView` (SwiftUI) and `BraintreePaymentFl
 
 ### Braintree returns failure
 
-- Verify Braintree packages (BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector) are added to your app target
+- Verify `SpreedlyBraintree` is added to your app target (it resolves Braintree dependencies transitively)
 - If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` will publish a failure
 
 ### App not opening on redirect (PayPal)
@@ -593,5 +578,5 @@ Example references: `BraintreePaymentFlowView` (SwiftUI) and `BraintreePaymentFl
 - [stripe-apm.md](stripe-apm.md) – Stripe alternative payment methods (iDEAL, Bancontact)
 - [ebanx-apm.md](ebanx-apm.md) – EBANX payments (Pix, Boleto, OXXO, NuPay)
 - [getting-started.md](getting-started.md) – Installation and basic setup
-- [BRAINTREE_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/BRAINTREE_FLOW.md) – Detailed flow diagrams for Braintree PayPal/Venmo
-- [BRAINTREE_UNIVERSAL_LINK_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/BRAINTREE_UNIVERSAL_LINK_FLOW.md) – Universal Link vs custom URL scheme flows, AASA status, and 3DS comparison
+- [BRAINTREE_FLOW.md](../development/BRAINTREE_FLOW.md) – Detailed flow diagrams for Braintree PayPal/Venmo
+- [BRAINTREE_UNIVERSAL_LINK_FLOW.md](../development/BRAINTREE_UNIVERSAL_LINK_FLOW.md) – Universal Link vs custom URL scheme flows, AASA status, and 3DS comparison

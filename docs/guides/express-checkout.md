@@ -327,10 +327,8 @@ cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
 | Property | Description |
 |----------|-------------|
 | `isSuccess` | `true` when payment succeeded |
-| `isPending` | `true` when transaction is pending or processing; show orange (warning) UI and use "Pending" or "Processing" as the title instead of "Successful" |
 | `isFailure` | `true` when payment failed |
 | `token` | Payment method token on success |
-| `pendingOrProcessingDisplayTitle` | "Pending" or "Processing" when `isPending`; nil otherwise |
 | `shouldRetain` | User's "save card" preference |
 | `failureDetails` | Failure details on failure; use `getDescription()` for error text |
 
@@ -530,4 +528,4 @@ cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
 - [theme-and-styling.md](theme-and-styling.md) – Theming and customization
 - [error-handling.md](error-handling.md) – Error types and handling patterns
 - [security.md](security.md) – Screen prevention, PCI compliance, security practices
-- [CARD_TOKENIZATION_FLOW.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/CARD_TOKENIZATION_FLOW.md) – Detailed flow diagrams for card tokenization
+- [CARD_TOKENIZATION_FLOW.md](../development/CARD_TOKENIZATION_FLOW.md) – Detailed flow diagrams for card tokenization
