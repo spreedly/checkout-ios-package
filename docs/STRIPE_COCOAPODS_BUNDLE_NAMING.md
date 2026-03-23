@@ -121,18 +121,19 @@ We ship a **post_install** script that:
 3. Doesn’t change Stripe’s source or our XCFramework—it only adds or renames bundle copies in your app target.
 
 **Where the script lives:**  
-`checkout-ios-package/scripts/cocoapods_stripe_spm_bundle_fix.rb`
+`checkout-ios-package/scripts/cocoapods_stripe_bundle_patcher.rb` (shipped inside the `SpreedlyStripeAPM` pod via `s.preserve_paths`)
 
 **What to add to your Podfile:**
 
 ```ruby
 post_install do |installer|
-  require_relative '<path-to-checkout-ios-package>/scripts/cocoapods_stripe_spm_bundle_fix'
-  SpreedlyStripeAPM::CocoaPods.apply_stripe_spm_bundle_fix(installer)
+  stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
+  require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
+  SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
 end
 ```
 
-**Option A (Recommended):** When you install from the remote package (version or `:git`), copy the script from a release into your repo or use a submodule—see [stripe-apm.md](guides/stripe-apm.md#cocoapods-stripe-spm-bundle-fix). **Option B (Local development):** When you use `:path =>` to the package repo, point `require_relative` at that same path. Full details and troubleshooting are in the [Stripe APM guide](guides/stripe-apm.md#cocoapods-stripe-spm-bundle-fix).
+The script is shipped inside the pod, so no manual file copy or path configuration is needed. The same `post_install` block works for both remote and local (`:path =>`) installs. Full details and troubleshooting are in the [Stripe APM guide](guides/stripe-apm.md#cocoapods-stripe-bundle-patcher).
 
 **When you need it:**  
 Only when you’re using **SpreedlyStripeAPM** and **Stripe** via **CocoaPods** (including React Native with CocoaPods for native deps). If you use **SPM** for both, the bundle names already match and you can skip this.

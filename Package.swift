@@ -16,8 +16,6 @@ let package = Package(
         // Gateway modules (optional — merchants add only what they use)
         .library(name: "SpreedlyStripeAPM", targets: ["SpreedlyStripeAPM", "SpreedlyStripeAPMDeps"]),
         .library(name: "SpreedlyBraintree", targets: ["SpreedlyBraintree"]),
-        // All-in-one (core only — gateways are always opt-in)
-        .library(name: "Spreedly", targets: ["SpreedlyCore", "SpreedlySecurity", "SpreedlyUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/stripe/stripe-ios-spm.git", from: "25.0.0"),

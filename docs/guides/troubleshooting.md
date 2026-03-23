@@ -146,11 +146,21 @@ func application(_ app: UIApplication, open url: URL, options: [...]) -> Bool {
 }
 ```
 
-### Stripe APM: CocoaPods bundle crash ("unable to find bundle named Stripe_Stripe*")
+### Stripe APM: CocoaPods bundle crash (`Fatal error: unable to find bundle named Stripe_StripePaymentSheet`)
 
-**Cause:** With CocoaPods, Stripe ships resource bundles under different names than the Spreedly XCFramework expects. The SDK was built against Stripe via SPM. Same Stripe SDK, different naming by install method—see [Why CocoaPods users need a Stripe bundle fix](../STRIPE_COCOAPODS_BUNDLE_NAMING.md) for root cause and evidence.
+**Cause:** With CocoaPods, Stripe ships resource bundles under different names than the Spreedly XCFramework expects. The SDK was built against Stripe via SPM, so it looks for SPM-style bundle names (e.g. `Stripe_StripePaymentSheet.bundle`) while CocoaPods provides different names (e.g. `StripePaymentSheetBundle.bundle`). See [Why CocoaPods users need a Stripe bundle fix](../STRIPE_COCOAPODS_BUNDLE_NAMING.md) for root cause and evidence.
 
-**Fix:** Add the [CocoaPods Stripe SPM bundle fix](stripe-apm.md#cocoapods-stripe-spm-bundle-fix) to your Podfile (script in this repo: `scripts/cocoapods_stripe_spm_bundle_fix.rb`). SPM users do not need this.
+**Fix:** Add the [CocoaPods Stripe bundle patcher](stripe-apm.md#cocoapods-stripe-bundle-patcher) `post_install` block to your Podfile. The script is shipped inside the `SpreedlyStripeAPM` pod; no manual file copy needed:
+
+```ruby
+post_install do |installer|
+  stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
+  require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
+  SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
+end
+```
+
+SPM users are not affected — `StripePaymentSheet` is resolved transitively with correct bundle names.
 
 ### Stripe APM PaymentSheet doesn't appear
 

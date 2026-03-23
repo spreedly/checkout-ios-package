@@ -13,4 +13,5 @@ Pod::Spec.new do |s|
   s.dependency 'StripePaymentSheet', '~> 25.0'
 
   s.vendored_frameworks = 'Frameworks/SpreedlyStripeAPM.xcframework'
+  s.preserve_paths = 'scripts/cocoapods_stripe_bundle_patcher.rb'
 end
