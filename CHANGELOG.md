@@ -1,18 +1,18 @@
-## [1.2.2] - 2026-03-17
+## [1.2.9] - 2026-03-23
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1265 Documentation audit and fix SpreedlyStripeAPM build (#215)
+- HC-1268 sync docs and sdk package refs for stripe fixes (#216)
 
 ### Change Requests
-  - HC-1265
+  - HC-1268
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.2.2 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.2.9 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -20,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.2")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.9")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.2.2'
+pod 'Spreedly', '~> 1.2.9'
 ```
 
 ---
@@ -39,10 +39,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.7] - 2026-03-20
+
+Major focus of this release: **Stripe APM distribution and payment flow fixes**. HC-1268 resolves CocoaPods and SPM issues so merchants using SpreedlyStripeAPM get transitive Stripe dependencies automatically. HC-1179 fixes the pending-vs-processing status discrepancy for Stripe APM payments (iDEAL, SEPA). Also includes source field and sdkPlatform enum (HC-1263), thread safety and internal refactoring (HC-1242), Xcode Cloud TestFlight fix (HC-1249), and comprehensive documentation audit (HC-1265).
+
 ### Added
 
-- HC-1268 **CocoaPods Stripe SPM bundle fix**: Post-install script (`scripts/cocoapods_stripe_spm_bundle_fix.rb`) so CocoaPods users can copy Stripe resource bundles with SPM-style names when using SpreedlyStripeAPM. Doc `STRIPE_COCOAPODS_BUNDLE_NAMING.md` explains root cause (SPM vs CocoaPods naming) and Option A (remote) / Option B (path). Integration guides and troubleshooting updated with Option A (recommended) and bundle fix steps.
-- HC-1268 **SPM wrapper targets**: Package.swift now uses wrapper targets that depend on the binary XCFrameworks plus Stripe, Braintree, Forter, and DataDog SPM products. Merchants who add checkout-ios-package and use SpreedlyStripeAPM (or Braintree/Forter) get those dependencies transitively and no longer need to add Stripe/Braintree/Forter manually to their app target, avoiding the "unable to find bundle named Stripe_StripePaymentSheet" crash. Minimal wrapper sources added under `Sources/Spreedly*/`.
 - HC-1234 **`sdk_platform` global telemetry attribute**: New `sdkPlatform` field on `SpreedlyConfig` (default `.ios`). React Native bridges pass `.reactNative` to distinguish integration surface in Datadog.
 - HC-1263 **`source` field on payment method creation**: All payment method creation requests (credit card JSON and offsite/APM form-encoded) now include a `source` field identifying the checkout SDK platform (e.g. `"checkout-ios"`, `"checkout-react-native"`). This syncs with the Android SDK's equivalent change (HC-1255).
 - HC-1242 **`TelemetryEventsObjCBridge`**: ObjC-compatible wrapper exposing typed `TelemetryEvents` methods so ObjC consumers and bridge layers can emit telemetry without Swift-only API.
@@ -61,7 +63,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HC-1242 **CardFormDropIn timing hack**: Replaced 50ms `asyncAfter` delay (race condition with `clearAllErrors()`) with deterministic `DispatchQueue.main.async` sequencing.
 - HC-1242 **ObjC Stripe APM delegate leak**: `StripeAPMPaymentFlowViewController` did not nil-out `paymentDelegate` on dealloc, risking dangling-pointer callbacks. Added `dealloc` cleanup.
 - HC-1249 **Xcode Cloud TestFlight build failure**: `Package.resolved` was stale (pinned to an older `checkout-ios-package` version) and Xcode Cloud ignores runtime modifications made by `ci_post_clone.sh`. The `checkout-ios-package` release workflow now updates `Package.resolved` in `checkout-ios-sdk`, runs `xcodebuild -resolvePackageDependencies` to correct the revision SHA and originHash, commits the result, and creates the `testflight-*` tag on that commit. Xcode Cloud clones at the tag and gets a correct `Package.resolved` from the start. `ci_post_clone.sh` was simplified to only generate `SpreedlyKeys.xcconfig` and verify `Package.resolved` is present — all stale Package.resolved editing logic was removed.
-- HC-1268 **Broken development doc links**: Docs in this repo referenced `development/*` (e.g. STRIPE_FLOW.md, CONTRIBUTING.md) which do not exist here. All such links now point to the checkout-ios-sdk repo (`SpreedlyDocs/development/` on GitHub) so the links resolve correctly.
 
 ### Changed
 
@@ -77,7 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HC-1242 **Example app cleanup**: Deleted `SpreedlyDevBridge.swift` (bridge APIs now in published SDK) and `TempFile.swift`. Removed unused `channel`/`redirectUrl` from gateway-specific purchase requests in both Swift and ObjC examples. Added Braintree URL scheme and PayPal/Venmo query schemes to ObjC Info.plist.
 - HC-1242 **Test cleanup**: Removed 9 zero-value tests in `Forter3DSIntegrationTests` that only asserted `XCTAssertTrue(true)`. Renamed `Forter3DSDelegateErrorPathTests` to `Forter3DSDelegateMockErrorPathTests` for clarity.
 - HC-1242 **Removed `GATEWAY_CHANGES.md`**: Deleted the redundant cross-gateway overview doc. Moved the unique cross-cutting content (payment methods comparison table, backend requirements quick reference, URL handling troubleshooting, React Native URL handling) into `guides/getting-started.md`. Replaced with `GATEWAY_SPECIFIC_FLOWCHARTS.md` containing detailed flow diagrams.
-- HC-1268 **Docs: Option A (recommended) vs Option B**: CocoaPods install is documented as Option A (remote, version or `:git`) and Option B (local path only). Stripe bundle fix path options and getting-started/README/troubleshooting updated accordingly. Recaching guide now uses `sheet(item:)` example and blank-sheet troubleshooting; error-handling and express-checkout document `isPending` and `pendingOrProcessingDisplayTitle`.
 
 ## [1.1.4] - 2026-03-11
 

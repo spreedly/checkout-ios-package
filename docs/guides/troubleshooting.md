@@ -92,18 +92,17 @@ Replace `{GitToken}` with a GitHub personal access token that has read access.
 
 ### "Environment key is missing" or payment calls return 401
 
-**Cause:** `Spreedly.shared` was not initialized with valid credentials before making API calls.
+**Cause:** `Spreedly.setup(config:)` was not called with valid credentials before making API calls.
 
 **Fix:** Initialize the SDK before presenting any payment UI:
 ```swift
-Spreedly.shared.setCredentials(
+Spreedly.setup(config: SpreedlyConfig(
     environmentKey: "your-env-key",
-    token: token,
-    nonce: nonce,
-    timestamp: timestamp,
     certificateToken: certToken,
-    signature: signature
-)
+    nonce: nonce,
+    signature: signature,
+    timestamp: timestamp
+))
 ```
 
 ### Card form is blank or fields don't appear
@@ -122,17 +121,16 @@ Spreedly.shared.setCredentials(
 
 **Fix:** Subscribe to payment results before presenting the form:
 ```swift
-Spreedly.shared.subscribeToPaymentResults { paymentResult in
-    switch paymentResult {
-    case .success(let result):
+cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
+    if paymentResult.isSuccess {
         // Handle success
-    case .failure(let error):
-        // Handle failure
+    } else if paymentResult.isFailure {
+        // Handle failure via paymentResult.failureDetails
     }
 }
 ```
 
-For Objective-C, set the `paymentDelegate` on the `Spreedly.shared` instance.
+For Objective-C, set the `paymentDelegate` on the `Spreedly.shared()` instance.
 
 ### Offsite payment returns to app but status is unknown
 
@@ -140,27 +138,28 @@ For Objective-C, set the `paymentDelegate` on the `Spreedly.shared` instance.
 
 **Fix:** In your `AppDelegate` or `SceneDelegate`:
 ```swift
-func application(_ app: UIApplication, open url: URL, options: [...]) -> Bool {
-    Spreedly.shared.handleOffsiteReturn(url: url)
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    Spreedly.shared().handleOffsiteReturn(url: url)
     return true
 }
 ```
 
-### Stripe APM: CocoaPods bundle crash (`Fatal error: unable to find bundle named Stripe_StripePaymentSheet`)
+### Stripe APM: "unable to find bundle named Stripe_StripePaymentSheet"
 
-**Cause:** With CocoaPods, Stripe ships resource bundles under different names than the Spreedly XCFramework expects. The SDK was built against Stripe via SPM, so it looks for SPM-style bundle names (e.g. `Stripe_StripePaymentSheet.bundle`) while CocoaPods provides different names (e.g. `StripePaymentSheetBundle.bundle`). See [Why CocoaPods users need a Stripe bundle fix](../STRIPE_COCOAPODS_BUNDLE_NAMING.md) for root cause and evidence.
-
-**Fix:** Add the [CocoaPods Stripe bundle patcher](stripe-apm.md#cocoapods-stripe-bundle-patcher) `post_install` block to your Podfile. The script is shipped inside the `SpreedlyStripeAPM` pod; no manual file copy needed:
-
-```ruby
-post_install do |installer|
-  stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
-  require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
-  SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
-end
+**Crash message:**
+```
+StripePaymentSheet/resource_bundle_accessor.swift:44:
+Fatal error: unable to find bundle named Stripe_StripePaymentSheet
 ```
 
-SPM users are not affected — `StripePaymentSheet` is resolved transitively with correct bundle names.
+**Root cause:** The Spreedly `SpreedlyStripeAPM` XCFramework is built against Stripe via SPM, which produces resource bundles named `Stripe_StripePaymentSheet`. When merchants install Stripe through CocoaPods, bundles are named `StripePaymentSheet_StripePaymentSheet` instead. Same Stripe SDK, different bundle names depending on install method.
+
+**Fix by install method:**
+
+| Install method | Fix |
+|---|---|
+| **SPM** | No action needed. Adding `SpreedlyStripeAPM` from `checkout-ios-package` resolves `StripePaymentSheet` transitively via the `SpreedlyStripeAPMDeps` wrapper target. Bundles use SPM naming automatically. |
+| **CocoaPods** | Add the [CocoaPods Stripe Bundle Patcher](stripe-apm.md#cocoapods-stripe-bundle-patcher) `post_install` block to your Podfile. The patcher script is shipped inside the `SpreedlyStripeAPM` pod (`scripts/cocoapods_stripe_bundle_patcher.rb`) — no manual file copy needed. |
 
 ### Stripe APM PaymentSheet doesn't appear
 
@@ -258,13 +257,7 @@ SPLThemeConfig *config = [[SPLThemeConfig alloc]
 
 **Cause:** `SpreedlyKeys.xcconfig` contains secrets and is gitignored. CI needs to generate it.
 
-**Fix:** Use a `ci_post_clone.sh` script to generate the xcconfig from environment variables:
-```bash
-cat > "$CI_PRIMARY_REPOSITORY_PATH/Example/SpreedlySDKExample/SpreedlyKeys.xcconfig" << EOF
-SPREEDLY_ENVIRONMENT_KEY = ${SPREEDLY_ENVIRONMENT_KEY}
-SPREEDLY_SERVER_URL = https:/$()/your-server.example.com/api/v1
-EOF
-```
+**Fix:** Use a `ci_post_clone.sh` script to generate the xcconfig from environment variables. See [TESTFLIGHT_DISTRIBUTION.md](../development/TESTFLIGHT_DISTRIBUTION.md) for the full CI setup.
 
 ### Package.resolved desync
 

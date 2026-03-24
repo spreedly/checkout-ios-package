@@ -51,7 +51,7 @@ Themes are resolved in this order (highest to lowest priority):
 
 1. **Custom theme** passed directly to a component (e.g. `CardFormDropIn(theme: myTheme)`)
 2. **Environment theme** (if set)
-3. **Global theme** set via `SpreedlyThemeManager.setGlobalTheme()`
+3. **Global theme** set via `SpreedlyThemeManager.setGlobalTheme(lightTheme:darkTheme:)`
 4. **Default theme** built into the SDK
 
 If you pass a theme directly to a component, it always wins over the global theme.
@@ -565,6 +565,8 @@ import SpreedlyUI
 
 struct ThemedCheckoutView: View {
     @State private var showCheckout = false
+    @State private var isLoading = false
+    @State private var errorMessage: String?
 
     let brandLight = SpreedlyThemeManager.createCustomTheme(
         colors: SpreedlyColors(
@@ -663,7 +665,7 @@ class ThemedRecacheViewController: UIViewController {
 
 **Theme not applying:**
 
-- Verify `SpreedlyThemeManager.setGlobalTheme()` is called before presenting any SDK components
+- Verify `SpreedlyThemeManager.setGlobalTheme(lightTheme:darkTheme:)` is called before presenting any SDK components
 - Check that you are passing the theme to the correct parameter (`theme` for light, `darkTheme` for dark)
 - Component-level themes override global themes; check if a component has an explicit theme set
 

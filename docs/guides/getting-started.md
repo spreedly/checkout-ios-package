@@ -85,20 +85,21 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.2.2")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.2.8")
 ],
 targets: [
     .target(
         name: "YourApp",
         dependencies: [
-            // Required
             .product(name: "SpreedlyCore", package: "checkout-ios-package"),
             .product(name: "SpreedlySecurity", package: "checkout-ios-package"),
             .product(name: "SpreedlyUI", package: "checkout-ios-package"),
-
-            // Optional — add only the gateways you use:
+            // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
             // .product(name: "SpreedlyStripeAPM", package: "checkout-ios-package"),
-            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package"),
+            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package")
+            // Optional: add when using 3DS Global — add Forter3DS from Bitbucket (not in Spreedly package):
+            // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0"),
+            // .product(name: "Forter3DS", package: "forter-ios")
         ]
     )
 ]
@@ -116,18 +117,16 @@ Add to your `Podfile`. Source is `https://github.com/spreedly/checkout-ios-packa
 target 'YourApp' do
   use_frameworks!
 
-  pod 'SpreedlyCore', '~> 1.1'
-  pod 'SpreedlySecurity', '~> 1.1'
-  pod 'SpreedlyUI', '~> 1.1'
+  pod 'SpreedlyCore', '~> 1.2'
+  pod 'SpreedlySecurity', '~> 1.2'
+  pod 'SpreedlyUI', '~> 1.2'
   # Add these only if needed:
-  # pod 'SpreedlyStripeAPM', '~> 1.1'
-  # pod 'SpreedlyBraintree', '~> 1.1'
+  # pod 'SpreedlyStripeAPM', '~> 1.2'
+  # pod 'SpreedlyBraintree', '~> 1.2'
 end
 ```
 
 Then run `pod install`.
-
-If you use **Stripe APM** with CocoaPods, you must also add the [CocoaPods Stripe SPM bundle fix](stripe-apm.md#cocoapods-stripe-spm-bundle-fix) to your Podfile so Stripe resource bundles are copied with the names the SDK expects. With Option A, the script is not on disk—copy it from a release or use a submodule; see the [Stripe APM guide](stripe-apm.md#cocoapods-stripe-spm-bundle-fix).
 
 **Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead of version specifiers (still Option A—remote install):
 
@@ -135,18 +134,68 @@ If you use **Stripe APM** with CocoaPods, you must also add the [CocoaPods Strip
 target 'YourApp' do
   use_frameworks!
 
-  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
+  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
+  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
   # Add these only if needed:
-  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
+  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
 end
 ```
 
 Replace `{GitToken}` with your GitHub personal access token that has read access to the repository. Then run `pod install`.
 
-**Option B (Local development only):** To develop or test against a local clone of checkout-ios-package, use `:path =>` in your Podfile (e.g. `pod 'SpreedlyCore', :path => '../checkout-ios-package'`). Use that same path in the [Stripe bundle fix](stripe-apm.md#cocoapods-stripe-spm-bundle-fix) `require_relative` so the script is loaded from your clone.
+#### Stripe APM: CocoaPods `post_install` (Required)
+
+If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add a `post_install` block so Stripe resource bundles are copied with the names the SDK expects. Without this, the app will crash at runtime with `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. See the [Stripe APM guide](stripe-apm.md#cocoapods-stripe-bundle-patcher) and [STRIPE_COCOAPODS_BUNDLE_NAMING.md](https://github.com/spreedly/checkout-ios-package/blob/main/docs/STRIPE_COCOAPODS_BUNDLE_NAMING.md) for why this is needed.
+
+**SPM users do not need this step** — when you add `SpreedlyStripeAPM` via SPM, `StripePaymentSheet` is resolved as a transitive dependency automatically and bundles already use the correct names.
+
+**Full Podfile example (private repo with Stripe APM):**
+
+```ruby
+platform :ios, '14.0'
+
+PACKAGE_REPO = 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
+PACKAGE_TAG  = '1.2.8'
+
+target 'YourApp' do
+  use_frameworks!
+
+  # Core (required)
+  pod 'SpreedlyCore',      :git => PACKAGE_REPO, :tag => PACKAGE_TAG
+  pod 'SpreedlySecurity',  :git => PACKAGE_REPO, :tag => PACKAGE_TAG
+  pod 'SpreedlyUI',        :git => PACKAGE_REPO, :tag => PACKAGE_TAG
+
+  # Stripe APM (optional)
+  pod 'SpreedlyStripeAPM', :git => PACKAGE_REPO, :tag => PACKAGE_TAG
+
+  # Braintree (optional)
+  # pod 'SpreedlyBraintree', :git => PACKAGE_REPO, :tag => PACKAGE_TAG
+
+  # 3DS Global (optional — from Forter's repo, not Spreedly)
+  # pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git', :tag => '2.1.0'
+end
+
+# Required when using SpreedlyStripeAPM with CocoaPods.
+# The patcher script is shipped inside the SpreedlyStripeAPM pod — no manual copy needed.
+post_install do |installer|
+  stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
+  require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
+  SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
+end
+```
+
+Local development fallback (`:path => '../checkout-ios-package'`) is also supported:
+
+```ruby
+post_install do |installer|
+  require_relative '../checkout-ios-package/scripts/cocoapods_stripe_bundle_patcher'
+  SpreedlyStripeAPM::CocoaPods.apply_stripe_bundle_patch(installer)
+end
+```
+
+The `cocoapods_stripe_bundle_patcher.rb` script is shipped inside the `SpreedlyStripeAPM` pod via `preserve_paths`, so `installer.sandbox.pod_dir` locates it automatically — no manual file copy or path setup needed. This works for both remote (`:git =>`) and local (`:path =>`) pod installs.
 
 ### Option 3: Manual Framework Integration
 
@@ -164,8 +213,8 @@ Add these only when you need the corresponding features:
 | Feature | Package | URL | Version |
 |---------|---------|-----|---------|
 | 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
-| Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | ~> 1.2 |
-| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | ~> 1.2 |
+| Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
+| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.2.x |
 
 **Forter3DS (3DS Global):** Required for 3DS authentication. Add Forter3DS directly from Forter's Bitbucket repository. **Do not use** `pod 'SpreedlyForter3DS'` — use the Forter Bitbucket URL below. A dedicated `SpreedlyForter3DS` module is planned for a future release but is not yet available for standard CocoaPods usage.
 
@@ -178,9 +227,9 @@ pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git', :
 
 Without the Forter3DS dependency, the app will crash when 3DS is required.
 
-**StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). `StripePaymentSheet` is resolved **transitively** by both SPM (via `SpreedlyStripeAPMDeps`) and CocoaPods (via the `SpreedlyStripeAPM` podspec dependency). You do **not** need to add `StripePaymentSheet` separately. **CocoaPods only:** You must include the `post_install` bundle patcher in your Podfile (see [Stripe APM guide](stripe-apm.md#cocoapods-stripe-bundle-patcher)). Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. SPM users are not affected.
+**StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). **SPM:** adding `SpreedlyStripeAPM` from `checkout-ios-package` resolves Stripe transitively (`SpreedlyStripeAPMDeps`), so no separate Stripe package is needed for standard integration. **CocoaPods:** `SpreedlyStripeAPM` resolves `StripePaymentSheet` transitively, and you must include the Stripe bundle patcher `post_install` block above. The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without Stripe linkage and patching (for CocoaPods), the app will crash at presentation time.
 
-**SpreedlyBraintree (Braintree PayPal/Venmo):** Add `SpreedlyBraintree` from `checkout-ios-package` (SPM or CocoaPods). All Braintree dependencies (BraintreeCore, BraintreePayPal, BraintreeVenmo, BraintreeDataCollector) are resolved automatically — no separate Braintree packages needed for either SPM or CocoaPods. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash).
+**SpreedlyBraintree (Braintree PayPal/Venmo):** Add `SpreedlyBraintree` from `checkout-ios-package` — no extra Braintree dependencies needed. Both SPM and CocoaPods resolve the required Braintree modules (Core, PayPal, Venmo, DataCollector) transitively. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash).
 
 ---
 
@@ -372,7 +421,7 @@ struct YourApp: App {
 }
 ```
 
-> **Note:** `SpreedlySecurity` is a required dependency of the SDK. All three core modules (`SpreedlyCore`, `SpreedlySecurity`, `SpreedlyUI`) must be added to your app target — binary xcframeworks cannot declare transitive SPM dependencies. You only need `import SpreedlySecurity` if you use `SecureValueContainer` or other security APIs directly.
+> **Note:** `SpreedlySecurity` is a required dependency of the SDK. Always add all three core modules (`SpreedlyCore`, `SpreedlySecurity`, `SpreedlyUI`) to your app target — binary xcframeworks cannot declare transitive SPM dependencies. You only need `import SpreedlySecurity` if you use `SecureValueContainer` or other security APIs directly.
 
 **UIKit (AppDelegate):**
 
