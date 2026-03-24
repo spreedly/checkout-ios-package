@@ -27,7 +27,7 @@ Accept European payment methods via Stripe PaymentSheet (iDEAL, Bancontact, EPS,
 
 Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact, EPS, P24, SEPA Debit) using Stripe's native PaymentSheet. Unlike EBANX and other offsite flows, Stripe APM does **not** require a separate payment method tokenization step. Your backend creates a pending purchase directly, and the Stripe PaymentSheet handles APM selection and payment confirmation natively.
 
-**Required for Stripe integration:** You **must** add the **Stripe iOS SDK** (`StripePaymentSheet`) to your **app target** when using Stripe APM. Add it via Swift Package Manager or CocoaPods (see [Prerequisites](#prerequisites)). Without it, calling `SpreedlyStripeAPMCheckout.present(config: config)` will crash with: `StripePaymentSheet/resource_bundle_accessor.swift:44: Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The Spreedly SDK does not embed Stripe's resource bundle; the app must depend on Stripe so the bundle is included.
+**Required for Stripe integration:** `StripePaymentSheet` must be present at runtime for Stripe APM. For standard integrations, you only need to add `SpreedlyStripeAPM` (SPM or CocoaPods) and Stripe resolves transitively. Do **not** add Stripe separately unless your app calls Stripe APIs directly. Without Stripe linkage, calling `SpreedlyStripeAPMCheckout.present(config: config)` can fail with: `StripePaymentSheet/resource_bundle_accessor.swift:44: Fatal error: unable to find bundle named Stripe_StripePaymentSheet`.
 
 ### Offsite vs Stripe APM vs Braintree
 
@@ -67,13 +67,13 @@ Before integrating Stripe APM:
 4. **Stripe Payment Intents gateway** configured in Spreedly
 5. **Stripe publishable key** (from the Stripe dashboard, starts with `pk_test_` or `pk_live_`)
 6. **Stripe webhook** configured to send all Payment Intent events to Spreedly (required for delayed payment methods)
-7. **StripePaymentSheet** iOS SDK added to your app target (see below)
+7. **SpreedlyStripeAPM** added to your app target (Stripe `StripePaymentSheet` resolves transitively; see below)
 8. **Info.plist:** Set **Bundle display name** (`CFBundleDisplayName`) in your app's `Info.plist`. The Stripe SDK requires it to be non-nil; otherwise you may see: *"CFBundleDisplayName must be non-nil. Please set 'Bundle display name' in your Info.plist."*
 9. **Info.plist:** Add `NSCameraUsageDescription` with a user-facing string. The Stripe SDK's `StripePaymentSheet` includes card scanning that references camera APIs internally. Apple rejects App Store builds without this key (`ITMS-90683`), even if card scanning is never used.
 
 The Spreedly SDK includes Stripe APM support via **weak linking** (same pattern as Forter3DS) — it compiles without the Stripe SDK, but requires it at runtime for Stripe APM flows.
 
-### Add StripePaymentSheet to Your App Target
+### StripePaymentSheet Dependency
 
 #### Swift Package Manager
 
@@ -84,9 +84,7 @@ When you add `SpreedlyStripeAPM` from `checkout-ios-package`, `StripePaymentShee
 
 #### CocoaPods
 
-```ruby
-pod 'StripePaymentSheet', '~> 25.0'
-```
+When you add `SpreedlyStripeAPM`, CocoaPods resolves `StripePaymentSheet` transitively. No separate Stripe pod is required for standard integration.
 
 > **Version compatibility:** The `SpreedlyStripeAPM` podspec depends on `StripePaymentSheet ~> 25.0`. If you use CocoaPods, the version is resolved automatically. For SPM, ensure you use a compatible major version (25.x).
 >
@@ -540,7 +538,7 @@ typedef NS_ENUM(NSInteger, StripeAPMStage) {
 |-------|----------|
 | Crash: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet` | **SPM:** ensure `SpreedlyStripeAPM` is added from `checkout-ios-package` — Stripe resolves transitively via `SpreedlyStripeAPMDeps`, no manual Stripe dependency needed. **CocoaPods:** ensure `SpreedlyStripeAPM` is installed and the [CocoaPods Stripe Bundle Patcher](#cocoapods-stripe-bundle-patcher) `post_install` block is in your Podfile. |
 | **CocoaPods:** Added `SpreedlyStripeAPM` but still get bundle error | Add the [CocoaPods Stripe Bundle Patcher](#cocoapods-stripe-bundle-patcher) `post_install` block to your Podfile. The patcher script is shipped inside the `SpreedlyStripeAPM` pod — no manual file copy needed. |
-| **Reinstalled `StripePaymentSheet` but still crashes** with the same bundle error | Stale build artifacts can persist after removing and re-adding the pod. Try: (1) **Product > Clean Build Folder** (Shift-Cmd-K), (2) **Delete Derived Data** for the project (Xcode > Settings > Locations > Derived Data > delete your project's folder), (3) **Full CocoaPods reset:** `pod deintegrate`, delete `Pods/` and `Podfile.lock`, then `pod install`, (4) Quit Xcode, reopen the `.xcworkspace`, and build again. If using CocoaPods, also ensure the [CocoaPods Stripe Bundle Patcher](#cocoapods-stripe-bundle-patcher) is in your Podfile. |
+| **Reinstalled Pods but still crashes** with the same bundle error | Stale build artifacts can persist after dependency changes. Try: (1) **Product > Clean Build Folder** (Shift-Cmd-K), (2) **Delete Derived Data** for the project (Xcode > Settings > Locations > Derived Data > delete your project's folder), (3) **Full CocoaPods reset:** `pod deintegrate`, delete `Pods/` and `Podfile.lock`, then `pod install`, (4) Quit Xcode, reopen the `.xcworkspace`, and build again. If using CocoaPods, also ensure the [CocoaPods Stripe Bundle Patcher](#cocoapods-stripe-bundle-patcher) is in your Podfile. |
 | App Store rejection `ITMS-90683` (missing `NSCameraUsageDescription`) | Add `NSCameraUsageDescription` to your app's `Info.plist`. The Stripe SDK's `StripePaymentSheet` module includes card scanning functionality that references camera APIs internally. Apple's static analysis detects these references even if card scanning is never presented to the user. Without this key, App Store and TestFlight submissions will be rejected. |
 | `CFBundleDisplayName must be non-nil` | Set `CFBundleDisplayName` in your app's `Info.plist` with a string value (e.g. your app name). |
 | User not redirected back to app after bank auth | Ensure `redirect_url` in the purchase request matches your custom URL scheme (e.g. `myapp://stripe-redirect`), and that `returnURL` in `StripeAPMConfig` matches. Register the scheme in `Info.plist` under `CFBundleURLTypes`. |

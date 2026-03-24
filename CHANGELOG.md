@@ -1,18 +1,18 @@
-## [1.2.9] - 2026-03-23
+## [1.2.10] - 2026-03-24
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1268 sync docs and sdk package refs for stripe fixes (#216)
+- HC-1274 fix pending and processing message UI in merchant examples (#217)
 
 ### Change Requests
-  - HC-1268
+  - HC-1274
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.2.9 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.2.10 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -20,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.9")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.10")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.2.9'
+pod 'Spreedly', '~> 1.2.10'
 ```
 
 ---
@@ -38,6 +38,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Fixed
+
+- HC-1274 **Pending/processing status UI in merchant examples**: SwiftUI and Objective-C payment example flows displayed `processing` and `pending` states as success or error messages, which made in-progress transactions look final. Status handling now renders a dedicated pending message style across Offsite, EBANX, Stripe APM, and Braintree examples so intermediate gateway states are shown consistently and clearly.
 
 ## [1.2.7] - 2026-03-20
 
