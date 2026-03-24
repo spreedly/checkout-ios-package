@@ -213,7 +213,7 @@ Add these only when you need the corresponding features:
 | Feature | Package | URL | Version |
 |---------|---------|-----|---------|
 | 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
-| Stripe APM | StripePaymentSheet | `https://github.com/stripe/stripe-ios-spm` | - |
+| Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | 1.2.x |
 | Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.2.x |
 
 **Forter3DS (3DS Global):** Required for 3DS authentication. Add Forter3DS directly from Forter's Bitbucket repository. **Do not use** `pod 'SpreedlyForter3DS'` — use the Forter Bitbucket URL below. A dedicated `SpreedlyForter3DS` module is planned for a future release but is not yet available for standard CocoaPods usage.
