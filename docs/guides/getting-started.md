@@ -85,7 +85,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.2.8")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.0")
 ],
 targets: [
     .target(
@@ -134,12 +134,12 @@ Then run `pod install`.
 target 'YourApp' do
   use_frameworks!
 
-  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
-  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
-  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
+  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
   # Add these only if needed:
-  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
-  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.8'
+  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
 end
 ```
 
@@ -157,7 +157,7 @@ If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add a `post_instal
 platform :ios, '14.0'
 
 PACKAGE_REPO = 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-PACKAGE_TAG  = '1.2.8'
+PACKAGE_TAG  = '1.3.0'
 
 target 'YourApp' do
   use_frameworks!
@@ -576,10 +576,12 @@ Spreedly.setLogger(nil)
 
 **Objective-C:**
 
+> **Note:** The logging configuration APIs (`configureLogging`, `setLogLevel`, `setDatadogLogLevel`) are Swift-only. `LogLevel` is not `@objc`-exposed. From Objective-C, use the delegate-based `SpreedlyLogger` protocol to receive log output, or configure logging from your Swift bridging layer.
+
 ```objc
-[Spreedly configureLogging:SpreedlyLoggerConfiguration.debug];
-[Spreedly setLogLevel:LogLevelWarn];
-[Spreedly setDatadogLogLevel:LogLevelError];
+// Set a custom logger that conforms to SpreedlyLogger protocol
+id<SpreedlyLogger> myLogger = [[MyCustomLogger alloc] init];
+[[Spreedly shared] setLogger:myLogger];
 ```
 
 **React Native:** Set `sdkPlatform` to `.reactNative` in `SpreedlyConfig` so telemetry events and payment method `source` fields are tagged correctly. All logging APIs above work the same from the native bridge.
@@ -836,6 +838,8 @@ The SDK ships with **English strings only** (`en.lproj`). All user-facing labels
 
 ## Testing and Sandbox
 
+For the full testing guide — including 3DS test cards, EBANX test data, flow-by-flow testing steps, and a production readiness checklist — see [Testing Guide](testing-guide.md).
+
 ### Test Environment
 
 Use your **test environment key** (from the Spreedly dashboard) during development. Test transactions are free and do not process real payments.
@@ -871,7 +875,7 @@ Switch between environments by changing the `environmentKey` in `SpreedlyConfig`
 |---------|----------------|------------|---------------|-------------|--------------|
 | **Stripe** | iDEAL, Bancontact, EPS, P24, SEPA Debit | `SpreedlyStripeAPM` | No | Native PaymentSheet | Result state |
 | **Braintree** | PayPal, Venmo | `SpreedlyBraintree` | No | Native Braintree UI | Nonce |
-| **EBANX** | Pix, Boleto, OXXO, NuPay, NuPay Recurrent, Rapipago | `SpreedlyUI` (offsite) | Yes | Safari | Token |
+| **EBANX** | Pix, Boleto, OXXO, NuPay, NuPay Recurrent | `SpreedlyUI` (offsite) | Yes | Safari | Token |
 | **Offsite** | PayPal, Sprel | `SpreedlyUI` (offsite) | Yes | Safari | Token |
 | **Gateway-Specific 3DS** | Card (e.g. Worldpay) | `SpreedlyCore` | N/A | Safari (challenge) | Transaction result |
 
@@ -939,17 +943,36 @@ This clears internal state, cancels any pending operations, and resets validatio
 If you only need to reset validation parameters (e.g., to allow re-submission after a validation failure), use:
 
 ```swift
-ValidationParamReset.reset()
+Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
 ```
 
 This clears cached validation state without requiring full reinitialization.
 
 ---
 
+## Production Integration Checklist
+
+Use this before shipping to production users. Details live in the linked guides -- this section does not repeat install or init steps.
+
+| Item | What to verify | Reference |
+|------|----------------|-----------|
+| SPM / CocoaPods access | GitHub PAT with `read:packages` for `checkout-ios-package`, or CocoaPods token configured | [Installation](#installation) above |
+| Backend signing | Your server mints **new** signed init params (environment key, HMAC signature, timestamp) per session / flow | [Basic Setup](#basic-setup) above |
+| Errors and UX | Handle all `PaymentProcessingResult` / `PaymentResult` states; show user-friendly messages | [Error Handling](error-handling.md) |
+| Security | Use SDK form components (`SPLTextField` / `CardFormDropIn`); enable `ScreenPreventionSecureView` on custom payment screens | [Security](security.md) |
+| Privacy and telemetry | Understand Datadog logging and data handling; disclose in your privacy policy | [Privacy](privacy.md), [Telemetry Spec](../development/TELEMETRY_SPEC.md) |
+| Minimum iOS version | Your deployment target is at least **iOS 14.0** | [README](../../README.md) |
+| 3DS setup (if applicable) | Forter3DS SDK added via SPM/CocoaPods; `#if canImport(Forter3DS)` pattern used | [3DS Global](3ds-global.md), [Conditional Imports](#conditional-imports-for-optional-modules) |
+| ObjC compatibility (if applicable) | ObjC delegates and view controllers tested if your app uses Objective-C | [Objective-C](objective-c.md) |
+
+---
+
 ## Next Steps
 
-- **[Express Checkout Guide](express-checkout.md)** – Integrate the pre-built `CardFormDropIn` payment form
-- **[Custom Fields Guide](custom-payment-forms.md)** – Build custom payment forms with `SPLTextField`
+- **[Express Checkout Guide](express-checkout.md)** -- Integrate the pre-built `CardFormDropIn` payment form
+- **[Custom Fields Guide](custom-payment-forms.md)** -- Build custom payment forms with `SPLTextField`
 
 ---
 

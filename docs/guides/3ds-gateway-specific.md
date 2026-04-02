@@ -238,6 +238,7 @@ var body: some View {
 }
 
 // Call this after your purchase/authorize response.
+// PurchaseResponse is YOUR app's model for the backend response -- not an SDK type.
 func handlePurchaseResponse(_ response: PurchaseResponse) {
     guard response.errors?.isEmpty ?? true else {
         errorMessage = "Purchase failed"
@@ -307,6 +308,7 @@ final class GatewaySpecific3DSViewController: UIViewController {
         }
     }
 
+    // PurchaseResponse is YOUR app's model for the backend response -- not an SDK type.
     func handlePurchaseResponse(_ response: PurchaseResponse) {
         guard response.errors?.isEmpty ?? true,
               let transaction = response.transaction else { return }

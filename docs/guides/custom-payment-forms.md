@@ -693,11 +693,13 @@ Cancel the subscription and reset validation parameters when the view disappears
 .onDisappear {
     cancellable?.cancel()
     cancellable = nil
-    ValidationParamReset.reset()
+    Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+    Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+    Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
 }
 ```
 
-Call `ValidationParamReset.reset()` to reset validation parameters to their defaults when the form is dismissed.
+Reset validation parameters in `onDisappear` to restore defaults when the form is dismissed.
 
 ---
 

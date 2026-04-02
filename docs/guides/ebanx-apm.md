@@ -40,7 +40,6 @@ EBANX payments (Pix, Boleto Bancario, OXXO, NuPay) use the same offsite flow as 
 | OXXO | `.oxxo` | Mexico | email, fullName, country("MX"), phoneNumber, address1, city, state, zip (NO documentId) |
 | NuPay | `.nupay` | Brazil | email, fullName, documentId, country("BR"), phoneNumber |
 | NuPay Recurrent | `.nupayRecurrent` | Brazil | email, fullName, documentId, country("BR"), phoneNumber |
-| Rapipago | `.rapipago` | Argentina | email, fullName, documentId, country("AR"), phoneNumber, address1, city, state, zip |
 
 ---
 
@@ -426,7 +425,8 @@ class EbanxPaymentViewController: UIViewController, SpreedlyPaymentDelegate {
 
     func purchaseWithToken(_ paymentMethodToken: String) {
         // Call YOUR backend which calls Spreedly purchase API with gateway_specific_fields.ebanx.document
-        let client = SpreedlyConfigManager.shared.createPurchaseAPIClient()
+        // SpreedlyConfigManager is from the Example app -- replace with your own backend client
+        let client = YourBackend.createPurchaseAPIClient()
         Task {
             do {
                 let response = try await client.ebanxPurchase(
@@ -455,7 +455,12 @@ class EbanxPaymentViewController: UIViewController, SpreedlyPaymentDelegate {
     }
 }
 
-// In SceneDelegate — handle redirect return:
+```
+
+In your `SceneDelegate` — handle redirect return:
+
+```swift
+// Add this to your SceneDelegate
 func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
     guard let url = URLContexts.first?.url else { return }
     let isSpreedlyURL = Spreedly.shared().handleOffsiteReturn(url: url)
@@ -472,8 +477,8 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 ```objc
 #import <SpreedlyCore/SpreedlyCore-Swift.h>
 #import <SpreedlyUI/SpreedlyUI-Swift.h>
-#import "SpreedlyConfigManager.h"
-#import "PurchaseAPIClient.h"
+// Replace with your own backend client headers
+#import "YourBackend.h"
 
 typedef NS_ENUM(NSInteger, EbanxStage) {
     EbanxStageIdle,
@@ -589,7 +594,8 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
 // MARK: - Purchase (Merchant Backend Call)
 
 - (void)purchaseWithToken:(NSString *)paymentMethodToken {
-    PurchaseAPIClient *client = [[SpreedlyConfigManager shared] createPurchaseAPIClient];
+    // Replace with your own backend client that calls the Spreedly purchase API
+    YourBackendAPIClient *client = [[YourBackend shared] createPurchaseAPIClient];
     NSDecimalNumber *amount = [NSDecimalNumber numberWithInt:9900];
     [client ebanxPurchaseWithPaymentMethodToken:paymentMethodToken
                                          amount:amount
@@ -611,8 +617,14 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
 }
 
 @end
+```
 
-// In SceneDelegate — handle redirect return:
+In `SceneDelegate.m` — handle redirect return:
+
+```objc
+// Add this to your SceneDelegate.m
+@implementation SceneDelegate
+
 - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
     NSURL *url = URLContexts.allObjects.firstObject.URL;
     if (url) {
@@ -622,6 +634,8 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
         }
     }
 }
+
+@end
 ```
 
 ---
@@ -630,7 +644,7 @@ typedef NS_ENUM(NSInteger, EbanxStage) {
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
-| `paymentMethodType` | `OffsitePaymentMethodType` | Yes | `.pix`, `.boletoBancario`, `.oxxo`, `.nupay`, `.nupayRecurrent`, `.rapipago` |
+| `paymentMethodType` | `OffsitePaymentMethodType` | Yes | `.pix`, `.boletoBancario`, `.oxxo`, `.nupay`, `.nupayRecurrent` |
 | `email` | `String` | Yes | Customer email |
 | `fullName` | `String` | Yes | Customer full name |
 | `documentId` | `DocumentId` | Pix, Boleto, NuPay | CPF/CNPJ — use `DocumentId(key: .documentId, value: "...")` |

@@ -17,6 +17,8 @@ Each framework package includes a corresponding `.sha256` checksum file:
 - `SpreedlyCore.zip.sha256` - Checksum for SpreedlyCore framework
 - `SpreedlySecurity.zip.sha256` - Checksum for SpreedlySecurity framework
 - `SpreedlyUI.zip.sha256` - Checksum for SpreedlyUI framework
+- `SpreedlyStripeAPM.zip.sha256` - Checksum for SpreedlyStripeAPM framework
+- `SpreedlyBraintree.zip.sha256` - Checksum for SpreedlyBraintree framework
 
 ## Locating Checksums
 
@@ -24,16 +26,16 @@ Checksums are distributed alongside packages in the package repository:
 
 ```
 package-repo/
-├── Frameworks/
-│   ├── SpreedlyCore.xcframework/
-│   ├── SpreedlySecurity.xcframework/
-│   └── SpreedlyUI.xcframework/
 ├── SpreedlyCore.zip
 ├── SpreedlyCore.zip.sha256
 ├── SpreedlySecurity.zip
 ├── SpreedlySecurity.zip.sha256
 ├── SpreedlyUI.zip
-└── SpreedlyUI.zip.sha256
+├── SpreedlyUI.zip.sha256
+├── SpreedlyStripeAPM.zip
+├── SpreedlyStripeAPM.zip.sha256
+├── SpreedlyBraintree.zip
+└── SpreedlyBraintree.zip.sha256
 ```
 
 ## Verification Methods
@@ -51,6 +53,8 @@ The `shasum` command is available on macOS and most Linux distributions.
 # Verify using the checksum file
 shasum -a 256 -c SpreedlyCore.zip.sha256
 ```
+
+If your `.sha256` file contains a path prefix (for example `distribution/SpreedlyCore.zip`), run the command from a directory that matches that path or adjust the file path accordingly.
 
 Expected output on success:
 ```
@@ -179,7 +183,7 @@ Swift Package Manager automatically verifies checksums when using binary targets
 ```swift
 .binaryTarget(
     name: "SpreedlyCore",
-    url: "https://github.com/spreedly/checkout-ios-package/releases/download/v1.0.0/SpreedlyCore.zip",
+    url: "https://github.com/spreedly/checkout-ios-package/releases/download/1.3.0/SpreedlyCore.zip",
     checksum: "abc123..." // SHA-256 checksum
 )
 ```
@@ -250,7 +254,7 @@ If automated verification fails:
 
 set -e
 
-VERSION="1.0.0"
+VERSION="1.3.0"
 REPO_URL="https://github.com/spreedly/checkout-ios-package"
 DOWNLOAD_DIR="./packages/${VERSION}"
 
@@ -260,12 +264,12 @@ cd "$DOWNLOAD_DIR"
 
 # Download packages and checksums
 echo "Downloading packages..."
-curl -L -O "${REPO_URL}/releases/download/v${VERSION}/SpreedlyCore.zip"
-curl -L -O "${REPO_URL}/releases/download/v${VERSION}/SpreedlyCore.zip.sha256"
-curl -L -O "${REPO_URL}/releases/download/v${VERSION}/SpreedlySecurity.zip"
-curl -L -O "${REPO_URL}/releases/download/v${VERSION}/SpreedlySecurity.zip.sha256"
-curl -L -O "${REPO_URL}/releases/download/v${VERSION}/SpreedlyUI.zip"
-curl -L -O "${REPO_URL}/releases/download/v${VERSION}/SpreedlyUI.zip.sha256"
+curl -L -O "${REPO_URL}/releases/download/${VERSION}/SpreedlyCore.zip"
+curl -L -O "${REPO_URL}/releases/download/${VERSION}/SpreedlyCore.zip.sha256"
+curl -L -O "${REPO_URL}/releases/download/${VERSION}/SpreedlySecurity.zip"
+curl -L -O "${REPO_URL}/releases/download/${VERSION}/SpreedlySecurity.zip.sha256"
+curl -L -O "${REPO_URL}/releases/download/${VERSION}/SpreedlyUI.zip"
+curl -L -O "${REPO_URL}/releases/download/${VERSION}/SpreedlyUI.zip.sha256"
 
 # Verify all packages
 echo "Verifying checksums..."
@@ -295,6 +299,6 @@ If you encounter issues with package verification:
 
 ---
 
-**Last Updated**: Version 1.0.0  
+**Last Updated**: Version 1.3.0  
 **Maintained By**: Spreedly Security Team
 

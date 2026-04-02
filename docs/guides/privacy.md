@@ -1,6 +1,6 @@
 # Privacy and Data Handling - Spreedly iOS SDK
 
-This document outlines the privacy requirements and data handling practices for the Spreedly iOS SDK. The SDK is designed with privacy-first principles, ensuring that sensitive payment card data is processed securely and never stored persistently.
+Privacy requirements and data handling for the Spreedly iOS SDK. The SDK processes payment card data in memory only -- nothing is stored on disk -- and transmits it to Spreedly over TLS for tokenization.
 
 ## Data Handling Principles
 
@@ -10,20 +10,23 @@ This document outlines the privacy requirements and data handling practices for 
 - **Transmission**: Card data is sent to Spreedly for tokenization via TLS (Transport Layer Security) encrypted connections
 
 ### Data Collection
-- **None**: The SDK does not collect any personal data or user information
-- **Purpose**: The SDK only facilitates the processing of payment card data for tokenization
+- **Payment data**: The SDK processes payment card data in memory for tokenization only
+- **Operational telemetry**: The SDK collects non-personal operational data for reliability monitoring, including: SDK version, OS version, device region, carrier name, ephemeral session ID, environment key (identifies the merchant account), API endpoint paths, HTTP methods, response status codes, error types, flow durations, and payment method types. Field-level interaction events (focus/blur on form fields) are also collected for form usability monitoring. No card numbers, CVVs, expiry dates, or PII are included in telemetry.
+- **Telemetry destination**: Operational telemetry is sent to **Datadog** when configured. Telemetry is disabled if no Datadog client token is provided.
+- **Purpose**: Payment data is used for tokenization. Telemetry data is used to monitor SDK health, detect failures, measure latency, and improve reliability.
 
 ### Persistent Storage
 - **None**: The SDK does not use persistent storage for card data
 - **Memory Only**: All card data operations occur in memory and are cleared immediately after processing
 
 ### User Tracking
-- **None**: The SDK does not track users or collect analytics data
-- **No Tracking**: No user behavior tracking, analytics, or profiling is performed
+- **No advertising or profiling**: The SDK does not perform user profiling, advertising analytics, or cross-app tracking
+- **Form interaction telemetry**: The SDK records field focus/blur events on payment form fields for usability monitoring. These events contain the field type (e.g. "card_number", "cvv") and the action ("focus"/"blur") but never the field contents.
+- **Ephemeral session IDs**: Operational telemetry uses a random UUID generated per SDK initialization. This ID is not tied to user identity and is not persisted across app launches
 
 ### Third-Party Sharing
-- **Spreedly Only**: Card data is shared exclusively with Spreedly for the purpose of tokenization
-- **No Third Parties**: No other third-party services receive card data or user information
+- **Spreedly**: Card data is shared exclusively with Spreedly for tokenization. No card data is sent to any other party
+- **Datadog**: Non-sensitive operational telemetry (SDK version, OS version, region, carrier, session ID, flow success/failure events) is sent to Datadog for SDK reliability monitoring. No card data, tokens, or PII is included in telemetry payloads
 
 ## iOS-Specific Requirements
 
@@ -65,13 +68,16 @@ When integrating the Spreedly iOS SDK:
 ## Privacy Policy Integration
 
 When using the Spreedly iOS SDK, you should include in your app's privacy policy:
-- That payment card data is processed by Spreedly
+- That payment card data is processed by Spreedly for tokenization
 - That card data is not stored on the device
 - That data transmission is encrypted
-- That no user tracking or analytics is performed by the SDK
+- That the SDK collects non-personal operational telemetry (device type, OS version, region) for reliability monitoring via Datadog
+- That no user behavior tracking, profiling, or advertising analytics is performed by the SDK
 
 ## Related Documentation
 
 - [Security](security.md) -- Screen prevention and PCI compliance
 - [Getting Started](getting-started.md) -- Installation and initialization
+- [Telemetry Spec](../development/TELEMETRY_SPEC.md) -- Full telemetry event catalog and data attributes
+- [Platform Privacy Requirements](../development/PLATFORM_PRIVACY_REQUIREMENTS.md) -- iOS-specific privacy manifest details
 - [Spreedly Privacy Policy](https://www.spreedly.com/privacy)

@@ -67,7 +67,8 @@ struct CheckoutView: View {
     var body: some View {
         Button("Pay with Saved Card") {
             Task {
-                let result = await SpreedlyConfigManager.shared.generateSignature()
+                // Replace with your own backend call that generates a Spreedly signature
+                let result = await YourBackend.shared.generateSignature()
                 switch result {
                 case .success:
                     showCVVRecaching = true
@@ -105,7 +106,9 @@ struct CheckoutView: View {
         .onDisappear {
             cancellable?.cancel()
             cancellable = nil
-            ValidationParamReset.reset()
+            Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+            Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+            Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
         }
     }
 }
@@ -258,7 +261,8 @@ struct SavedCardsView: View {
             List(savedCards) { card in
                 Button(action: {
                     Task {
-                        let result = await SpreedlyConfigManager.shared.generateSignature()
+                        // Replace with your own backend call that generates a Spreedly signature
+                        let result = await YourBackend.shared.generateSignature()
                         await MainActor.run {
                             switch result {
                             case .success:
@@ -319,7 +323,9 @@ struct SavedCardsView: View {
         .onDisappear {
             cancellable?.cancel()
             cancellable = nil
-            ValidationParamReset.reset()
+            Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+            Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+            Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
         }
     }
 }
@@ -343,7 +349,8 @@ class SavedCardsViewController: UIViewController {
         guard let card = selectedCard else { return }
 
         Task {
-            let signatureGenerated = await SpreedlyConfigManager.shared.generateSignature()
+            // Replace with your own backend call that generates a Spreedly signature
+            let signatureGenerated = await YourBackend.shared.generateSignature()
             await MainActor.run {
                 switch signatureGenerated {
                 case .success:
@@ -409,7 +416,8 @@ Use `CVVRecachingViewController` with alloc/init and the same parameters. Implem
 - (void)updateCVVTapped {
     if (!self.selectedCard) return;
 
-    [[SpreedlyConfigManager shared] generateSignatureWithCompletion:^(BOOL success, NSError * _Nullable error) {
+    // Replace with your own backend call that generates a Spreedly signature
+    [[YourBackend shared] generateSignatureWithCompletion:^(BOOL success, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
                 CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
@@ -644,11 +652,13 @@ Cancel payment result subscriptions to prevent memory leaks:
 .onDisappear {
     cancellable?.cancel()
     cancellable = nil
-    ValidationParamReset.reset()
+    Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+    Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+    Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
 }
 ```
 
-Call `ValidationParamReset.reset()` in `onDisappear` to reset validation parameters to their defaults when the recaching view is dismissed.
+Reset validation parameters in `onDisappear` to restore defaults when the recaching view is dismissed.
 
 ---
 

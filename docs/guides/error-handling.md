@@ -14,7 +14,7 @@ Handle payment errors, validation failures, and network issues properly.
 6. [Handling Network Errors](#handling-network-errors)
 7. [Handling 3DS Errors](#handling-3ds-errors)
 8. [Common Error Scenarios](#common-error-scenarios)
-9. [UIKit/Objective-C Error Handling](#uikitojective-c-error-handling)
+9. [UIKit/Objective-C Error Handling](#uikitobjective-c-error-handling)
 10. [Best Practices](#best-practices)
 11. [Related Documentation](#related-documentation)
 
@@ -508,8 +508,38 @@ The examples use the simple `failureDetails.getDescription()` pattern for displa
 
 ---
 
+## Customer Troubleshooting
+
+### Common issues
+
+| Symptom | Likely cause | What to try |
+|---------|--------------|-------------|
+| SPM cannot resolve `checkout-ios-package` | Missing or invalid GitHub token | Confirm your PAT has `read:packages` scope; see [Getting Started -- Installation](getting-started.md#installation) |
+| CocoaPods `pod install` fails | Podspec source not configured or private repo token invalid | Use `:git =>` with a valid token; see [Getting Started -- Installation](getting-started.md#installation) |
+| `initializeSDK()` / `setup(config:)` fails immediately | Expired or reused signed auth params | Issue **fresh** environment key, HMAC signature, and timestamp from your backend per payment session |
+| `UNAUTHORIZED` / auth errors | Wrong or revoked credentials | Rotate signing keys on the server; confirm `environmentKey` matches your Spreedly account |
+| `ACCOUNT_INACTIVE` | Live card data in a test environment | Use Spreedly test cards or activate the environment |
+| Timeouts / network errors | Device or API connectivity | Retry with backoff for transient failures; see [Best Practices](#best-practices) |
+| 3DS challenge never appears | Forter3DS SDK not linked, or `#if canImport` not used | Verify `Forter3DS` is added via SPM/CocoaPods; see [3DS Global](3ds-global.md) |
+| Screen prevention blocks screenshots in Simulator | `ScreenPreventionSecureView` is active | This is expected behavior; disable in debug builds if needed; see [Security](security.md) |
+
+For SDK log delivery issues (Datadog), see [Telemetry Spec -- Operational Readiness](../development/TELEMETRY_SPEC.md#operational-readiness).
+
+### What you can share with Spreedly Support
+
+**OK to share:** SDK version, approximate time (UTC), masked `environment_key` (first 4 characters only), `session_id` from Datadog global attributes (if you use SDK telemetry), `PaymentResult` `errorType` / `apiError`, HTTP status code if shown, iOS version, device model.
+
+**Never share:** Full card number, CVV, full `environmentKey`, raw error responses if they could contain tokens or PII, complete auth signatures or HMAC secrets.
+
+### When to contact support
+
+Open a ticket via [Spreedly Support](https://spreedly.com/support/) after you have confirmed credentials, a fresh init payload, and a minimal reproduction case (or merchant logs scoped as above). Include references to the integration guides you followed ([Getting Started](getting-started.md), [Security](security.md)).
+
+---
+
 ## Related Documentation
 
 - [express-checkout.md](express-checkout.md) - CardFormDropIn integration and callbacks
 - [3ds-global.md](3ds-global.md) - 3DS authentication and challenge handling
 - [offsite-payments.md](offsite-payments.md) - Offsite payment flows and result handling
+- [troubleshooting.md](troubleshooting.md) - Installation, build, and runtime troubleshooting

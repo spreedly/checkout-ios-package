@@ -297,25 +297,13 @@ When using Combine publishers (for example, `subscribeToPaymentResults`), cancel
 
 The SDK's logging system automatically redacts sensitive data via `LogSanitizer`:
 
-- **Card numbers** (13-19 digit PANs) are sanitized in log output
-- **Expiry dates** are redacted when preceded by expiry-related keywords
+- **Card numbers** (PANs) are sanitized in log output
+- **Expiry dates** are redacted
 - **API keys**, environment keys, and credentials are redacted
 - **CVV/CVC** and other sensitive fields are never logged
 - **Phone numbers** and emails are redacted in sensitive contexts
-- **Card data in JSON payloads** (e.g. `"number": "4111..."`) is caught
-- **URL path tokens** (`transactions/TOKEN/...`) are masked — both versioned (`/v1/transactions/TOKEN`) and non-versioned paths are caught
-- **Token identification heuristic**: a path segment is treated as a token only if it is 6+ characters _and_ contains at least one digit, which prevents false positives on endpoint names like `restricted`
-
-### URL Token Sanitization (Defense in Depth)
-
-URL path tokens are sanitized at two layers:
-
-1. **`NetworkClient.extractEndpointPath()`** masks token-like segments _before_ the message is even constructed. This is the primary defense.
-2. **`LogSanitizer`** regex catches any tokens that survive in the final log string. The regex matches `transactions/<token>` and `payment_methods/<token>` with or without a `/v1/` prefix.
-
-Both layers use the same heuristic: a segment is a token candidate if it is 6+ alphanumeric characters containing at least one digit. This avoids masking legitimate endpoint names (e.g. `payment_methods/restricted`).
-
-If you add new API endpoints that contain sensitive identifiers in the URL path, update both `extractEndpointPath()` in `NetworkClient.swift` and the `urlPathTokenPattern` regex in `SpreedlyLogger.swift`.
+- **Card data in JSON payloads** is sanitized
+- **URL path tokens** (e.g. transaction tokens in API paths) are masked at multiple layers
 
 ### Production Recommendations
 

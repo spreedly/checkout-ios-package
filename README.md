@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.1.4-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.3.0-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -9,6 +9,8 @@ A modern iOS SDK for integrating Spreedly payment processing into iOS applicatio
 with Swift, SwiftUI, and following iOS best practices.
 
 ## Installation
+
+> Version note: this package repository is the canonical source for public install versions. The source SDK repository docs may temporarily show an older pin during release propagation.
 
 ### Swift Package Manager (Recommended)
 
@@ -25,7 +27,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.1.4")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.0")
 ]
 ```
 
@@ -71,13 +73,13 @@ See [Getting Started](docs/guides/getting-started.md) for full Podfile examples 
 
 ```ruby
 # Podfile — private repo via Git token
-pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
-pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
-pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
+pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
-# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.2.2'
+# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
 ```
 
 Replace `{GitToken}` with your GitHub personal access token that has read access to the repository.
@@ -107,7 +109,7 @@ Get started quickly with the [Getting Started Guide](docs/guides/getting-started
 ### Offsite & Alternative Payment Methods
 
 - **[Offsite Payments](docs/guides/offsite-payments.md)** -- Sprel, PayPal, and EBANX via Safari
-- **[EBANX APM](docs/guides/ebanx-apm.md)** -- Pix, Boleto, OXXO, NuPay, Rapipago via EBANX
+- **[EBANX APM](docs/guides/ebanx-apm.md)** -- Pix, Boleto, OXXO, NuPay via EBANX
 - **[Stripe APM](docs/guides/stripe-apm.md)** -- iDEAL, Bancontact, EPS, P24, SEPA via native Stripe PaymentSheet
 - **[Braintree APM](docs/guides/braintree-apm.md)** -- PayPal and Venmo via Braintree
 
@@ -165,7 +167,7 @@ More information about versioning and the SDK lifecycle can be found in the [CHA
 
 - **3DS is not a separate module:** Unlike the Android SDK (which publishes `checkout-threeds` as a standalone module), 3DS/Forter support on iOS is embedded within `SpreedlyCore` via weak linking. Merchants must add `Forter3DS` as a direct dependency to their app target for 3DS to function. Extracting 3DS into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific) is planned for a future release.
 
-- **Release manifest does not cover all modules:** Checksum verification currently covers the three core frameworks (`SpreedlyCore`, `SpreedlySecurity`, `SpreedlyUI`). The optional modules (`SpreedlyStripeAPM`, `SpreedlyBraintree`) are not yet included. Extending the manifest to all published modules is tracked as future work.
+- **Checksum validation workflows vary by release artifact set:** SHA-256 checksum files are published for core and optional modules. Always verify checksums for the specific artifacts your app consumes.
 
 - **No GPG artifact signing:** The Android SDK signs release artifacts with GPG. The iOS SDK currently relies on SHA-256 checksums for integrity verification. GPG signing is planned for a future release.
 
@@ -176,7 +178,7 @@ More information about versioning and the SDK lifecycle can be found in the [CHA
 - **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-sdk/issues)
 - **Package Verification**: [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
-- **Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Contributing (source SDK repo)**: [checkout-ios-sdk/SpreedlyDocs/development/CONTRIBUTING.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/CONTRIBUTING.md)
 - **Security**: [SECURITY.md](SECURITY.md)
 
 ## License
