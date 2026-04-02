@@ -41,7 +41,7 @@ Add 3D Secure authentication to protect against fraudulent card payments.
 | Provider | Forter SDK | Gateway's own (e.g. Worldpay) |
 | Purchase API | No `attempt_3dsecure` | `attempt_3dsecure: true` |
 | SDK | `DoChallengeIfNeeded` | `DoChallengeIfNeeded` + trigger + finalize |
-| Challenge UI | Automatic | Merchant-driven |
+| Challenge UI | Automatic | SDK-managed |
 | Backend calls | SDK handles | Merchant calls `/complete.json` |
 
 ---

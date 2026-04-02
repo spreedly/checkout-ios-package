@@ -1,3 +1,34 @@
+# Changelog
+
+All notable changes to the Spreedly iOS SDK will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [1.3.0] - 2026-03-24
+
+### Release Type
+**Minor Version** (New features and improvements - backward compatible)
+
+### Changes
+- All changes from 1.2.8 through 1.2.10 consolidated into a minor release
+
+### Removed
+- Removed unsupported Rapipago payment method from `OffsitePaymentMethodType` and `OffsiteGateway` enums (was never implemented)
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.0")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore', '~> 1.3.0'
+```
+
 ## [1.2.10] - 2026-03-24
 
 ### Release Type
@@ -25,23 +56,8 @@ This release has been documented for PCI DSS compliance requirements:
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.2.10'
+pod 'SpreedlyCore', '~> 1.2.10'
 ```
-
----
-
-# Changelog
-
-All notable changes to the Spreedly iOS SDK will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-### Fixed
-
-- HC-1274 **Pending/processing status UI in merchant examples**: SwiftUI and Objective-C payment example flows displayed `processing` and `pending` states as success or error messages, which made in-progress transactions look final. Status handling now renders a dedicated pending message style across Offsite, EBANX, Stripe APM, and Braintree examples so intermediate gateway states are shown consistently and clearly.
 
 ## [1.2.7] - 2026-03-20
 

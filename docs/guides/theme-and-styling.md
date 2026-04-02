@@ -624,15 +624,15 @@ import SpreedlyUI
 class ThemedRecacheViewController: UIViewController {
     func showRecache() {
         let lightConfig = SPLThemeConfig(
-            primaryColor: UIColor(hex: "#6200EE"),
+            primaryColor: UIColor(red: 0.384, green: 0, blue: 0.933, alpha: 1),
             secondaryColor: .systemGray,
-            backgroundColor: UIColor(hex: "#FAFAFA"),
+            backgroundColor: UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1),
             surfaceColor: .white,
-            borderColor: UIColor(hex: "#E0E0E0"),
-            borderFocusedColor: UIColor(hex: "#6200EE"),
-            textColor: UIColor(hex: "#212121"),
-            textSecondaryColor: UIColor(hex: "#757575"),
-            errorColor: UIColor(hex: "#B00020"),
+            borderColor: UIColor(red: 0.878, green: 0.878, blue: 0.878, alpha: 1),
+            borderFocusedColor: UIColor(red: 0.384, green: 0, blue: 0.933, alpha: 1),
+            textColor: UIColor(red: 0.129, green: 0.129, blue: 0.129, alpha: 1),
+            textSecondaryColor: UIColor(red: 0.459, green: 0.459, blue: 0.459, alpha: 1),
+            errorColor: UIColor(red: 0.69, green: 0, blue: 0.125, alpha: 1),
             placeholderColor: nil,
             borderRadius: 12.0
         )

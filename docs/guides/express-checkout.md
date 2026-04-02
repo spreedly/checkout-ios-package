@@ -96,7 +96,9 @@ struct CheckoutView: View {
         .onDisappear {
             cancellable?.cancel()
             cancellable = nil
-            ValidationParamReset.reset()
+            Spreedly.shared().setParam(parameter: .allowBlankName, value: false)
+            Spreedly.shared().setParam(parameter: .allowExpiredDate, value: false)
+            Spreedly.shared().setParam(parameter: .allowBlankDate, value: false)
         }
     }
 }
@@ -104,7 +106,7 @@ struct CheckoutView: View {
 
 Always apply `.screenPrevention()` to protect sensitive payment data from app switcher screenshots.
 
-Call `ValidationParamReset.reset()` in `onDisappear` to reset validation parameters to their defaults when the checkout view is dismissed.
+Reset validation parameters in `onDisappear` to restore defaults when the checkout view is dismissed.
 
 > **Tip:** You can read back current validation parameters via `Spreedly.shared().paramsManager.getParam(parameter:)` if you need to inspect or log the state before reset.
 

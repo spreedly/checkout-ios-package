@@ -382,7 +382,8 @@ Use `becomeFirstResponder` and `resignFirstResponder` for focus management:
         textContentType:UITextContentTypeGivenName
         onValidationChange:nil
         onSubmit:^{ [self.lastNameField becomeFirstResponder]; }
-        submitLabel:SpreedlySubmitLabelNext];
+        submitLabel:SpreedlySubmitLabelNext
+        onFocus:nil];
 
     self.lastNameField = [[SPLTextFieldViewController alloc]
         initWithField:FormFieldTypeLastName
@@ -393,7 +394,8 @@ Use `becomeFirstResponder` and `resignFirstResponder` for focus management:
         textContentType:UITextContentTypeFamilyName
         onValidationChange:nil
         onSubmit:^{ [self.cardNumberField becomeFirstResponder]; }
-        submitLabel:SpreedlySubmitLabelNext];
+        submitLabel:SpreedlySubmitLabelNext
+        onFocus:nil];
 
     self.cardNumberField = [[SPLTextFieldViewController alloc]
         initWithField:FormFieldTypeCardNumber
@@ -404,7 +406,8 @@ Use `becomeFirstResponder` and `resignFirstResponder` for focus management:
         textContentType:UITextContentTypeCreditCardNumber
         onValidationChange:nil
         onSubmit:^{ [self.cvcField becomeFirstResponder]; }
-        submitLabel:SpreedlySubmitLabelNext];
+        submitLabel:SpreedlySubmitLabelNext
+        onFocus:nil];
 
     self.cvcField = [[SPLTextFieldViewController alloc]
         initWithField:FormFieldTypeCvc
@@ -415,7 +418,8 @@ Use `becomeFirstResponder` and `resignFirstResponder` for focus management:
         textContentType:UITextContentTypeCreditCardSecurityCode
         onValidationChange:nil
         onSubmit:^{ [self submitForm]; }
-        submitLabel:SpreedlySubmitLabelDone];
+        submitLabel:SpreedlySubmitLabelDone
+        onFocus:nil];
 
     [self addFormField:self.firstNameField];
     [self addFormField:self.lastNameField];
@@ -438,7 +442,8 @@ Use `becomeFirstResponder` and `resignFirstResponder` for focus management:
 Create the recaching view controller with card details and payment method token:
 
 ```objc
-[[SpreedlyConfigManager shared] generateSignatureWithCompletion:^(BOOL success, NSError * _Nullable error) {
+// Replace with your own backend call that generates a Spreedly signature
+[[YourBackend shared] generateSignatureWithCompletion:^(BOOL success, NSError * _Nullable error) {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (success) {
             CVVRecachingViewController *recachingVC = [[CVVRecachingViewController alloc]
@@ -608,7 +613,10 @@ if (processingResult.isValidationFailed) {
 ### Example
 
 ```objc
-[Spreedly shared].paymentDelegate = self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [Spreedly shared].paymentDelegate = self;
+}
 
 - (void)startOffsiteFlow {
     OffsitePaymentConfig *config = [[OffsitePaymentConfig alloc]
@@ -633,8 +641,8 @@ if (processingResult.isValidationFailed) {
     }
 }
 
-// After backend purchase succeeds:
-- (void)purchaseWithToken:(NSString *)token {
+// After backend purchase succeeds, present checkout with the transaction token:
+- (void)presentCheckoutWithTransactionToken:(NSString *)transactionToken {
     self.stage = OffsiteStageCheckout;
     [SpreedlyOffsiteCheckout presentWithTransactionToken:transactionToken];
 }
@@ -816,7 +824,7 @@ Proper cleanup prevents memory leaks, dangling delegates, and stale validation s
 
 ### Reset Validation State
 
-Call `[[Spreedly shared] reset]` in `viewWillDisappear:` for custom form views that use `SPLTextFieldViewController`. This is the Objective-C equivalent of `ValidationParamReset.reset()` in Swift:
+Call `[[Spreedly shared] reset]` in `viewWillDisappear:` for custom form views that use `SPLTextFieldViewController`. This resets validation parameters to their defaults:
 
 ```objc
 - (void)viewWillDisappear:(BOOL)animated {
@@ -943,14 +951,16 @@ Use `SpreedlyTelemetryObjCBridge` to emit structured telemetry events from Objec
 
 **Duration tracking:**
 
+> **Note:** `FlowDurationTracker` is not `@objc`-exposed. Use it from Swift or track duration manually in Objective-C:
+
 ```objc
-// Start timing
-[[FlowDurationTracker shared] startWithKey:@"my_flow"];
+// Track duration manually in Objective-C
+NSDate *startTime = [NSDate date];
 
 // ... your flow logic ...
 
-// Get elapsed milliseconds (returns -1 if no mark exists)
-int64_t ms = [[FlowDurationTracker shared] elapsedMsWithKey:@"my_flow"];
+NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startTime] * 1000;
+int64_t durationMs = (int64_t)elapsed;
 ```
 
 See [Structured Telemetry Events](getting-started.md#structured-telemetry-events) for the full event reference table and detailed usage guidance.

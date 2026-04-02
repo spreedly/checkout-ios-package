@@ -36,7 +36,7 @@ Stripe APM lets users pay via alternative payment methods (iDEAL, Bancontact, EP
 | Tokenization step | Yes (`submitOffsitePayment`) | No | No |
 | Backend creates | Purchase (after token) | Pending purchase | Purchase |
 | Checkout UI | Safari | Native PaymentSheet | Native PayPal/Venmo |
-| Return flow | Deep link redirect | Deep link redirect | In-app |
+| Return flow | Deep link redirect | Deep link redirect | URL scheme / Universal Link |
 | Module | SpreedlyUI | SpreedlyStripeAPM | SpreedlyBraintree |
 
 ---

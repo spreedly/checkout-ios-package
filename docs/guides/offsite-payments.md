@@ -43,7 +43,7 @@ Offsite payments let users pay via external providers such as PayPal and Sprel. 
 - `paypal` - PayPal checkout
 - `sprel` - Sprel checkout
 
-For EBANX providers (Pix, Boleto, OXXO, NuPay, NuPay Recurrent, Rapipago), see [ebanx-apm.md](ebanx-apm.md). EBANX methods use `submitOffsitePayment` under the hood but have additional configuration requirements covered in that guide.
+For EBANX providers (Pix, Boleto, OXXO, NuPay, NuPay Recurrent), see [ebanx-apm.md](ebanx-apm.md). EBANX methods use `submitOffsitePayment` under the hood but have additional configuration requirements covered in that guide.
 
 ---
 
@@ -423,10 +423,17 @@ typedef NS_ENUM(NSInteger, OffsiteStage) {
     OffsiteStageCheckout
 };
 
-// Set delegate
-[Spreedly shared].paymentDelegate = self;
+@interface OffsitePaymentViewController () <SpreedlyPaymentDelegate>
+@property (nonatomic, assign) OffsiteStage stage;
+@end
 
-// Start flow
+@implementation OffsitePaymentViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [Spreedly shared].paymentDelegate = self;
+}
+
 - (void)startOffsiteFlow {
     self.stage = OffsiteStageCreatingPaymentMethod;
     // Generate signature, setup SDK, then:
@@ -471,14 +478,21 @@ typedef NS_ENUM(NSInteger, OffsiteStage) {
     });
 }
 
-// After backend purchase succeeds:
-- (void)purchaseWithToken:(NSString *)token {
-    // Call your backend, then:
+// After backend purchase succeeds, present checkout with the transaction token:
+- (void)presentCheckoutWithTransactionToken:(NSString *)transactionToken {
     self.stage = OffsiteStageCheckout;
     [SpreedlyOffsiteCheckout presentWithTransactionToken:transactionToken];
 }
 
-// In SceneDelegate — handle redirect return:
+@end
+```
+
+In `SceneDelegate.m` — handle redirect return:
+
+```objc
+// Add this to your SceneDelegate.m
+@implementation SceneDelegate
+
 - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
     NSURL *url = URLContexts.allObjects.firstObject.URL;
     if (url) {
@@ -488,6 +502,8 @@ typedef NS_ENUM(NSInteger, OffsiteStage) {
         }
     }
 }
+
+@end
 ```
 
 ---
@@ -498,7 +514,7 @@ typedef NS_ENUM(NSInteger, OffsiteStage) {
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| `paymentMethodType` | Yes | `.paypal`, `.sprel` (for EBANX types like `.nupayRecurrent`, `.rapipago`, see [ebanx-apm.md](ebanx-apm.md)) |
+| `paymentMethodType` | Yes | `.paypal`, `.sprel` (for EBANX types like `.nupayRecurrent`, see [ebanx-apm.md](ebanx-apm.md)) |
 | `email` | No | Customer email |
 | `fullName` | No | Full name |
 | `firstName` | No | First name |
