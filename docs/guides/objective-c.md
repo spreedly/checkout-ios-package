@@ -57,7 +57,7 @@ The Spreedly iOS SDK provides full Objective-C support through UIKit wrappers. A
 
 ### Initialization
 
-Call `[Spreedly initializeSDK]` at app launch -- either in `AppDelegate application:didFinishLaunchingWithOptions:` or when setting up your root scene in `SceneDelegate scene:willConnectToSession:options:`. Scene-based apps (the default since iOS 14) should use `SceneDelegate`. Then call `Spreedly.setup(config:)` with your credentials before presenting any payment UI:
+Call `[Spreedly initializeSDK]` at app launch -- either in `AppDelegate application:didFinishLaunchingWithOptions:` or when setting up your root scene in `SceneDelegate scene:willConnectToSession:options:`. Scene-based apps (the default since iOS 14) should use `SceneDelegate`. Then call `[Spreedly setupWithConfig:]` with your credentials before presenting any payment UI:
 
 ```objc
 // In AppDelegate or SceneDelegate at launch:
@@ -761,14 +761,16 @@ Set globally or pass to individual components that support theme configuration. 
 
 Use `SpreedlyThemeManagerObjC` to set a global theme applied to all SDK components:
 
-| Method | Purpose |
+| Method (abbreviated) | Purpose |
 |--------|---------|
-| `setGlobalThemeWithLightConfig:darkConfig:` | Sets light and dark theme configs |
-| `setGlobalThemeWithConfig:` | Sets a single theme config |
-| `setGlobalThemeWithLightHexColors:darkHexColors:` | Sets themes using hex color strings |
-| `setGlobalThemeWithHexColors:` | Sets a single theme using hex colors |
-| `setGlobalThemeWithLightColors:darkColors:` | Sets themes using UIColor objects |
-| `setGlobalThemeWithColors:` | Sets a single theme using UIColor objects |
+| `setGlobalThemeWithLightConfig:darkConfig:` | Sets light and dark `SPLThemeConfig` instances |
+| `setGlobalThemeWithConfig:` | Sets a single `SPLThemeConfig` |
+| `setGlobalThemeWithHexColorsWithPrimaryColorHex:...borderRadius:` | Sets a single theme using hex color strings (full selector includes all color params) |
+| `setGlobalThemeWithLightHexColorsWithLightPrimaryColorHex:...borderRadius:` | Sets light + dark themes using hex color strings |
+| `setGlobalThemeWithColorsWithPrimaryColor:...borderRadius:` | Sets a single theme using `UIColor` objects |
+| `setGlobalThemeWithLightColorsWithLightPrimaryColor:...borderRadius:` | Sets light + dark themes using `UIColor` objects |
+
+> **Note:** The hex/UIColor selectors have long generated names from Swift. Use Xcode autocomplete to fill in the full parameter list. See the example below.
 
 Example:
 
@@ -824,12 +826,15 @@ Proper cleanup prevents memory leaks, dangling delegates, and stale validation s
 
 ### Reset Validation State
 
-Call `[[Spreedly shared] reset]` in `viewWillDisappear:` for custom form views that use `SPLTextFieldViewController`. This resets validation parameters to their defaults:
+Call `reset` in `viewWillDisappear:` for custom form views that use `SPLTextFieldViewController`. This stops secure value collection, clears error state, and removes Combine subscriptions. It does **not** reset validation parameters (`allowBlankName`, etc.) -- reset those individually if needed:
 
 ```objc
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[Spreedly shared] reset];
+    [[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankName value:NO];
+    [[Spreedly shared] setParamWithParameter:ValidationParamAllowExpiredDate value:NO];
+    [[Spreedly shared] setParamWithParameter:ValidationParamAllowBlankDate value:NO];
 }
 ```
 
@@ -882,7 +887,7 @@ For gateway-specific 3DS, remove the trigger observer in `dealloc`:
 
 | Pattern | When | How |
 |---------|------|-----|
-| Reset validation | Custom form dismissed | `[[Spreedly shared] reset]` in `viewWillDisappear:` |
+| Reset state + validation | Custom form dismissed | `[[Spreedly shared] reset]` + `setParamWithParameter:value:` in `viewWillDisappear:` |
 | Nil delegates | VC deallocated | Check `== self` before nil-ing in `dealloc` |
 | Remove child VCs | Custom form dismissed | `willMoveToParent:nil`, `removeFromSuperview`, `removeFromParent` in `viewDidDisappear:` |
 | Remove notification observers | VC deallocated | `removeObserver:` in `dealloc` |

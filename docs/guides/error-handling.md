@@ -60,17 +60,17 @@ Delivered asynchronously via `subscribeToPaymentResults` or the delegate, repres
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `isInitial` | Bool | `true` for the initial value emitted by `paymentResultPublisher` before any payment is attempted. Ignore this state when handling results; it indicates no payment has been processed yet. |
+| `isInitial` | Bool | `true` on the default/empty `PaymentResult`. The publisher is a passthrough stream and does not automatically emit an initial value -- you will only see `isInitial` if you check the subject's stored value or in testing. Treat it as "no outcome yet" and return early. |
 | `isSuccess` | Bool | Payment succeeded |
 | `isCanceled` | Bool | User canceled the payment flow (e.g., dismissed the form, canceled a 3DS challenge, or backed out of an APM flow). Handle this as a non-error state — allow the user to retry. |
 | `isFailure` | Bool | Payment failed |
 | `token` | String? | Payment method token |
 | `paymentResponse` | PaymentMethodResponse? | Full response object |
-| `shouldRetain` | Bool | Whether to save card (CardFormDropIn only) |
+| `shouldRetain` | Bool | Whether to save card (set by CardFormDropIn and by `createCreditCard(..., shouldRetain:)`) |
 | `failureDetails` | FailedDetails? | Error details when failed |
 | `state` | String? | Transaction state (for offsite/APM flows) |
 
-> **Three mutually exclusive states:** `isSuccess`, `isCanceled`, and `isFailure` are mutually exclusive. Exactly one will be `true` on any non-initial `PaymentResult`. Always check all three in your result handler. `isInitial` is a separate property that is only `true` for the first value emitted by the Combine publisher (`paymentResultPublisher`) — `subscribeToPaymentResults` filters this out automatically.
+> **Three mutually exclusive states:** `isSuccess`, `isCanceled`, and `isFailure` are mutually exclusive. Exactly one will be `true` on any non-initial `PaymentResult`. Always check all three in your result handler. `subscribeToPaymentResults` delivers every emitted result on the main queue without any filtering.
 
 ### FailedDetails
 
@@ -311,8 +311,12 @@ monitor.start(queue: DispatchQueue.global())
 For transient errors such as `rateLimited` or `serverError`, offer a retry option:
 
 ```swift
+switch details.apiError {
 case .rateLimited, .serverError:
     showRetryOption()
+default:
+    showPermanentError(details)
+}
 
 private func showRetryOption() {
     let alert = UIAlertController(

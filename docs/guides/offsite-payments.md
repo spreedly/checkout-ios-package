@@ -43,7 +43,7 @@ Offsite payments let users pay via external providers such as PayPal and Sprel. 
 - `paypal` - PayPal checkout
 - `sprel` - Sprel checkout
 
-For EBANX providers (Pix, Boleto, OXXO, NuPay, NuPay Recurrent), see [ebanx-apm.md](ebanx-apm.md). EBANX methods use `submitOffsitePayment` under the hood but have additional configuration requirements covered in that guide.
+For EBANX providers (Pix, Boleto, OXXO, NuPay), see [ebanx-apm.md](ebanx-apm.md). EBANX methods use `submitOffsitePayment` under the hood but have additional configuration requirements covered in that guide.
 
 ---
 
@@ -514,7 +514,7 @@ In `SceneDelegate.m` — handle redirect return:
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| `paymentMethodType` | Yes | `.paypal`, `.sprel` (for EBANX types like `.nupayRecurrent`, see [ebanx-apm.md](ebanx-apm.md)) |
+| `paymentMethodType` | Yes | `.paypal`, `.sprel` (for EBANX types like `.pix`, `.nupay`, see [ebanx-apm.md](ebanx-apm.md)) |
 | `email` | No | Customer email |
 | `fullName` | No | Full name |
 | `firstName` | No | First name |

@@ -67,6 +67,7 @@ Minimal example with a single card number field. Subscribe to payment results be
 
 ```swift
 import SwiftUI
+import SpreedlyCore
 import SpreedlyUI
 import Combine
 
@@ -196,6 +197,7 @@ struct CustomPaymentForm: View {
     @State private var lastNameValid = false
     @State private var isFormValid = false
     @State private var focusedFieldType: FormFieldType?
+    @State private var cancellable: AnyCancellable?
 
     private var fieldOrder: [FormFieldType] {
         [.firstName, .lastName, .cardNumber, .expirationMonth, .expirationYear, .cvc]
@@ -309,6 +311,16 @@ struct CustomPaymentForm: View {
         .padding()
         .onAppear {
             focusedFieldType = fieldOrder.first
+            cancellable = Spreedly.shared().subscribeToPaymentResults { result in
+                if result.isSuccess, let token = result.token {
+                    // Payment method tokenized -- send token to your backend
+                } else if result.isFailure {
+                    // Handle failure via result.failureDetails
+                }
+            }
+        }
+        .onDisappear {
+            cancellable?.cancel()
         }
     }
 
@@ -438,7 +450,7 @@ let processingResult = Spreedly.shared().createCreditCard(
         .email: "john.doe@example.com"
     ],
     metadata: ["orderId": "12345"],
-    shouldRetain: true  // pass true to retain the payment method for future use
+    shouldRetain: true  // sets PaymentResult.shouldRetain; backend must call retain API separately
 )
 ```
 
@@ -607,7 +619,7 @@ cardNumberField.view.translatesAutoresizingMaskIntoConstraints = NO;
 PaymentProcessingResult *result = [[Spreedly shared] createCreditCardObjCWithAdditionalFields:@{} metadata:@{}];
 ```
 
-Set `[Spreedly shared].paymentDelegate` to receive the token via `paymentDidComplete:` when `result.isProcessing` is true.
+Set `[Spreedly shared].paymentDelegate` **before** calling `createCreditCardObjC` to receive the token via `paymentDidComplete:`. When `result.isProcessing` is `YES`, the async tokenization is underway and the delegate will fire when it completes.
 
 **Cleanup (Objective-C):** Call `[[Spreedly shared] reset]` in `viewWillDisappear:` and remove child `SPLTextFieldViewController` instances in `viewDidDisappear:`. See [objective-c.md](objective-c.md#cleanup-and-teardown) for full cleanup patterns.
 
@@ -647,7 +659,7 @@ struct CustomPaymentForm: View {
 }
 ```
 
-In custom forms, pass the user's choice via the `shouldRetain` parameter on `createCreditCard(additionalFields:metadata:shouldRetain:)`. When `shouldRetain` is `true`, Spreedly retains the payment method for future use. The value is also available in `PaymentResult.shouldRetain` on success.
+In custom forms, pass the user's choice via the `shouldRetain` parameter on `createCreditCard(additionalFields:metadata:shouldRetain:)`. This sets `PaymentResult.shouldRetain` on success so your app knows the user opted in. **The SDK does not send a retain request to the Spreedly API** -- your backend must call the Spreedly retain endpoint separately if you want to vault the payment method for future use. See the example app's `RetainPaymentMethodAPIClient` for this pattern.
 
 ---
 
