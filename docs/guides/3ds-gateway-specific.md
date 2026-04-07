@@ -136,6 +136,7 @@ When showing error messages during gateway-specific flows, use your normal error
 |-------|---------|
 | `GatewaySpecific3DSTriggerCompletion` | The SDK needs your backend to call `/complete.json`. The event provides the transaction token. |
 | `ThreeDSChallengeResult` | Final 3DS outcome (success, failure, or canceled). Handle all three cases in your subscriber. |
+| `GatewaySpecific3DSStatusUpdate` (notification) | Fires on each status poll during the challenge phase. Optional — use only if you need to display live status to the user. |
 
 ---
 
@@ -145,7 +146,7 @@ The main integration point for gateway-specific 3DS flows.
 
 ### Starting a Flow
 
-- **`startFlow(transactionToken:statusResponse:presentingViewController:)`** — Starts the gateway-specific 3DS flow. Call this instead of presenting `DoChallengeIfNeeded` when you want programmatic control. Pass the transaction token, the status response from your backend, and the view controller that will present the challenge UI.
+- **`startFlow(transactionToken:statusResponse:presentingViewController:)`** — Starts the gateway-specific 3DS flow programmatically. **Most merchants should use `DoChallengeIfNeeded` (SwiftUI) or `DoChallengeIfNeededViewController` (UIKit) instead** — they handle status detection, flow routing, and presentation automatically. Use `startFlow` only when you need full programmatic control (e.g., custom UI around the challenge).
 
 ### Managing Flows
 
@@ -156,6 +157,23 @@ The main integration point for gateway-specific 3DS flows.
 ### Finalizing
 
 - **`finalizeTransaction(for:transaction:)`** — Pass the `/complete.json` response to the SDK so it can emit `ThreeDSChallengeResult`. Call this when `GatewaySpecific3DSTriggerCompletion` fires and your backend has returned a non-succeeded transaction.
+
+**Important:** The `transaction` parameter is `TransactionStatus` — a Codable struct defined by the SDK. When your backend returns the raw `/complete.json` JSON, you must extract the `"transaction"` key and decode it:
+
+```swift
+// Your backend returns the raw /complete.json response as Data
+let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
+guard let transactionDict = json?["transaction"] as? [String: Any] else { return }
+let transactionData = try JSONSerialization.data(withJSONObject: transactionDict)
+let transaction = try JSONDecoder().decode(TransactionStatus.self, from: transactionData)
+
+GatewaySpecific3DSIntegration.finalizeTransaction(
+    for: transactionToken,
+    transaction: transaction
+)
+```
+
+**For Objective-C**, use `GatewaySpecific3DSObjCBridge.finalizeTransactionForTransactionToken:completeResponseData:error:` instead — it accepts raw `NSData` from `/complete.json` and handles decoding internally.
 
 ---
 
@@ -213,8 +231,16 @@ var body: some View {
         // Trigger to call /complete.json on your backend.
         triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { event in
             Task {
-                // Your backend should call /complete.json and return the transaction.
-                let transaction = try await backend.complete(transactionToken: event.token)
+                // Your backend calls POST /v1/transactions/{token}/complete.json
+                // and returns the raw JSON response as Data.
+                let responseData = try await backend.complete(transactionToken: event.token)
+
+                // Decode the "transaction" key from the response into TransactionStatus.
+                let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
+                guard let txnDict = json?["transaction"] as? [String: Any] else { return }
+                let txnData = try JSONSerialization.data(withJSONObject: txnDict)
+                let transaction = try JSONDecoder().decode(TransactionStatus.self, from: txnData)
+
                 if transaction.state?.lowercased() == "succeeded" {
                     await MainActor.run {
                         successMessage = "Payment successful"
@@ -292,8 +318,15 @@ final class GatewaySpecific3DSViewController: UIViewController {
         // Trigger to call /complete.json on your backend.
         triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { [weak self] event in
             Task {
-                // Your backend should call /complete.json and return the transaction.
-                let transaction = try await backend.complete(transactionToken: event.token)
+                // Your backend calls POST /v1/transactions/{token}/complete.json
+                // and returns the raw JSON response as Data.
+                let responseData = try await backend.complete(transactionToken: event.token)
+
+                let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
+                guard let txnDict = json?["transaction"] as? [String: Any] else { return }
+                let txnData = try JSONSerialization.data(withJSONObject: txnDict)
+                let transaction = try JSONDecoder().decode(TransactionStatus.self, from: txnData)
+
                 if transaction.state?.lowercased() == "succeeded" {
                     await MainActor.run { self?.dismiss(animated: true) }
                     return
@@ -356,8 +389,15 @@ final class GatewaySpecific3DSViewController: UIViewController, SpreedlyThreeDSC
         ) { [weak self] note in
             guard let token = note.userInfo?["transactionToken"] as? String else { return }
             Task {
-                // Your backend should call /complete.json and return the transaction.
-                let transaction = try await backend.complete(transactionToken: token)
+                // Your backend calls POST /v1/transactions/{token}/complete.json
+                // and returns the raw JSON response as Data.
+                let responseData = try await backend.complete(transactionToken: token)
+
+                let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
+                guard let txnDict = json?["transaction"] as? [String: Any] else { return }
+                let txnData = try JSONSerialization.data(withJSONObject: txnDict)
+                let transaction = try JSONDecoder().decode(TransactionStatus.self, from: txnData)
+
                 if transaction.state?.lowercased() == "succeeded" {
                     await MainActor.run { /* Show success, dismiss challenge */ }
                     return
@@ -401,7 +441,7 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
 
 - **`GatewaySpecific3DSObjCBridge.finalizeTransactionForTransactionToken:completeResponseData:error:`** — Finalizes the transaction with raw response data from `/complete.json`. Pass the transaction token and the `NSData` from your backend's complete response. On success, the error pointer is set to `nil`; on failure, it is populated. The final result is delivered via `SpreedlyThreeDSChallengeDelegate` (`threeDSChallengeDidComplete:`).
 
-- **`GatewaySpecific3DSTriggerNotification`** — The notification name used to observe when the SDK needs your backend to call `/complete.json`. The `userInfo` dictionary contains `transactionToken` (the transaction token). In Swift, use `Notification.Name.gatewaySpecific3DSTriggerCompletion`; in Objective-C, use the string constant `@"GatewaySpecific3DSTriggerCompletion"`.
+- **`GatewaySpecific3DSTriggerCompletion`** — The notification name posted when the SDK needs your backend to call `/complete.json`. The `userInfo` dictionary contains `transactionToken` (the transaction token). In Swift, use `Notification.Name.gatewaySpecific3DSTriggerCompletion`; in Objective-C, observe the string `@"GatewaySpecific3DSTriggerCompletion"`.
 
 ```objc
 @interface GatewaySpecific3DSViewController () <SpreedlyThreeDSChallengeDelegate>

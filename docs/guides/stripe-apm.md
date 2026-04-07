@@ -163,7 +163,7 @@ After the user completes authentication in Safari (e.g., iDEAL bank auth), they 
 |---|--------|--------|---------|
 | 1 | Backend: create pending purchase | Merchant backend | Get `client_secret` and `transaction_token` |
 | 2 | `SpreedlyStripeAPMCheckout.present(config:)` / `present(config:from:)` | SpreedlyStripeAPM | Present Stripe PaymentSheet. The no-argument variant finds the topmost VC automatically. Use `present(config:from:)` to specify the presenting view controller. |
-| 3 | `SpreedlyStripeAPMCheckout.handleStripeReturnURL(_: URL) -> Bool` | SpreedlyStripeAPM | Handle Stripe redirect URL; returns `true` if the URL was handled |
+| 3 | `SpreedlyStripeAPMCheckout.handleStripeReturnURL(_ url: URL) -> Bool` | SpreedlyStripeAPM | Handle Stripe redirect URL; returns `true` if the URL was handled |
 | 4 | `subscribeToPaymentResults` | SpreedlyCore | Receive payment result |
 | 5 | `handleOffsiteReturn(url:)` | SpreedlyCore | Handle redirect when app re-opens |
 

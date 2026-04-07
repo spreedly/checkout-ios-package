@@ -727,6 +727,31 @@ Reset validation parameters in `onDisappear` to restore defaults when the recach
 
 ## Related Documentation
 
+## Core API (Advanced)
+
+If you need programmatic recaching without the built-in UI, use the Core API directly:
+
+```swift
+let result = Spreedly.shared().recachePaymentMethod(
+    paymentMethodToken: "saved_token",
+    allowBlankName: false,
+    allowExpiredDate: false,
+    allowBlankDate: false
+)
+
+if result.isProcessing {
+    // Recache request started -- await PaymentResult via subscribeToPaymentResults
+} else if result.isValidationFailed {
+    // CVV validation failed
+}
+```
+
+You must collect the CVV via `SecureValueContainer` before calling this method. The final recache result is delivered via `subscribeToPaymentResults` (Swift) or `paymentDelegate` (ObjC).
+
+> **Note:** `recachePaymentMethod` is Swift-only. Objective-C integrations must use `CVVRecachingViewController`.
+
+---
+
 | Guide | Description |
 |-------|-------------|
 | [getting-started.md](getting-started.md) | SDK installation and basic setup |

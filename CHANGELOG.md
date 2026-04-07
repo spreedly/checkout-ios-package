@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- HC-1302 Improved gateway-specific 3DS documentation: clarified DoChallengeIfNeeded as recommended entry point, added TransactionStatus JSON decoding guidance, corrected notification names and lifecycle documentation
+- HC-1302 Documentation accuracy audit: corrected PaymentResult, reset(), recaching, shouldRetain, ObjC theme methods, testing guide, and Stripe/Braintree parameter documentation across all merchant guides
+- HC-1302 Updated CocoaPods install snippets from `~> 1.2` to `~> 1.3` across README and getting-started guide
+
+### Removed
+- HC-1302 Removed unsupported NuPay Recurrent payment method from documentation (ebanx-apm, getting-started, offsite-payments guides)
+
 ## [1.3.0] - 2026-03-24
 
 ### Release Type

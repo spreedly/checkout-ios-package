@@ -441,7 +441,10 @@ let cancellable = Spreedly.shared().subscribeToPaymentResults { paymentResult in
 ### Objective-C Example
 
 ```objc
-[[Spreedly shared] setPaymentDelegate:self];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[Spreedly shared] setPaymentDelegate:self];
+}
 
 - (void)paymentDidComplete:(PaymentResult *)result {
     if (result.isSuccess) {

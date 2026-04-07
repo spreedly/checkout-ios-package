@@ -168,7 +168,9 @@ Fatal error: unable to find bundle named Stripe_StripePaymentSheet
 **Fix:** Ensure your backend creates the purchase first and returns the `clientSecret`. Pass all required config:
 ```swift
 let config = StripeAPMConfig(
+    publishableKey: "pk_test_...",
     clientSecret: clientSecret,
+    transactionToken: transactionToken,
     merchantDisplayName: "Your Store",
     returnURL: "yourapp://stripe-redirect"
 )
@@ -180,12 +182,12 @@ let config = StripeAPMConfig(
 
 ### 3DS challenge never appears
 
-**Cause:** `Forter3DS` framework is not linked, or `doChallengeIfNeeded` is not called after payment creation.
+**Cause:** `Forter3DS` framework is not linked, or the 3DS challenge view is not presented after payment creation.
 
 **Fix:**
 1. Verify `Forter3DS` is added as a dependency (see [3DS Global guide](3ds-global.md))
-2. After receiving a payment result that requires 3DS, call `doChallengeIfNeeded()`
-3. Subscribe to challenge results via `subscribeToThreeDSChallengeResults`
+2. After receiving a payment result that requires 3DS, present `DoChallengeIfNeeded(transactionToken:onDismiss:)` (SwiftUI) or `DoChallengeIfNeededViewController(transactionToken:onDismiss:)` (UIKit)
+3. Subscribe to challenge results via `subscribeToThreeDSChallengeResults` before presenting
 
 ### Gateway-specific 3DS: Safari opens but nothing happens
 

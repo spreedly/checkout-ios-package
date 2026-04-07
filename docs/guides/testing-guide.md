@@ -115,7 +115,7 @@ let config = SpreedlyConfig(
 Spreedly.setup(config: config)
 
 // Present CardFormDropIn in your SwiftUI view
-CardFormDropIn(additionalFields: [.firstName, .lastName])
+CardFormDropIn()
 ```
 
 See [Express Checkout](express-checkout.md) for the full integration.
@@ -125,7 +125,7 @@ See [Express Checkout](express-checkout.md) for the full integration.
 1. Initialize the SDK
 2. Add `SPLTextField` fields to your layout for card number, expiry, and CVV
 3. Fill in test card data
-4. Call `Spreedly.shared()?.createCreditCard(...)` with the form fields
+4. Call `Spreedly.shared().createCreditCard(...)` with the form fields
 5. Verify `.completed` via Combine publishers
 
 See [Custom Payment Forms](custom-payment-forms.md) for the full integration.
@@ -143,7 +143,7 @@ See [Recaching](recaching.md) for configuration details.
 
 1. Initialize the SDK with `forterSiteId` in your `SpreedlyConfig`
 2. Tokenize a card, send the token to your backend to create a purchase
-3. If the purchase response includes `sca_authentication`, call `Spreedly.shared()?.showThreeDSChallenge(transactionToken:)`
+3. If the purchase response includes `sca_authentication`, present `DoChallengeIfNeeded(transactionToken:)`
 4. Complete the challenge in the Forter UI
 5. Collect results from the 3DS Combine publisher
 6. Verify events in the Forter Portal under **Sandbox > Mobile Events Viewer**
@@ -156,7 +156,7 @@ See [3DS Global](3ds-global.md) for the full integration.
 2. Tokenize a card, send the token to your backend
 3. Create a purchase with `attempt_3dsecure: true` and a test amount (e.g., 3005 cents for a direct challenge)
 4. If the response includes `required_action`, use `GatewaySpecific3DSIntegration` to start the lifecycle
-5. The challenge opens in a `SFSafariViewController`
+5. The challenge opens in an `ASWebAuthenticationSession` (system-managed secure browser)
 6. Complete the challenge and verify the result via `GatewaySpecific3DSEvent`
 
 See [3DS Gateway-Specific](3ds-gateway-specific.md) for the full integration.
@@ -240,17 +240,13 @@ See [Error Handling](error-handling.md) for the full error type catalog and retr
 
 ### Enable SDK Logging
 
-Set the log level in your `SpreedlyConfig` to see SDK activity in the Xcode console:
+Enable debug logging to see SDK activity in the Xcode console:
 
 ```swift
-let config = SpreedlyConfig(
-    environmentKey: "your-test-environment-key",
-    // ... other params
-    logLevel: .debug
-)
+Spreedly.setLogLevel(.debug)
 ```
 
-Use `.debug` during development. Set to `.none` for production.
+Use `.debug` during development. Set to `.none` for production. Call this after `Spreedly.initializeSDK()`.
 
 ### Verify in the Spreedly Dashboard
 

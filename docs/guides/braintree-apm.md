@@ -73,7 +73,7 @@ Step 1: Backend creates purchase
         Response: transaction_token + client_token
 
 Step 2: Build BraintreeCheckoutConfig, subscribe to payment result, present
-        BraintreeCheckoutConfig(transactionToken, paymentType, merchantDisplayName, clientToken, amount, currency)
+        BraintreeCheckoutConfig(transactionToken, paymentType, merchantDisplayName, clientToken, amount, currencyCode)
         Spreedly.shared().subscribeToPaymentResults { ... }
         SpreedlyBraintreeCheckout.present(config:)
 

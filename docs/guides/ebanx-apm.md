@@ -39,7 +39,6 @@ EBANX payments (Pix, Boleto Bancario, OXXO, NuPay) use the same offsite flow as 
 | Boleto | `.boletoBancario` | Brazil | email, fullName, documentId, country("BR"), phoneNumber, address1, city, state, zip |
 | OXXO | `.oxxo` | Mexico | email, fullName, country("MX"), phoneNumber, address1, city, state, zip (NO documentId) |
 | NuPay | `.nupay` | Brazil | email, fullName, documentId, country("BR"), phoneNumber |
-| NuPay Recurrent | `.nupayRecurrent` | Brazil | email, fullName, documentId, country("BR"), phoneNumber |
 
 ---
 
@@ -644,7 +643,7 @@ In `SceneDelegate.m` — handle redirect return:
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
-| `paymentMethodType` | `OffsitePaymentMethodType` | Yes | `.pix`, `.boletoBancario`, `.oxxo`, `.nupay`, `.nupayRecurrent` |
+| `paymentMethodType` | `OffsitePaymentMethodType` | Yes | `.pix`, `.boletoBancario`, `.oxxo`, `.nupay` |
 | `email` | `String` | Yes | Customer email |
 | `fullName` | `String` | Yes | Customer full name |
 | `documentId` | `DocumentId` | Pix, Boleto, NuPay | CPF/CNPJ — use `DocumentId(key: .documentId, value: "...")` |

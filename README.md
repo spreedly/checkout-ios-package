@@ -48,13 +48,13 @@ Then add the products to your target:
 
 ```ruby
 # Podfile
-pod 'SpreedlyCore', '~> 1.2'
-pod 'SpreedlySecurity', '~> 1.2'
-pod 'SpreedlyUI', '~> 1.2'
+pod 'SpreedlyCore', '~> 1.3'
+pod 'SpreedlySecurity', '~> 1.3'
+pod 'SpreedlyUI', '~> 1.3'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', '~> 1.2'
-# pod 'SpreedlyBraintree', '~> 1.2'
+# pod 'SpreedlyStripeAPM', '~> 1.3'
+# pod 'SpreedlyBraintree', '~> 1.3'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.

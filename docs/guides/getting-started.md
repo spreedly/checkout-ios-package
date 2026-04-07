@@ -8,7 +8,7 @@ Set up the Spreedly iOS SDK in your project in under 15 minutes.
 
 1. [Prerequisites](#prerequisites)
 2. [Required Credentials](#required-credentials)
-3. [Installation](#installation)
+3. [Installation](#installation) — includes *one version for all modules*
 4. [Optional Dependencies](#optional-dependencies)
 5. [Required Info.plist Entries](#required-infoplist-entries)
 6. [Required App Setup](#required-app-setup)
@@ -66,6 +66,10 @@ struct ExampleCredentials {
 
 ## Installation
 
+### Use one package version for all Spreedly modules
+
+Distribution is **[checkout-ios-package](https://github.com/spreedly/checkout-ios-package)** (SwiftPM or CocoaPods). **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**, and optional modules (**SpreedlyStripeAPM**, **SpreedlyBraintree**) are released together under **one** version (for example `1.3.0`). Use the **same** resolved version for every Spreedly product in your app.
+
 ### Option 1: Swift Package Manager (Recommended)
 
 SPM distribution is from a separate repository: `https://github.com/spreedly/checkout-ios-package`.
@@ -85,7 +89,9 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.0")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.0"),
+    // Optional: add when using 3DS Global (Forter) — separate repo:
+    // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
 ],
 targets: [
     .target(
@@ -96,9 +102,8 @@ targets: [
             .product(name: "SpreedlyUI", package: "checkout-ios-package"),
             // Optional: add when using Stripe APM or Braintree (PayPal/Venmo)
             // .product(name: "SpreedlyStripeAPM", package: "checkout-ios-package"),
-            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package")
-            // Optional: add when using 3DS Global — add Forter3DS from Bitbucket (not in Spreedly package):
-            // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0"),
+            // .product(name: "SpreedlyBraintree", package: "checkout-ios-package"),
+            // Optional: add when using 3DS Global (Forter):
             // .product(name: "Forter3DS", package: "forter-ios")
         ]
     )
@@ -117,12 +122,12 @@ Add to your `Podfile`. Source is `https://github.com/spreedly/checkout-ios-packa
 target 'YourApp' do
   use_frameworks!
 
-  pod 'SpreedlyCore', '~> 1.2'
-  pod 'SpreedlySecurity', '~> 1.2'
-  pod 'SpreedlyUI', '~> 1.2'
+  pod 'SpreedlyCore', '~> 1.3'
+  pod 'SpreedlySecurity', '~> 1.3'
+  pod 'SpreedlyUI', '~> 1.3'
   # Add these only if needed:
-  # pod 'SpreedlyStripeAPM', '~> 1.2'
-  # pod 'SpreedlyBraintree', '~> 1.2'
+  # pod 'SpreedlyStripeAPM', '~> 1.3'
+  # pod 'SpreedlyBraintree', '~> 1.3'
 end
 ```
 
@@ -213,8 +218,8 @@ Add these only when you need the corresponding features:
 | Feature | Package | URL | Version |
 |---------|---------|-----|---------|
 | 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
-| Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | 1.2.x |
-| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.2.x |
+| Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | 1.3.0+ |
+| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.3.0+ |
 
 **Forter3DS (3DS Global):** Required for 3DS authentication. Add Forter3DS directly from Forter's Bitbucket repository. **Do not use** `pod 'SpreedlyForter3DS'` — use the Forter Bitbucket URL below. A dedicated `SpreedlyForter3DS` module is planned for a future release but is not yet available for standard CocoaPods usage.
 
@@ -579,9 +584,9 @@ Spreedly.setLogger(nil)
 > **Note:** The logging configuration APIs (`configureLogging`, `setLogLevel`, `setDatadogLogLevel`) are Swift-only. `LogLevel` is not `@objc`-exposed. From Objective-C, use the delegate-based `SpreedlyLogger` protocol to receive log output, or configure logging from your Swift bridging layer.
 
 ```objc
-// Set a custom logger that conforms to SpreedlyLogger protocol
-id<SpreedlyLogger> myLogger = [[MyCustomLogger alloc] init];
-[[Spreedly shared] setLogger:myLogger];
+// Logging configuration is Swift-only. From Objective-C, implement logging
+// in a Swift bridging file that calls Spreedly.setLogger() and Spreedly.setLogLevel().
+// Your custom logger class must conform to the SpreedlyLogger protocol in Swift.
 ```
 
 **React Native:** Set `sdkPlatform` to `.reactNative` in `SpreedlyConfig` so telemetry events and payment method `source` fields are tagged correctly. All logging APIs above work the same from the native bridge.
@@ -875,7 +880,7 @@ Switch between environments by changing the `environmentKey` in `SpreedlyConfig`
 |---------|----------------|------------|---------------|-------------|--------------|
 | **Stripe** | iDEAL, Bancontact, EPS, P24, SEPA Debit | `SpreedlyStripeAPM` | No | Native PaymentSheet | Result state |
 | **Braintree** | PayPal, Venmo | `SpreedlyBraintree` | No | Native Braintree UI | Nonce |
-| **EBANX** | Pix, Boleto, OXXO, NuPay, NuPay Recurrent | `SpreedlyUI` (offsite) | Yes | Safari | Token |
+| **EBANX** | Pix, Boleto, OXXO, NuPay | `SpreedlyUI` (offsite) | Yes | Safari | Token |
 | **Offsite** | PayPal, Sprel | `SpreedlyUI` (offsite) | Yes | Safari | Token |
 | **Gateway-Specific 3DS** | Card (e.g. Worldpay) | `SpreedlyCore` | N/A | Safari (challenge) | Transaction result |
 
@@ -938,7 +943,7 @@ When you need to reset SDK state — for example, on user logout, environment sw
 Spreedly.shared().reset()
 ```
 
-This clears internal state, cancels any pending operations, and resets validation parameters. After calling `reset()`, you must call `initializeSDK()` and `setup(config:)` again before making any further SDK calls.
+This clears internal state (secure collection, validation errors, Combine subscriptions on the instance) and resets validation parameters. The SDK singleton and configuration remain intact -- you do not need to call `initializeSDK()` or `setup(config:)` again. Re-subscribe to `paymentResultPublisher` if your previous subscriptions were cancelled.
 
 If you only need to reset validation parameters (e.g., to allow re-submission after a validation failure), use:
 
