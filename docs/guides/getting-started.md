@@ -70,6 +70,8 @@ struct ExampleCredentials {
 
 Distribution is **[checkout-ios-package](https://github.com/spreedly/checkout-ios-package)** (SwiftPM or CocoaPods). **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**, and optional modules (**SpreedlyStripeAPM**, **SpreedlyBraintree**) are released together under **one** version (for example `1.3.0`). Use the **same** resolved version for every Spreedly product in your app.
 
+**SDK maintainers** (bumping versions in git): see [Versioning](../development/VERSIONING.md) — you edit **`Version.xcconfig`** and **`SpreedlyVersion.swift`**, then run the **Release SDK** workflow so **checkout-ios-package** gets the matching **`X.Y.Z`**.
+
 ### Option 1: Swift Package Manager (Recommended)
 
 SPM distribution is from a separate repository: `https://github.com/spreedly/checkout-ios-package`.

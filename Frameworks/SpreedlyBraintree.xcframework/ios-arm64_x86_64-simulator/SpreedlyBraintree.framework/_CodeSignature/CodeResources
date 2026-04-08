@@ -10,11 +10,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		6cFuR5dIGsqUtoDpcpoVio7YILk=
+		upJtlO8KEtbifQVbhgWFEeR5e2k=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		VCSCL38opnLTOkrw2O/RBNtfUdE=
+		uq/9qn4CXnDWFubokvVhf0NHuQs=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -30,11 +30,11 @@
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		eeCqAGu5byS4RhHdk4g4+gZPgyM=
+		JezogPJGCUygGoBOnVuXh6I3FE8=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		VCSCL38opnLTOkrw2O/RBNtfUdE=
+		uq/9qn4CXnDWFubokvVhf0NHuQs=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		0h9qjRi0RH2AihIrv8moVfD6/BQ=
+		Y2J7yfB65nYCQKdfIlFX6KaWMA0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -79,7 +79,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			aglVkAV6ovFoXAgpjMtNhzoK3ovT8WNb4+FRD/uD+ec=
+			i20eEejo8LqkbIWL5i/lzO6bfshQ1CgrjE0UlHPkWB8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -107,14 +107,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WH7lmZdLdpsKrNnJwZCZvNGh66wSr/hvvHCvdddMW1U=
+			VQhOTtGIY6h5XtXhpF/QNnZ+Kn1ngKTrNXVjOjeb6XQ=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			aglVkAV6ovFoXAgpjMtNhzoK3ovT8WNb4+FRD/uD+ec=
+			i20eEejo8LqkbIWL5i/lzO6bfshQ1CgrjE0UlHPkWB8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -142,7 +142,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			p1lGA0jbdhkf95Abe7M5RlO0AYNddJAAm8SLkQLJDXY=
+			qJnciNiULMuCotwhA9C+lXYz9wPgvNWlAI47fJZ3Lck=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

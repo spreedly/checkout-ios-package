@@ -772,6 +772,13 @@
       "offset": 283,
       "length": 39,
       "value": "\"https:\/\/spreedly.com\/braintree\/return\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyBraintree\/SpreedlyBraintree\/Internal\/BraintreeFlowController.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1012,
+      "length": 2,
+      "value": "60"
     }
   ]
 }

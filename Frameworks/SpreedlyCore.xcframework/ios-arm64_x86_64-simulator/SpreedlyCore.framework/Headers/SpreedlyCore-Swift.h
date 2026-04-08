@@ -471,10 +471,8 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypePix = 1,
   OffsitePaymentMethodTypeBoletoBancario = 2,
   OffsitePaymentMethodTypeNupay = 3,
-  OffsitePaymentMethodTypeNupayRecurrent = 4,
-  OffsitePaymentMethodTypeOxxo = 5,
-  OffsitePaymentMethodTypeRapipago = 6,
-  OffsitePaymentMethodTypeSprel = 7,
+  OffsitePaymentMethodTypeOxxo = 4,
+  OffsitePaymentMethodTypeSprel = 5,
 };
 
 /// Represents the immediate result of a payment processing attempt.
@@ -1585,10 +1583,8 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypePix = 1,
   OffsitePaymentMethodTypeBoletoBancario = 2,
   OffsitePaymentMethodTypeNupay = 3,
-  OffsitePaymentMethodTypeNupayRecurrent = 4,
-  OffsitePaymentMethodTypeOxxo = 5,
-  OffsitePaymentMethodTypeRapipago = 6,
-  OffsitePaymentMethodTypeSprel = 7,
+  OffsitePaymentMethodTypeOxxo = 4,
+  OffsitePaymentMethodTypeSprel = 5,
 };
 
 /// Represents the immediate result of a payment processing attempt.

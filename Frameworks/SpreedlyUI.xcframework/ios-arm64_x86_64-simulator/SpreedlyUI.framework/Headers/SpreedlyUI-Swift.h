@@ -391,10 +391,8 @@ typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
   OffsiteGatewayPix = 2,
   OffsiteGatewayBoletoBancario = 3,
   OffsiteGatewayNupay = 4,
-  OffsiteGatewayNupayRecurrent = 5,
-  OffsiteGatewayOxxo = 6,
-  OffsiteGatewayRapipago = 7,
-  OffsiteGatewaySprel = 8,
+  OffsiteGatewayOxxo = 5,
+  OffsiteGatewaySprel = 6,
 };
 
 enum SpreedlySubmitLabel : NSInteger;
@@ -1027,10 +1025,8 @@ typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
   OffsiteGatewayPix = 2,
   OffsiteGatewayBoletoBancario = 3,
   OffsiteGatewayNupay = 4,
-  OffsiteGatewayNupayRecurrent = 5,
-  OffsiteGatewayOxxo = 6,
-  OffsiteGatewayRapipago = 7,
-  OffsiteGatewaySprel = 8,
+  OffsiteGatewayOxxo = 5,
+  OffsiteGatewaySprel = 6,
 };
 
 enum SpreedlySubmitLabel : NSInteger;
