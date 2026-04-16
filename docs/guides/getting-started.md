@@ -91,7 +91,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 dependencies: [
     .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.0"),
     // Optional: add when using 3DS Global (Forter) — separate repo:
-    // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
+    // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", exact: "2.1.0")
 ],
 targets: [
     .target(
@@ -202,6 +202,53 @@ end
 
 The `cocoapods_stripe_bundle_patcher.rb` script is shipped inside the `SpreedlyStripeAPM` pod via `preserve_paths`, so `installer.sandbox.pod_dir` locates it automatically — no manual file copy or path setup needed. This works for both remote (`:git =>`) and local (`:path =>`) pod installs.
 
+#### CocoaPods with Custom xcconfig Files
+
+> **Skip this section** if your app does not use custom `.xcconfig` files. Most apps don't — CocoaPods handles everything automatically and no extra setup is needed.
+
+If your app uses a custom `.xcconfig` file to manage build settings (API keys, server URLs, feature flags, etc.), you need an extra step when adding CocoaPods.
+
+**Why this is needed:** Xcode allows only **one** base configuration file (xcconfig) per build configuration (Debug, Release). This is set under **Project > Info > Configurations** in Xcode. When you run `pod install`, CocoaPods needs to set its generated xcconfig (e.g. `Pods-YourApp.debug.xcconfig`) as the base configuration — this file contains framework search paths, linker flags, and other build settings that make pods work.
+
+If the slot is empty, CocoaPods claims it automatically. But if you already have a custom xcconfig set (e.g. `MyKeys.xcconfig`), CocoaPods shows a warning:
+
+> *"CocoaPods did not set the base configuration of your project because your project already has a custom config set."*
+
+Without both configs active, either your custom values (API keys, URLs) are missing at runtime, or CocoaPods frameworks fail to link.
+
+**The fix — wrapper xcconfig files:** Create a thin wrapper file for each build configuration that `#include`s both your custom config and the CocoaPods config. Set the wrapper as the base configuration in Xcode.
+
+**Step 1:** Create a `Config/` folder in your project and add two files:
+
+`Config/App-Debug.xcconfig`:
+```
+#include "../MyKeys.xcconfig"
+#include "../../Pods/Target Support Files/Pods-YourApp/Pods-YourApp.debug.xcconfig"
+```
+
+`Config/App-Release.xcconfig`:
+```
+#include "../MyKeys.xcconfig"
+#include "../../Pods/Target Support Files/Pods-YourApp/Pods-YourApp.release.xcconfig"
+```
+
+Adjust the `#include` paths to match your project structure. The paths are relative to the wrapper file's location.
+
+**Step 2:** In Xcode, go to **Project > Info > Configurations** and set:
+- Debug → `App-Debug.xcconfig`
+- Release → `App-Release.xcconfig`
+
+**Step 3:** Run `pod install`. CocoaPods will warn that a custom config is already set — this is expected and safe. Your wrapper includes the Pods config via `#include`, so all CocoaPods build settings are still applied.
+
+At build time, Xcode reads the wrapper file, which pulls in both your custom values (for `$(MY_API_KEY)` substitution in Info.plist) and the CocoaPods linker flags (for framework linking). Both sources merge through `#include`.
+
+> **Tip:** Use `#include?` (with a `?`) if the included file may not exist in some environments (e.g. CI where secrets are injected differently):
+> ```
+> #include? "../MyKeys.xcconfig"
+> #include "../../Pods/Target Support Files/Pods-YourApp/Pods-YourApp.debug.xcconfig"
+> ```
+> `#include?` silently skips the file if it's missing (supported since Xcode 8).
+
 ### Option 3: Manual Framework Integration
 
 1. Download frameworks from GitHub releases
@@ -217,13 +264,13 @@ Add these only when you need the corresponding features:
 
 | Feature | Package | URL | Version |
 |---------|---------|-----|---------|
-| 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0+ |
+| 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0 (exact) |
 | Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | 1.3.0+ |
 | Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.3.0+ |
 
 **Forter3DS (3DS Global):** Required for 3DS authentication. Add Forter3DS directly from Forter's Bitbucket repository. **Do not use** `pod 'SpreedlyForter3DS'` — use the Forter Bitbucket URL below. A dedicated `SpreedlyForter3DS` module is planned for a future release but is not yet available for standard CocoaPods usage.
 
-- **SPM:** Add `Forter3DS` directly from `https://bitbucket.org/forter-mobile/forter-ios.git` (2.1.0+) to your app target with **Embed & Sign**. File → Add Package Dependencies → enter the URL → add the `Forter3DS` product to your app target.
+- **SPM:** Add `Forter3DS` directly from `https://bitbucket.org/forter-mobile/forter-ios.git` (exactly 2.1.0) to your app target with **Embed & Sign**. File → Add Package Dependencies → enter the URL → add the `Forter3DS` product to your app target.
 - **CocoaPods:** Add `Forter3DS` directly from Forter's Bitbucket repository (it is not on CocoaPods trunk):
 
 ```ruby

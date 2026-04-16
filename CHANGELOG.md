@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HC-1302 Improved gateway-specific 3DS documentation: clarified DoChallengeIfNeeded as recommended entry point, added TransactionStatus JSON decoding guidance, corrected notification names and lifecycle documentation
 - HC-1302 Documentation accuracy audit: corrected PaymentResult, reset(), recaching, shouldRetain, ObjC theme methods, testing guide, and Stripe/Braintree parameter documentation across all merchant guides
 - HC-1302 Updated CocoaPods install snippets from `~> 1.2` to `~> 1.3` across README and getting-started guide
+- HC-1311 Pin Forter3DS to exact 2.1.0 across getting-started, 3ds-global, and README
+- HC-1311 Add step-by-step flow annotations to 3ds-gateway-specific code examples
+- HC-1311 Add CocoaPods custom xcconfig guide (getting-started) and troubleshooting entry
+- HC-1311 Add Forter3DS "exactly 2.1.0" callout to README Known Issues section
 
 ### Removed
 - HC-1302 Removed unsupported NuPay Recurrent payment method from documentation (ebanx-apm, getting-started, offsite-payments guides)

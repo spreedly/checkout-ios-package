@@ -167,6 +167,8 @@ More information about versioning and the SDK lifecycle can be found in the [CHA
 
 - **3DS is not a separate module:** Unlike the Android SDK (which publishes `checkout-threeds` as a standalone module), 3DS/Forter support on iOS is embedded within `SpreedlyCore` via weak linking. Merchants must add `Forter3DS` as a direct dependency to their app target for 3DS to function. Extracting 3DS into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific) is planned for a future release.
 
+> **Forter3DS (3DS Global):** Forter3DS is **not** part of the Spreedly package. Add it directly from Forter's Bitbucket: `https://bitbucket.org/forter-mobile/forter-ios.git` (exactly 2.1.0). Without it, the app crashes when 3DS is triggered.
+
 - **Checksum validation workflows vary by release artifact set:** SHA-256 checksum files are published for core and optional modules. Always verify checksums for the specific artifacts your app consumes.
 
 - **No GPG artifact signing:** The Android SDK signs release artifacts with GPG. The iOS SDK currently relies on SHA-256 checksums for integrity verification. GPG signing is planned for a future release.
