@@ -208,39 +208,60 @@ var body: some View {
     // Your payment UI
     .sheet(isPresented: $show3DSChallenge) {
         if let token = transactionToken {
+            // The SDK shows a loading spinner, runs device fingerprint in
+            // a hidden WebView, and auto-presents the challenge if needed.
             DoChallengeIfNeeded(transactionToken: token) {
                 show3DSChallenge = false
             }
         }
     }
     .onAppear {
-        // Final 3DS outcome.
+        // ── STEP 1: Subscribe to events BEFORE presenting the challenge ──
+        // Both subscriptions must be active before DoChallengeIfNeeded is
+        // shown. If you subscribe after presenting, you may miss the
+        // trigger or the final result.
+
+        // Subscribe to the final 3DS outcome (success / failure / cancel).
+        // This fires once per flow, after the SDK determines the terminal state.
         challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { result in
             if result.isSuccess {
+                // Authentication succeeded — payment is authorized.
                 successMessage = "Payment successful"
                 show3DSChallenge = false
             } else if result.isFailure {
+                // Authentication failed, or the user tapped "Cancel" in the
+                // auth session. Check result.error for "3DS challenge canceled
+                // by user" if you want to distinguish user cancellation.
                 errorMessage = result.error?.localizedDescription ?? "Payment failed"
                 show3DSChallenge = false
             } else if result.isCanceled {
+                // Only emitted when cancelFlow() is called programmatically.
                 errorMessage = "Payment canceled"
                 show3DSChallenge = false
             }
         }
 
-        // Trigger to call /complete.json on your backend.
+        // ── STEP 2: Subscribe to the trigger event ──
+        // After the SDK finishes device fingerprint collection, it emits this
+        // trigger to tell your app: "call /complete.json on your backend now."
+        // This is the handoff: SDK → your app → your backend → Spreedly API.
         triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { event in
             Task {
+                // ── STEP 3: Call your backend to invoke /complete.json ──
                 // Your backend calls POST /v1/transactions/{token}/complete.json
                 // and returns the raw JSON response as Data.
                 let responseData = try await backend.complete(transactionToken: event.token)
 
-                // Decode the "transaction" key from the response into TransactionStatus.
+                // Decode the "transaction" key from the /complete.json response.
+                // The SDK needs a TransactionStatus to determine next steps.
                 let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
                 guard let txnDict = json?["transaction"] as? [String: Any] else { return }
                 let txnData = try JSONSerialization.data(withJSONObject: txnDict)
                 let transaction = try JSONDecoder().decode(TransactionStatus.self, from: txnData)
 
+                // ── STEP 4: Check if the transaction is already terminal ──
+                // If /complete.json returned "succeeded", no challenge is needed.
+                // Show success and skip finalize entirely.
                 if transaction.state?.lowercased() == "succeeded" {
                     await MainActor.run {
                         successMessage = "Payment successful"
@@ -248,6 +269,10 @@ var body: some View {
                     }
                     return
                 }
+
+                // ── STEP 5: Finalize — hand the response back to the SDK ──
+                // For non-succeeded states the SDK checks whether a user-facing
+                // challenge is required and presents it automatically.
                 await MainActor.run {
                     GatewaySpecific3DSIntegration.finalizeTransaction(
                         for: event.token,
@@ -258,14 +283,17 @@ var body: some View {
         }
     }
     .onDisappear {
+        // Cancel subscriptions when leaving the view. Be careful not to
+        // cancel while the auth session is still showing — see Troubleshooting.
         challengeCancellable?.cancel()
         triggerCancellable?.cancel()
     }
 }
 
-// Call this after your purchase/authorize response.
-// PurchaseResponse is YOUR app's model for the backend response -- not an SDK type.
+// ── ENTRY POINT: Call this after your backend returns a purchase response ──
+// PurchaseResponse is YOUR app's model for the backend response — not an SDK type.
 func handlePurchaseResponse(_ response: PurchaseResponse) {
+    // Bail early on backend errors.
     guard response.errors?.isEmpty ?? true else {
         errorMessage = "Purchase failed"
         return
@@ -276,6 +304,10 @@ func handlePurchaseResponse(_ response: PurchaseResponse) {
     }
     transactionToken = transaction.token
 
+    // Route based on the purchase response state:
+    // • "succeeded"            → 3DS not required, payment is done.
+    // • "pending" or device_fingerprint required → present DoChallengeIfNeeded
+    //   to kick off the 3DS flow (device fingerprint → trigger → challenge).
     let state = transaction.state?.lowercased() ?? ""
     let requiredAction = transaction.scaAuthentication?.requiredAction?.lowercased() ?? ""
     if state == "succeeded" {
@@ -301,36 +333,46 @@ final class GatewaySpecific3DSViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Final 3DS outcome.
+        // ── STEP 1: Subscribe to events BEFORE presenting the challenge ──
+        // Both subscriptions must be active before the challenge VC is
+        // presented, otherwise you may miss the trigger or the final result.
+
+        // Subscribe to the final 3DS outcome (fires once per flow).
         challengeCancellable = Spreedly.shared().subscribeToThreeDSChallengeResults { [weak self] result in
             if result.isSuccess {
-                // show success
+                // Authentication succeeded — payment is authorized.
                 self?.dismiss(animated: true)
             } else if result.isFailure {
-                // show error
+                // Authentication failed or user tapped "Cancel" in the
+                // auth session. Check result.error for details.
                 self?.dismiss(animated: true)
             } else if result.isCanceled {
-                // show cancel
+                // Only emitted when cancelFlow() is called programmatically.
                 self?.dismiss(animated: true)
             }
         }
 
-        // Trigger to call /complete.json on your backend.
+        // ── STEP 2: Subscribe to the trigger event ──
+        // Fires when device fingerprint is done and the SDK needs your
+        // backend to call /complete.json.
         triggerCancellable = Spreedly.shared().subscribeToGatewaySpecific3DSTriggerCompletion { [weak self] event in
             Task {
-                // Your backend calls POST /v1/transactions/{token}/complete.json
-                // and returns the raw JSON response as Data.
+                // ── STEP 3: Call your backend to invoke /complete.json ──
                 let responseData = try await backend.complete(transactionToken: event.token)
 
+                // Decode the "transaction" key from the /complete.json response.
                 let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
                 guard let txnDict = json?["transaction"] as? [String: Any] else { return }
                 let txnData = try JSONSerialization.data(withJSONObject: txnDict)
                 let transaction = try JSONDecoder().decode(TransactionStatus.self, from: txnData)
 
+                // ── STEP 4: If already succeeded, no challenge needed ──
                 if transaction.state?.lowercased() == "succeeded" {
                     await MainActor.run { self?.dismiss(animated: true) }
                     return
                 }
+
+                // ── STEP 5: Finalize — SDK determines if challenge is required ──
                 await MainActor.run {
                     GatewaySpecific3DSIntegration.finalizeTransaction(
                         for: event.token,
@@ -341,12 +383,15 @@ final class GatewaySpecific3DSViewController: UIViewController {
         }
     }
 
-    // PurchaseResponse is YOUR app's model for the backend response -- not an SDK type.
+    // ── ENTRY POINT: Route based on the purchase response state ──
+    // PurchaseResponse is YOUR app's model for the backend response — not an SDK type.
     func handlePurchaseResponse(_ response: PurchaseResponse) {
         guard response.errors?.isEmpty ?? true,
               let transaction = response.transaction else { return }
         transactionToken = transaction.token
 
+        // "succeeded" → 3DS not required; "pending" or device_fingerprint
+        // required → present the challenge to kick off the 3DS flow.
         let state = transaction.state?.lowercased() ?? ""
         let requiredAction = transaction.scaAuthentication?.requiredAction?.lowercased() ?? ""
         if state == "succeeded" { return }
@@ -357,6 +402,8 @@ final class GatewaySpecific3DSViewController: UIViewController {
 
     private func presentChallenge() {
         guard let token = transactionToken else { return }
+        // DoChallengeIfNeededViewController handles device fingerprint,
+        // polling, trigger, and challenge presentation internally.
         let vc = DoChallengeIfNeededViewController(
             transactionToken: token,
             onDismiss: { [weak self] in self?.dismiss(animated: true) }
@@ -379,29 +426,41 @@ final class GatewaySpecific3DSViewController: UIViewController, SpreedlyThreeDSC
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // ── STEP 1: Set delegate BEFORE presenting the challenge ──
+        // The delegate receives the final 3DS outcome via
+        // threeDSChallengeDidComplete(_:).
         Spreedly.shared().threeDSChallengeDelegate = self
 
-        // Notification posted when the SDK needs your backend to call /complete.json.
+        // ── STEP 2: Observe the trigger notification ──
+        // Fires when device fingerprint is done and the SDK needs your
+        // backend to call /complete.json.
         triggerObserver = NotificationCenter.default.addObserver(
             forName: .gatewaySpecific3DSTriggerCompletion,
             object: nil,
             queue: .main
         ) { [weak self] note in
+            // The notification carries the transaction token in userInfo.
+            // In multi-flow apps, compare this token against the one you're
+            // tracking to avoid handling triggers from unrelated flows.
             guard let token = note.userInfo?["transactionToken"] as? String else { return }
             Task {
-                // Your backend calls POST /v1/transactions/{token}/complete.json
-                // and returns the raw JSON response as Data.
+                // ── STEP 3: Call your backend to invoke /complete.json ──
                 let responseData = try await backend.complete(transactionToken: token)
 
+                // Decode the "transaction" key from the /complete.json response.
                 let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any]
                 guard let txnDict = json?["transaction"] as? [String: Any] else { return }
                 let txnData = try JSONSerialization.data(withJSONObject: txnDict)
                 let transaction = try JSONDecoder().decode(TransactionStatus.self, from: txnData)
 
+                // ── STEP 4: If already succeeded, no challenge needed ──
                 if transaction.state?.lowercased() == "succeeded" {
                     await MainActor.run { /* Show success, dismiss challenge */ }
                     return
                 }
+
+                // ── STEP 5: Finalize — SDK determines if challenge is required ──
                 await MainActor.run {
                     GatewaySpecific3DSIntegration.finalizeTransaction(
                         for: token,
@@ -418,14 +477,16 @@ final class GatewaySpecific3DSViewController: UIViewController, SpreedlyThreeDSC
         }
     }
 
-    // Final 3DS outcome.
+    // ── STEP 6: Final 3DS outcome delivered via delegate ──
     func threeDSChallengeDidComplete(_ result: ThreeDSChallengeResult) {
         if result.isSuccess {
-            // show success
+            // Authentication succeeded — payment is authorized.
         } else if result.isFailure {
-            // show error
+            // Authentication failed or user tapped "Cancel" in the auth
+            // session. Check result.error for "3DS challenge canceled by
+            // user" to distinguish user cancellation from other failures.
         } else if result.isCanceled {
-            // show cancel
+            // Only emitted when cancelFlow() is called programmatically.
         }
     }
 }
@@ -454,16 +515,22 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Set delegate before presenting. Delegate receives final 3DS outcome.
+    // ── STEP 1: Set delegate BEFORE presenting the challenge ──
+    // The delegate receives the final 3DS outcome via
+    // threeDSChallengeDidComplete:.
     [Spreedly shared].threeDSChallengeDelegate = self;
 
-    // Notification posted when the SDK needs your backend to call /complete.json.
+    // ── STEP 2: Observe the trigger notification ──
+    // Fires when device fingerprint is done and the SDK needs your
+    // backend to call /complete.json.
     __weak typeof(self) weakSelf = self;
     self.gatewaySpecificTriggerObserver = [[NSNotificationCenter defaultCenter]
         addObserverForName:@"GatewaySpecific3DSTriggerCompletion"
                     object:nil
                      queue:[NSOperationQueue mainQueue]
                 usingBlock:^(NSNotification *note) {
+                    // userInfo carries the transaction token. In multi-flow
+                    // apps, compare against the token you're tracking.
                     NSString *transactionToken = note.userInfo[@"transactionToken"];
                     if (!transactionToken.length) return;
                     [weakSelf handleGatewaySpecificTriggerWithToken:transactionToken];
@@ -472,6 +539,8 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
 
 - (void)presentChallenge {
     if (!self.transactionToken) return;
+    // DoChallengeIfNeededViewController handles device fingerprint,
+    // polling, trigger, and challenge presentation internally.
     DoChallengeIfNeededViewController *challengeVC = [[DoChallengeIfNeededViewController alloc]
         initWithTransactionToken:self.transactionToken
         onDismiss:^{
@@ -480,12 +549,14 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
     [self presentViewController:challengeVC animated:YES completion:nil];
 }
 
+// ── STEP 3: Trigger received — device fingerprint is done ──
+// Call your backend to invoke /complete.json, then hand the response
+// back to the SDK via the ObjC bridge.
 - (void)handleGatewaySpecificTriggerWithToken:(NSString *)transactionToken {
-    // Call your backend to invoke POST https://core.spreedly.com/v1/transactions/{token}/complete.json
     [yourBackend completeTransactionWithToken:transactionToken
                                  completion:^(NSData *responseData, NSError *error) {
         if (error) {
-            // Handle error, dismiss challenge
+            // Handle backend error, dismiss challenge
             return;
         }
         if (!responseData) {
@@ -493,16 +564,19 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
             return;
         }
 
-        // Parse the /complete.json response using your own model (PurchaseResponse is not part of the SDK)
+        // ── STEP 4: Check if the transaction is already terminal ──
+        // PurchaseResponse is YOUR app's model — not an SDK type.
         NSError *parseErr = nil;
         PurchaseResponse *completeResponse = [PurchaseResponse fromJSONData:responseData error:&parseErr];
         if (completeResponse.transaction &&
             [[completeResponse.transaction.state lowercaseString] isEqualToString:@"succeeded"]) {
-            // Show success, dismiss challenge
+            // No challenge needed — show success and exit the flow.
             return;
         }
 
-        // Otherwise finalize with the raw response data.
+        // ── STEP 5: Finalize — pass raw response data to the ObjC bridge ──
+        // The bridge decodes TransactionStatus internally and determines
+        // whether a user-facing challenge is required.
         NSError *finalizeError = nil;
         [GatewaySpecific3DSObjCBridge finalizeTransactionForTransactionToken:transactionToken
                                                           completeResponseData:responseData
@@ -510,7 +584,7 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
         if (finalizeError) {
             // Handle finalize error
         }
-        // Final result delivered via delegate
+        // Final result delivered via delegate (threeDSChallengeDidComplete:)
     }];
 }
 
@@ -521,14 +595,15 @@ Set the delegate before presenting. Use `NSNotificationCenter` to observe `Gatew
     }
 }
 
-// Implement delegate (final 3DS outcome)
+// ── STEP 6: Final 3DS outcome delivered via delegate ──
 - (void)threeDSChallengeDidComplete:(ThreeDSChallengeResult *)result {
     if (result.isSuccess) {
-        // show success
+        // Authentication succeeded — payment is authorized.
     } else if (result.isFailure) {
-        // show error
+        // Authentication failed or user tapped "Cancel" in the auth
+        // session. Check result.error for details.
     } else if (result.isCanceled) {
-        // show cancel
+        // Only emitted when cancelFlow: is called programmatically.
     }
 }
 

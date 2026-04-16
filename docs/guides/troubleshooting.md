@@ -47,6 +47,14 @@ pod 'SpreedlyCore', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios
 
 Replace `{GitToken}` with a GitHub personal access token that has read access.
 
+### CocoaPods: Custom xcconfig values missing after pod install
+
+**Symptom:** After running `pod install`, your custom xcconfig values (API keys, server URLs, feature flags) resolve to empty strings at runtime. The app builds successfully but configuration values read from `Info.plist` via `Bundle.main.infoDictionary` are blank.
+
+**Cause:** Xcode allows only one base configuration file (xcconfig) per build configuration. When you had no CocoaPods, your custom xcconfig (e.g. `MyKeys.xcconfig`) was set as the base config and Xcode read it at build time. Running `pod install` either replaced it with the Pods xcconfig (disconnecting your file) or CocoaPods printed a warning and failed to integrate (breaking pod linking).
+
+**Fix:** Create wrapper xcconfig files that `#include` both your custom config and the Pods config, then set the wrapper as the base configuration in Xcode. See [CocoaPods with Custom xcconfig Files](getting-started.md#cocoapods-with-custom-xcconfig-files) in the Getting Started guide for step-by-step instructions.
+
 ---
 
 ## Build Errors

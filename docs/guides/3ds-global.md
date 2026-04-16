@@ -60,7 +60,7 @@ Add `Forter3DS` directly from the Forter repository (the Spreedly package does n
 
 1. File → Add Package Dependencies
 2. Enter repository URL: `https://bitbucket.org/forter-mobile/forter-ios.git`
-3. Set dependency rule to "Up to Next Major Version" (minimum 2.1.0)
+3. Set dependency rule to "Exact Version" (2.1.0)
 4. Add `Forter3DS` product to your app target
 5. Ensure "Embed & Sign" is set in "Frameworks, Libraries, and Embedded Content"
 
@@ -76,7 +76,7 @@ pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git', :
 
 ```swift
 dependencies: [
-    .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", from: "2.1.0")
+    .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", exact: "2.1.0")
 ],
 targets: [
     .target(
