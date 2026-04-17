@@ -1,6 +1,8 @@
 # Why CocoaPods Users Need a Small Stripe Bundle Step
 
-If you use **SpreedlyStripeAPM** with **CocoaPods**, you’ll need to add a short post-install step so Stripe’s resources are found at runtime. This doc explains why that’s needed and where the naming difference actually comes from—so it’s clear this isn’t a bug in our SDK, but how Stripe and the iOS ecosystem name things differently depending on how you install them.
+> **Update (HC-1312):** Starting with the Spreedly iOS package release that ships **HC-1312** (see `CHANGELOG.md` for the version number), Stripe resource bundles are embedded directly inside `SpreedlyStripeAPM.xcframework`. The `post_install` patcher described in this document is **no longer required**. This file stays for reference and for merchants on **older** SDK versions.
+
+On **older** Spreedly iOS package lines (before HC-1312), if you used **SpreedlyStripeAPM** with **CocoaPods**, you needed a short post-install step so Stripe’s resources were found at runtime. This doc explains why that was needed and where the naming difference came from—so it’s clear this wasn’t a bug in our SDK, but how Stripe and the iOS ecosystem name things differently depending on how you install them.
 
 **Last updated:** 2025-03
 
