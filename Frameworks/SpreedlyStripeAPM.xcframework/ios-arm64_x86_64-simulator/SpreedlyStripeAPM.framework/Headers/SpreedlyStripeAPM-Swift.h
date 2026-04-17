@@ -307,11 +307,11 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSURL;
 @class StripeAPMConfig;
 @class UIViewController;
+/// Presents Stripe’s PaymentSheet, then polls Spreedly for the transaction result.
+/// The final <code>PaymentResult</code> is published through <code>Spreedly.shared().publishPaymentResult()</code>.
 SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
 @interface SpreedlyStripeAPMCheckout : NSObject
-/// Called from the URL pre-handler when the app is opened via the Stripe return URL.
 + (BOOL)handleStripeReturnURL:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
-/// Presents the Stripe PaymentSheet for APM checkout from the topmost view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
 /// Configures and presents the Stripe PaymentSheet from the given view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
@@ -636,11 +636,11 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSURL;
 @class StripeAPMConfig;
 @class UIViewController;
+/// Presents Stripe’s PaymentSheet, then polls Spreedly for the transaction result.
+/// The final <code>PaymentResult</code> is published through <code>Spreedly.shared().publishPaymentResult()</code>.
 SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
 @interface SpreedlyStripeAPMCheckout : NSObject
-/// Called from the URL pre-handler when the app is opened via the Stripe return URL.
 + (BOOL)handleStripeReturnURL:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
-/// Presents the Stripe PaymentSheet for APM checkout from the topmost view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
 /// Configures and presents the Stripe PaymentSheet from the given view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;

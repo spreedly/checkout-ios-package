@@ -1,3 +1,35 @@
+## [1.3.1] - 2026-04-17
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Changes
+- HC-1311 Add KT comments, bump to 1.3.1, pin Forter exact, and update release docs (#229)
+
+### Change Requests
+  - HC-1311
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.3.1 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.1")
+```
+
+```ruby
+# CocoaPods
+pod 'Spreedly', '~> 1.3.1'
+```
+
+---
+
 # Changelog
 
 All notable changes to the Spreedly iOS SDK will be documented in this file.
@@ -7,69 +39,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- HC-1311 **Knowledge-transfer comments**: Added step-numbered flow annotations and "KT Overview" doc comments across SDK source (`Spreedly.swift`, `ValidatedField`, `SPLTextField`, `CardFormDropIn`, `BraintreeFlowController`, `SpreedlyStripeAPMCheckout`, `OffsitePaymentSafariFlow`) and all Example app payment flow views to onboard new engineers faster.
+
+- HC-1311 **CocoaPods custom xcconfig guide**: New section in `getting-started.md` explaining wrapper xcconfig pattern when merchants use custom `.xcconfig` files alongside CocoaPods. Matching troubleshooting entry added.
+
+- HC-1311 **CI workflow documentation**: Added full workflow reference to `.github/workflows/README.md` covering test-and-lint, PR validation, CodeQL, nightly, and DAST triggers.
+
+- HC-1311 **DAST xcconfig stub**: Added `SpreedlyKeys.xcconfig` placeholder generation step in `dast-security.yml` so DAST builds don't fail when the gitignored file is missing.
+
 ### Changed
-- HC-1302 Improved gateway-specific 3DS documentation: clarified DoChallengeIfNeeded as recommended entry point, added TransactionStatus JSON decoding guidance, corrected notification names and lifecycle documentation
-- HC-1302 Documentation accuracy audit: corrected PaymentResult, reset(), recaching, shouldRetain, ObjC theme methods, testing guide, and Stripe/Braintree parameter documentation across all merchant guides
-- HC-1302 Updated CocoaPods install snippets from `~> 1.2` to `~> 1.3` across README and getting-started guide
-- HC-1311 Pin Forter3DS to exact 2.1.0 across getting-started, 3ds-global, and README
-- HC-1311 Add step-by-step flow annotations to 3ds-gateway-specific code examples
-- HC-1311 Add CocoaPods custom xcconfig guide (getting-started) and troubleshooting entry
-- HC-1311 Add Forter3DS "exactly 2.1.0" callout to README Known Issues section
+
+- HC-1311 **Version bump 1.3.0 → 1.3.1**: Updated `Version.xcconfig`, `SpreedlyVersion.swift`, `README.md`, and all doc version references.
+
+- HC-1311 **Pin Forter3DS to exact 2.1.0**: Changed Forter3DS dependency from `from: "2.1.0"` (up-to-next-major) to `exact: "2.1.0"` in `Package.swift` and all Xcode project files. Updated guides (`getting-started`, `3ds-global`, `3ds-gateway-specific`) and dev docs (`3DS_GLOBAL_FLOW`, `DISTRIBUTION`, `FORTER3DS_DISTRIBUTION_PROPOSAL`, `SDK_TECHNICAL_SPECIFICATION`) to reflect exact pinning.
+
+- HC-1311 **Package.resolved re-resolve (1.2.8 → 1.3.0)**: Updated Example app `Package.resolved` to latest published `checkout-ios-package` tag. Documented silent-drift risk and re-resolve requirement in `RELEASE_PROCESS.md`, `TESTFLIGHT_DISTRIBUTION.md`, and `VERSIONING.md`.
+
+- HC-1311 **3DS gateway-specific flow annotations**: Added step-by-step callout comments to all code examples (SwiftUI, UIKit+Combine, Notification+Delegate, ObjC) in `3ds-gateway-specific.md` and `3DS_GATEWAY_SPECIFIC_FLOW.md`.
 
 ### Removed
-- HC-1302 Removed unsupported NuPay Recurrent payment method from documentation (ebanx-apm, getting-started, offsite-payments guides)
 
-## [1.3.0] - 2026-03-24
+- HC-1311 **Dead code and "Android parity" references**: Removed unused `cryptoData` case from `PaymentMethodType` and stripped "mirrors Android SDK" / "cross-platform parity" narrative from source comments and telemetry docs.
 
-### Release Type
-**Minor Version** (New features and improvements - backward compatible)
+- HC-1301 **Version source of truth and release parity**: Introduced repo-root `Version.xcconfig` (`SPREEDLY_SDK_VERSION`) and `SpreedlyVersion.swift` (`SpreedlySDK.version`), wired all framework targets to `MARKETING_VERSION` from the xcconfig, and updated telemetry via `GlobalAttributes`. **Release SDK** reads the version from files (no workflow version-bump input), validates xcconfig/Swift match, gates on duplicate tags, generates optional GPG-signed `release-manifest-vX.Y.Z.json`, creates an SDK repo GitHub Release, and improves package/SDK doc sync. Added `.github/scripts/release.sh` (pre-flight) and `generate-release-manifest.sh`. Documented maintainer quick paths in VERSIONING, RELEASE_PROCESS, README, getting-started, CONTRIBUTING, TestFlight, SDK technical spec, and workflows README.
 
-### Changes
-- All changes from 1.2.8 through 1.2.10 consolidated into a minor release
+- **Documentation parity with Android SDK**: Added three new docs to match Android's documentation coverage:
+  - `guides/testing-guide.md` — Merchant-facing testing guide with test card numbers, EBANX test data, 3DS test scenarios, flow-by-flow testing steps, error scenario testing, and a production readiness checklist.
+  - `development/TESTING_GUIDE.md` — SDK developer testing guide with quick-reference commands, coverage thresholds (95% line / 93% branch), test module inventory, XCTest naming conventions, protocol-based mocking patterns, and CI integration details.
+  - `development/DATADOG_INTEGRATION.md` — Datadog integration guide with zero-config quick start, configuration table, global attribute reference, LogSanitizer redaction rules, custom logger setup, Datadog query examples, and troubleshooting.
+
+- HC-1278 **Gitleaks secret scanning (CI + pre-commit)**: Added `.gitleaks.toml`, `.gitleaksignore`, `.github/workflows/secret-scanning.yml` (Gitleaks SARIF upload, iOS Spreedly pattern grep, failing summary job), and a **`pre-commit`** hook running `gitleaks protect --staged`, installed via `setup-git-hooks.sh`. Documented in `development/SECRET_SCANNING.md`, `development/GIT_HOOKS.md`, `development/CONTRIBUTING.md`, and `.github/workflows/README.md`. CI scans the checked-out tree only (`--no-git`) so new leaks in tracked files are gated without blocking on legacy history.
+
+### Changed
+
+- HC-1278 **Gitleaks: allowlist `*.md`**: Markdown files are excluded from Gitleaks path matching in `.gitleaks.toml` so README and doc code fences do not trip generic default rules (e.g. illustrative AWS/Sidekiq-shaped strings). Source, plist, and xcconfig remain scanned; **GitHub Secret Scanning** still applies to pushes. Documented in `development/SECRET_SCANNING.md`.
+
+- HC-1278 **When scanning runs (contributor docs)**: Documented timing for local `pre-commit` vs GitHub **Secret Scanning** workflow (PRs, pushes to `main`/`develop`, post-merge push) in `development/CONTRIBUTING.md`, `development/GIT_HOOKS.md`, and `development/SECRET_SCANNING.md`; noted in `scripts/hooks/pre-commit` header.
+
+- HC-1278 **Secret scanning documentation alignment**: Removed unreleased changelog entry and cross-links that bundled a git-history rewrite runbook with HC-1278; `development/SECRET_SCANNING.md` now frames the `.github/scripts/` + `scripts/` automation stack, adds operator notes (SARIF, Stripe `pk_*` shapes in rules), a generic GitHub sensitive-data link, `*Tests/` policy (fake tokens only), and a **Maintainers: after merge** checklist (branch protection on **Security Scan Summary**, contributor Gitleaks/hooks announcement). Added a **Security and credential scanning** section to root `README.md` and listed `secret-scanning.yml` in `development/WORKFLOW_IMPROVEMENTS.md`.
+
+- HC-1278 **Secret scanning in dev quick reference and TestFlight docs**: Updated `development/DEVELOPER_QUICK_REFERENCE.md` with Secret Scanning as a required PR check, local Gitleaks/hooks setup, failure guidance, and related-doc links. Added `development/TESTFLIGHT_DISTRIBUTION.md` section clarifying Gitleaks runs on GitHub only, not Xcode Cloud.
+
+- HC-1278 **Secret scanning (Swift + xcconfig)**: Extended `.gitleaks.toml` and **Spreedly pattern scan** with multi-shape Swift literals for `environmentKey`, `certificateToken`, `forterSiteId` (**8+ hex**, matching `SPREEDLY_FORTER_SITE_ID`), `nonce`, `signature`, `accessSecret`, `spreedlyApiKey`, Stripe publishable keys (`pk_*` with **underscore** suffix per real `STRIPE_PUBLISHABLE_KEY` values), and long `clientSecret`. Added **xcconfig-only** Gitleaks rules and CI greps keyed like `SpreedlyKeys.xcconfig.example` (`SPREEDLY_ENVIRONMENT_KEY`, `SPREEDLY_FORTER_SITE_ID`, `SPREEDLY_API_KEY`, `STRIPE_PUBLISHABLE_KEY`, `*_GATEWAY_TOKEN`, `SPREEDLY_ACCESS_SECRET`). Documented in `development/SECRET_SCANNING.md` and `.github/workflows/README.md`.
+
+- HC-1302 **Gateway-specific 3DS documentation improvements**: Clarified `DoChallengeIfNeeded` as the recommended entry point versus the programmatic `startFlow` API. Added `TransactionStatus` JSON decoding guidance and code snippets to the merchant guide. Documented the two `checkTransactionStatus` calls made by `DoChallengeIfNeeded`, the `onStatusUpdate` callback, frictionless/direct-challenge lifecycle paths, and a cross-platform key-types reference table. Updated `3ds-gateway-specific.md`, `3DS_GATEWAY_SPECIFIC_FLOW.md`, and `GATEWAY_SPECIFIC_FLOWCHARTS.md`.
+
+- HC-1302 **Documentation accuracy audit**: Corrected integration guides and SDK technical documentation for global and gateway-specific 3DS, Stripe APM cancel semantics, Braintree URL handling, `PaymentResult` and `subscribeToPaymentResults`, `reset()` behavior, recaching, testing flows, architecture and Datadog wiring, CI workflow README, and SwiftLint job behavior. Aligned DocC and SpreedlyUI README examples with current APIs. Synced distribution and install snippets to **checkout-ios-package 1.3.0** (SPM `from:`, CocoaPods `~> 1.3` / `:tag`).
+
+- HC-1302 **Version 1.3.0 alignment**: Aligned `Version.xcconfig`, `SpreedlyVersion.swift`, README, and integration docs with latest published checkout-ios-package **1.3.0**. WCAG example-app UI tests use criterion name wording only so strings are not confused with SDK patch versions.
 
 ### Removed
-- Removed unsupported Rapipago payment method from `OffsitePaymentMethodType` and `OffsiteGateway` enums (was never implemented)
 
-### Installation
-```swift
-// Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.0")
-```
+- **Remove unsupported Rapipago payment method**: Removed `.rapipago` from `OffsitePaymentMethodType` and `OffsiteGateway` enums. Rapipago was added as an enum case but was never implemented or supported on any platform. All documentation references removed from ebanx-apm, getting-started, offsite-payments guides, and READMEs.
 
-```ruby
-# CocoaPods
-pod 'SpreedlyCore', '~> 1.3.0'
-```
+- HC-1278 **Local Gitleaks fixture scripts and example-app comments**: Removed `scripts/verify-spreedly-config-manager-gitleaks.sh`, `scripts/gitleaks-local-test-snippets.example`, and the optional Gitleaks verification comment block from `SpreedlyConfigManager.swift` so the tree does not contain secret-shaped sample strings or matrix tooling. Contributors continue to rely on **`gitleaks protect --staged`** (when hooks are installed) and **`secret-scanning.yml`** in CI.
 
-## [1.2.10] - 2026-03-24
+- HC-1302 **Remove unsupported NuPay Recurrent payment method**: Removed `.nupayRecurrent` from `OffsitePaymentMethodType` enum and all documentation references (ebanx-apm, getting-started, offsite-payments guides, EBANX_FLOW dev doc). NuPay Recurrent was declared in the enum but never implemented in the SDK or example app.
 
-### Release Type
-**Patch Version** (Bug fixes and improvements - backward compatible)
+### Fixed
 
-### Changes
-- HC-1274 fix pending and processing message UI in merchant examples (#217)
+- HC-1302 **CI `hashFiles` timeout on cache keys**: `test-and-lint`, CodeQL, and nightly workflows used deep `**/*.pbxproj` globs in `actions/cache` keys; GitHub’s `hashFiles` helper can exceed its 120s limit and fail the job before tests run. Cache keys now hash explicit `…/project.pbxproj` paths (and CodeQL includes `SpreedlyCore`’s `Package.resolved`). See `development/WORKFLOW_IMPROVEMENTS.md`.
 
-### Change Requests
-  - HC-1274
+- HC-1302 **Objective-C example app token display**: Result screens now use `Spreedly.maskedToken` for transaction and recache token labels (including accessibility) so full tokens are not shown in the demo UI.
 
-### PCI DSS Compliance
-This release has been documented for PCI DSS compliance requirements:
-- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.2.10 - Patch Version)
-- **Security Validation**: All security scans and validations completed
-- **SBOM**: Software Bill of Materials included in release artifacts
-- **Audit Trail**: Complete release documentation available in this changelog
+- HC-1301 **Release workflow YAML validation**: Removed `secrets` from `if:` and from boolean `env` expressions on the GPG import and release-manifest steps. GitHub rejects those expressions (secrets are not available when workflow conditionals are evaluated), which produced a workflow file error and zero jobs on push. Signing is now gated with shell checks on `SIGNING_KEY` only.
 
-### Installation
-```swift
-// Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.2.10")
-```
+- HC-1278 **Gitleaks SARIF upload token permissions**: The Gitleaks job in `secret-scanning.yml` now grants **`actions: read`** (with `security-events: write`) so `github/codeql-action/upload-sarif` can call the Actions API for workflow-run metadata, eliminating **“Resource not accessible by integration”** annotations when the scan itself is clean. Documented in `.github/workflows/README.md` and `development/WORKFLOW_IMPROVEMENTS.md`. SARIF upload remains **`continue-on-error`** as a safety net.
 
-```ruby
-# CocoaPods
-pod 'SpreedlyCore', '~> 1.2.10'
-```
+- HC-1278 **Secret Scanning workflow (Spreedly job + SARIF upload)**: The Spreedly pattern scan step failed on GitHub-hosted runners with bash parse errors (`unexpected EOF while looking for matching '''`) from YAML-injected inline scripts and from unsafe `grep -E "$VAR"` when EREs contained literal quotes. The scan now runs from `.github/scripts/spreedly-ios-pattern-scan.sh` with `printf`-built patterns using a safe `qc="[\"']"` quote class (no fragile `'\''` escaping). Long EREs still use temp files + `grep -f`. The Gitleaks SARIF upload step is `continue-on-error: true` when the code scanning API returns "Resource not accessible" while Gitleaks passed. The Spreedly grep pass excludes `*.example` template files.
+
+- HC-1278 **Swift secret regex and `String` types**: Gitleaks and CI patterns used `(?::\s*String\?)?` on `let`/`var` lines, which matched only Swift’s optional `String?` and not plain `: String`. Updated to `(?::\s*String\??)?` so assignments align with real Swift (and with values shaped like `SpreedlyKeys.xcconfig.example`). Added a key-to-shape table in `.gitleaks.toml` comments.
+
+- HC-1274 **Pending/processing status UI in merchant examples**: SwiftUI and Objective-C payment example flows displayed `processing` and `pending` states as success or error messages, which made in-progress transactions look final. Status handling now renders a dedicated pending message style across Offsite, EBANX, Stripe APM, and Braintree examples so intermediate gateway states are shown consistently and clearly.
 
 ## [1.2.7] - 2026-03-20
 
