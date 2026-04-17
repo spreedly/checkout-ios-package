@@ -177,6 +177,7 @@
         "declAttributes": [
           "AccessControl",
           "ObjCMembers",
+          "RawDocComment",
           "ObjC"
         ],
         "superclassUsr": "c:objc(cs)NSObject",
@@ -285,28 +286,28 @@
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
       "kind": "IntegerLiteral",
-      "offset": 535,
+      "offset": 714,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
       "kind": "FloatLiteral",
-      "offset": 587,
+      "offset": 766,
       "length": 3,
       "value": "2.0"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
       "kind": "BooleanLiteral",
-      "offset": 742,
+      "offset": 921,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/StripeAPMSetupHelper.swift",
       "kind": "StringLiteral",
-      "offset": 255,
+      "offset": 509,
       "length": 27,
       "value": "\"https:\/\/core.spreedly.com\""
     }

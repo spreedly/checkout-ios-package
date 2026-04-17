@@ -351,6 +351,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// EBANX methods (Pix, Boleto, OXXO) require a national document (e.g. CPF/CNPJ).
+/// Use <code>.documentId</code> for the standard field, or <code>.custom</code> for gateway-specific keys.
 typedef SWIFT_ENUM(NSInteger, DocumentIdKey, open) {
   DocumentIdKeyDocumentId = 0,
   DocumentIdKeyCustom = 1,
@@ -444,6 +446,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 @end
 
 enum OffsitePaymentMethodType : NSInteger;
+/// Config bag the merchant passes to <code>submitOffsitePayment()</code>.
+/// PayPal only needs the type; EBANX methods also need email, documentId, country, etc.
 SWIFT_CLASS("_TtC12SpreedlyCore20OffsitePaymentConfig")
 @interface OffsitePaymentConfig : NSObject
 @property (nonatomic, readonly) enum OffsitePaymentMethodType paymentMethodType;
@@ -466,15 +470,15 @@ SWIFT_CLASS("_TtC12SpreedlyCore20OffsitePaymentConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Supported offsite/APM types. PayPal + Sprel are standard redirect-based;
+/// Pix, Boleto, NuPay, OXXO are EBANX methods (require documentId + email).
 typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypePaypal = 0,
   OffsitePaymentMethodTypePix = 1,
   OffsitePaymentMethodTypeBoletoBancario = 2,
   OffsitePaymentMethodTypeNupay = 3,
-  OffsitePaymentMethodTypeNupayRecurrent = 4,
-  OffsitePaymentMethodTypeOxxo = 5,
-  OffsitePaymentMethodTypeRapipago = 6,
-  OffsitePaymentMethodTypeSprel = 7,
+  OffsitePaymentMethodTypeOxxo = 4,
+  OffsitePaymentMethodTypeSprel = 5,
 };
 
 /// Represents the immediate result of a payment processing attempt.
@@ -715,12 +719,6 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
-/// Creates an offsite payment method using transparent redirect flow.
-/// \param config Offsite payment config provided by merchant
-///
-///
-/// returns:
-/// PaymentProcessingResult indicating synchronous validation status
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -754,14 +752,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Used by SpreedlyUI to forward URLs to the Stripe SDK for redirect-based APM handling.
 /// The handler returns <code>true</code> if it consumed the URL, <code>false</code> to let normal processing continue.
 - (void)setURLPreHandler:(BOOL (^ _Nullable)(NSURL * _Nonnull))handler;
-/// Call this from your app’s <code>onOpenURL</code>, <code>application(_:open:options:)</code>, or
-/// <code>scene(_:openURLContexts:)</code> when the app opens via a URL (Universal Link or custom scheme).
-/// The SDK automatically handles both Stripe APM redirects and Spreedly offsite returns.
-/// \param url The URL received
-///
-///
-/// returns:
-/// <code>true</code> if the SDK recognized and handled the URL; <code>false</code> otherwise
 - (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
@@ -883,7 +873,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Preset logging configurations matching Android’s <code>LoggerConfiguration</code>.
+/// Preset logging configurations for common environments.
 /// Use with <code>Spreedly.configureLogging(_:)</code>. Fluent builders return new copies.
 /// seealso:
 /// <code>getting-started.md</code> → “Logging & Observability” for usage examples.
@@ -911,6 +901,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyLogg
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Toggles for relaxing card validation (e.g. allow blank name, expired date).
+/// Merchants flip these via the Spreedly config; the form fields re-evaluate when a param changes.
 SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlyParamsManager")
 @interface SpreedlyParamsManager : NSObject
 - (BOOL)getParamWithParameter:(enum ValidationParam)parameter SWIFT_WARN_UNUSED_RESULT;
@@ -926,6 +918,7 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
+/// ObjC-callable wrappers for <code>TelemetryEvents</code>. Mirrors every Swift method 1:1.
 SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 @interface SpreedlyTelemetryObjCBridge : NSObject
 + (void)sdkInitializedWithDurationMs:(int64_t)durationMs datadogEnabled:(BOOL)datadogEnabled threedsRegistered:(BOOL)threedsRegistered;
@@ -1093,6 +1086,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore22ThreeDSChallengeResult")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+/// Maps a transaction status API response into a <code>PaymentResult</code>.
+/// Used by offsite, Stripe APM, and handleOffsiteReturn flows.
+/// “pending” defaults to failure unless <code>treatPendingAsSuccess</code> is true.
+/// For EBANX methods (Boleto/OXXO/Pix) where “pending” means the user got a voucher/QR,
+/// the merchant’s result handler should check <code>.state</code> and treat pending as success UX.
 SWIFT_CLASS("_TtC12SpreedlyCore23TransactionStatusMapper")
 @interface TransactionStatusMapper : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;

@@ -373,6 +373,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
+/// Controls whether the card form shows a single “Full Name” field or separate first/last name fields.
 typedef SWIFT_ENUM(NSInteger, DropInNameDisplayMode, open) {
   DropInNameDisplayModeSingleField = 0,
   DropInNameDisplayModeSeparateFields = 1,
@@ -391,10 +392,8 @@ typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
   OffsiteGatewayPix = 2,
   OffsiteGatewayBoletoBancario = 3,
   OffsiteGatewayNupay = 4,
-  OffsiteGatewayNupayRecurrent = 5,
-  OffsiteGatewayOxxo = 6,
-  OffsiteGatewayRapipago = 7,
-  OffsiteGatewaySprel = 8,
+  OffsiteGatewayOxxo = 5,
+  OffsiteGatewaySprel = 6,
 };
 
 enum SpreedlySubmitLabel : NSInteger;
@@ -488,10 +487,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI26ScreenPreventionSecureView")
 /// publishes PaymentResult when the user finishes or returns via redirect.
 SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 @interface SpreedlyOffsiteCheckout : NSObject <SFSafariViewControllerDelegate>
-/// Fetches the checkout URL for the given transaction and presents
-/// SFSafariViewController directly on the topmost view controller.
-/// Result is delivered via <code>Spreedly.shared().paymentResultPublisher</code>
-/// (or the <code>SpreedlyPaymentDelegate</code> for Obj-C).
 + (void)presentWithTransactionToken:(NSString * _Nonnull)transactionToken;
 - (void)safariViewControllerDidFinish:(SFSafariViewController * _Nonnull)controller;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -621,6 +616,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 - (UIViewController * _Nonnull)wrapInSecureViewControllerWithPlaceholderText:(NSString * _Nonnull)placeholderText SWIFT_WARN_UNUSED_RESULT;
 @end
 
+/// Whether the expiration year field shows 2-digit (YY) or 4-digit (YYYY) format.
 typedef SWIFT_ENUM(NSInteger, YearFormat, open) {
   YearFormatTwoDigit = 2,
   YearFormatFourDigit = 4,
