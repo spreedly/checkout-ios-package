@@ -152,11 +152,13 @@ end
 
 Replace `{GitToken}` with your GitHub personal access token that has read access to the repository. Then run `pod install`.
 
-#### Stripe APM: CocoaPods `post_install` (Required)
+#### Stripe APM: CocoaPods `post_install` (legacy, optional)
 
-If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add a `post_install` block so Stripe resource bundles are copied with the names the SDK expects. Without this, the app will crash at runtime with `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. See the [Stripe APM guide](stripe-apm.md#cocoapods-stripe-bundle-patcher) and [STRIPE_COCOAPODS_BUNDLE_NAMING.md](https://github.com/spreedly/checkout-ios-package/blob/main/docs/STRIPE_COCOAPODS_BUNDLE_NAMING.md) for why this is needed.
+**Current SDK:** Stripe’s Swift code and resource bundles are **inside** `SpreedlyStripeAPM.xcframework`. New installs do **not** need a `post_install` bundle patch (SPM or CocoaPods). If your Podfile still has the block from an older guide, you can leave it—the shipped `cocoapods_stripe_bundle_patcher.rb` stays for backward compatibility and is a **no-op** on current versions.
 
-**SPM users do not need this step** — when you add `SpreedlyStripeAPM` via SPM, `StripePaymentSheet` is resolved as a transitive dependency automatically and bundles already use the correct names.
+**Older package versions (pre–HC-1312):** Some CocoaPods setups needed the `post_install` below so resource bundle names matched what the XCFramework expected. Without it, the app could crash with `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. See the [Stripe APM guide](stripe-apm.md#cocoapods-stripe-bundle-patcher) and [STRIPE_COCOAPODS_BUNDLE_NAMING.md](https://github.com/spreedly/checkout-ios-package/blob/main/docs/STRIPE_COCOAPODS_BUNDLE_NAMING.md) for background.
+
+**SPM and CocoaPods (current):** Add `SpreedlyStripeAPM` only. Stripe is **not** a separate transitive package or pod—the XCFramework already includes it.
 
 **Full Podfile example (private repo with Stripe APM):**
 
@@ -184,8 +186,9 @@ target 'YourApp' do
   # pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git', :tag => '2.1.0'
 end
 
-# Required when using SpreedlyStripeAPM with CocoaPods.
-# The patcher script is shipped inside the SpreedlyStripeAPM pod — no manual copy needed.
+# Optional / legacy: not needed on current SDK (Stripe embedded in SpreedlyStripeAPM.xcframework).
+# Harmless if kept; required only for older package versions before HC-1312 on some CocoaPods setups.
+# The script is shipped inside the SpreedlyStripeAPM pod — no manual copy needed.
 post_install do |installer|
   stripe_apm_pod = installer.sandbox.pod_dir('SpreedlyStripeAPM')
   require File.join(stripe_apm_pod, 'scripts', 'cocoapods_stripe_bundle_patcher')
@@ -202,7 +205,7 @@ post_install do |installer|
 end
 ```
 
-The `cocoapods_stripe_bundle_patcher.rb` script is shipped inside the `SpreedlyStripeAPM` pod via `preserve_paths`, so `installer.sandbox.pod_dir` locates it automatically — no manual file copy or path setup needed. This works for both remote (`:git =>`) and local (`:path =>`) pod installs.
+The `cocoapods_stripe_bundle_patcher.rb` script is shipped inside the `SpreedlyStripeAPM` pod via `preserve_paths`, so `installer.sandbox.pod_dir` locates it automatically — no manual file copy or path setup needed. This works for both remote (`:git =>`) and local (`:path =>`) pod installs. On current SDKs the patcher does nothing; it remains so existing Podfiles keep working.
 
 #### CocoaPods with Custom xcconfig Files
 
@@ -281,9 +284,9 @@ pod 'Forter3DS', :git => 'https://bitbucket.org/forter-mobile/forter-ios.git', :
 
 Without the Forter3DS dependency, the app will crash when 3DS is required.
 
-**StripePaymentSheet (Stripe APM):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). **SPM:** adding `SpreedlyStripeAPM` from `checkout-ios-package` resolves Stripe transitively (`SpreedlyStripeAPMDeps`), so no separate Stripe package is needed for standard integration. **CocoaPods:** `SpreedlyStripeAPM` resolves `StripePaymentSheet` transitively, and you must include the Stripe bundle patcher `post_install` block above. The Spreedly SDK does not embed Stripe's resource bundle (`Stripe_StripePaymentSheet`); without Stripe linkage and patching (for CocoaPods), the app will crash at presentation time.
+**Stripe APM (`SpreedlyStripeAPM`):** Required for Stripe APM flows (iDEAL, Bancontact, EPS, P24, SEPA Debit). Add **`SpreedlyStripeAPM`** from `checkout-ios-package` only (SPM or CocoaPods). Stripe PaymentSheet **code and resource bundles are embedded** in `SpreedlyStripeAPM.xcframework`—there is no separate `StripePaymentSheet` dependency, no `SpreedlyStripeAPMDeps` wrapper, and **no** bundle patcher `post_install` for new integrations. Add Stripe’s public SPM/CocoaPods distribution only if your app calls Stripe APIs outside Spreedly.
 
-**SpreedlyBraintree (Braintree PayPal/Venmo):** Add `SpreedlyBraintree` from `checkout-ios-package` — no extra Braintree dependencies needed. Both SPM and CocoaPods resolve the required Braintree modules (Core, PayPal, Venmo, DataCollector) transitively. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash).
+**SpreedlyBraintree (Braintree PayPal/Venmo):** Add `SpreedlyBraintree` from `checkout-ios-package`. Braintree SDK code is **embedded** in `SpreedlyBraintree.xcframework`—no separate Braintree pods for a standard integration. If Braintree is not linked, `SpreedlyBraintreeCheckout.present(config:)` publishes a failure gracefully (no crash).
 
 ---
 
@@ -293,13 +296,13 @@ Add these entries to your app's `Info.plist`:
 
 | Key | When Required | Purpose |
 |-----|--------------|---------|
-| `NSCameraUsageDescription` | Stripe APM only | **Required only if your app target links `StripePaymentSheet`.** The `StripePaymentSheet` module includes built-in card scanning functionality that references camera APIs internally. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. If you do not use Stripe APM, you do not need this key. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
+| `NSCameraUsageDescription` | Stripe APM only | **Required when you integrate Stripe APM** (`SpreedlyStripeAPM`). Embedded Stripe PaymentSheet still includes card-scanning code that references camera APIs. Even if your app never presents the card scanner, Apple's static analysis detects these references and will reject your App Store submission (error `ITMS-90683`) if this key is missing. Provide a user-facing string explaining why the app may need camera access. If you do not use Stripe APM, you do not need this key. **Note:** The Braintree SDK (PayPal/Venmo) does not require camera access. |
 | `CFBundleURLTypes` | Offsite, Stripe APM, Braintree | Register custom URL schemes so the app can receive redirects. Include your app scheme (e.g. `yourapp`) for offsite/Stripe flows and `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` for Braintree PayPal/Venmo. **Gateway-Specific 3DS no longer needs a URL scheme** — the SDK uses `ASWebAuthenticationSession`, which handles the callback internally. |
 | `LSApplicationQueriesSchemes` | Braintree PayPal/Venmo | Include `paypal` so the SDK can detect the PayPal app for App Switch. Optionally include `com.venmo.touch.v2` (Braintree v6 legacy; v7 Venmo uses Universal Links and does not call `canOpenURL`). |
 
 > **Add keys based on your integration:** `NSCameraUsageDescription` only if you use Stripe APM. `CFBundleURLTypes` for Offsite, Stripe APM, or Braintree (include `$(PRODUCT_BUNDLE_IDENTIFIER).spreedly.braintree` if using Braintree). `LSApplicationQueriesSchemes` only if you use Braintree PayPal/Venmo. Add these to every target (Swift and Objective-C) that integrates the corresponding modules.
 
-**Why is `NSCameraUsageDescription` required for Stripe APM?** The Stripe iOS SDK (`StripePaymentSheet`) bundles card-scanning functionality that references camera APIs. Apple's static analysis flags these references during App Store review and rejects the build (`ITMS-90683`) if this key is missing — even if your app never invokes the card scanner. If your app uses Stripe APM (via `SpreedlyStripeAPM`), you must include this key. If you only use card tokenization, Braintree, or offsite payments, this key is not needed.
+**Why is `NSCameraUsageDescription` required for Stripe APM?** PaymentSheet ships inside `SpreedlyStripeAPM` and still bundles card-scanning functionality that references camera APIs. Apple's static analysis flags these references during App Store review and rejects the build (`ITMS-90683`) if this key is missing — even if your app never invokes the card scanner. If your app uses Stripe APM (via `SpreedlyStripeAPM`), you must include this key. If you only use card tokenization, Braintree, or offsite payments, this key is not needed.
 
 **Example XML snippet:**
 
