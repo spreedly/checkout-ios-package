@@ -154,23 +154,20 @@ func application(_ app: UIApplication, open url: URL, options: [UIApplication.Op
 
 ### Stripe APM: "unable to find bundle named Stripe_StripePaymentSheet"
 
-> **HC-1312 and newer:** From the `checkout-ios-package` release that includes **HC-1312** onward (see `CHANGELOG.md` for the version), Stripe resources are embedded in `SpreedlyStripeAPM.xcframework`. On those versions this error should not occur if `SpreedlyStripeAPM` is linked normally.
-
 **Crash message:**
 ```
 StripePaymentSheet/resource_bundle_accessor.swift:44:
 Fatal error: unable to find bundle named Stripe_StripePaymentSheet
 ```
 
-**Root cause (fixed in HC-1312):** Current `SpreedlyStripeAPM.xcframework` **embeds** Stripe’s code and resource bundles, so SPM vs CocoaPods bundle naming no longer applies at the app level. **Older Spreedly package versions** shipped an XCFramework that expected SPM-style bundle names while CocoaPods produced different bundle names unless a `post_install` patch ran—same Stripe SDK, different bundle names by install path.
+**Root cause:** The Spreedly `SpreedlyStripeAPM` XCFramework is built against Stripe via SPM, which produces resource bundles named `Stripe_StripePaymentSheet`. When merchants install Stripe through CocoaPods, bundles are named `StripePaymentSheet_StripePaymentSheet` instead. Same Stripe SDK, different bundle names depending on install method.
 
 **Fix by install method:**
 
 | Install method | Fix |
 |---|---|
-| **SPM or CocoaPods (HC-1312+)** | Upgrade to the package release that includes HC-1312. Link `SpreedlyStripeAPM` to your app target, then clean build. No separate Stripe product and no bundle patcher. |
-| **SPM (older SDK)** | Add `SpreedlyStripeAPM` from `checkout-ios-package` only; Stripe was resolved transitively (legacy `SpreedlyStripeAPMDeps` / separate Stripe product, depending on version). |
-| **CocoaPods (older SDK)** | Add the [CocoaPods Stripe Bundle Patcher](stripe-apm.md#cocoapods-stripe-bundle-patcher) `post_install` block to your Podfile. The patcher script is shipped inside the `SpreedlyStripeAPM` pod (`scripts/cocoapods_stripe_bundle_patcher.rb`) — no manual file copy needed. |
+| **SPM** | No action needed. Adding `SpreedlyStripeAPM` from `checkout-ios-package` resolves `StripePaymentSheet` transitively via the `SpreedlyStripeAPMDeps` wrapper target. Bundles use SPM naming automatically. |
+| **CocoaPods** | Add the [CocoaPods Stripe Bundle Patcher](stripe-apm.md#cocoapods-stripe-bundle-patcher) `post_install` block to your Podfile. The patcher script is shipped inside the `SpreedlyStripeAPM` pod (`scripts/cocoapods_stripe_bundle_patcher.rb`) — no manual file copy needed. |
 
 ### Stripe APM PaymentSheet doesn't appear
 

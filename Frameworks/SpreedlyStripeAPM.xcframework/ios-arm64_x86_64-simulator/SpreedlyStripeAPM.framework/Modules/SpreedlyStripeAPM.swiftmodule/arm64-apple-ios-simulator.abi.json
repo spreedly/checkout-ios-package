@@ -303,13 +303,6 @@
       "offset": 921,
       "length": 5,
       "value": "false"
-    },
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/StripeAPMSetupHelper.swift",
-      "kind": "StringLiteral",
-      "offset": 509,
-      "length": 27,
-      "value": "\"https:\/\/core.spreedly.com\""
     }
   ]
 }
