@@ -1,18 +1,24 @@
-## [1.3.1] - 2026-04-17
+## [1.3.2] - 2026-04-21
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1311 Add KT comments, bump to 1.3.1, pin Forter exact, and update release docs (#229)
+- HC-1314 Enable symbol stripping in Release builds for all XCFramework targets (#234)
+- HC-1312 Fix SBOM generation for zero external SPM dependencies (#233)
+- HC-1313 Add binary hardening for API endpoint strings (#232)
+- HC-1312 Fix Stripe resource build by disabling module interface verification (#231)
+- HC-1312 Add Stripe resource embedding to CI build pipeline (#230)
 
 ### Change Requests
-  - HC-1311
+  - HC-1312
+  - HC-1313
+  - HC-1314
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.3.1 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.3.2 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -20,12 +26,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.1")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.2")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.3.1'
+pod 'Spreedly', '~> 1.3.2'
 ```
 
 ---
@@ -38,6 +44,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Security
+
+- HC-1313 **Binary hardening**: API endpoint strings are no longer visible in plain text when inspecting the compiled framework binary. Covers `SpreedlyCore` and `SpreedlyStripeAPM` modules.
+
+- HC-1314 **Release binary hardening via symbol stripping**: Enabled `DEPLOYMENT_POSTPROCESSING`, `STRIP_INSTALLED_PRODUCT`, `STRIP_STYLE=non-global`, `STRIP_SWIFT_SYMBOLS`, `DEAD_CODE_STRIPPING`, and `COPY_PHASE_STRIP` in the Release configuration of all 6 framework projects (SpreedlyCore, SpreedlySecurity, SpreedlyUI, SpreedlyStripeAPM, SpreedlyBraintree, SpreedlyAnalytics).
+
+  **Before**: Distributed binaries shipped with full symbol tables — SpreedlyCore arm64 slice had 6,038 nlist entries (5,591 local symbols) exposing internal class names, method selectors, and implementation flow.
+
+  **After**: Local symbol table entries reduced to 1 per architecture slice (99.98% reduction). String table dropped from 434 KB to 13 KB (97% reduction). Binary size reduced ~8%. All 102 public API symbols preserved. dSYM generation and crash symbolication unaffected.
+
+  CI workflow (`build-frameworks.yml`) also passes strip settings as CLI overrides for belt-and-suspenders. Verification script (`build-integrity-verify-optimization.sh`) now warns if local symbols exceed threshold, catching accidental regressions.
+
+### Fixed
+
+- HC-1312 **Duplicate ObjC class resolution**: Eliminated runtime `objc: Class X is implemented in both` warnings caused by third-party dependencies (Stripe, Datadog, Braintree) being loaded twice — once baked into our XCFrameworks and once built from source by the package manager. Root cause: `checkout-ios-package` declared explicit SPM/CocoaPods dependencies on libraries already statically linked into the framework binaries, causing the Objective-C runtime to load two copies of every class.
+
+  **Stripe fix** (SPM + CocoaPods): Added a CI build step (`embed-stripe-resources.sh`) that embeds Stripe's 6 resource bundles (localizations, `form_specs.json`, 3DS2 assets) directly into `SpreedlyStripeAPM.framework` during the archive process. This allows removing the `stripe-ios-spm` dependency and `SpreedlyStripeAPMDeps` target from `Package.swift`, and the `StripePaymentSheet` dependency from the podspec — without breaking Stripe's internal `Bundle(for: BundleFinder.self)` resource resolution.
+
+  **Datadog fix** (CocoaPods only): Removed `s.dependency 'DatadogCore'` and `s.dependency 'DatadogLogs'` from `SpreedlyCore.podspec`. These are code-only dependencies already embedded in `SpreedlyCore.xcframework`. SPM was unaffected because `Package.swift` never declared these dependencies.
+
+  **Braintree fix** (CocoaPods only): Removed `s.dependency 'Braintree/Core'`, `Braintree/PayPal`, `Braintree/Venmo`, and `Braintree/DataCollector` from `SpreedlyBraintree.podspec`. Same pattern — code already embedded in the XCFramework.
+
+  Follows Apple's guidance from WWDC 2019 "Binary Frameworks in Swift" (Session 416): embed third-party code and resources inside your vendored framework rather than requiring consumers to separately resolve the same dependency.
 
 ### Added
 

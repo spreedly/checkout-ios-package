@@ -14,9 +14,10 @@ Protect sensitive payment data with screen prevention, secure storage, and PCI c
 6. [PCI Compliance](#pci-compliance)
 7. [Memory Management](#memory-management)
 8. [Logging Security](#logging-security)
-9. [Best Practices Checklist](#best-practices-checklist)
-10. [Testing Security](#testing-security)
-11. [Related Documentation](#related-documentation)
+9. [Binary Hardening](#binary-hardening)
+10. [Best Practices Checklist](#best-practices-checklist)
+11. [Testing Security](#testing-security)
+12. [Related Documentation](#related-documentation)
 
 ---
 
@@ -373,6 +374,14 @@ The Spreedly SDK does not control logging from third-party SDKs it depends on (B
 The SDK automatically sanitizes all public-facing error messages in `FailedDetails`, `APIErrorHandler`, and logging. Merchants no longer need to call `sanitizeForDisplay()` — error descriptions returned by `getDescription()` and similar APIs are already safe to log or display.
 
 For displaying masked payment tokens in your UI (e.g., "•••• 4242"), use `Spreedly.maskedToken(_:)`. For logging, use the SDK's `logInfo`/`logError` functions, which auto-sanitize output.
+
+---
+
+## Binary Hardening
+
+The SDK applies hardening techniques to internal API endpoints, sensitive string constants, and network configuration. This prevents casual extraction of SDK internals from the compiled framework binary using tools like `strings` or disassemblers. Combined with Apple's standard code signing and App Store encryption, this raises the cost of reverse engineering the SDK's network layer.
+
+No action is required from merchants — binary hardening is applied automatically during the SDK build process.
 
 ---
 

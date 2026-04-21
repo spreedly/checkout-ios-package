@@ -421,22 +421,22 @@ SWIFT_CLASS("_TtC12SpreedlyCore27GatewaySpecific3DSLifecycle")
 
 @class NSData;
 /// Objective-C bridge for gateway-specific 3DS finalize flow.
-/// Allows ObjC callers to decode complete.json responses and finalize the SDK lifecycle.
+/// Allows ObjC callers to decode completion responses and finalize the SDK lifecycle.
 SWIFT_CLASS("_TtC12SpreedlyCore28GatewaySpecific3DSObjCBridge")
 @interface GatewaySpecific3DSObjCBridge : NSObject
-/// Finalizes a gateway-specific 3DS transaction using the complete.json response data.
+/// Finalizes a gateway-specific 3DS transaction using the completion response data.
 /// \param transactionToken Transaction token from the purchase response
 ///
-/// \param completeResponseData Raw JSON data returned by /complete.json
+/// \param completeResponseData Raw JSON data returned by the completion endpoint
 ///
 ///
 /// throws:
 /// NSError if decoding fails or transaction is missing
 + (BOOL)finalizeTransactionForTransactionToken:(NSString * _Nonnull)transactionToken completeResponseData:(NSData * _Nonnull)completeResponseData error:(NSError * _Nullable * _Nullable)error;
-/// Finalizes a gateway-specific 3DS transaction using the complete.json response data.
+/// Finalizes a gateway-specific 3DS transaction using the completion response data.
 /// \param transactionToken Transaction token from the purchase response
 ///
-/// \param completeResponseData Raw JSON data returned by /complete.json
+/// \param completeResponseData Raw JSON data returned by the completion endpoint
 ///
 ///
 /// throws:

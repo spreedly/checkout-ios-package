@@ -6,34 +6,6 @@
     "children": [
       {
         "kind": "Import",
-        "name": "StripePaymentSheet",
-        "printedName": "StripePaymentSheet",
-        "declKind": "Import",
-        "moduleName": "SpreedlyStripeAPM",
-        "declAttributes": [
-          "AccessControl",
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SpreedlyCore",
-        "printedName": "SpreedlyCore",
-        "declKind": "Import",
-        "moduleName": "SpreedlyStripeAPM"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "SpreedlyStripeAPM",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -278,18 +250,39 @@
             "mangledName": "$ss28CustomDebugStringConvertibleP"
           }
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "StripePaymentSheet",
+        "printedName": "StripePaymentSheet",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SpreedlyCore",
+        "printedName": "SpreedlyCore",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "SpreedlyStripeAPM",
+        "declAttributes": [
+          "RawDocComment"
+        ]
       }
     ],
     "json_format_version": 8
   },
   "ConstValues": [
-    {
-      "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/StripeAPMSetupHelper.swift",
-      "kind": "StringLiteral",
-      "offset": 509,
-      "length": 27,
-      "value": "\"https:\/\/core.spreedly.com\""
-    },
     {
       "filePath": "\/Users\/runner\/work\/checkout-ios-sdk\/checkout-ios-sdk\/SpreedlyStripeAPM\/SpreedlyStripeAPM\/SpreedlyStripeAPMCheckout.swift",
       "kind": "IntegerLiteral",
