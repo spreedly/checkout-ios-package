@@ -1,24 +1,20 @@
-## [1.3.2] - 2026-04-21
+## [1.3.3] - 2026-04-23
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1314 Enable symbol stripping in Release builds for all XCFramework targets (#234)
-- HC-1312 Fix SBOM generation for zero external SPM dependencies (#233)
-- HC-1313 Add binary hardening for API endpoint strings (#232)
-- HC-1312 Fix Stripe resource build by disabling module interface verification (#231)
-- HC-1312 Add Stripe resource embedding to CI build pipeline (#230)
+- HC-1324 Bump SDK version 1.3.2 → 1.3.3 across source and docs (#236)
+- HC-1315 Suppress ABI metadata and internalize network-layer types to reduce symbol exposure (#235)
 
 ### Change Requests
-  - HC-1312
-  - HC-1313
-  - HC-1314
+  - HC-1315
+  - HC-1324
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.3.2 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.3.3 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -26,12 +22,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.2")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.3")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.3.2'
+pod 'Spreedly', '~> 1.3.3'
 ```
 
 ---
@@ -57,6 +53,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   CI workflow (`build-frameworks.yml`) also passes strip settings as CLI overrides for belt-and-suspenders. Verification script (`build-integrity-verify-optimization.sh`) now warns if local symbols exceed threshold, catching accidental regressions.
 
+### Changed
+
+- HC-1315 **Symbol obfuscation — ABI metadata suppression**: Added `-Xfrontend -empty-abi-descriptor` to all 6 framework Release configs and CI build workflow.
+
+  **Issue**: The Swift compiler generates `.abi.json` files inside each XCFramework slice containing a complete blueprint of every type — every class, struct, enum, protocol, their properties, methods, parameter types, return types, conformances, and memory layout. An attacker could open these files and read the full SDK internals without even using a disassembler.
+
+  **What we did**: Added the `-Xfrontend -empty-abi-descriptor` compiler flag to all 6 framework project Release configs and both device/simulator CI build steps. This tells the compiler to emit empty stubs instead of full metadata.
+
+  **Before**: Each `.abi.json` was ~2.4 MB per architecture slice (~36 MB across all 15 files in the distributed package), exposing every internal type definition.
+
+  **After**: Each `.abi.json` reduced to 149 bytes (empty stub) — 99.99% reduction. The `.swiftinterface` files that consumers need for compilation are unaffected.
+
+- HC-1315 **Symbol obfuscation — access level tightening**: Removed `public` from 10 network-layer implementation types that are not merchant-facing API.
+
+  **Issue**: HC-1314 added `STRIP_STYLE=non-global` which strips `internal` symbols from the binary. But 10 network-layer types were unnecessarily marked `public`, so the stripper left them in. An attacker running `nm | swift-demangle` could see type names like `AuthenticationInterceptor` (reveals auth injection exists), `RetryInterceptor` (reveals retry strategy), `DefaultNetworkClient` (reveals HTTP pipeline architecture), and `NetworkClientBuilder` (reveals builder pattern) — mapping the SDK's internal network architecture.
+
+  **What we did**: Removed `public` from these 10 types across 4 files: `NetworkInterceptor` + `AuthenticationInterceptor` + `RetryInterceptor` (NetworkInterceptor.swift), `NetworkClient` + `DefaultNetworkClient` + `NetworkClientBuilder` (NetworkClient.swift), `NetworkSession` + `URLSessionNetworkSession` + `MockNetworkSession` (NetworkSession.swift), `NetworkResponse` (NetworkResponse.swift). Swift defaults them to `internal`, and `STRIP_STYLE=non-global` from HC-1314 then strips them from the binary.
+
+  **After**: All 10 type names gone from `nm` output. An attacker no longer knows the SDK uses interceptors, a builder pattern, or what the network architecture looks like. Three types (`NetworkRequest`, `BasicNetworkRequest`, `HTTPMethod`) remain `public` because merchant-facing API types inherit from them — but these reveal only that HTTP requests exist, not how they're built or authenticated.
+
+  **No breaking changes**: None of the internalized types were used by merchants or sibling modules. Tests access them via `@testable import`. All test targets, sibling modules (SpreedlyUI, SpreedlyBraintree, SpreedlyStripeAPM), and both Example apps (Swift + ObjC) build and pass.
+
 ### Fixed
 
 - HC-1312 **Duplicate ObjC class resolution**: Eliminated runtime `objc: Class X is implemented in both` warnings caused by third-party dependencies (Stripe, Datadog, Braintree) being loaded twice — once baked into our XCFrameworks and once built from source by the package manager. Root cause: `checkout-ios-package` declared explicit SPM/CocoaPods dependencies on libraries already statically linked into the framework binaries, causing the Objective-C runtime to load two copies of every class.
@@ -80,6 +98,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HC-1311 **DAST xcconfig stub**: Added `SpreedlyKeys.xcconfig` placeholder generation step in `dast-security.yml` so DAST builds don't fail when the gitignored file is missing.
 
 ### Changed
+
+- HC-1324 **Version bump 1.3.2 → 1.3.3**: Updated `Version.xcconfig`, `SpreedlyVersion.swift`, `README.md`, and all doc version references across 11 files.
 
 - HC-1311 **Version bump 1.3.0 → 1.3.1**: Updated `Version.xcconfig`, `SpreedlyVersion.swift`, `README.md`, and all doc version references.
 
