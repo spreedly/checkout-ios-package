@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyBraintree-Swift.h</key>
 		<data>
-		shmGzAcP5kbGl8ZTcAmKg/dMyIk=
+		29a0GBl8aH8hrkEl6FdEGx8b/mQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Zu4bjS3BhEn/N+/EZ7skgdc88h4=
+		djvG6BFSuOi+jok0ZipTCP8/wo8=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		JvYz0dyDGExLNDrDT8DQZINjyQU=
+		5E3OhsBQKI9k3SjK0fTaul7++Ec=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		jWZFCO/N3kSZNSt49kXu9xb/Njk=
+		qs1ibvToelN4NgIfyYnumX3k0QE=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		JvYz0dyDGExLNDrDT8DQZINjyQU=
+		5E3OhsBQKI9k3SjK0fTaul7++Ec=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		IJQDPKlGR27bnbE4y2zkc1MK8QQ=
+		XT7Nrs9O0ZUAwlpiRazAk93n9tQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -52,7 +52,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qS677qUVGLvwd1m/6ds+dZV8qzO7/364WuBtfpPmPKA=
+			MtdFGmPrNLeRI679Oo9/dvNNJ8g9QqTxwk1VK9cjaG8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -66,28 +66,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KUDiHVdPbPquiZr/c1WSqzdwUnU2smTNH7O/LIGod40=
+			jvFjrXLJTnQhcTFaOjPd81uLZHzpyuYqb1anYAJtvVY=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			AeF/OXDzBWTWU24vwHDRuBcELnRSLYgPRqY7PcClM00=
+			q5eCyICtXzeDnYkpQ4eH1VwS+XA9fcfPMoklqIy2FPE=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KUDiHVdPbPquiZr/c1WSqzdwUnU2smTNH7O/LIGod40=
+			jvFjrXLJTnQhcTFaOjPd81uLZHzpyuYqb1anYAJtvVY=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IGozgiu6/bdEhZkAWOg7mG0kML2954lWGCaMsMUKXZk=
+			zznJQOnC6RpPso0CWRrd/cPivHgZJyWGmPIVGmg87gQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

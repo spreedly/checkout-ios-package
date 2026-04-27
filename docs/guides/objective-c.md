@@ -61,6 +61,7 @@ Call `[Spreedly initializeSDK]` at app launch -- either in `AppDelegate applicat
 
 ```objc
 // In AppDelegate or SceneDelegate at launch:
+// Spreedly.blockJailbrokenDevices = YES;  // opt-in: block all SDK ops on compromised devices
 [Spreedly initializeSDK];
 
 // Before presenting payment form (e.g., after fetching signature from backend):
@@ -72,7 +73,17 @@ config.certificateToken = certificateToken;
 config.timestamp = timestamp;
 // config.sdkPlatform = SdkPlatformIos;          // default — native iOS
 // config.sdkPlatform = SdkPlatformReactNative;   // use for React Native bridges
+// config.blockJailbrokenDevices = YES;           // or set here instead of the static property
 [Spreedly setupWithConfig:config];
+
+if (Spreedly.initializationError != nil) {
+    NSLog(@"SDK blocked: %@", Spreedly.initializationError.message);
+}
+
+// Check device trust at any time:
+if (!Spreedly.isDeviceTrusted) {
+    NSLog(@"SDK is blocked — show fallback UI");
+}
 ```
 
 ---

@@ -54,6 +54,10 @@ Before integrating Express Checkout:
 2. Ensure `Spreedly.initializeSDK()` is called at app launch (e.g., in your `App.init()` or `AppDelegate`).
 3. Call `Spreedly.setup(config:)` with `environmentKey`, `forterSiteId`, and signature parameters (nonce, signature, certificateToken, timestamp) **before** presenting the form. Without valid credentials, tokenization will fail.
 
+### Blocked Devices
+
+> **Important:** When `blockJailbrokenDevices` is enabled and the device is compromised, `CardFormDropIn` auto-dismisses the sheet and publishes a `PaymentResult.failure` via `paymentResultPublisher`. The merchant receives the error through the existing subscription — no extra code needed. See [Security — Runtime Integrity](security.md#runtime-integrity) for details.
+
 ---
 
 ## Quick Start

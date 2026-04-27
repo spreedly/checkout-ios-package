@@ -311,7 +311,12 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 /// The final <code>PaymentResult</code> is published through <code>Spreedly.shared().publishPaymentResult()</code>.
 SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
 @interface SpreedlyStripeAPMCheckout : NSObject
+/// Handles the return URL after a Stripe redirect (e.g. iDEAL bank auth).
+/// Call from your scene delegate or <code>onOpenURL</code> handler. Returns <code>true</code> if the URL was handled.
 + (BOOL)handleStripeReturnURL:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
+/// Presents the Stripe APM payment sheet using the topmost view controller.
+/// \param config Stripe APM configuration with credentials and transaction token.
+///
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
 /// Configures and presents the Stripe PaymentSheet from the given view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
@@ -640,7 +645,12 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 /// The final <code>PaymentResult</code> is published through <code>Spreedly.shared().publishPaymentResult()</code>.
 SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
 @interface SpreedlyStripeAPMCheckout : NSObject
+/// Handles the return URL after a Stripe redirect (e.g. iDEAL bank auth).
+/// Call from your scene delegate or <code>onOpenURL</code> handler. Returns <code>true</code> if the URL was handled.
 + (BOOL)handleStripeReturnURL:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
+/// Presents the Stripe APM payment sheet using the topmost view controller.
+/// \param config Stripe APM configuration with credentials and transaction token.
+///
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
 /// Configures and presents the Stripe PaymentSheet from the given view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;

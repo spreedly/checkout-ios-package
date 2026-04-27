@@ -68,7 +68,7 @@ struct ExampleCredentials {
 
 ### Use one package version for all Spreedly modules
 
-Distribution is **[checkout-ios-package](https://github.com/spreedly/checkout-ios-package)** (SwiftPM or CocoaPods). **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**, and optional modules (**SpreedlyStripeAPM**, **SpreedlyBraintree**) are released together under **one** version (for example `1.3.3`). Use the **same** resolved version for every Spreedly product in your app.
+Distribution is **[checkout-ios-package](https://github.com/spreedly/checkout-ios-package)** (SwiftPM or CocoaPods). **SpreedlyCore**, **SpreedlySecurity**, **SpreedlyUI**, and optional modules (**SpreedlyStripeAPM**, **SpreedlyBraintree**) are released together under **one** version (for example `1.3.4`). Use the **same** resolved version for every Spreedly product in your app.
 
 **SDK maintainers** (bumping versions in git): see [Versioning](../development/VERSIONING.md) — you edit **`Version.xcconfig`** and **`SpreedlyVersion.swift`**, then run the **Release SDK** workflow so **checkout-ios-package** gets the matching **`X.Y.Z`**.
 
@@ -91,7 +91,7 @@ SPM distribution is from a separate repository: `https://github.com/spreedly/che
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.3"),
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.4"),
     // Optional: add when using 3DS Global (Forter) — separate repo:
     // .package(url: "https://bitbucket.org/forter-mobile/forter-ios.git", exact: "2.1.0")
 ],
@@ -141,12 +141,12 @@ Then run `pod install`.
 target 'YourApp' do
   use_frameworks!
 
-  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.3'
-  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.3'
-  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.3'
+  pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+  pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+  pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
   # Add these only if needed:
-  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.3'
-  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.3'
+  # pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+  # pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
 end
 ```
 
@@ -164,7 +164,7 @@ If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add a `post_instal
 platform :ios, '14.0'
 
 PACKAGE_REPO = 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git'
-PACKAGE_TAG  = '1.3.3'
+PACKAGE_TAG  = '1.3.4'
 
 target 'YourApp' do
   use_frameworks!
@@ -267,8 +267,8 @@ Add these only when you need the corresponding features:
 | Feature | Package | URL | Version |
 |---------|---------|-----|---------|
 | 3DS Global | Forter3DS | `https://bitbucket.org/forter-mobile/forter-ios.git` | 2.1.0 (exact) |
-| Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | 1.3.3+ |
-| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.3.3+ |
+| Stripe APM | SpreedlyStripeAPM | `https://github.com/spreedly/checkout-ios-package` | 1.3.4+ |
+| Braintree (PayPal/Venmo) | SpreedlyBraintree | `https://github.com/spreedly/checkout-ios-package` | 1.3.4+ |
 
 **Forter3DS (3DS Global):** Required for 3DS authentication. Add Forter3DS directly from Forter's Bitbucket repository. **Do not use** `pod 'SpreedlyForter3DS'` — use the Forter Bitbucket URL below. A dedicated `SpreedlyForter3DS` module is planned for a future release but is not yet available for standard CocoaPods usage.
 
@@ -501,6 +501,7 @@ Call `Spreedly.setup(config:)` with all required parameters before any payment r
 | `signature` | Yes | HMAC signature, fetched from your backend |
 | `timestamp` | Yes | Timestamp of signature generation, fetched from your backend |
 | `sdkPlatform` | No | Identifies the integration surface in telemetry and the `source` field on payment method creation requests. Defaults to `.ios` for native apps. Set to `.reactNative` if calling from a React Native bridge. Uses the `SdkPlatform` enum. |
+| `blockJailbrokenDevices` | No | When `true`, SDK blocks all operations on jailbroken or compromised devices. Defaults to `false`. Check `Spreedly.initializationError` after setup, or `Spreedly.isDeviceTrusted` at any time. Also available as `Spreedly.blockJailbrokenDevices` static property for `initializeSDK()` usage. See [Security — Runtime Integrity](security.md#runtime-integrity). |
 
 > **Migration note (breaking change):** `sdkPlatform` was previously a `String?` parameter. It is now a type-safe `SdkPlatform` enum. If you were passing `sdkPlatform: "react_native"`, change to `sdkPlatform: .reactNative`. Native iOS apps that omitted the parameter are unaffected — the default changed from `nil` to `.ios`, which produces the same behavior. In Objective-C, use `SdkPlatformIos` or `SdkPlatformReactNative`.
 
@@ -515,7 +516,7 @@ class SpreedlyConfigManager {
         do {
             let signatureParams = try await fetchSignatureFromBackend()
 
-            Spreedly.setup(config: SpreedlyConfig(
+            let config = SpreedlyConfig(
                 environmentKey: environmentKey,
                 forterSiteId: forterSiteId,
                 certificateToken: signatureParams.certificateToken,
@@ -523,7 +524,14 @@ class SpreedlyConfigManager {
                 signature: signatureParams.signature,
                 timestamp: String(signatureParams.timestamp),
                 sdkPlatform: .ios  // default for native iOS; use .reactNative for RN bridges
-            ))
+            )
+            // config.blockJailbrokenDevices = true  // opt-in: block SDK on jailbroken devices
+            Spreedly.setup(config: config)
+
+            if let error = Spreedly.initializationError {
+                print("SDK blocked: \(error.message), signals: \(error.signals)")
+                return
+            }
         } catch {
             print("Failed to configure Spreedly: \(error.localizedDescription)")
         }
@@ -565,6 +573,50 @@ config.sdkPlatform = SdkPlatformReactNative;
 ```
 
 Without this, all telemetry and API requests will be tagged as `"checkout-ios"` instead of `"checkout-react-native"`, making it impossible to distinguish native iOS events from React Native events in Datadog.
+
+### Enable Jailbreak Blocking (Optional)
+
+To block all SDK operations on compromised devices, set `blockJailbrokenDevices` before initialization:
+
+```swift
+// Before initializeSDK():
+Spreedly.blockJailbrokenDevices = true
+Spreedly.initializeSDK()
+
+// Or via SpreedlyConfig:
+let config = SpreedlyConfig(environmentKey: "your-environment-key", ...)
+config.blockJailbrokenDevices = true
+Spreedly.setup(config: config)
+```
+
+When enabled, the SDK automatically:
+- Auto-dismisses `CardFormDropIn`, `CVVRecachingView`, and `DoChallengeIfNeeded` sheets
+- Returns `PaymentResult.failure` / `ThreeDSChallengeResult.failure` through existing publishers
+- Blocks all network requests without leaving the device
+
+Check the status at any point:
+
+```swift
+if !Spreedly.isDeviceTrusted {
+    let error = Spreedly.initializationError
+    // Show fallback UI or redirect to web checkout
+}
+```
+
+#### Recovering from a Block
+
+If the device condition changes (e.g. a debugging session ends), the SDK can recover. Call `initializeSDK()` or `setup(config:)` again — if the device now passes integrity checks, the block is cleared and the SDK becomes fully operational:
+
+```swift
+// Attempt recovery after conditions change
+Spreedly.initializeSDK()
+
+if Spreedly.isDeviceTrusted {
+    // SDK is now operational — proceed normally
+}
+```
+
+For full details — per-component behavior, error handling patterns, and testing — see [Security — Runtime Integrity](security.md#runtime-integrity).
 
 ### Logging & Observability (Optional)
 
@@ -830,8 +882,15 @@ Create `SpreedlyConfig` with `initWithEnvironmentKey:` and set properties, then 
     config.timestamp = [NSString stringWithFormat:@"%ld", (long)signatureParams.timestamp];
     // config.sdkPlatform = SdkPlatformIos;          // default — native iOS
     // config.sdkPlatform = SdkPlatformReactNative;   // use for React Native bridges
+    // config.blockJailbrokenDevices = YES;           // opt-in: block SDK on jailbroken devices
 
     [Spreedly setupWithConfig:config];
+
+    if (Spreedly.initializationError != nil) {
+        NSLog(@"SDK blocked: %@", Spreedly.initializationError.message);
+        if (completion) completion(NO, nil);
+        return;
+    }
     if (completion) completion(YES, nil);
 }
 ```

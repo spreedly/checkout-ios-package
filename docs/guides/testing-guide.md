@@ -282,6 +282,56 @@ See [Go-Live Index](../GO_LIVE_INDEX.md) for the full production readiness check
 
 ---
 
+## Testing Blocked-Device Scenarios
+
+When `blockJailbrokenDevices` is enabled, verify the SDK behaves correctly on compromised devices.
+
+### Using the DEBUG Override
+
+The SDK provides `SecurityManager.shared.setOverrideAssessment(_:)` in DEBUG builds. This forces a specific assessment result on the Simulator (where real checks always return `.clean`):
+
+```swift
+#if DEBUG
+// Force a "compromised" state for testing
+let compromised = SecurityAssessment(level: .compromised, signals: ["sandbox_broken", "dylib_injection"])
+SecurityManager.shared.setOverrideAssessment(compromised)
+
+// Now initialize with blocking enabled
+Spreedly.blockJailbrokenDevices = true
+Spreedly.initializeSDK()
+
+// Verify: isDeviceTrusted should be false
+assert(!Spreedly.isDeviceTrusted)
+assert(Spreedly.initializationError != nil)
+
+// Restore normal behavior
+SecurityManager.shared.setOverrideAssessment(nil)
+#endif
+```
+
+### What to Verify
+
+| Scenario | Expected Behavior |
+|----------|-------------------|
+| `CardFormDropIn` presented on blocked device | Sheet auto-dismisses, `PaymentResult.failure` published |
+| `CVVRecachingView` presented on blocked device | View auto-dismisses, `PaymentResult.failure` published |
+| APM `present()` called on blocked device | Returns immediately, `PaymentResult.failure` published |
+| 3DS `DoChallengeIfNeeded` on blocked device | Auto-dismisses, `ThreeDSChallengeResult.failure` published |
+| `SPLTextField` rendered on blocked device | Renders invisible (zero-size frame) |
+| `Spreedly.shared()` on blocked device | Returns non-functional instance; all network calls fail |
+| Recovery: call `initializeSDK()` after clearing override | `isDeviceTrusted` returns `true`, SDK operational |
+
+### Telemetry Verification
+
+When a device is blocked, verify these events fire:
+
+- `security_check_completed` — with `is_compromised: true` and the signal names
+- `sdk_init_blocked` — with `reason: "device_compromised"`
+
+See [Security — Runtime Integrity](security.md#runtime-integrity) for full details on per-component behavior.
+
+---
+
 ## Related Documentation
 
 - [Getting Started](getting-started.md) — Installation and first payment
