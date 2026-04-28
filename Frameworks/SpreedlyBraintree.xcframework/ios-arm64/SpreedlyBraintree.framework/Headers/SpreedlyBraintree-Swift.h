@@ -327,6 +327,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isActive;)
 /// The transaction token of the active checkout, if any.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nullable currentTransactionToken;)
 + (NSString * _Nullable)currentTransactionToken SWIFT_WARN_UNUSED_RESULT;
+/// Presents the Braintree payment flow using the topmost view controller.
+/// \param config Braintree checkout configuration with transaction token and payment type.
+///
 + (void)presentWithConfig:(BraintreeCheckoutConfig * _Nonnull)config;
 /// Presents the Braintree PayPal or Venmo flow from the given view controller.
 + (void)presentWithConfig:(BraintreeCheckoutConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;

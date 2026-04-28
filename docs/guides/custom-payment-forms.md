@@ -59,6 +59,16 @@ Complete [getting-started.md](getting-started.md) before using custom fields. Yo
 - Call `Spreedly.setup(config:)` with signature parameters from your backend before any tokenization
 - Fetch signature parameters fresh for each payment session
 
+> **Blocked device handling:** If you enable `blockJailbrokenDevices`, `SPLTextField` fields render as blank on compromised devices. Unlike `CardFormDropIn` (which auto-dismisses its sheet), custom forms are your UI — the SDK cannot dismiss them for you. Check `Spreedly.isDeviceTrusted` when the form appears and show an appropriate error:
+>
+> ```swift
+> .onAppear {
+>     if !Spreedly.isDeviceTrusted {
+>         errorMessage = Spreedly.initializationError?.message ?? "SDK blocked by security check"
+>     }
+> }
+> ```
+
 ---
 
 ## Quick Start

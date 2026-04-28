@@ -7,17 +7,18 @@ Protect sensitive payment data with screen prevention, secure storage, and PCI c
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Screen Prevention](#screen-prevention)
-3. [Secure Value Collection](#secure-value-collection)
-4. [API Key Handling](#api-key-handling)
-5. [Token Storage](#token-storage)
-6. [PCI Compliance](#pci-compliance)
-7. [Memory Management](#memory-management)
-8. [Logging Security](#logging-security)
-9. [Binary Hardening](#binary-hardening)
-10. [Best Practices Checklist](#best-practices-checklist)
-11. [Testing Security](#testing-security)
-12. [Related Documentation](#related-documentation)
+2. [Runtime Integrity](#runtime-integrity)
+3. [Screen Prevention](#screen-prevention)
+4. [Secure Value Collection](#secure-value-collection)
+5. [API Key Handling](#api-key-handling)
+6. [Token Storage](#token-storage)
+7. [PCI Compliance](#pci-compliance)
+8. [Memory Management](#memory-management)
+9. [Logging Security](#logging-security)
+10. [Binary Hardening](#binary-hardening)
+11. [Best Practices Checklist](#best-practices-checklist)
+12. [Testing Security](#testing-security)
+13. [Related Documentation](#related-documentation)
 
 ---
 
@@ -31,6 +32,144 @@ Protect sensitive payment data with screen prevention, secure storage, and PCI c
 ## Introduction
 
 The Spreedly iOS SDK provides security features to meet PCI DSS requirements and protect sensitive payment information. It covers screen prevention, secure value collection, API key handling, token storage, and other security practices for integrating the SDK into your application.
+
+---
+
+## Runtime Integrity
+
+The SDK performs runtime security checks during initialization to detect compromised environments. These checks run automatically and use only public POSIX/Darwin APIs (App Store safe).
+
+### What It Detects
+
+- **Debugger attachment** — LLDB, Frida, or other debuggers attached to the process
+- **Jailbroken devices** — sandbox escape, hooking framework injection (MobileSubstrate, libhooker, FridaGadget, etc.), known jailbreak filesystem artifacts
+
+### Blocking Jailbroken Devices (Opt-In)
+
+By default, the SDK runs on all devices. To block all SDK operations on compromised devices, enable `blockJailbrokenDevices` before initialization.
+
+**Option A — Config property** (when using `setup(config:)`):
+
+```swift
+let config = SpreedlyConfig(environmentKey: "your-environment-key")
+config.blockJailbrokenDevices = true
+Spreedly.setup(config: config)
+```
+
+**Option B — Static property** (when using `initializeSDK()`):
+
+```swift
+Spreedly.blockJailbrokenDevices = true
+Spreedly.initializeSDK()
+```
+
+**Objective-C (either option):**
+
+```objc
+// Option A
+SpreedlyConfig *config = [[SpreedlyConfig alloc] initWithEnvironmentKey:@"your-environment-key"];
+config.blockJailbrokenDevices = YES;
+[Spreedly setupWithConfig:config];
+
+// Option B
+Spreedly.blockJailbrokenDevices = YES;
+[Spreedly initializeSDK];
+```
+
+**Checking the result:**
+
+```swift
+if let error = Spreedly.initializationError {
+    print("SDK blocked: \(error.message)")
+    print("Signals: \(error.signals)")
+    return
+}
+
+// Or check anytime:
+if !Spreedly.isDeviceTrusted {
+    // SDK is blocked — show a fallback UI or redirect to web checkout
+}
+```
+
+When blocking is enabled and the device is compromised, `Spreedly.initializationError` is set with a `SpreedlySecurityError` containing:
+- `code` — the error category (`.deviceCompromised`)
+- `message` — human-readable description
+- `signals` — which specific checks fired (e.g. `["sandbox_broken", "dylib_injection"]`)
+
+### What Gets Blocked
+
+When the SDK is blocked, **all operations fail gracefully** — no card data UI appears, no network traffic leaves the device:
+
+- **Card forms** (`CardFormDropIn`, `SPLTextField`) render as invisible — no text fields appear
+- **Recaching UI** (`CVVRecachingView`) does not render and emits a failure result
+- **3DS challenges** (`DoChallengeIfNeeded`) do not render and emit a 3DS failure result
+- **APM flows** (Stripe `present()`, Braintree `present()`) reject immediately with a `PaymentResult.failure`
+- **Offsite payments** (`OffsitePaymentSafariFlow.present()`) reject immediately
+- **Network calls** — a `BlockedNetworkClient` is injected so any network request throws without leaving the device
+- **3DS integrations** (Forter, Gateway-Specific) check the blocked state and emit failure results
+
+Merchants observing `paymentResultPublisher` or the `SpreedlyPaymentDelegate` will receive a `PaymentResult.failure` with an error message indicating the SDK is blocked.
+
+### Blocked-Device Behavior by Component
+
+| Component | Presentation | What happens when blocked |
+|---|---|---|
+| `CardFormDropIn` | `.sheet` | Auto-dismisses the sheet, publishes `PaymentResult.failure` via `paymentResultPublisher` |
+| `CVVRecachingView` | `.sheet` | Auto-dismisses the sheet, publishes `PaymentResult.failure` |
+| `CVVRecachingView` | `.dialog` (alert mode) | Prevents dimming overlay, auto-dismisses via `onDismiss` callback |
+| `DoChallengeIfNeeded` | `.sheet` | Auto-dismisses, emits `ThreeDSChallengeResult.failure` via `threeDSChallengeResultPublisher` |
+| `SPLTextField` (custom forms) | Inline | Renders blank (zero-size placeholder). **Merchant must check `Spreedly.isDeviceTrusted` on appear and show an error.** See [Custom Payment Forms](custom-payment-forms.md#prerequisites). |
+| Braintree `present()` | UIKit | Returns immediately, publishes `PaymentResult.failure` |
+| Stripe `present()` | UIKit | Returns immediately, publishes `PaymentResult.failure` |
+| Offsite `present()` | Safari | Returns immediately, publishes `PaymentResult.failure` |
+| `createCreditCard()` / network | N/A | `BlockedNetworkClient` throws immediately — no data leaves the device |
+| 3DS (Global / Gateway-Specific) | N/A | Emits `ThreeDSChallengeResult.failure`, no UI shown |
+
+### How Errors Reach the Merchant
+
+Blocked-device errors flow through the same channels merchants already subscribe to:
+
+| Flow | Error channel | What the merchant receives |
+|---|---|---|
+| Drop-in forms, recaching, APMs | `Spreedly.shared().subscribeToPaymentResults` / `SpreedlyPaymentDelegate` | `PaymentResult` with `isFailure == true` and message "SDK blocked by security check" |
+| 3DS challenges | `Spreedly.shared().subscribeToThreeDSChallengeResults` | `ThreeDSChallengeResult` with `isFailure == true` |
+| Custom forms (`SPLTextField`) | `Spreedly.initializationError` / `Spreedly.isDeviceTrusted` | Merchant checks these on appear — fields are blank but no automatic error is published |
+| Direct API calls | `BlockedNetworkClient` throws | `NSError` in `spreedlySecurityErrorDomain` with "SDK blocked" message |
+
+### Testing Blocked-Device Behavior
+
+Real integrity checks only run on **physical devices in RELEASE builds**. On the Simulator, all checks return clean.
+
+To test the blocking flow during development, use the DEBUG-only override in your example/test code:
+
+```swift
+#if DEBUG
+SecurityManager.shared.setOverrideAssessment(
+    SecurityAssessment(level: .compromised, signals: ["sandbox_broken", "dylib_injection"])
+)
+#endif
+```
+
+Set the override **before** calling `Spreedly.setup(config:)`. The SDK will treat the device as compromised and block. Pass `nil` to restore normal behavior.
+
+### Recovery
+
+If the device condition changes (e.g., a debugger is detached), calling `Spreedly.setup(config:)` or `Spreedly.initializeSDK()` again re-runs the assessment. If it passes, the block is cleared and the SDK resumes normal operation.
+
+### Querying Security Status Directly
+
+You can also call `SecurityManager` directly for custom policy decisions:
+
+```swift
+let assessment = SecurityManager.shared.performAssessment()
+// assessment.level: .clean, .suspicious, or .compromised
+// assessment.signals: ["sandbox_broken", "dylib_injection", ...]
+// assessment.isCompromised: true when 2+ signals fired
+```
+
+### DEBUG Builds
+
+Debugger detection is disabled in DEBUG builds so Xcode development is not disrupted. Jailbreak checks are disabled on the iOS Simulator.
 
 ---
 
@@ -387,6 +526,8 @@ No action is required from merchants — binary hardening is applied automatical
 
 ## Best Practices Checklist
 
+- [ ] Consider enabling `blockJailbrokenDevices` for high-risk payment flows
+- [ ] Check `Spreedly.initializationError` after setup when blocking is enabled, or `Spreedly.isDeviceTrusted` at any time
 - [ ] Apply `.screenPrevention()` to payment forms and custom views displaying sensitive data
 - [ ] Fetch signature parameters from your backend before each payment session
 - [ ] Cancel Combine subscriptions in `onDisappear` (or `dealloc` for Objective-C)

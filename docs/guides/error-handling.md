@@ -526,6 +526,8 @@ The examples use the simple `failureDetails.getDescription()` pattern for displa
 | Timeouts / network errors | Device or API connectivity | Retry with backoff for transient failures; see [Best Practices](#best-practices) |
 | 3DS challenge never appears | Forter3DS SDK not linked, or `#if canImport` not used | Verify `Forter3DS` is added via SPM/CocoaPods; see [3DS Global](3ds-global.md) |
 | Screen prevention blocks screenshots in Simulator | `ScreenPreventionSecureView` is active | This is expected behavior; disable in debug builds if needed; see [Security](security.md) |
+| Blank form fields / empty `SPLTextField` | `blockJailbrokenDevices` is enabled and device failed integrity checks | Check `Spreedly.isDeviceTrusted`; drop-in components auto-dismiss, but custom forms must handle this — see [Custom Payment Forms](custom-payment-forms.md#prerequisites) |
+| SDK returns `.compromisedDevice` error | Device blocked by `SecurityManager` | `Spreedly.initializationError` has the details; see [Security — Runtime Integrity](security.md#runtime-integrity) |
 
 For SDK log delivery issues (Datadog), see [Telemetry Spec -- Operational Readiness](../development/TELEMETRY_SPEC.md#operational-readiness).
 

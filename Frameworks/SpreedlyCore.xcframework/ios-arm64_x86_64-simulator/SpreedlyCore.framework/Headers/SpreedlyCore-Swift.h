@@ -674,6 +674,59 @@ typedef SWIFT_ENUM(NSInteger, SdkPlatform, open) {
   SdkPlatformReactNative = 1,
 };
 
+enum SecurityIntegrityLevel : NSInteger;
+/// Aggregated result from all jailbreak/environment detection layers.
+SWIFT_CLASS("_TtC12SpreedlyCore18SecurityAssessment")
+@interface SecurityAssessment : NSObject
+/// Overall integrity verdict.
+@property (nonatomic, readonly) enum SecurityIntegrityLevel level;
+/// Which specific checks fired (empty when clean).
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull signals;
+/// Whether the device should be considered compromised for policy decisions.
+@property (nonatomic, readonly) BOOL isCompromised;
+- (nonnull instancetype)initWithLevel:(enum SecurityIntegrityLevel)level signals:(NSArray<NSString *> * _Nonnull)signals OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Result of a composite environment integrity check, ObjC-compatible.
+typedef SWIFT_ENUM(NSInteger, SecurityIntegrityLevel, open) {
+  SecurityIntegrityLevelClean = 0,
+  SecurityIntegrityLevelSuspicious = 1,
+  SecurityIntegrityLevelCompromised = 2,
+};
+
+@class SpreedlySecurityError;
+@class NSMutableData;
+/// Centralized runtime security manager.
+/// Access via <code>SecurityManager.shared</code>. All public methods are safe to call from
+/// both Swift and Objective-C.
+SWIFT_CLASS("_TtC12SpreedlyCore15SecurityManager")
+@interface SecurityManager : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityManager * _Nonnull shared;)
++ (SecurityManager * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// True when the SDK detected a compromised device and blocking was enabled.
+@property (nonatomic, readonly) BOOL isDeviceBlocked;
+/// The security error that caused the block, if any.
+@property (nonatomic, readonly, strong) SpreedlySecurityError * _Nullable blockingError;
+/// Checks if SDK operations are allowed. If blocked, publishes a failure
+/// <code>PaymentResult</code> with telemetry and returns <code>false</code>.
+/// Usage: <code>guard SecurityManager.shared.allowPaymentOperation(provider: "stripe") else { return }</code>
+- (BOOL)allowPaymentOperationWithProvider:(NSString * _Nonnull)provider;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Runs all security checks and returns a composite assessment.
+/// Called during SDK initialization to determine environment integrity.
+- (SecurityAssessment * _Nonnull)performAssessment SWIFT_WARN_UNUSED_RESULT;
+/// Checks whether an external process is inspecting this process.
+/// Returns <code>false</code> in DEBUG builds so development is not disrupted.
+- (BOOL)isDebuggerAttached SWIFT_WARN_UNUSED_RESULT;
+/// ObjC-compatible variant — zeroes a <code>NSMutableData</code> buffer.
+- (void)zeroMemory:(NSMutableData * _Nonnull)data;
+/// ObjC-compatible variant — returns a cleared empty string.
+- (NSString * _Nonnull)secureClearedString:(NSString * _Nonnull)string SWIFT_WARN_UNUSED_RESULT;
+@end
+
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
@@ -687,6 +740,20 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// Masks a token for safe display: shows first 4 and last 4 characters.
 /// Requires at least 4 hidden characters to avoid near-full exposure of short tokens.
 + (NSString * _Nonnull)maskedToken:(NSString * _Nonnull)token SWIFT_WARN_UNUSED_RESULT;
+/// When <code>true</code>, SDK initialization fails if the device is compromised.
+/// Set this BEFORE calling <code>initializeSDK()</code> or <code>setup(config:)</code>.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL blockJailbrokenDevices;)
++ (BOOL)blockJailbrokenDevices SWIFT_WARN_UNUSED_RESULT;
++ (void)setBlockJailbrokenDevices:(BOOL)newValue;
+/// <code>true</code> when the device passes integrity checks and the SDK can process payments;
+/// <code>false</code> when blocked due to a compromised environment.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isDeviceTrusted;)
++ (BOOL)isDeviceTrusted SWIFT_WARN_UNUSED_RESULT;
+/// Non-nil when SDK initialization was blocked by a security check.
+/// Reads from SecurityManager — the single source of truth.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecurityError * _Nullable initializationError;)
++ (SpreedlySecurityError * _Nullable)initializationError SWIFT_WARN_UNUSED_RESULT;
+/// Manager for custom parameters sent with payment method creation requests.
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 /// Objective-C compatible delegate for payment result callbacks
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
@@ -705,8 +772,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 ///
 + (void)setupWithConfig:(SpreedlyConfig * _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// Applies a new configuration (credentials, 3DS settings) to the SDK instance.
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
+/// Sets a validation parameter that controls field-level validation behavior.
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
+/// Resets the SDK state: clears secure values, registered fields, and validation errors.
 - (void)reset;
 /// Performs a checkout operation with field values from different sources (Objective-C compatible version)
 /// \param additionalFields Dictionary containing additional field values from application components using string keys
@@ -738,11 +808,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// \param result The payment result to emit
 ///
 - (void)publishPaymentResult:(PaymentResult * _Nonnull)result;
-/// Query parameter name for transaction token in offsite return URLs (Universal Links).
-/// Merchant’s redirect URL should include e.g. <code>?transaction_token=XXX</code> so the SDK can finalize the correct transaction.
+/// Query parameter name for transaction token in offsite return URLs.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnTransactionTokenQueryKey;)
 + (NSString * _Nonnull)offsiteReturnTransactionTokenQueryKey SWIFT_WARN_UNUSED_RESULT;
-/// Alternate query parameter for transaction token (e.g. <code>?code=XXX</code>). SDK accepts either <code>transaction_token</code> or <code>code</code>.
+/// Alternate query parameter for transaction token in offsite return URLs.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnCodeQueryKey;)
 + (NSString * _Nonnull)offsiteReturnCodeQueryKey SWIFT_WARN_UNUSED_RESULT;
 /// Sets the closure to run when the app is opened via Universal Link after offsite payment (so the SDK can dismiss SFSafariViewController).
@@ -752,6 +821,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Used by SpreedlyUI to forward URLs to the Stripe SDK for redirect-based APM handling.
 /// The handler returns <code>true</code> if it consumed the URL, <code>false</code> to let normal processing continue.
 - (void)setURLPreHandler:(BOOL (^ _Nullable)(NSURL * _Nonnull))handler;
+/// Handles the return URL from an offsite payment redirect.
+/// Extracts transaction identifiers from the return URL, checks status, and publishes the result.
 - (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
@@ -843,6 +914,9 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 /// and as the <code>source</code> field on payment method creation requests to Core.
 /// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
 @property (nonatomic) enum SdkPlatform sdkPlatform;
+/// When <code>true</code>, SDK initialization fails if the device is detected as jailbroken
+/// or otherwise compromised. Defaults to <code>false</code> (jailbroken devices allowed).
+@property (nonatomic) BOOL blockJailbrokenDevices;
 @end
 
 /// Configuration for the Spreedly SDK, providing credentials and optional 3DS/Forter settings.
@@ -852,19 +926,23 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
 /// Forter site ID for 3DS fraud detection. Required only when using Forter-powered Global 3DS.
 @property (nonatomic, copy) NSString * _Nullable forterSiteId;
-/// Certificate token for HMAC signature-based authentication.
+/// Token used for request authentication.
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
-/// One-time nonce combined with timestamp and certificateToken to generate the request signature.
+/// One-time nonce for request signing.
 @property (nonatomic, copy) NSString * _Nullable nonce;
-/// HMAC-SHA256 signature computed from nonce + timestamp + certificateToken.
+/// Cryptographic signature for request verification.
 @property (nonatomic, copy) NSString * _Nullable signature;
-/// UTC timestamp paired with nonce for signature validation. Must be within the server’s tolerance window.
+/// UTC timestamp paired with nonce for request verification.
 @property (nonatomic, copy) NSString * _Nullable timestamp;
 /// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>)
 /// and as the <code>source</code> field on payment method creation requests to Core.
 /// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
 @property (nonatomic) enum SdkPlatform sdkPlatform;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(enum SdkPlatform)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
+/// When <code>true</code>, SDK initialization fails if the device is detected as jailbroken
+/// or otherwise compromised. Defaults to <code>false</code> (jailbroken devices allowed).
+@property (nonatomic) BOOL blockJailbrokenDevices;
+/// Creates a new SDK configuration with the specified credentials and options.
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(enum SdkPlatform)sdkPlatform blockJailbrokenDevices:(BOOL)blockJailbrokenDevices OBJC_DESIGNATED_INITIALIZER;
 /// Objective-C compatible convenience initializer
 /// \param environmentKey Spreedly environment key
 ///
@@ -918,6 +996,27 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
+enum SpreedlySecurityErrorCode : NSInteger;
+/// Describes a security condition that blocked SDK initialization.
+SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlySecurityError")
+@interface SpreedlySecurityError : NSObject
+/// The category of security failure.
+@property (nonatomic, readonly) enum SpreedlySecurityErrorCode code;
+/// Human-readable description of the failure.
+@property (nonatomic, readonly, copy) NSString * _Nonnull message;
+/// Individual signals that triggered the failure (e.g. “sandbox_broken”, “dylib_injection”).
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull signals;
+- (nonnull instancetype)initWithCode:(enum SpreedlySecurityErrorCode)code message:(NSString * _Nonnull)message signals:(NSArray<NSString *> * _Nonnull)signals OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Error codes for SDK security failures, ObjC-compatible.
+typedef SWIFT_ENUM(NSInteger, SpreedlySecurityErrorCode, open) {
+  SpreedlySecurityErrorCodeDeviceCompromised = 1,
+  SpreedlySecurityErrorCodeDebuggerAttached = 2,
+};
+
 /// ObjC-callable wrappers for <code>TelemetryEvents</code>. Mirrors every Swift method 1:1.
 SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 @interface SpreedlyTelemetryObjCBridge : NSObject
@@ -947,6 +1046,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)threedsCompletedWithFlowType:(NSString * _Nonnull)flowType durationMs:(int64_t)durationMs success:(BOOL)success outcome:(NSString * _Nonnull)outcome gatewayType:(NSString * _Nullable)gatewayType errorCode:(NSString * _Nullable)errorCode;
 + (void)apmCheckoutCompletedWithProvider:(NSString * _Nonnull)provider paymentType:(NSString * _Nonnull)paymentType success:(BOOL)success durationMs:(int64_t)durationMs;
 + (void)offsitePaymentCompletedWithPaymentMethodType:(NSString * _Nonnull)paymentMethodType success:(BOOL)success durationMs:(int64_t)durationMs;
++ (void)securityCheckCompletedWithIsCompromised:(BOOL)isCompromised signals:(NSString * _Nonnull)signals durationMs:(int64_t)durationMs;
++ (void)sdkInitBlockedWithReason:(NSString * _Nonnull)reason signals:(NSString * _Nonnull)signals;
 + (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName;
 + (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName module:(NSString * _Nonnull)module_;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -1786,6 +1887,59 @@ typedef SWIFT_ENUM(NSInteger, SdkPlatform, open) {
   SdkPlatformReactNative = 1,
 };
 
+enum SecurityIntegrityLevel : NSInteger;
+/// Aggregated result from all jailbreak/environment detection layers.
+SWIFT_CLASS("_TtC12SpreedlyCore18SecurityAssessment")
+@interface SecurityAssessment : NSObject
+/// Overall integrity verdict.
+@property (nonatomic, readonly) enum SecurityIntegrityLevel level;
+/// Which specific checks fired (empty when clean).
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull signals;
+/// Whether the device should be considered compromised for policy decisions.
+@property (nonatomic, readonly) BOOL isCompromised;
+- (nonnull instancetype)initWithLevel:(enum SecurityIntegrityLevel)level signals:(NSArray<NSString *> * _Nonnull)signals OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Result of a composite environment integrity check, ObjC-compatible.
+typedef SWIFT_ENUM(NSInteger, SecurityIntegrityLevel, open) {
+  SecurityIntegrityLevelClean = 0,
+  SecurityIntegrityLevelSuspicious = 1,
+  SecurityIntegrityLevelCompromised = 2,
+};
+
+@class SpreedlySecurityError;
+@class NSMutableData;
+/// Centralized runtime security manager.
+/// Access via <code>SecurityManager.shared</code>. All public methods are safe to call from
+/// both Swift and Objective-C.
+SWIFT_CLASS("_TtC12SpreedlyCore15SecurityManager")
+@interface SecurityManager : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityManager * _Nonnull shared;)
++ (SecurityManager * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// True when the SDK detected a compromised device and blocking was enabled.
+@property (nonatomic, readonly) BOOL isDeviceBlocked;
+/// The security error that caused the block, if any.
+@property (nonatomic, readonly, strong) SpreedlySecurityError * _Nullable blockingError;
+/// Checks if SDK operations are allowed. If blocked, publishes a failure
+/// <code>PaymentResult</code> with telemetry and returns <code>false</code>.
+/// Usage: <code>guard SecurityManager.shared.allowPaymentOperation(provider: "stripe") else { return }</code>
+- (BOOL)allowPaymentOperationWithProvider:(NSString * _Nonnull)provider;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Runs all security checks and returns a composite assessment.
+/// Called during SDK initialization to determine environment integrity.
+- (SecurityAssessment * _Nonnull)performAssessment SWIFT_WARN_UNUSED_RESULT;
+/// Checks whether an external process is inspecting this process.
+/// Returns <code>false</code> in DEBUG builds so development is not disrupted.
+- (BOOL)isDebuggerAttached SWIFT_WARN_UNUSED_RESULT;
+/// ObjC-compatible variant — zeroes a <code>NSMutableData</code> buffer.
+- (void)zeroMemory:(NSMutableData * _Nonnull)data;
+/// ObjC-compatible variant — returns a cleared empty string.
+- (NSString * _Nonnull)secureClearedString:(NSString * _Nonnull)string SWIFT_WARN_UNUSED_RESULT;
+@end
+
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
@@ -1799,6 +1953,20 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// Masks a token for safe display: shows first 4 and last 4 characters.
 /// Requires at least 4 hidden characters to avoid near-full exposure of short tokens.
 + (NSString * _Nonnull)maskedToken:(NSString * _Nonnull)token SWIFT_WARN_UNUSED_RESULT;
+/// When <code>true</code>, SDK initialization fails if the device is compromised.
+/// Set this BEFORE calling <code>initializeSDK()</code> or <code>setup(config:)</code>.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL blockJailbrokenDevices;)
++ (BOOL)blockJailbrokenDevices SWIFT_WARN_UNUSED_RESULT;
++ (void)setBlockJailbrokenDevices:(BOOL)newValue;
+/// <code>true</code> when the device passes integrity checks and the SDK can process payments;
+/// <code>false</code> when blocked due to a compromised environment.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isDeviceTrusted;)
++ (BOOL)isDeviceTrusted SWIFT_WARN_UNUSED_RESULT;
+/// Non-nil when SDK initialization was blocked by a security check.
+/// Reads from SecurityManager — the single source of truth.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecurityError * _Nullable initializationError;)
++ (SpreedlySecurityError * _Nullable)initializationError SWIFT_WARN_UNUSED_RESULT;
+/// Manager for custom parameters sent with payment method creation requests.
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
 /// Objective-C compatible delegate for payment result callbacks
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
@@ -1817,8 +1985,11 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 ///
 + (void)setupWithConfig:(SpreedlyConfig * _Nonnull)config;
 + (Spreedly * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// Applies a new configuration (credentials, 3DS settings) to the SDK instance.
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
+/// Sets a validation parameter that controls field-level validation behavior.
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
+/// Resets the SDK state: clears secure values, registered fields, and validation errors.
 - (void)reset;
 /// Performs a checkout operation with field values from different sources (Objective-C compatible version)
 /// \param additionalFields Dictionary containing additional field values from application components using string keys
@@ -1850,11 +2021,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 /// \param result The payment result to emit
 ///
 - (void)publishPaymentResult:(PaymentResult * _Nonnull)result;
-/// Query parameter name for transaction token in offsite return URLs (Universal Links).
-/// Merchant’s redirect URL should include e.g. <code>?transaction_token=XXX</code> so the SDK can finalize the correct transaction.
+/// Query parameter name for transaction token in offsite return URLs.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnTransactionTokenQueryKey;)
 + (NSString * _Nonnull)offsiteReturnTransactionTokenQueryKey SWIFT_WARN_UNUSED_RESULT;
-/// Alternate query parameter for transaction token (e.g. <code>?code=XXX</code>). SDK accepts either <code>transaction_token</code> or <code>code</code>.
+/// Alternate query parameter for transaction token in offsite return URLs.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull offsiteReturnCodeQueryKey;)
 + (NSString * _Nonnull)offsiteReturnCodeQueryKey SWIFT_WARN_UNUSED_RESULT;
 /// Sets the closure to run when the app is opened via Universal Link after offsite payment (so the SDK can dismiss SFSafariViewController).
@@ -1864,6 +2034,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Used by SpreedlyUI to forward URLs to the Stripe SDK for redirect-based APM handling.
 /// The handler returns <code>true</code> if it consumed the URL, <code>false</code> to let normal processing continue.
 - (void)setURLPreHandler:(BOOL (^ _Nullable)(NSURL * _Nonnull))handler;
+/// Handles the return URL from an offsite payment redirect.
+/// Extracts transaction identifiers from the return URL, checks status, and publishes the result.
 - (BOOL)handleOffsiteReturnWithUrl:(NSURL * _Nonnull)url;
 /// Emits a 3DS challenge result through both Combine publisher and delegate
 /// note:
@@ -1955,6 +2127,9 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyConfigGenerator_")
 /// and as the <code>source</code> field on payment method creation requests to Core.
 /// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
 @property (nonatomic) enum SdkPlatform sdkPlatform;
+/// When <code>true</code>, SDK initialization fails if the device is detected as jailbroken
+/// or otherwise compromised. Defaults to <code>false</code> (jailbroken devices allowed).
+@property (nonatomic) BOOL blockJailbrokenDevices;
 @end
 
 /// Configuration for the Spreedly SDK, providing credentials and optional 3DS/Forter settings.
@@ -1964,19 +2139,23 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 @property (nonatomic, copy) NSString * _Nullable environmentKey;
 /// Forter site ID for 3DS fraud detection. Required only when using Forter-powered Global 3DS.
 @property (nonatomic, copy) NSString * _Nullable forterSiteId;
-/// Certificate token for HMAC signature-based authentication.
+/// Token used for request authentication.
 @property (nonatomic, copy) NSString * _Nullable certificateToken;
-/// One-time nonce combined with timestamp and certificateToken to generate the request signature.
+/// One-time nonce for request signing.
 @property (nonatomic, copy) NSString * _Nullable nonce;
-/// HMAC-SHA256 signature computed from nonce + timestamp + certificateToken.
+/// Cryptographic signature for request verification.
 @property (nonatomic, copy) NSString * _Nullable signature;
-/// UTC timestamp paired with nonce for signature validation. Must be within the server’s tolerance window.
+/// UTC timestamp paired with nonce for request verification.
 @property (nonatomic, copy) NSString * _Nullable timestamp;
 /// Integration surface identifier sent as a Datadog global attribute (<code>sdk_platform</code>)
 /// and as the <code>source</code> field on payment method creation requests to Core.
 /// Defaults to <code>.ios</code>. React Native bridges should set this to <code>.reactNative</code>.
 @property (nonatomic) enum SdkPlatform sdkPlatform;
-- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(enum SdkPlatform)sdkPlatform OBJC_DESIGNATED_INITIALIZER;
+/// When <code>true</code>, SDK initialization fails if the device is detected as jailbroken
+/// or otherwise compromised. Defaults to <code>false</code> (jailbroken devices allowed).
+@property (nonatomic) BOOL blockJailbrokenDevices;
+/// Creates a new SDK configuration with the specified credentials and options.
+- (nonnull instancetype)initWithEnvironmentKey:(NSString * _Nullable)environmentKey forterSiteId:(NSString * _Nullable)forterSiteId certificateToken:(NSString * _Nullable)certificateToken nonce:(NSString * _Nullable)nonce signature:(NSString * _Nullable)signature timestamp:(NSString * _Nullable)timestamp sdkPlatform:(enum SdkPlatform)sdkPlatform blockJailbrokenDevices:(BOOL)blockJailbrokenDevices OBJC_DESIGNATED_INITIALIZER;
 /// Objective-C compatible convenience initializer
 /// \param environmentKey Spreedly environment key
 ///
@@ -2030,6 +2209,27 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
+enum SpreedlySecurityErrorCode : NSInteger;
+/// Describes a security condition that blocked SDK initialization.
+SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlySecurityError")
+@interface SpreedlySecurityError : NSObject
+/// The category of security failure.
+@property (nonatomic, readonly) enum SpreedlySecurityErrorCode code;
+/// Human-readable description of the failure.
+@property (nonatomic, readonly, copy) NSString * _Nonnull message;
+/// Individual signals that triggered the failure (e.g. “sandbox_broken”, “dylib_injection”).
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull signals;
+- (nonnull instancetype)initWithCode:(enum SpreedlySecurityErrorCode)code message:(NSString * _Nonnull)message signals:(NSArray<NSString *> * _Nonnull)signals OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Error codes for SDK security failures, ObjC-compatible.
+typedef SWIFT_ENUM(NSInteger, SpreedlySecurityErrorCode, open) {
+  SpreedlySecurityErrorCodeDeviceCompromised = 1,
+  SpreedlySecurityErrorCodeDebuggerAttached = 2,
+};
+
 /// ObjC-callable wrappers for <code>TelemetryEvents</code>. Mirrors every Swift method 1:1.
 SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 @interface SpreedlyTelemetryObjCBridge : NSObject
@@ -2059,6 +2259,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)threedsCompletedWithFlowType:(NSString * _Nonnull)flowType durationMs:(int64_t)durationMs success:(BOOL)success outcome:(NSString * _Nonnull)outcome gatewayType:(NSString * _Nullable)gatewayType errorCode:(NSString * _Nullable)errorCode;
 + (void)apmCheckoutCompletedWithProvider:(NSString * _Nonnull)provider paymentType:(NSString * _Nonnull)paymentType success:(BOOL)success durationMs:(int64_t)durationMs;
 + (void)offsitePaymentCompletedWithPaymentMethodType:(NSString * _Nonnull)paymentMethodType success:(BOOL)success durationMs:(int64_t)durationMs;
++ (void)securityCheckCompletedWithIsCompromised:(BOOL)isCompromised signals:(NSString * _Nonnull)signals durationMs:(int64_t)durationMs;
++ (void)sdkInitBlockedWithReason:(NSString * _Nonnull)reason signals:(NSString * _Nonnull)signals;
 + (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName;
 + (void)sdkMethodInvokedWithMethodName:(NSString * _Nonnull)methodName module:(NSString * _Nonnull)module_;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;

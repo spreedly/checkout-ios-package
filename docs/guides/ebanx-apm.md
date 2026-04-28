@@ -667,6 +667,10 @@ In `SceneDelegate.m` — handle redirect return:
 
 ---
 
+### Blocked Devices
+
+> **Important:** When `blockJailbrokenDevices` is enabled and the device is compromised, the SDK blocks this flow automatically. The `present()` call returns immediately without showing any UI, and a `PaymentResult.failure` is published. See [Security — Runtime Integrity](security.md#runtime-integrity) for details.
+
 ## Related Documentation
 
 - [offsite-payments.md](offsite-payments.md) — Custom URL scheme setup, offsite flow details

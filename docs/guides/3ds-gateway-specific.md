@@ -642,6 +642,10 @@ If your code calls `getChallengeContainerView`, you can safely remove those call
 
 ---
 
+### Blocked Devices
+
+> **Important:** When `blockJailbrokenDevices` is enabled and the device is compromised, the SDK blocks 3DS challenge flows automatically. `DoChallengeIfNeeded` auto-dismisses and emits a failure result. See [Security — Runtime Integrity](security.md#runtime-integrity) for details.
+
 ## Troubleshooting
 
 **Trigger never fires**

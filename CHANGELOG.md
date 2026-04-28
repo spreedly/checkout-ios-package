@@ -1,20 +1,18 @@
-## [1.3.3] - 2026-04-23
+## [1.3.4] - 2026-04-27
 
 ### Release Type
 **Patch Version** (Bug fixes and improvements - backward compatible)
 
 ### Changes
-- HC-1324 Bump SDK version 1.3.2 → 1.3.3 across source and docs (#236)
-- HC-1315 Suppress ABI metadata and internalize network-layer types to reduce symbol exposure (#235)
+- HC-1317 Add runtime integrity checks, security blocking, and version bump to 1.3.4 (#237)
 
 ### Change Requests
-  - HC-1315
-  - HC-1324
+  - HC-1317
 
 ### PCI DSS Compliance
 This release has been documented for PCI DSS compliance requirements:
 - **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
-- **Version History**: Semantic versioning maintained (1.3.3 - Patch Version)
+- **Version History**: Semantic versioning maintained (1.3.4 - Patch Version)
 - **Security Validation**: All security scans and validations completed
 - **SBOM**: Software Bill of Materials included in release artifacts
 - **Audit Trail**: Complete release documentation available in this changelog
@@ -22,12 +20,12 @@ This release has been documented for PCI DSS compliance requirements:
 ### Installation
 ```swift
 // Swift Package Manager
-.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.3")
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.4")
 ```
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.3.3'
+pod 'Spreedly', '~> 1.3.4'
 ```
 
 ---
@@ -40,6 +38,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Added
+
+- **Runtime security protections** (`SecurityManager`): Centralized runtime integrity checks in `SpreedlyCore`. Includes debugger detection (sysctl `P_TRACED`), jailbreak/environment integrity (sandbox write test, dylib injection scan, filesystem artifact detection), and memory protection utilities (memset_s zeroing, scoped access pattern). All checks use public POSIX/Darwin/Foundation APIs — App Store safe.
+
+- **Merchant opt-in jailbreak blocking**: New `blockJailbrokenDevices` property on `SpreedlyConfig` (defaults to `false`). When enabled, `Spreedly.setup(config:)` refuses to initialize on compromised devices and sets `Spreedly.initializationError` with a `SpreedlySecurityError` describing which signals fired. Works from both Swift and Objective-C.
+
+- **Static blocking flag**: New `Spreedly.blockJailbrokenDevices` static property for merchants using `initializeSDK()` without a config object. Set before calling `initializeSDK()`.
+
+- **`Spreedly.isDeviceTrusted`**: Read-only computed property that returns `false` when the device fails integrity checks and the SDK is blocked. Merchants can check this at any point.
+
+- **3-layer security blocking**: When blocking is enabled on a compromised device, the SDK prevents all operations across three layers:
+  - **Network layer**: `BlockedNetworkClient` injected into the blocked instance — every network call throws immediately, preventing any data from leaving the device.
+  - **UI layer**: SwiftUI views (`CardFormDropIn`, `CVVRecachingView`, `DoChallengeIfNeeded`, `SPLTextField`) render as invisible when blocked, preventing card data entry. UIKit entry points (Stripe, Braintree, Offsite `present()` methods) reject at the call site via `SecurityManager.shared.allowPaymentOperation(provider:)`.
+  - **3DS layer**: Forter 3DS and Gateway-Specific 3DS integrations check `SecurityManager.shared.isDeviceBlocked` and emit failure results.
+
+- **Security telemetry**: New `security_check_completed` and `sdk_init_blocked` events emitted during SDK initialization for Datadog observability.
+
+### Changed
+
+- **Renamed `Spreedly.isOperational` → `Spreedly.isDeviceTrusted`**: The new name aligns with industry conventions (Apple `canMakePayments`, Google `isReadyToPay`) and clearly communicates that the check reflects device integrity status rather than general SDK readiness.
+
+- **Auto-dismiss on blocked devices**: `CardFormDropIn`, `CVVRecachingView`, and `DoChallengeIfNeeded` now automatically dismiss their sheets when presented on a blocked device — merchants no longer need to guard presentations with `isDeviceTrusted` checks. Custom forms using `SPLTextField` directly still require a manual check (see [Custom Payment Forms](guides/custom-payment-forms.md#prerequisites)).
+
+- **Defense-in-depth: `handleStripeReturnURL` gated**: `SpreedlyStripeAPMCheckout.handleStripeReturnURL(_:)` now checks `SecurityManager.shared.isDeviceBlocked` and returns `false` immediately on blocked devices. In practice the flow starts from `present()` which is already gated, so exploitation was unlikely — but the guard closes the gap for defense-in-depth.
+
+### Added (Documentation & Governance)
+
+- **Jailbreak blocking reference in `security.md`**: Per-component behavior table, error channel mapping, and testing instructions for `blockJailbrokenDevices`.
+- **Jailbreak blocking quick-start in `getting-started.md`**: Setup snippet and link to full security guide.
+- **Blocked-device notes in `express-checkout.md` and `recaching.md`**: Auto-dismiss behavior documented for `CardFormDropIn` and `CVVRecachingView`.
+- **`SECURITY_CHECKLIST.md`**: Reusable checklist for new modules covering runtime integrity, telemetry, sensitive data, and code comments.
+- **`runtime-security-enforcement.mdc` cursor rule**: Enforces `SecurityManager` checks at all payment entry points, with patterns for SwiftUI, UIKit, APM, and URL handlers.
+- **Security step in `new-payment-module` skill**: Mandatory Step 2b wiring `allowPaymentOperation` and `isDeviceBlocked` checks before module scaffolding continues.
+- **Blocked-device layering in `ARCHITECTURE.md`**: Documents how blocking propagates across network, UI, APM, and 3DS layers.
+- **Runtime integrity section in `CONTRIBUTING.md`**: Adds `SecurityManager` requirements to the existing security guidance for contributors.
+
+### Fixed
+
+- HC-1317 **`initializeSDK()` recovery path**: `initializeSDK()` now clears a previous security block when the device assessment passes. Previously only `setup(config:)` had the recovery logic, so a blocked SDK could not recover through `initializeSDK()` even when the environment became clean.
 
 ### Security
 

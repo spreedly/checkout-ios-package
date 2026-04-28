@@ -48,6 +48,8 @@ Before integrating CVV recaching:
 - Call `Spreedly.setup(config:)` with `environmentKey`, `forterSiteId`, and signature parameters before presenting the recaching UI
 - Fetch signature parameters from your backend before each payment session
 
+> **Blocked-device behavior:** When `blockJailbrokenDevices` is enabled and the device is compromised, both sheet and alert/dialog presentation modes auto-dismiss without showing any UI. A `PaymentResult.failure` is published through `paymentResultPublisher` — handle it the same way you handle other failures. See [Security — Runtime Integrity](security.md#runtime-integrity) for the full behavior table.
+
 ---
 
 ## Quick Start

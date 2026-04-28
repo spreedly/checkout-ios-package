@@ -586,6 +586,10 @@ For error handling patterns, see [error-handling.md](error-handling.md).
 
 ---
 
+### Blocked Devices
+
+> **Important:** When `blockJailbrokenDevices` is enabled and the device is compromised, the SDK blocks offsite payment flows automatically. The flow returns immediately without opening Safari, and a `PaymentResult.failure` is published. See [Security — Runtime Integrity](security.md#runtime-integrity) for details.
+
 ## Troubleshooting
 
 ### Payment result not received

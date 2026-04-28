@@ -280,6 +280,32 @@ SPLThemeConfig *config = [[SPLThemeConfig alloc]
 
 ---
 
+## Blocked Device / Security
+
+### Blank form fields on a jailbroken or compromised device
+
+**Cause:** `blockJailbrokenDevices` is enabled and the device failed integrity checks. `SPLTextField` renders blank; drop-in components (`CardFormDropIn`, `CVVRecachingView`, `DoChallengeIfNeeded`) auto-dismiss their sheets.
+
+**Detection:**
+```swift
+if !Spreedly.isDeviceTrusted {
+    let reason = Spreedly.initializationError?.message
+    // Show fallback UI or redirect to web checkout
+}
+```
+
+**ObjC:**
+```objc
+if (![Spreedly isDeviceTrusted]) {
+    NSString *reason = Spreedly.initializationError.message;
+    // Show fallback UI
+}
+```
+
+**Note:** For custom forms using `SPLTextField` directly, the SDK cannot dismiss your UI — check `Spreedly.isDeviceTrusted` on appear and show an error. See [Custom Payment Forms](custom-payment-forms.md#prerequisites).
+
+---
+
 ## Getting Help
 
 - **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-sdk/issues)

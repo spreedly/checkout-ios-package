@@ -348,6 +348,10 @@ For detailed error handling patterns, see [error-handling.md](error-handling.md)
 
 ---
 
+### Blocked Devices
+
+> **Important:** When `blockJailbrokenDevices` is enabled and the device is compromised, the SDK blocks 3DS challenge flows automatically. `DoChallengeIfNeeded` auto-dismisses and emits a failure result. See [Security — Runtime Integrity](security.md#runtime-integrity) for details.
+
 ## Troubleshooting
 
 ### Forter3DS crash: "dyld: Library not loaded: Forter3DS"
