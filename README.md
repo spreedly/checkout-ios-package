@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.3.0-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.3.4-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -27,7 +27,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.0")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.4")
 ]
 ```
 
@@ -67,19 +67,17 @@ post_install do |installer|
 end
 ```
 
-See [Getting Started](docs/guides/getting-started.md) for full Podfile examples including private repository access and local development setup. See [Stripe APM guide](docs/guides/stripe-apm.md#cocoapods-stripe-bundle-patcher) for details on the bundle patcher.
-
 **Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens):
 
 ```ruby
 # Podfile — private repo via Git token
-pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
-pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
-pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
-# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.0'
+# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
 ```
 
 Replace `{GitToken}` with your GitHub personal access token that has read access to the repository.
@@ -96,37 +94,9 @@ Replace `{GitToken}` with your GitHub personal access token that has read access
 
 ## Integration Guides
 
-Get started quickly with the [Getting Started Guide](docs/guides/getting-started.md), then follow the guide for your use case.
+For detailed integration guides, code samples, and the example merchant app, see the [checkout-ios-example](https://github.com/spreedly/checkout-ios-example) repository. It includes step-by-step guides for all payment flows, 3DS, theming, error handling, Objective-C support, and more.
 
 > **API Reference:** DocC documentation catalogs are included in the source SDK for SpreedlyCore, SpreedlyUI, SpreedlySecurity, and SpreedlyAnalytics. Build them locally with `xcodebuild docbuild` or browse inline in Xcode via **Product > Build Documentation**.
-
-### Payments
-
-- **[Getting Started](docs/guides/getting-started.md)** -- Install, initialize, and process your first payment
-- **[Recaching](docs/guides/recaching.md)** -- Update CVV for saved payment methods
-- **[Error Handling](docs/guides/error-handling.md)** -- Handle payment errors and edge cases
-
-### Offsite & Alternative Payment Methods
-
-- **[Offsite Payments](docs/guides/offsite-payments.md)** -- Sprel, PayPal, and EBANX via Safari
-- **[EBANX APM](docs/guides/ebanx-apm.md)** -- Pix, Boleto, OXXO, NuPay via EBANX
-- **[Stripe APM](docs/guides/stripe-apm.md)** -- iDEAL, Bancontact, EPS, P24, SEPA via native Stripe PaymentSheet
-- **[Braintree APM](docs/guides/braintree-apm.md)** -- PayPal and Venmo via Braintree
-
-### 3D Secure (3DS) Authentication
-
-- **[Global 3DS](docs/guides/3ds-global.md)** -- Forter-powered 3DS authentication
-- **[Gateway-Specific 3DS](docs/guides/3ds-gateway-specific.md)** -- Gateway-managed 3DS authentication (e.g. Worldpay)
-
-### Customization
-
-- **[Express Checkout](docs/guides/express-checkout.md)** -- Pre-built CardFormDropIn payment form
-- **[Custom Payment Forms](docs/guides/custom-payment-forms.md)** -- Build custom payment forms with SPLTextField
-- **[Theme & Styling](docs/guides/theme-and-styling.md)** -- Customize colors, typography, and dark mode
-- **[Security](docs/guides/security.md)** -- Screen prevention and PCI compliance
-- **[Privacy](docs/guides/privacy.md)** -- Data handling, privacy manifest, and App Store compliance
-- **[Objective-C](docs/guides/objective-c.md)** -- Objective-C integration with delegates and wrappers
-- **[Troubleshooting](docs/guides/troubleshooting.md)** -- Common issues and solutions
 
 ## SDK Lifecycle
 
@@ -135,6 +105,43 @@ Get started quickly with the [Getting Started Guide](docs/guides/getting-started
 | 1.x.x | Active | March 2026 | --- | --- |
 
 More information about versioning and the SDK lifecycle can be found in the [CHANGELOG](CHANGELOG.md).
+
+## Stability & Compatibility Guarantees
+
+The Spreedly iOS SDK follows [Semantic Versioning 2.0.0](https://semver.org/):
+
+- **Patch** releases (`x.y.Z`) contain only bug fixes. No public API changes.
+- **Minor** releases (`x.Y.0`) may add new public API. Existing API remains source- and binary-compatible.
+- **Major** releases (`X.0.0`) may contain breaking changes. A migration guide is published with every major release.
+
+### What Constitutes a Breaking Change
+
+The following changes are considered breaking and will only ship in a **major** release:
+
+- Removal or rename of any `public` / `open` symbol
+- Changing the signature of an existing public method or initializer
+- Changing observable behavior that merchants rely on (e.g. callback semantics, error types)
+- Raising the minimum iOS deployment target
+- Removing support for a dependency manager (SPM or CocoaPods)
+
+### Deprecation Policy
+
+- Deprecated API is annotated with `@available(*, deprecated, message:)` and documented in the [CHANGELOG](CHANGELOG.md).
+- Deprecated API remains functional for at least **one minor release cycle** after the deprecation notice.
+- Deprecated API is removed only in the next **major** release, unless a security issue requires earlier removal.
+
+### Support Window
+
+- The **current major** version receives active feature development and bug fixes.
+- The **previous major** version (N-1) receives critical bug fixes and security patches for **12 months** after the new major ships.
+- Older major versions are end-of-life and receive no further updates.
+
+### Version Pinning
+
+All `Spreedly*` frameworks in a single app build must use the **same version**. Pin explicitly:
+
+- **SPM:** `from: "X.Y.Z"` (accepts compatible minor/patch updates)
+- **CocoaPods:** `~> X.Y` (accepts compatible patch updates within the minor)
 
 ## Compatibility
 
