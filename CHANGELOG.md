@@ -25,7 +25,9 @@ This release has been documented for PCI DSS compliance requirements:
 
 ```ruby
 # CocoaPods
-pod 'Spreedly', '~> 1.3.4'
+pod 'SpreedlyCore',      :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+pod 'SpreedlySecurity',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
+pod 'SpreedlyUI',        :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.3.4'
 ```
 
 ---
