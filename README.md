@@ -178,14 +178,14 @@ All `Spreedly*` frameworks in a single app build must use the **same version**. 
 
 - **Checksum validation workflows vary by release artifact set:** SHA-256 checksum files are published for core and optional modules. Always verify checksums for the specific artifacts your app consumes.
 
-- **No GPG artifact signing:** The Android SDK signs release artifacts with GPG. The iOS SDK currently relies on SHA-256 checksums for integrity verification. GPG signing is planned for a future release.
+- **GPG-signed release tags:** Stable release tags are GPG-signed by the Spreedly iOS Release Bot. Contact Spreedly Support to obtain the verification key and run `git tag -v X.Y.Z`. SHA-256 checksums for framework zips are also available for binary artifact verification — see [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md).
 
 ## Support
 
 - **Spreedly Documentation**: [docs.spreedly.com](https://docs.spreedly.com/)
 - **Support Portal**: [spreedly.com/support](https://spreedly.com/support/)
 - **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-sdk/issues)
-- **Package Verification**: [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md)
+- **Package Verification (checksums)**: [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
 - **Contributing (source SDK repo)**: [checkout-ios-sdk/SpreedlyDocs/development/CONTRIBUTING.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/CONTRIBUTING.md)
 - **Security**: [SECURITY.md](SECURITY.md)
