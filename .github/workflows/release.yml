@@ -12,6 +12,76 @@ permissions:
   contents: read
 
 jobs:
+  attach-release-assets:
+    name: Attach SBOM, zips, and checksums to release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout tagged commit
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 1
+
+      - name: Verify expected assets exist on disk
+        id: verify
+        run: |
+          set -euo pipefail
+          MISSING=0
+          REQUIRED=(
+            "sbom.json"
+            "SpreedlyCore.zip" "SpreedlyCore.zip.sha256"
+            "SpreedlySecurity.zip" "SpreedlySecurity.zip.sha256"
+            "SpreedlyUI.zip" "SpreedlyUI.zip.sha256"
+            "SpreedlyStripeAPM.zip" "SpreedlyStripeAPM.zip.sha256"
+            "SpreedlyBraintree.zip" "SpreedlyBraintree.zip.sha256"
+          )
+          for f in "${REQUIRED[@]}"; do
+            if [ -f "$f" ]; then
+              echo "FOUND: $f ($(wc -c < "$f") bytes)"
+            else
+              echo "::warning::Missing expected release asset: $f"
+              MISSING=$((MISSING + 1))
+            fi
+          done
+          echo "missing=$MISSING" >> "$GITHUB_OUTPUT"
+
+      - name: Upload assets to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          ASSETS=()
+          for f in sbom.json *.zip *.zip.sha256; do
+            [ -f "$f" ] && ASSETS+=("$f")
+          done
+          if [ ${#ASSETS[@]} -eq 0 ]; then
+            echo "::error::No release assets found at tag $TAG"
+            exit 1
+          fi
+          echo "Uploading ${#ASSETS[@]} asset(s) to release $TAG..."
+          printf '  - %s\n' "${ASSETS[@]}"
+          gh release upload "$TAG" --repo "${{ github.repository }}" --clobber "${ASSETS[@]}"
+          echo "Upload complete."
+
+      - name: Verify assets attached to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          ATTACHED=$(gh release view "$TAG" --repo "${{ github.repository }}" --json assets --jq '.assets[].name')
+          COUNT=$(echo "$ATTACHED" | grep -c . || true)
+          echo "Release $TAG now has $COUNT asset(s):"
+          echo "$ATTACHED" | sed 's/^/  - /'
+          if [ "$COUNT" -lt 1 ]; then
+            echo "::error::Release verification failed: no assets attached"
+            exit 1
+          fi
+
   create-sdk-tag:
     runs-on: macos-latest
     timeout-minutes: 15

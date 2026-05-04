@@ -41,6 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- HC-1369 **GPG-signed release tags**: Stable release tags are GPG-signed by the Spreedly iOS Release Bot. Verify any tag with `git tag -v X.Y.Z`. Contact Spreedly Support to obtain the verification key.
+
 ### Added
 
 - **Runtime security protections** (`SecurityManager`): Centralized runtime integrity checks in `SpreedlyCore`. Includes debugger detection (sysctl `P_TRACED`), jailbreak/environment integrity (sandbox write test, dylib injection scan, filesystem artifact detection), and memory protection utilities (memset_s zeroing, scoped access pattern). All checks use public POSIX/Darwin/Foundation APIs — App Store safe.
