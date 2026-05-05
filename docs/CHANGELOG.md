@@ -5,6 +5,16 @@ All notable changes to the Spreedly iOS SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.7] - 2026-05-05
+
+### Changed
+
+- HC-1369 **Replaced the auto-merged release PR with a sync-branch + direct-tag-push pattern** in `tag-release.yml`. The previous `gh pr merge --squash` step failed against `checkout-ios-package`'s `Require PR Review` ruleset and only shipped 1.3.6 via a one-off manual approval. The dist-sync flow now: (1) pushes the version-bump commit to a `sync/v${VERSION}` branch, (2) pushes the GPG-signed tag directly to dist (tags bypass branch-protection rulesets), (3) creates the GitHub Release, and (4) opens a non-blocking sync PR for human review. GPG signing stays on the SDK runner; **no GPG keys are added to the public package repo**. Mirrors the approach used by `checkout-android-sdk`. Also adds a maintenance-aware `expected_branch` output (`main` for the current major, `release/N.x` otherwise) so dist sync targets the right branch on patch releases.
+
+### Notes
+
+This is a validation release for the new GPG-signed tag pipeline (HC-1369). The compiled SDK binary is functionally identical to 1.3.6 — same source code, same dependencies, only the embedded `SpreedlySDK.version` string changes. Merchants on 1.3.6 do not need to upgrade for functional reasons; 1.3.7 exists to prove the new release pipeline end-to-end before the next merchant-facing change ships.
+
 ## [1.3.6] - 2026-05-04
 
 ### Fixed
