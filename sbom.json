@@ -1,152 +1,127 @@
 {
   "bomFormat": "CycloneDX",
-  "specVersion": "1.5",
+  "specVersion": "1.4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-27T13:47:03Z",
-    "tools": [
-      {
-        "vendor": "GitHub Actions",
-        "name": "sbom-generator",
-        "version": "1.0.0"
-      }
-    ],
+    "timestamp": "2026-05-05T05:50:15Z",
     "component": {
-      "type": "application",
+      "type": "library",
       "name": "Spreedly iOS SDK",
-      "version": "1.3.4",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk@v1.3.4",
-      "properties": [
-        {
-          "name": "build:tag",
-          "value": "v1.3.4"
-        },
-        {
-          "name": "build:commit",
-          "value": "1f25d2228324eec74c9f7265d8d20228f0614016"
-        },
-        {
-          "name": "build:repository",
-          "value": "spreedly/checkout-ios-sdk"
-        },
-        {
-          "name": "build:workflow",
-          "value": "Release SDK"
-        },
-        {
-          "name": "build:run_id",
-          "value": "24998733875"
-        }
-      ]
-    }
+      "version": "1.3.6",
+      "purl": "pkg:swift/spreedly/checkout-ios-sdk@1.3.6"
+    },
+    "tools": [{ "name": "tag-release.yml", "version": "1.0" }]
   },
   "components": [
-    {
-      "type": "library",
-      "name": "SpreedlyCore",
-      "version": "1.3.4",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.3.4",
-      "scope": "required",
-      "properties": [
-        {
-          "name": "framework:type",
-          "value": "binary"
-        },
-        {
-          "name": "framework:platform",
-          "value": "iOS"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "SpreedlySecurity",
-      "version": "1.3.4",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.3.4",
-      "scope": "required",
-      "properties": [
-        {
-          "name": "framework:type",
-          "value": "binary"
-        },
-        {
-          "name": "framework:platform",
-          "value": "iOS"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "SpreedlyUI",
-      "version": "1.3.4",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.3.4",
-      "scope": "required",
-      "properties": [
-        {
-          "name": "framework:type",
-          "value": "binary"
-        },
-        {
-          "name": "framework:platform",
-          "value": "iOS"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "SpreedlyStripeAPM",
-      "version": "1.3.4",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyStripeAPM@v1.3.4",
-      "scope": "optional",
-      "properties": [
-        {
-          "name": "framework:type",
-          "value": "binary"
-        },
-        {
-          "name": "framework:platform",
-          "value": "iOS"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "SpreedlyBraintree",
-      "version": "1.3.4",
-      "purl": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyBraintree@v1.3.4",
-      "scope": "optional",
-      "properties": [
-        {
-          "name": "framework:type",
-          "value": "binary"
-        },
-        {
-          "name": "framework:platform",
-          "value": "iOS"
-        }
-      ]
-    }
+    { "type": "framework", "name": "SpreedlyBraintree", "version": "1.3.6", "hashes": [{ "alg": "SHA-256", "content": "15ec6bb0379175c08d6b75129ef6ba410c018a2d1c028fde86aa6e2239f7d1be" }] }
+,
+    { "type": "framework", "name": "SpreedlyCore", "version": "1.3.6", "hashes": [{ "alg": "SHA-256", "content": "0b20391c76924fe77a0ae874f0b36317f2f0f9c20da7b02aa30e3ae4419f122e" }] }
+,
+    { "type": "framework", "name": "SpreedlySecurity", "version": "1.3.6", "hashes": [{ "alg": "SHA-256", "content": "a3eecefc488ae968dd88d1b0e4b4e14be4b8ef690b7a1549ae521111e5ca610f" }] }
+,
+    { "type": "framework", "name": "SpreedlyStripeAPM", "version": "1.3.6", "hashes": [{ "alg": "SHA-256", "content": "1c334c1cb12ce67d265cc514c457cabdb9ddb3bc8d69700437a7dcf2d56912b8" }] }
+,
+    { "type": "framework", "name": "SpreedlyUI", "version": "1.3.6", "hashes": [{ "alg": "SHA-256", "content": "7fae5cfba74d1215f458028f308162e17e3bf3c7b4cd7f346c05377ecbc502db" }] }
+  ],
+  "dependencies": {
+  "identity": "checkout-ios-sdk",
+  "name": "SpreedlySDK",
+  "url": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk",
+  "version": "unspecified",
+  "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk",
+  "traits": [
+    "default"
   ],
   "dependencies": [
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyCore@v1.3.4",
-      "dependsOn": []
+      "identity": "dd-sdk-ios",
+      "name": "Datadog",
+      "url": "https://github.com/DataDog/dd-sdk-ios.git",
+      "version": "3.7.0",
+      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/dd-sdk-ios",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+        {
+          "identity": "kscrash",
+          "name": "KSCrash",
+          "url": "https://github.com/kstenerud/KSCrash.git",
+          "version": "2.5.1",
+          "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/KSCrash",
+          "traits": [
+            "default"
+          ],
+          "dependencies": [
+
+          ]
+        },
+        {
+          "identity": "opentelemetry-swift-core",
+          "name": "opentelemetry-swift-core",
+          "url": "https://github.com/open-telemetry/opentelemetry-swift-core",
+          "version": "2.3.0",
+          "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/opentelemetry-swift-core",
+          "traits": [
+            "default"
+          ],
+          "dependencies": [
+            {
+              "identity": "swift-atomics",
+              "name": "swift-atomics",
+              "url": "https://github.com/apple/swift-atomics.git",
+              "version": "1.3.0",
+              "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/swift-atomics",
+              "traits": [
+                "default"
+              ],
+              "dependencies": [
+
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlySecurity@v1.3.4",
-      "dependsOn": []
+      "identity": "forter-ios",
+      "name": "Forter3DS",
+      "url": "https://bitbucket.org/forter-mobile/forter-ios.git",
+      "version": "2.1.0",
+      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/forter-ios",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
+      ]
     },
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyUI@v1.3.4",
-      "dependsOn": []
+      "identity": "stripe-ios-spm",
+      "name": "Stripe",
+      "url": "https://github.com/stripe/stripe-ios-spm.git",
+      "version": "24.25.0",
+      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/stripe-ios-spm",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
+      ]
     },
     {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyStripeAPM@v1.3.4",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:github/spreedly/checkout-ios-sdk/SpreedlyBraintree@v1.3.4",
-      "dependsOn": []
+      "identity": "braintree_ios",
+      "name": "Braintree",
+      "url": "https://github.com/braintree/braintree_ios.git",
+      "version": "7.5.0",
+      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/braintree_ios",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
+      ]
     }
   ]
+}
 }
