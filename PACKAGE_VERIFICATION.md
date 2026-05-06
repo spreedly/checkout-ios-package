@@ -202,7 +202,7 @@ SPM will:
 
 1. **Always download from official sources**: Only download packages from the official Spreedly package repository
 2. **Verify checksums**: Always verify checksums before integrating packages
-3. **Check repository access**: Ensure you're using the correct private repository URL
+3. **Check the source URL**: Confirm you're pointing at the official Spreedly package repository
 4. **Review release notes**: Check release notes for any security updates or changes
 
 ### During Integration
@@ -234,7 +234,7 @@ If checksum verification fails:
 If checksum files are missing:
 
 1. **Check release artifacts**: Ensure you're accessing the correct release version
-2. **Verify repository access**: Confirm you have access to the package repository
+2. **Re-fetch the release**: Pull the artifacts again from the official Spreedly package repository
 3. **Contact support**: Report missing checksum files to Spreedly support
 
 ### Verification Script Errors
