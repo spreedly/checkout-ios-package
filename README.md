@@ -10,8 +10,6 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ## Installation
 
-> Version note: this package repository is the canonical source for public install versions. The source SDK repository docs may temporarily show an older pin during release propagation.
-
 ### Swift Package Manager (Recommended)
 
 #### In Xcode
@@ -67,21 +65,6 @@ post_install do |installer|
 end
 ```
 
-**Private repository access:** If the SDK is distributed via a private GitHub repository, use the `:git` option with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens):
-
-```ruby
-# Podfile — private repo via Git token
-pod 'SpreedlyCore',      :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.7'
-pod 'SpreedlySecurity',  :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.7'
-pod 'SpreedlyUI',        :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.7'
-
-# Optional — add as needed
-# pod 'SpreedlyStripeAPM', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.7'
-# pod 'SpreedlyBraintree', :git => 'https://{GitToken}@github.com/spreedly/checkout-ios-package.git', :tag => '1.3.7'
-```
-
-Replace `{GitToken}` with your GitHub personal access token that has read access to the repository.
-
 ## Modules
 
 | Module | Product | Description |
@@ -95,8 +78,6 @@ Replace `{GitToken}` with your GitHub personal access token that has read access
 ## Integration Guides
 
 For detailed integration guides, code samples, and the example merchant app, see the [checkout-ios-example](https://github.com/spreedly/checkout-ios-example) repository. It includes step-by-step guides for all payment flows, 3DS, theming, error handling, Objective-C support, and more.
-
-> **API Reference:** DocC documentation catalogs are included in the source SDK for SpreedlyCore, SpreedlyUI, SpreedlySecurity, and SpreedlyAnalytics. Build them locally with `xcodebuild docbuild` or browse inline in Xcode via **Product > Build Documentation**.
 
 ## SDK Lifecycle
 
@@ -172,22 +153,21 @@ All `Spreedly*` frameworks in a single app build must use the **same version**. 
 
 ## Known Issues
 
-- **3DS is not a separate module:** Unlike the Android SDK (which publishes `checkout-threeds` as a standalone module), 3DS/Forter support on iOS is embedded within `SpreedlyCore` via weak linking. Merchants must add `Forter3DS` as a direct dependency to their app target for 3DS to function. Extracting 3DS into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific) is planned for a future release.
+- **3DS is not a separate module:** 3DS/Forter support on iOS is embedded within `SpreedlyCore` via weak linking. Merchants must add `Forter3DS` as a direct dependency to their app target for 3DS to function. Extracting 3DS into dedicated modules (`SpreedlyForter3DS` for Global 3DS and `SpreedlyGateway3DS` for Gateway-Specific) is planned for a future release.
 
 > **Forter3DS (3DS Global):** Forter3DS is **not** part of the Spreedly package. Add it directly from Forter's Bitbucket: `https://bitbucket.org/forter-mobile/forter-ios.git` (exactly 2.1.0). Without it, the app crashes when 3DS is triggered.
 
 - **Checksum validation workflows vary by release artifact set:** SHA-256 checksum files are published for core and optional modules. Always verify checksums for the specific artifacts your app consumes.
 
-- **GPG-signed release tags:** Stable release tags are GPG-signed by the Spreedly iOS Release Bot. Contact Spreedly Support to obtain the verification key and run `git tag -v X.Y.Z`. SHA-256 checksums for framework zips are also available for binary artifact verification — see [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md).
+- **GPG-signed release tags:** Stable release tags are GPG-signed with Spreedly's iOS release key. Contact Spreedly Support to obtain the public verification key and run `git tag -v X.Y.Z`. SHA-256 checksums for framework zips are also available for binary artifact verification — see [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md).
 
 ## Support
 
 - **Spreedly Documentation**: [docs.spreedly.com](https://docs.spreedly.com/)
 - **Support Portal**: [spreedly.com/support](https://spreedly.com/support/)
-- **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-sdk/issues)
+- **GitHub Issues**: [Bug reports and feature requests](https://github.com/spreedly/checkout-ios-package/issues)
 - **Package Verification (checksums)**: [PACKAGE_VERIFICATION.md](PACKAGE_VERIFICATION.md)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
-- **Contributing (source SDK repo)**: [checkout-ios-sdk/SpreedlyDocs/development/CONTRIBUTING.md](https://github.com/spreedly/checkout-ios-sdk/blob/main/SpreedlyDocs/development/CONTRIBUTING.md)
 - **Security**: [SECURITY.md](SECURITY.md)
 
 ## License
