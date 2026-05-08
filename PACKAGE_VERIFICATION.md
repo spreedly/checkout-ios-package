@@ -183,7 +183,7 @@ Swift Package Manager automatically verifies checksums when using binary targets
 ```swift
 .binaryTarget(
     name: "SpreedlyCore",
-    url: "https://github.com/spreedly/checkout-ios-package/releases/download/1.3.7/SpreedlyCore.zip",
+    url: "https://github.com/spreedly/checkout-ios-package/releases/download/1.3.8-rc.1/SpreedlyCore.zip",
     checksum: "abc123..." // SHA-256 checksum
 )
 ```
@@ -254,7 +254,7 @@ If automated verification fails:
 
 set -e
 
-VERSION="1.3.7"
+VERSION="1.3.8-rc.1"
 REPO_URL="https://github.com/spreedly/checkout-ios-package"
 DOWNLOAD_DIR="./packages/${VERSION}"
 
@@ -299,6 +299,6 @@ If you encounter issues with package verification:
 
 ---
 
-**Last Updated**: Version 1.3.7  
+**Last Updated**: Version 1.3.8-rc.1  
 **Maintained By**: Spreedly Security Team
 
