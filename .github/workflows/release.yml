@@ -1,8 +1,22 @@
 name: Trigger TestFlight Build on Release
 
+# Triggered by a repository_dispatch from checkout-ios-sdk/tag-release.yml
+# immediately after the dist-repo draft release is flipped to published.
+# workflow_dispatch is kept as a manual fallback (e.g. re-running a missed
+# TestFlight build or recovering from a dispatch failure without re-running
+# the full source-side release pipeline).
 on:
-  release:
-    types: [published]
+  repository_dispatch:
+    types: [release-published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Package repo tag (e.g. 1.3.8 or 1.3.8-rc.0, no v prefix)"
+        required: true
+      is_prerelease:
+        description: "true for RC pre-release, false for stable"
+        required: true
+        default: "false"
 
 concurrency:
   group: release-package
@@ -12,76 +26,6 @@ permissions:
   contents: read
 
 jobs:
-  attach-release-assets:
-    name: Attach SBOM, zips, and checksums to release
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout tagged commit
-        uses: actions/checkout@v5
-        with:
-          ref: ${{ github.event.release.tag_name }}
-          fetch-depth: 1
-
-      - name: Verify expected assets exist on disk
-        id: verify
-        run: |
-          set -euo pipefail
-          MISSING=0
-          REQUIRED=(
-            "sbom.json"
-            "SpreedlyCore.zip" "SpreedlyCore.zip.sha256"
-            "SpreedlySecurity.zip" "SpreedlySecurity.zip.sha256"
-            "SpreedlyUI.zip" "SpreedlyUI.zip.sha256"
-            "SpreedlyStripeAPM.zip" "SpreedlyStripeAPM.zip.sha256"
-            "SpreedlyBraintree.zip" "SpreedlyBraintree.zip.sha256"
-          )
-          for f in "${REQUIRED[@]}"; do
-            if [ -f "$f" ]; then
-              echo "FOUND: $f ($(wc -c < "$f") bytes)"
-            else
-              echo "::warning::Missing expected release asset: $f"
-              MISSING=$((MISSING + 1))
-            fi
-          done
-          echo "missing=$MISSING" >> "$GITHUB_OUTPUT"
-
-      - name: Upload assets to GitHub Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.event.release.tag_name }}
-        run: |
-          set -euo pipefail
-          ASSETS=()
-          for f in sbom.json *.zip *.zip.sha256; do
-            [ -f "$f" ] && ASSETS+=("$f")
-          done
-          if [ ${#ASSETS[@]} -eq 0 ]; then
-            echo "::error::No release assets found at tag $TAG"
-            exit 1
-          fi
-          echo "Uploading ${#ASSETS[@]} asset(s) to release $TAG..."
-          printf '  - %s\n' "${ASSETS[@]}"
-          gh release upload "$TAG" --repo "${{ github.repository }}" --clobber "${ASSETS[@]}"
-          echo "Upload complete."
-
-      - name: Verify assets attached to release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ github.event.release.tag_name }}
-        run: |
-          set -euo pipefail
-          ATTACHED=$(gh release view "$TAG" --repo "${{ github.repository }}" --json assets --jq '.assets[].name')
-          COUNT=$(echo "$ATTACHED" | grep -c . || true)
-          echo "Release $TAG now has $COUNT asset(s):"
-          echo "$ATTACHED" | sed 's/^/  - /'
-          if [ "$COUNT" -lt 1 ]; then
-            echo "::error::Release verification failed: no assets attached"
-            exit 1
-          fi
-
   create-sdk-tag:
     runs-on: macos-latest
     timeout-minutes: 15
@@ -98,10 +42,11 @@ jobs:
           git config --global url."https://x-access-token:${{ secrets.SDK_REPO_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
       - name: Environment diagnostics
+        env:
+          RELEASE_VERSION: ${{ github.event.client_payload.tag_name || github.event.inputs.tag_name }}
         run: |
           echo "=== Release Info ==="
-          echo "Release version: ${{ github.event.release.tag_name }}"
-          echo "Release target:  ${{ github.event.release.target_commitish }}"
+          echo "Release version: ${RELEASE_VERSION}"
           echo "Triggered by:    ${{ github.actor }}"
           echo ""
           echo "=== Xcode ==="
@@ -138,9 +83,62 @@ jobs:
             echo "SPM cache: EMPTY (cold start -- expect slow resolve)"
           fi
 
+      - name: Pin project.pbxproj SPM requirement for RC pre-release
+        if: ${{ github.event.client_payload.is_prerelease == 'true' || github.event.inputs.is_prerelease == 'true' }}
+        env:
+          RELEASE_VERSION: ${{ github.event.client_payload.tag_name || github.event.inputs.tag_name }}
+        run: |
+          set -euo pipefail
+
+          PBXPROJ="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.pbxproj"
+          export PBXPROJ
+
+          echo "=== RC pre-release: pin checkout-ios-package to exactVersion ${RELEASE_VERSION} in project.pbxproj ==="
+
+          # upToNextMajorVersion excludes pre-releases by SPM spec, so SPM silently
+          # downgrades back to the latest stable during resolve. Switching to exactVersion
+          # for the duration of this workflow run forces SPM to fetch the RC.
+          # This edit only lands on the testflight-rc-* tag commit; main is never pushed.
+          python3 << 'PYEOF'
+          import re, sys, os
+
+          version = os.environ['RELEASE_VERSION']
+          pbxproj = os.environ['PBXPROJ']
+
+          with open(pbxproj) as f:
+              content = f.read()
+
+          anchor = 'repositoryURL = "https://github.com/spreedly/checkout-ios-package";\n'
+          idx = content.find(anchor)
+          if idx == -1:
+              print('ERROR: checkout-ios-package repositoryURL not found in project.pbxproj')
+              sys.exit(1)
+
+          after = content[idx + len(anchor):]
+          m = re.search(r'(\t+)requirement = \{[^}]+\};', after)
+          if not m:
+              print('ERROR: requirement block not found after repositoryURL anchor')
+              sys.exit(1)
+
+          indent = m.group(1)
+          inner = indent + '\t'
+          replacement = (
+              f'{indent}requirement = {{\n'
+              f'{inner}kind = exactVersion;\n'
+              f'{inner}version = {version};\n'
+              f'{indent}}};'
+          )
+          new_content = content[:idx + len(anchor)] + replacement + after[m.end():]
+
+          with open(pbxproj, 'w') as f:
+              f.write(new_content)
+
+          print(f'Patched project.pbxproj: checkout-ios-package SPM requirement set to exactVersion {version}')
+          PYEOF
+
       - name: Update Package.resolved to released version
         env:
-          RELEASE_VERSION: ${{ github.event.release.tag_name }}
+          RELEASE_VERSION: ${{ github.event.client_payload.tag_name || github.event.inputs.tag_name }}
         run: |
           set -euo pipefail
 
@@ -248,10 +246,44 @@ jobs:
               print(f'  - {pin[\"identity\"]} @ {v} ({r})')
           " "../../$RESOLVED_FILE"
 
+      - name: Verify resolved version matches release
+        env:
+          RELEASE_VERSION: ${{ github.event.client_payload.tag_name || github.event.inputs.tag_name }}
+        run: |
+          set -euo pipefail
+
+          RESOLVED_FILE="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+
+          echo "=== Step 6: Guard — verify Package.resolved pins checkout-ios-package @ ${RELEASE_VERSION} ==="
+
+          RESOLVED_VERSION=$(python3 -c "
+          import json, sys
+          with open(sys.argv[1]) as f:
+              data = json.load(f)
+          for pin in data.get('pins', []):
+              if pin['identity'] == 'checkout-ios-package':
+                  print(pin['state'].get('version', 'unknown'))
+                  break
+          else:
+              print('::error::checkout-ios-package not found in Package.resolved pins', file=sys.stderr)
+              sys.exit(1)
+          " "$RESOLVED_FILE")
+
+          echo "Expected: ${RELEASE_VERSION}"
+          echo "Resolved: ${RESOLVED_VERSION}"
+
+          if [ "$RESOLVED_VERSION" != "$RELEASE_VERSION" ]; then
+            echo "::error::Silent drift detected: requested ${RELEASE_VERSION} but SPM resolved to ${RESOLVED_VERSION}."
+            echo "::error::For RC pre-releases the project.pbxproj exact-pin step should have run. Check the 'Pin project.pbxproj' step above."
+            exit 1
+          fi
+
+          echo "Verified: Package.resolved correctly pins checkout-ios-package @ ${RELEASE_VERSION}"
+
       - name: Create TestFlight tag with updated Package.resolved
         env:
-          RELEASE_VERSION: ${{ github.event.release.tag_name }}
-          IS_PRERELEASE: ${{ github.event.release.prerelease }}
+          RELEASE_VERSION: ${{ github.event.client_payload.tag_name || github.event.inputs.tag_name }}
+          IS_PRERELEASE: ${{ github.event.client_payload.is_prerelease || github.event.inputs.is_prerelease }}
         run: |
           set -euo pipefail
 
@@ -279,13 +311,22 @@ jobs:
           echo "Release event: ${RELEASE_VERSION} (prerelease=${IS_PRERELEASE})"
           echo "Target TestFlight tag: ${TAG_NAME}"
 
-          echo "=== Committing Package.resolved ==="
+          PBXPROJ_FILE="Example/SpreedlySDKExample/SpreedlySDKExample.xcodeproj/project.pbxproj"
+
+          echo "=== Committing updated lockfiles ==="
           git add "$RESOLVED_FILE"
-          if git diff --cached --quiet; then
-            echo "No changes to commit (Package.resolved already up to date)"
+          if [ "$IS_PRERELEASE" = "true" ]; then
+            git add "$PBXPROJ_FILE"
+            COMMIT_MSG="Update Package.resolved and pin project.pbxproj to checkout-ios-package ${RELEASE_VERSION}"
           else
-            git commit -m "Update Package.resolved to checkout-ios-package ${RELEASE_VERSION}"
-            echo "Committed Package.resolved update"
+            COMMIT_MSG="Update Package.resolved to checkout-ios-package ${RELEASE_VERSION}"
+          fi
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (files already up to date)"
+          else
+            git commit -m "$COMMIT_MSG"
+            echo "Committed: $COMMIT_MSG"
           fi
 
           echo ""
