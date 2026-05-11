@@ -1,3 +1,34 @@
+## [1.3.8] - 2026-05-11
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Change Requests
+  - (no tickets recorded)
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.3.8 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.3.8")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore',      :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.3.8'
+pod 'SpreedlySecurity',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.3.8'
+pod 'SpreedlyUI',        :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.3.8'
+```
+
+---
+
 ## [1.3.7] - 2026-05-05
 
 ### Release Type
