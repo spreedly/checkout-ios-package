@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.3.8-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.4.0-rc.1-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -25,7 +25,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.8")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.4.0-rc.1")
 ]
 ```
 
@@ -121,7 +121,7 @@ The following changes are considered breaking and will only ship in a **major** 
 
 All `Spreedly*` frameworks in a single app build must use the **same version**. Pin explicitly:
 
-- **SPM:** `from: "1.3.8"` (accepts compatible minor/patch updates)
+- **SPM:** `from: "1.4.0-rc.1"` (accepts compatible minor/patch updates)
 - **CocoaPods:** `~> X.Y` (accepts compatible patch updates within the minor)
 
 ## Compatibility

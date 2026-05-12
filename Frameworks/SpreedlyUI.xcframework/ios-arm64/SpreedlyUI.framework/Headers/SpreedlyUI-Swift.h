@@ -309,11 +309,72 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+enum DropInNameDisplayMode : NSInteger;
 @class NSString;
+/// Configuration for which optional fields appear in the bank account form.
+/// The Spreedly API requires <code>bank_routing_number</code>, <code>bank_account_number</code>, and a name
+/// (either <code>full_name</code> or <code>first_name</code>/<code>last_name</code>). Everything else is optional and
+/// gateway-dependent. This config controls which optional fields the form renders.
+SWIFT_CLASS("_TtC10SpreedlyUI22BankAccountFieldConfig")
+@interface BankAccountFieldConfig : NSObject
+/// Whether to show a single “Full Name” field or separate “First Name” / “Last Name” fields.
+/// Defaults to <code>.singleField</code>.
+@property (nonatomic, readonly) enum DropInNameDisplayMode nameDisplayMode;
+/// Whether to show the bank name text field. Off by default — most gateways do
+/// not require this attribute, so we ship the smaller form by default.
+@property (nonatomic, readonly) BOOL showBankName;
+/// Custom label for the bank name field. <code>nil</code> uses the default localized title.
+@property (nonatomic, readonly, copy) NSString * _Nullable bankNameLabel;
+/// Whether bank name is required for validation. Defaults to optional.
+@property (nonatomic, readonly) BOOL bankNameRequired;
+/// Whether to show the account type segmented control (checking/savings).
+@property (nonatomic, readonly) BOOL showAccountType;
+/// Custom label for the account type section. <code>nil</code> uses the default localized title.
+@property (nonatomic, readonly, copy) NSString * _Nullable accountTypeLabel;
+/// Whether to show the account holder type segmented control (personal/business).
+@property (nonatomic, readonly) BOOL showAccountHolderType;
+/// Custom label for the account holder type section. <code>nil</code> uses the default localized title.
+@property (nonatomic, readonly, copy) NSString * _Nullable accountHolderTypeLabel;
+- (nonnull instancetype)initWithNameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode showBankName:(BOOL)showBankName bankNameLabel:(NSString * _Nullable)bankNameLabel bankNameRequired:(BOOL)bankNameRequired showAccountType:(BOOL)showAccountType accountTypeLabel:(NSString * _Nullable)accountTypeLabel showAccountHolderType:(BOOL)showAccountHolderType accountHolderTypeLabel:(NSString * _Nullable)accountHolderTypeLabel OBJC_DESIGNATED_INITIALIZER;
+/// Default: full name, account type + holder type shown, no bank name.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong, getter=default) BankAccountFieldConfig * _Nonnull default_;)
++ (BankAccountFieldConfig * _Nonnull)default SWIFT_WARN_UNUSED_RESULT;
+/// Minimal: just the required text fields + secure fields (no segmented controls, no bank name).
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BankAccountFieldConfig * _Nonnull minimal;)
++ (BankAccountFieldConfig * _Nonnull)minimal SWIFT_WARN_UNUSED_RESULT;
+/// Full: all fields including bank name and both segmented controls.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BankAccountFieldConfig * _Nonnull full;)
++ (BankAccountFieldConfig * _Nonnull)full SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class PaymentProcessingResult;
 @class NSBundle;
 @class SPLThemeConfig;
 @class NSCoder;
+/// UIKit wrapper around <code>BankAccountFormDropIn</code>. Embed in a navigation controller
+/// or present modally; mirrors <code>CardFormDropInViewController</code>.
+SWIFT_CLASS("_TtC10SpreedlyUI35BankAccountFormDropInViewController")
+@interface BankAccountFormDropInViewController : UIViewController
+@property (nonatomic, strong) BankAccountFieldConfig * _Nonnull fieldConfig;
+@property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+/// Designated initializer; forwards to <code>UIViewController</code> so storyboard and nib paths still work.
+- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
+/// Convenience initializer using the <code>.default</code> field config and no result callback.
+- (nonnull instancetype)init;
+/// Initializes with a custom field config and result callback.
+- (nonnull instancetype)initWithFieldConfig:(BankAccountFieldConfig * _Nonnull)fieldConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+/// Initializes with a custom field config, single theme applied to both color schemes, and result callback.
+- (nonnull instancetype)initWithFieldConfig:(BankAccountFieldConfig * _Nonnull)fieldConfig themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+/// Initializes with a custom field config, separate light/dark themes, and result callback.
+- (nonnull instancetype)initWithFieldConfig:(BankAccountFieldConfig * _Nonnull)fieldConfig lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
+/// Storyboard-required initializer; not the recommended path.
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+/// Embeds the SwiftUI drop-in inside this view controller; dismisses early when the device fails security checks.
+- (void)viewDidLoad;
+@end
+
 /// UIKit wrapper for CVVRecachingView to enable Objective-C integration.
 /// Objective-C API for CVV recaching.
 SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
@@ -335,7 +396,6 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @end
 
 enum YearFormat : NSInteger;
-enum DropInNameDisplayMode : NSInteger;
 @class FormField;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @interface CardFormDropInViewController : UIViewController

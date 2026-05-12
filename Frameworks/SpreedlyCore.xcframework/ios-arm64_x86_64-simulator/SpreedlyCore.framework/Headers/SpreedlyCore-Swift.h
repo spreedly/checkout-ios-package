@@ -410,6 +410,10 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeCity = 10,
   FormFieldTypeState = 11,
   FormFieldTypeZipCode = 12,
+/// Bank routing number form field.
+  FormFieldTypeRoutingNumber = 13,
+/// Bank account number form field; treated as a secure input by the SDK UI components.
+  FormFieldTypeAccountNumber = 14,
 };
 
 /// Manages the complete gateway-specific 3DS lifecycle
@@ -789,6 +793,15 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecu
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+/// Telemetry module name for the bank-account drop-in form and related UI events.
+/// Aligned with Android (<code>paymentsheet_bank_account</code>) so cross-platform telemetry
+/// dashboards group ACH events.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull bankAccountSheetModule;)
++ (NSString * _Nonnull)bankAccountSheetModule SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C compatible variant. Type/holder are passed as string raw values; pass an empty
+/// string to omit. Pass <code>nil</code> for <code>shouldRetain</code> to use the SDK default; pass <code>@YES</code>/<code>@NO</code> to
+/// override. Mirrors <code>createCreditCardObjC</code> for additional-field handling.
+- (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -1026,6 +1039,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs;
 + (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
 + (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs;
++ (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
 + (void)paymentFailureWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage environmentKey:(NSString * _Nonnull)environmentKey;
 + (void)recacheSucceededWithDurationMs:(int64_t)durationMs;
 + (void)recacheFailedWithErrorCode:(NSString * _Nonnull)errorCode durationMs:(int64_t)durationMs;
@@ -1623,6 +1637,10 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeCity = 10,
   FormFieldTypeState = 11,
   FormFieldTypeZipCode = 12,
+/// Bank routing number form field.
+  FormFieldTypeRoutingNumber = 13,
+/// Bank account number form field; treated as a secure input by the SDK UI components.
+  FormFieldTypeAccountNumber = 14,
 };
 
 /// Manages the complete gateway-specific 3DS lifecycle
@@ -2002,6 +2020,15 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecu
 /// returns:
 /// Payment processing result indicating validation status. Actual payment result comes through error handler
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+/// Telemetry module name for the bank-account drop-in form and related UI events.
+/// Aligned with Android (<code>paymentsheet_bank_account</code>) so cross-platform telemetry
+/// dashboards group ACH events.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull bankAccountSheetModule;)
++ (NSString * _Nonnull)bankAccountSheetModule SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C compatible variant. Type/holder are passed as string raw values; pass an empty
+/// string to omit. Pass <code>nil</code> for <code>shouldRetain</code> to use the SDK default; pass <code>@YES</code>/<code>@NO</code> to
+/// override. Mirrors <code>createCreditCardObjC</code> for additional-field handling.
+- (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -2239,6 +2266,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs;
 + (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
 + (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs;
++ (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
 + (void)paymentFailureWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage environmentKey:(NSString * _Nonnull)environmentKey;
 + (void)recacheSucceededWithDurationMs:(int64_t)durationMs;
 + (void)recacheFailedWithErrorCode:(NSString * _Nonnull)errorCode durationMs:(int64_t)durationMs;
