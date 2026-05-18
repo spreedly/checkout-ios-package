@@ -311,6 +311,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 @class NSString;
 @class PaymentProcessingResult;
+@protocol FieldTextChangeListener;
 @class NSBundle;
 @class SPLThemeConfig;
 @class NSCoder;
@@ -327,6 +328,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @property (nonatomic) BOOL allowExpiredDate;
 @property (nonatomic) BOOL allowBlankDate;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+@property (nonatomic, weak) id <FieldTextChangeListener> _Nullable cvvTextChangeListener;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -334,14 +336,18 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 - (void)viewDidLoad;
 @end
 
+@class DropInCoreFieldLabels;
 enum YearFormat : NSInteger;
 enum DropInNameDisplayMode : NSInteger;
 @class FormField;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @interface CardFormDropInViewController : UIViewController
+@property (nonatomic, strong) DropInCoreFieldLabels * _Nullable coreFieldLabels;
 @property (nonatomic) enum YearFormat yearFormat;
 @property (nonatomic) enum DropInNameDisplayMode nameDisplayMode;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+@property (nonatomic) NSInteger cardNumberFormatRawValue;
+@property (nonatomic) BOOL enableAutofill;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -373,17 +379,89 @@ SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
+/// Optional title and placeholder overrides for core card fields in [CardFormDropIn].
+SWIFT_CLASS("_TtC10SpreedlyUI21DropInCoreFieldLabels")
+@interface DropInCoreFieldLabels : NSObject
+@property (nonatomic, copy) NSString * _Nullable cardNumberTitle;
+@property (nonatomic, copy) NSString * _Nullable cardNumberPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable cvcTitle;
+@property (nonatomic, copy) NSString * _Nullable cvcPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable expirationMonthTitle;
+@property (nonatomic, copy) NSString * _Nullable expirationMonthPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable expirationYearTitle;
+@property (nonatomic, copy) NSString * _Nullable expirationYearPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable expirationDateTitle;
+@property (nonatomic, copy) NSString * _Nullable expirationDatePlaceholder;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Controls whether the card form shows a single “Full Name” field or separate first/last name fields.
 typedef SWIFT_ENUM(NSInteger, DropInNameDisplayMode, open) {
   DropInNameDisplayModeSingleField = 0,
   DropInNameDisplayModeSeparateFields = 1,
 };
 
+/// Objective-C–friendly listener for per-keystroke <code>SPLTextField/onChange</code>–style updates from drop-ins and <code>SPLTextFieldViewController</code>.
+SWIFT_PROTOCOL("_TtP10SpreedlyUI23FieldTextChangeListener_")
+@protocol FieldTextChangeListener
+/// \param fieldType Which drop-in field emitted the change.
+///
+/// \param text Plaintext for low-sensitivity fields; AES-GCM ciphertext for <code>FormFieldType/merchantOnChangeUsesCiphertext</code> fields (same rules as <code>SPLTextField/onChange</code>).
+///
+- (void)onFieldTextChanged:(enum FormFieldType)fieldType text:(NSString * _Nonnull)text;
+@end
+
 SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 @interface FormField : NSObject
 - (nonnull instancetype)initWithId:(NSString * _Nonnull)id title:(NSString * _Nonnull)title type:(enum FormFieldType)type placeholder:(NSString * _Nullable)placeholder isRequired:(BOOL)isRequired OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Lifecycle of a merchant-safe field-state emission (maps to legacy iframe <code>fieldEvent</code> types where applicable).
+typedef SWIFT_ENUM(NSInteger, HostedFieldEventType, open) {
+/// User input was accepted (processed value updated).
+  HostedFieldEventTypeInput = 0,
+/// Field gained focus.
+  HostedFieldEventTypeFocus = 1,
+/// Field lost focus.
+  HostedFieldEventTypeBlur = 2,
+/// Validation outcome changed (including combined expiry refresh).
+  HostedFieldEventTypeValidation = 3,
+/// Card number mask visibility changed (eye toggle); use [HostedFieldState.isPanMasked].
+  HostedFieldEventTypePanMaskChanged = 4,
+};
+
+@class NSNumber;
+/// Merchant-safe field snapshot (legacy iframe <code>fieldEvent</code> / <code>inputProperties</code> subset; no raw PAN, CVV, or IIN).
+SWIFT_CLASS("_TtC10SpreedlyUI16HostedFieldState")
+@interface HostedFieldState : NSObject
+/// Which field produced this snapshot.
+@property (nonatomic, readonly) enum FormFieldType fieldType;
+/// What triggered this snapshot.
+@property (nonatomic, readonly) enum HostedFieldEventType eventType;
+/// Whether the field has focus at emission time.
+@property (nonatomic, readonly) BOOL isFocused;
+/// Current validation outcome for this field (includes combined month/year rules where applicable).
+@property (nonatomic, readonly) BOOL isValid;
+/// Whether the visible (decrypted) value is empty.
+@property (nonatomic, readonly) BOOL isEmpty;
+/// Detected card brand raw value for card-number fields; otherwise nil. Omits unknown scheme.
+@property (nonatomic, readonly, copy) NSString * _Nullable cardSchemeRawValue;
+/// Digit count for card number fields (not raw PAN); nil for other types.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable numberLength;
+/// Digit count for CVV fields; nil for other types.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable cvvLength;
+/// For card-number fields: <code>true</code> when digits are masked in the UI; always <code>true</code> for non-PAN fields.
+@property (nonatomic, readonly) BOOL isPanMasked;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Java-friendly listener for [HostedFieldState] updates from [SPLTextFieldViewController] (headless / custom form). [CardFormDropIn] does not expose field-state callbacks.
+SWIFT_PROTOCOL("_TtP10SpreedlyUI24HostedFieldStateListener_")
+@protocol HostedFieldStateListener
+- (void)onFieldStateChanged:(HostedFieldState * _Nonnull)state;
 @end
 
 typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
@@ -396,6 +474,7 @@ typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
   OffsiteGatewaySprel = 6,
 };
 
+@class UIView;
 enum SpreedlySubmitLabel : NSInteger;
 SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @interface SPLTextFieldViewController : UIViewController
@@ -410,6 +489,23 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, copy) void (^ _Nullable onSubmit)(void);
 @property (nonatomic) BOOL shouldFocus;
 @property (nonatomic, copy) void (^ _Nullable onFocus)(void);
+@property (nonatomic, copy) void (^ _Nullable onFocusChanged)(BOOL);
+@property (nonatomic, copy) void (^ _Nullable onFieldStateChange)(HostedFieldState * _Nonnull);
+@property (nonatomic, copy) void (^ _Nullable onInputLength)(NSInteger);
+@property (nonatomic, weak) id <HostedFieldStateListener> _Nullable hostedFieldStateListener;
+@property (nonatomic, weak) id <FieldTextChangeListener> _Nullable fieldTextChangeListener;
+/// When <code>field</code> is the card number type, produces the trailing brand view for the given scheme string (<code>CardType</code>’s <code>rawValue</code>, e.g. <code>"visa"</code>). Use app-bundled artwork.
+@property (nonatomic, copy) UIView * _Nonnull (^ _Nullable trailingIconViewFactory)(NSString * _Nonnull);
+/// When set, controls PAN mask state (<code>NSNumber</code> bool). <code>nil</code> = uncontrolled internal state.
+@property (nonatomic, strong) NSNumber * _Nullable panMasked;
+@property (nonatomic, copy) void (^ _Nullable onPanMaskedChange)(BOOL);
+@property (nonatomic) BOOL resetPanMaskedOnBlur;
+@property (nonatomic) BOOL forceMaskOnLifecycleStop;
+@property (nonatomic) BOOL showPanMaskToggle;
+@property (nonatomic) NSInteger cardNumberFormatRawValue;
+@property (nonatomic) BOOL observeHostedCardDisplayState;
+/// When <code>false</code>, suppresses credit-card autofill hints (legacy iframe <code>toggleAutoComplete</code> off). Set before the view loads.
+@property (nonatomic) BOOL enableAutofill;
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
@@ -603,6 +699,13 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 ///
 + (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface SpreedlyUIManager (SWIFT_EXTENSION(SpreedlyUI))
+/// <code>YearFormat</code> from the registered <code>FormFieldType/expirationYear</code> field (used when splitting <code>MM/YY</code> autofill on the month field).
+@property (nonatomic, readonly) enum YearFormat separatedExpirationYearFormat;
+/// Called when an <code>FormFieldType/expirationYear</code> <code>SPLTextField</code> appears or its format changes.
+- (void)updateSeparatedExpirationYearFormat:(enum YearFormat)format;
 @end
 
 @interface UIViewController (SWIFT_EXTENSION(SpreedlyUI))
@@ -943,6 +1046,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 @class NSString;
 @class PaymentProcessingResult;
+@protocol FieldTextChangeListener;
 @class NSBundle;
 @class SPLThemeConfig;
 @class NSCoder;
@@ -959,6 +1063,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @property (nonatomic) BOOL allowExpiredDate;
 @property (nonatomic) BOOL allowBlankDate;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+@property (nonatomic, weak) id <FieldTextChangeListener> _Nullable cvvTextChangeListener;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithLastFourDigits:(NSString * _Nonnull)lastFourDigits cardType:(NSString * _Nonnull)cardType cardBrand:(NSString * _Nullable)cardBrand paymentMethodToken:(NSString * _Nonnull)paymentMethodToken presentationMode:(NSInteger)presentationMode labelText:(NSString * _Nullable)labelText placeholderText:(NSString * _Nullable)placeholderText buttonText:(NSString * _Nullable)buttonText cancelButtonText:(NSString * _Nullable)cancelButtonText lightThemeConfig:(SPLThemeConfig * _Nullable)lightThemeConfig darkThemeConfig:(SPLThemeConfig * _Nullable)darkThemeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -966,14 +1071,18 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 - (void)viewDidLoad;
 @end
 
+@class DropInCoreFieldLabels;
 enum YearFormat : NSInteger;
 enum DropInNameDisplayMode : NSInteger;
 @class FormField;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 @interface CardFormDropInViewController : UIViewController
+@property (nonatomic, strong) DropInCoreFieldLabels * _Nullable coreFieldLabels;
 @property (nonatomic) enum YearFormat yearFormat;
 @property (nonatomic) enum DropInNameDisplayMode nameDisplayMode;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+@property (nonatomic) NSInteger cardNumberFormatRawValue;
+@property (nonatomic) BOOL enableAutofill;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -1005,17 +1114,89 @@ SWIFT_CLASS("_TtC10SpreedlyUI33DoChallengeIfNeededViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
+/// Optional title and placeholder overrides for core card fields in [CardFormDropIn].
+SWIFT_CLASS("_TtC10SpreedlyUI21DropInCoreFieldLabels")
+@interface DropInCoreFieldLabels : NSObject
+@property (nonatomic, copy) NSString * _Nullable cardNumberTitle;
+@property (nonatomic, copy) NSString * _Nullable cardNumberPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable cvcTitle;
+@property (nonatomic, copy) NSString * _Nullable cvcPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable expirationMonthTitle;
+@property (nonatomic, copy) NSString * _Nullable expirationMonthPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable expirationYearTitle;
+@property (nonatomic, copy) NSString * _Nullable expirationYearPlaceholder;
+@property (nonatomic, copy) NSString * _Nullable expirationDateTitle;
+@property (nonatomic, copy) NSString * _Nullable expirationDatePlaceholder;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 /// Controls whether the card form shows a single “Full Name” field or separate first/last name fields.
 typedef SWIFT_ENUM(NSInteger, DropInNameDisplayMode, open) {
   DropInNameDisplayModeSingleField = 0,
   DropInNameDisplayModeSeparateFields = 1,
 };
 
+/// Objective-C–friendly listener for per-keystroke <code>SPLTextField/onChange</code>–style updates from drop-ins and <code>SPLTextFieldViewController</code>.
+SWIFT_PROTOCOL("_TtP10SpreedlyUI23FieldTextChangeListener_")
+@protocol FieldTextChangeListener
+/// \param fieldType Which drop-in field emitted the change.
+///
+/// \param text Plaintext for low-sensitivity fields; AES-GCM ciphertext for <code>FormFieldType/merchantOnChangeUsesCiphertext</code> fields (same rules as <code>SPLTextField/onChange</code>).
+///
+- (void)onFieldTextChanged:(enum FormFieldType)fieldType text:(NSString * _Nonnull)text;
+@end
+
 SWIFT_CLASS("_TtC10SpreedlyUI9FormField")
 @interface FormField : NSObject
 - (nonnull instancetype)initWithId:(NSString * _Nonnull)id title:(NSString * _Nonnull)title type:(enum FormFieldType)type placeholder:(NSString * _Nullable)placeholder isRequired:(BOOL)isRequired OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Lifecycle of a merchant-safe field-state emission (maps to legacy iframe <code>fieldEvent</code> types where applicable).
+typedef SWIFT_ENUM(NSInteger, HostedFieldEventType, open) {
+/// User input was accepted (processed value updated).
+  HostedFieldEventTypeInput = 0,
+/// Field gained focus.
+  HostedFieldEventTypeFocus = 1,
+/// Field lost focus.
+  HostedFieldEventTypeBlur = 2,
+/// Validation outcome changed (including combined expiry refresh).
+  HostedFieldEventTypeValidation = 3,
+/// Card number mask visibility changed (eye toggle); use [HostedFieldState.isPanMasked].
+  HostedFieldEventTypePanMaskChanged = 4,
+};
+
+@class NSNumber;
+/// Merchant-safe field snapshot (legacy iframe <code>fieldEvent</code> / <code>inputProperties</code> subset; no raw PAN, CVV, or IIN).
+SWIFT_CLASS("_TtC10SpreedlyUI16HostedFieldState")
+@interface HostedFieldState : NSObject
+/// Which field produced this snapshot.
+@property (nonatomic, readonly) enum FormFieldType fieldType;
+/// What triggered this snapshot.
+@property (nonatomic, readonly) enum HostedFieldEventType eventType;
+/// Whether the field has focus at emission time.
+@property (nonatomic, readonly) BOOL isFocused;
+/// Current validation outcome for this field (includes combined month/year rules where applicable).
+@property (nonatomic, readonly) BOOL isValid;
+/// Whether the visible (decrypted) value is empty.
+@property (nonatomic, readonly) BOOL isEmpty;
+/// Detected card brand raw value for card-number fields; otherwise nil. Omits unknown scheme.
+@property (nonatomic, readonly, copy) NSString * _Nullable cardSchemeRawValue;
+/// Digit count for card number fields (not raw PAN); nil for other types.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable numberLength;
+/// Digit count for CVV fields; nil for other types.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable cvvLength;
+/// For card-number fields: <code>true</code> when digits are masked in the UI; always <code>true</code> for non-PAN fields.
+@property (nonatomic, readonly) BOOL isPanMasked;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Java-friendly listener for [HostedFieldState] updates from [SPLTextFieldViewController] (headless / custom form). [CardFormDropIn] does not expose field-state callbacks.
+SWIFT_PROTOCOL("_TtP10SpreedlyUI24HostedFieldStateListener_")
+@protocol HostedFieldStateListener
+- (void)onFieldStateChanged:(HostedFieldState * _Nonnull)state;
 @end
 
 typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
@@ -1028,6 +1209,7 @@ typedef SWIFT_ENUM(NSInteger, OffsiteGateway, open) {
   OffsiteGatewaySprel = 6,
 };
 
+@class UIView;
 enum SpreedlySubmitLabel : NSInteger;
 SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @interface SPLTextFieldViewController : UIViewController
@@ -1042,6 +1224,23 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, copy) void (^ _Nullable onSubmit)(void);
 @property (nonatomic) BOOL shouldFocus;
 @property (nonatomic, copy) void (^ _Nullable onFocus)(void);
+@property (nonatomic, copy) void (^ _Nullable onFocusChanged)(BOOL);
+@property (nonatomic, copy) void (^ _Nullable onFieldStateChange)(HostedFieldState * _Nonnull);
+@property (nonatomic, copy) void (^ _Nullable onInputLength)(NSInteger);
+@property (nonatomic, weak) id <HostedFieldStateListener> _Nullable hostedFieldStateListener;
+@property (nonatomic, weak) id <FieldTextChangeListener> _Nullable fieldTextChangeListener;
+/// When <code>field</code> is the card number type, produces the trailing brand view for the given scheme string (<code>CardType</code>’s <code>rawValue</code>, e.g. <code>"visa"</code>). Use app-bundled artwork.
+@property (nonatomic, copy) UIView * _Nonnull (^ _Nullable trailingIconViewFactory)(NSString * _Nonnull);
+/// When set, controls PAN mask state (<code>NSNumber</code> bool). <code>nil</code> = uncontrolled internal state.
+@property (nonatomic, strong) NSNumber * _Nullable panMasked;
+@property (nonatomic, copy) void (^ _Nullable onPanMaskedChange)(BOOL);
+@property (nonatomic) BOOL resetPanMaskedOnBlur;
+@property (nonatomic) BOOL forceMaskOnLifecycleStop;
+@property (nonatomic) BOOL showPanMaskToggle;
+@property (nonatomic) NSInteger cardNumberFormatRawValue;
+@property (nonatomic) BOOL observeHostedCardDisplayState;
+/// When <code>false</code>, suppresses credit-card autofill hints (legacy iframe <code>toggleAutoComplete</code> off). Set before the view loads.
+@property (nonatomic) BOOL enableAutofill;
 @property (nonatomic, readonly) BOOL isValid;
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
@@ -1235,6 +1434,13 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 ///
 + (void)setGlobalThemeWithColorsWithPrimaryColor:(UIColor * _Nonnull)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor borderColor:(UIColor * _Nullable)borderColor textColor:(UIColor * _Nullable)textColor borderRadius:(CGFloat)borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface SpreedlyUIManager (SWIFT_EXTENSION(SpreedlyUI))
+/// <code>YearFormat</code> from the registered <code>FormFieldType/expirationYear</code> field (used when splitting <code>MM/YY</code> autofill on the month field).
+@property (nonatomic, readonly) enum YearFormat separatedExpirationYearFormat;
+/// Called when an <code>FormFieldType/expirationYear</code> <code>SPLTextField</code> appears or its format changes.
+- (void)updateSeparatedExpirationYearFormat:(enum YearFormat)format;
 @end
 
 @interface UIViewController (SWIFT_EXTENSION(SpreedlyUI))
