@@ -10,36 +10,6 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 import os.log
 import os
-public enum SPLSecureContainerKey {
-  public static let number: Swift.String
-  public static let firstName: Swift.String
-  public static let lastName: Swift.String
-  public static let fullName: Swift.String
-  public static let expirationMonth: Swift.String
-  public static let expirationYear: Swift.String
-  public static let expirationDate: Swift.String
-  public static let securityCode: Swift.String
-  public static let addressLine1: Swift.String
-  public static let addressLine2: Swift.String
-  public static let city: Swift.String
-  public static let state: Swift.String
-  public static let zipCode: Swift.String
-  public static let country: Swift.String
-}
-@_hasMissingDesignatedInitializers public class SecureValueContainer {
-  public static let shared: SpreedlySecurity.SecureValueContainer
-  public func registerValue(fieldId: Swift.String, value: Swift.String)
-  public func removeValue(for fieldId: Swift.String)
-  public func startCollection()
-  public func stopCollection()
-  public func getValue(for fieldId: Swift.String) -> Swift.String?
-  public func collectAllValues() -> [Swift.String : Swift.String]?
-  public var isCollectionActive: Swift.Bool {
-    get
-  }
-  public func clearValues()
-  @objc deinit
-}
 public protocol SpreedlyEncryptionProtocol {
   func isValidSHA256Hash(_ hash: Swift.String) -> Swift.Bool
   func encryptAES(_ data: Swift.String) -> Swift.String?
@@ -59,5 +29,37 @@ public protocol SpreedlyEncryptionProtocol {
   public func secureRetrieve(_ key: Swift.String) -> Swift.String?
   public func clearSecureStorage()
   public func secureClear(_ data: inout Swift.String)
+  @objc deinit
+}
+public enum SPLSecureContainerKey {
+  public static let number: Swift.String
+  public static let firstName: Swift.String
+  public static let lastName: Swift.String
+  public static let fullName: Swift.String
+  public static let expirationMonth: Swift.String
+  public static let expirationYear: Swift.String
+  public static let expirationDate: Swift.String
+  public static let securityCode: Swift.String
+  public static let addressLine1: Swift.String
+  public static let addressLine2: Swift.String
+  public static let city: Swift.String
+  public static let state: Swift.String
+  public static let zipCode: Swift.String
+  public static let country: Swift.String
+  public static let routingNumber: Swift.String
+  public static let accountNumber: Swift.String
+}
+@_hasMissingDesignatedInitializers public class SecureValueContainer {
+  public static let shared: SpreedlySecurity.SecureValueContainer
+  public func registerValue(fieldId: Swift.String, value: Swift.String)
+  public func removeValue(for fieldId: Swift.String)
+  public func startCollection()
+  public func stopCollection()
+  public func getValue(for fieldId: Swift.String) -> Swift.String?
+  public func collectAllValues() -> [Swift.String : Swift.String]?
+  public var isCollectionActive: Swift.Bool {
+    get
+  }
+  public func clearValues()
   @objc deinit
 }
