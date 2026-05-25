@@ -339,6 +339,16 @@ typedef SWIFT_ENUM(NSInteger, BraintreePaymentType, open) {
   BraintreePaymentTypeVenmo = 1,
 };
 
+/// Card number display formatting for legacy iframe <code>setNumberFormat</code>.
+typedef SWIFT_ENUM(NSInteger, CardNumberFormat, open) {
+/// Grouped spaced PAN at all times (iframe <code>prettyFormat</code>; no blur mask).
+  CardNumberFormatPretty = 0,
+/// Ungrouped digits; PAN and CVV fully visible.
+  CardNumberFormatPlain = 1,
+/// Full mask of every digit position (including while focused).
+  CardNumberFormatMasked = 2,
+};
+
 enum DocumentIdKey : NSInteger;
 SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 @interface DocumentId : NSObject
@@ -357,6 +367,15 @@ typedef SWIFT_ENUM(NSInteger, DocumentIdKey, open) {
   DocumentIdKeyDocumentId = 0,
   DocumentIdKeyCustom = 1,
 };
+
+/// Email validation for merchant-collected email before tokenize.
+SWIFT_CLASS("_TtC12SpreedlyCore14EmailValidator")
+@interface EmailValidator : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+/// Returns <code>true</code> when <code>email</code> matches the SDK pattern (rejects single-label domains such as <code>user@test</code>).
++ (BOOL)isValid:(NSString * _Nonnull)email SWIFT_WARN_UNUSED_RESULT;
+@end
 
 /// Categorizes the type of error that occurred.
 typedef SWIFT_ENUM(NSInteger, ErrorType, open) {
@@ -410,6 +429,10 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeCity = 10,
   FormFieldTypeState = 11,
   FormFieldTypeZipCode = 12,
+/// Bank routing number form field.
+  FormFieldTypeRoutingNumber = 13,
+/// Bank account number form field; treated as a secure input by the SDK UI components.
+  FormFieldTypeAccountNumber = 14,
 };
 
 /// Manages the complete gateway-specific 3DS lifecycle
@@ -612,6 +635,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @property (nonatomic, readonly) BOOL isFailure;
 /// The payment method token (only available for successful payments).
 @property (nonatomic, readonly, copy) NSString * _Nullable token;
+/// The <code>updated_at</code> timestamp from the payment method on the recache response (ISO-8601).
+/// Non-nil on successful recache; nil for card tokenization, Braintree nonce, and failure results.
+/// Useful for tracking which CVV-cache cycle a payment method is on after recaching.
+@property (nonatomic, readonly, copy) NSString * _Nullable paymentMethodUpdatedAt;
 /// The transaction state (when available).
 @property (nonatomic, readonly, copy) NSString * _Nullable state;
 /// Indicates if the card should be retained for future payments (only available for successful payments from CardFormDropIn).
@@ -729,6 +756,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityMana
 
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
+@protocol SpreedlyRecacheDelegate;
 @protocol SpreedlyThreeDSChallengeDelegate;
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
@@ -753,10 +781,21 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isDeviceTrusted
 /// Reads from SecurityManager — the single source of truth.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecurityError * _Nullable initializationError;)
 + (SpreedlySecurityError * _Nullable)initializationError SWIFT_WARN_UNUSED_RESULT;
+/// <code>true</code> when the SDK has completed successful initialization (<code>initializeSDK()</code> or <code>setup(config:)</code>), or implicit initialization from <code>shared()</code>.
+/// Legacy iframe <em>ready</em> equivalent: the shared functional instance exists. <em><code>false</code></em> before init or when blocked (<code>sharedInstance</code> never set — use <code>initializationError</code> / <code>isDeviceTrusted</code>).
+/// Prefer <code>initializeSDK()</code> or <code>setup(config:)</code> before relying on this flag; first access via <code>shared()</code> still initializes but logs a warning.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isInitialized;)
++ (BOOL)isInitialized SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C entry point for [areAllFieldsValid(fieldTypes:)] — pass <code>NSNumber</code> values of <code>FormFieldType</code> raw values.
++ (BOOL)areAllFieldsValidWithFieldTypeRawValues:(NSArray<NSNumber *> * _Nonnull)fieldTypeRawValues SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C: <code>hostedCardDisplayState.cardNumberFormat</code> as <code>CardNumberFormat</code> raw value.
+@property (nonatomic, readonly) NSInteger hostedCardDisplayCardNumberFormatRawValue;
 /// Manager for custom parameters sent with payment method creation requests.
 @property (nonatomic, readonly, strong) SpreedlyParamsManager * _Nonnull paramsManager;
-/// Objective-C compatible delegate for payment result callbacks
+/// Objective-C compatible delegate for payment result callbacks (tokenization, offsite, APM — not recache).
 @property (nonatomic, weak) id <SpreedlyPaymentDelegate> _Nullable paymentDelegate;
+/// Objective-C compatible delegate for CVV recache results only.
+@property (nonatomic, weak) id <SpreedlyRecacheDelegate> _Nullable recacheDelegate;
 /// Objective-C compatible delegate for 3DS challenge result callbacks
 @property (nonatomic, weak) id <SpreedlyThreeDSChallengeDelegate> _Nullable threeDSChallengeDelegate;
 /// Initializes the Spreedly instance with the provided security configuration.
@@ -776,19 +815,70 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecu
 - (void)setConfigWithConfig:(id <SpreedlyConfigGenerator> _Nonnull)config;
 /// Sets a validation parameter that controls field-level validation behavior.
 - (void)setParamWithParameter:(enum ValidationParam)parameter value:(BOOL)value;
-/// Resets the SDK state: clears secure values, registered fields, and validation errors.
+/// Full payment form reset for merchant code (headless and express).
+/// Clears secure values, validation errors, in-flight subscriptions, visible <code>SPLTextField</code> text
+/// (via <code>SpreedlyUIManager/notifyFieldsShouldReset()</code>), and hosted PAN/CVV display back to defaults.
+/// Use when the customer leaves checkout or you need a clean slate. <em>Does not</em> rotate signing credentials —
+/// call <code>setup(config:)</code> again with a fresh nonce/signature from your server when auth must change.
+/// Headless example:
+/// \code
+/// Spreedly.shared().resetPaymentState() // alias: reset()
+///
+/// \endcodeExpress drop-in manages sheet open/dismiss internally; call this from <em>your</em> UI when you need form + display wiped.
+- (void)resetPaymentState;
+/// Same as <code>resetPaymentState()</code> — kept for existing integrations.
 - (void)reset;
+/// Skips the next <code>CardFormDropIn</code> <em>form</em> reset on sheet open (one-shot).
+/// Call <em>before</em> presenting <code>CardFormDropIn</code> when the sheet was dismissed only for configuration change
+/// (device rotation: landscape ↔ portrait while the sheet stays open). Does <em>not</em> restore typed PAN after dismiss — dismiss always clears secure values.
+/// <em>Main thread only.</em> Pair with the drop-in’s next <code>.onAppear</code>.
+/// \code
+/// Spreedly.shared().preservePaymentStateOnNextShow()
+/// present(cardFormDropIn)
+///
+/// \endcode
+- (void)preservePaymentStateOnNextShow;
+/// Returns whether the next drop-in open should skip the form reset; <em>consumes</em> the one-shot preserve flag.
+/// <code>CardFormDropIn</code> calls this on appear. Advanced integrators may call it when re-presenting a sheet manually.
+/// After one <code>true</code>, the flag is cleared until <code>preservePaymentStateOnNextShow()</code> is set again.
+/// <em>Main thread only.</em>
+/// \code
+/// if !Spreedly.shared().shouldPreserveState() {
+///     // drop-in would run form reset on appear (handled inside CardFormDropIn for most apps)
+/// }
+///
+/// \endcode
+- (BOOL)shouldPreserveState SWIFT_WARN_UNUSED_RESULT;
+/// Sets PAN display format and coupled PAN/CVV mask flags (legacy iframe <code>setNumberFormat</code>). Main thread.
+- (void)setNumberFormat:(enum CardNumberFormat)format;
+/// Sets card-number display format from iframe type strings (<code>prettyFormat</code>, <code>plainFormat</code>, <code>maskedFormat</code>). Unknown values are ignored.
+- (void)setNumberFormatWithType:(NSString * _Nonnull)type;
+/// Objective-C entry point for [setNumberFormat(_:)] using [CardNumberFormat] raw values.
+- (void)setNumberFormatWithCardNumberFormatRawValue:(NSInteger)cardNumberFormatRawValue;
+/// Toggles PAN and coupled CVV display mask (legacy iframe <code>toggleMask</code>). Main thread.
+- (void)toggleMask;
 /// Performs a checkout operation with field values from different sources (Objective-C compatible version)
-/// \param additionalFields Dictionary containing additional field values from application components using string keys
+/// \param additionalFields Additional field strings keyed by field name.
 ///
-/// \param metadata Optional metadata for the transaction
-///
-/// \param shouldRetain Flag indicating if the card should be retained for future payments (UI-only, not sent to API)
+/// \param metadata Optional metadata for the transaction.
 ///
 ///
 /// returns:
-/// Payment processing result indicating validation status. Actual payment result comes through error handler
+/// Immediate validation outcome; eventual success/failure delivers through payment handlers.
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload with Account Updater opt-in/out; use <code>nil</code> to omit. Conflicting metadata keys are stripped when a value is supplied.
+/// \param eligibleForCardUpdater <code>NSNumber</code> wrapping <code>YES</code> / <code>NO</code>; <code>nil</code> means unset.
+///
+- (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater SWIFT_WARN_UNUSED_RESULT;
+/// Telemetry module string for the bank-account drop-in. Emitted as <code>module</code> on
+/// <code>payment_sheet_presented</code>, <code>payment_sheet_dismissed</code>, and <code>validation_failed</code>
+/// so cross-platform dashboards can group ACH events under a single tag.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull bankAccountSheetModule;)
++ (NSString * _Nonnull)bankAccountSheetModule SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C compatible variant. Type/holder are passed as string raw values; pass an empty
+/// string to omit. Pass <code>nil</code> for <code>shouldRetain</code> to use the SDK default; pass <code>@YES</code>/<code>@NO</code> to
+/// override. Mirrors <code>createCreditCardObjC</code> for additional-field handling.
+- (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -802,7 +892,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlySecu
 ///
 ///
 /// returns:
-/// Processing result. Final result comes via payment result subscription.
+/// Processing result. Final result comes via <code>recacheResultPublisher</code> / <code>recacheDelegate</code>.
 - (PaymentProcessingResult * _Nonnull)recachePaymentMethodWithPaymentMethodToken:(NSString * _Nonnull)paymentMethodToken allowBlankName:(BOOL)allowBlankName allowExpiredDate:(BOOL)allowExpiredDate allowBlankDate:(BOOL)allowBlankDate SWIFT_WARN_UNUSED_RESULT;
 /// Public method for SDK UI flows to emit payment results
 /// \param result The payment result to emit
@@ -830,6 +920,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// \param result The challenge result to emit
 ///
 - (void)emitThreeDSChallengeResult:(ThreeDSChallengeResult * _Nonnull)result;
+@end
+
+@interface Spreedly (SWIFT_EXTENSION(SpreedlyCore))
+/// Drop-in dismiss: clear secure values and errors; keep merchant display format.
+- (void)resetPaymentSessionForDropIn;
+/// Drop-in open: fresh field values without resetting hosted PAN/CVV display.
+- (void)resetPaymentFormPreservingDisplayForDropIn;
 @end
 
 @class SpreedlyLoggerConfiguration;
@@ -996,6 +1093,15 @@ SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyPaymentDelegate_")
 - (void)paymentDidComplete:(PaymentResult * _Nonnull)result;
 @end
 
+/// Objective-C compatible delegate for CVV recache results only.
+SWIFT_PROTOCOL("_TtP12SpreedlyCore23SpreedlyRecacheDelegate_")
+@protocol SpreedlyRecacheDelegate
+/// Called when a recache result is available (success or failure).
+/// \param result The payment result for the recache operation
+///
+- (void)recacheDidComplete:(PaymentResult * _Nonnull)result;
+@end
+
 enum SpreedlySecurityErrorCode : NSInteger;
 /// Describes a security condition that blocked SDK initialization.
 SWIFT_CLASS("_TtC12SpreedlyCore21SpreedlySecurityError")
@@ -1026,6 +1132,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs;
 + (void)paymentMethodCreatedWithDurationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
 + (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs;
++ (void)paymentMethodFailedWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage errorType:(NSString * _Nonnull)errorType durationMs:(int64_t)durationMs paymentMethodType:(NSString * _Nonnull)paymentMethodType;
 + (void)paymentFailureWithErrorCode:(NSString * _Nonnull)errorCode errorMessage:(NSString * _Nonnull)errorMessage environmentKey:(NSString * _Nonnull)environmentKey;
 + (void)recacheSucceededWithDurationMs:(int64_t)durationMs;
 + (void)recacheFailedWithErrorCode:(NSString * _Nonnull)errorCode durationMs:(int64_t)durationMs;
@@ -1078,11 +1185,17 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// returns:
 /// True if all registered fields are valid, false otherwise
 - (BOOL)areAllFieldsValid SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C: invalid registered fields as <code>FormFieldType</code> raw values (<code>NSNumber</code>).
+- (NSArray<NSNumber *> * _Nonnull)getInvalidFieldTypes SWIFT_WARN_UNUSED_RESULT;
 /// Get count of registered fields
 ///
 /// returns:
 /// Number of currently registered fields
 - (NSInteger)getRegisteredFieldCount SWIFT_WARN_UNUSED_RESULT;
+/// Routes combined expiry autofill to the registered month and/or year field(s).
+/// \param excluding Field that already handled the initiator value (avoid duplicate work).
+///
+- (void)applySeparatedExpirationAutofillWithMonth:(NSString * _Nonnull)month year:(NSString * _Nonnull)year excluding:(enum FormFieldType)source;
 /// Get display text length for a specific field type
 /// \param fieldType The field type to get length for
 ///
@@ -1100,6 +1213,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 /// returns:
 /// True if the date is expired, false otherwise
 - (BOOL)isExpirationDateExpired SWIFT_WARN_UNUSED_RESULT;
+/// Applies <code>setNumberFormat</code>: PRETTY unmasks PAN only (CVV mask preserved); PLAIN/MASKED couple PAN + CVV.
+- (void)setNumberFormat:(enum CardNumberFormat)format;
+/// Toggles plain vs masked display for PAN and CVV (legacy iframe <code>toggleMask</code>).
+/// Uses <code>.masked</code> (full <code>*</code> hide) when masking — not <code>.pretty</code> (grouped spacing only).
+- (void)toggleMask;
+/// Restores default hosted-field display state.
+- (void)resetHostedCardDisplayState;
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
@@ -1201,6 +1321,7 @@ typedef SWIFT_ENUM(NSInteger, ValidationParam, open) {
   ValidationParamAllowBlankName = 0,
   ValidationParamAllowExpiredDate = 1,
   ValidationParamAllowBlankDate = 2,
+  ValidationParamAllowInternationalZipCodes = 3,
 };
 
 #endif

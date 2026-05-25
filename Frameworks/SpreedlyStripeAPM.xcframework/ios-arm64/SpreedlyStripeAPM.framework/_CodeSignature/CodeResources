@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyStripeAPM-Swift.h</key>
 		<data>
-		N54u5IEelK83QUZs6S3ygp/6Ets=
+		o2cOtI139zk0wG3231WBgyavYyE=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		IOfuMZJqAlitp2qGyjFnZneUoYQ=
+		6hZCIj06bjNTaOhIrK0XpBLTImU=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		xmbd6FWvoolNlUNhFqe49OXt9hs=
+		UagFzNE31DgySKBPzPAcDODIFbQ=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		QGAFtd2I3hsO3BNI/5VslRIva/o=
+		a8wwIb+o1xkAJ/9QvZTH6OPq46E=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		xmbd6FWvoolNlUNhFqe49OXt9hs=
+		UagFzNE31DgySKBPzPAcDODIFbQ=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		nvNgzqQv9c/zdm0/YkkxAg247D8=
+		PKLzSppW7b2bVg+sK2G8cS5Z1OM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -52,7 +52,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cWjVSEI7z76FjrXOVCLuWW5QYPGHVj/Cql8yko0p1IY=
+			uTQtRxjfOBVZ6qee9DYp03s4tprsBYnIUWkfx7CZHkQ=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -66,28 +66,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Q/mGHYeSyyr7PQ+If7R27ZI2NqbndC/k3XSCDXtRRAA=
+			aa+8pXOTqZpqX9IxKOOoY5/J5J9UsXyW5gguRTBIGrg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9z5gbCUeEMHMQcjNEm6h7NRqt9Lma6KF4Be6NF/JQ/E=
+			pSjuxCBJB01D12h48dbe4ond/A7uy6VZ13dg8p8tat0=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Q/mGHYeSyyr7PQ+If7R27ZI2NqbndC/k3XSCDXtRRAA=
+			aa+8pXOTqZpqX9IxKOOoY5/J5J9UsXyW5gguRTBIGrg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			o0NfYwoHcAfMj1jNxrjBT6iKApylXtlLGOz3zBpnHjs=
+			3vA7ZV+GmhnKpk22fCIWVj6Q2PfA6Rw0PxYwYuGglus=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -281,6 +281,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreFoundation;
 @import ObjectiveC;
 #endif
 
@@ -307,6 +308,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSURL;
 @class StripeAPMConfig;
 @class UIViewController;
+@class StripeAPMAppearanceConfig;
 /// Presents Stripe’s PaymentSheet, then polls Spreedly for the transaction result.
 /// The final <code>PaymentResult</code> is published through <code>Spreedly.shared().publishPaymentResult()</code>.
 SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
@@ -320,8 +322,154 @@ SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
 /// Configures and presents the Stripe PaymentSheet from the given view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
+/// Presents the Stripe APM payment sheet using the topmost view controller with optional appearance theming.
+/// \param config Stripe APM configuration with credentials and transaction token.
+///
+/// \param appearance Optional theming overrides for the PaymentSheet. Pass <code>nil</code> to use Stripe defaults.
+///
++ (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config appearance:(StripeAPMAppearanceConfig * _Nullable)appearance;
+/// Configures and presents the Stripe PaymentSheet from the given view controller, with optional appearance theming.
+/// \param config Stripe APM configuration with credentials and transaction token.
+///
+/// \param appearance Optional theming overrides for the PaymentSheet. Pass <code>nil</code> to use Stripe defaults.
+///
+/// \param viewController The view controller used to present the sheet.
+///
++ (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config appearance:(StripeAPMAppearanceConfig * _Nullable)appearance from:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class UIColor;
+/// Color palette mirroring <code>PaymentSheet.Appearance.Colors</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM25StripeAPMAppearanceColors")
+@interface StripeAPMAppearanceColors : NSObject
+/// Primary brand color. Stripe default: <code>.systemBlue</code>.
+@property (nonatomic, strong) UIColor * _Nonnull primary;
+/// Sheet background. Stripe default: <code>.systemBackground</code>.
+@property (nonatomic, strong) UIColor * _Nonnull background;
+/// Background of inputs, tabs, and other components.
+@property (nonatomic, strong) UIColor * _Nonnull componentBackground;
+/// Border color for inputs, tabs, and other components.
+@property (nonatomic, strong) UIColor * _Nonnull componentBorder;
+/// Border color used for selected buttons and tabs.
+/// <code>nil</code> falls back to <code>primary</code>.
+@property (nonatomic, strong) UIColor * _Nullable selectedComponentBorder;
+/// Divider color used inside inputs and tabs.
+@property (nonatomic, strong) UIColor * _Nonnull componentDivider;
+/// Default text color appearing over the background.
+@property (nonatomic, strong) UIColor * _Nonnull text;
+/// Text color for secondary text (e.g. input labels).
+@property (nonatomic, strong) UIColor * _Nonnull textSecondary;
+/// Text color used over <code>componentBackground</code>.
+@property (nonatomic, strong) UIColor * _Nonnull componentText;
+/// Input placeholder text color.
+@property (nonatomic, strong) UIColor * _Nonnull componentPlaceholderText;
+/// Icon color used in the sheet (e.g. close, back).
+@property (nonatomic, strong) UIColor * _Nonnull icon;
+/// Color for errors and destructive actions.
+@property (nonatomic, strong) UIColor * _Nonnull danger;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSNumber;
+@class StripeAPMAppearancePrimaryButton;
+@class StripeAPMAppearanceShadow;
+@class StripeAPMAppearanceFont;
+/// Appearance customization for the Stripe APM PaymentSheet.
+/// Mirrors the publicly stable, non-experimental subset of <code>PaymentSheet.Appearance</code> from
+/// the Stripe iOS SDK. Construct an instance, set only the values you want to override,
+/// and pass it to one of the <code>SpreedlyStripeAPMCheckout.present(...)</code> overloads.
+/// Any property left at its default is forwarded as Stripe’s own default (no override).
+/// <h3>Example</h3>
+/// \code
+/// let appearance = StripeAPMAppearanceConfig()
+/// appearance.cornerRadius = 8
+/// appearance.colors.primary = .systemPurple
+/// appearance.primaryButton.backgroundColor = .systemPurple
+/// appearance.primaryButton.height = 52
+///
+/// SpreedlyStripeAPMCheckout.present(config: config, appearance: appearance)
+///
+/// \endcode
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM25StripeAPMAppearanceConfig")
+@interface StripeAPMAppearanceConfig : NSObject
+/// Corner radius used for buttons, inputs, and tabs in the PaymentSheet.
+/// Stripe default: <code>6.0</code>. Set <code>nil</code> to keep Stripe’s adaptive default.
+@property (nonatomic, strong) NSNumber * _Nullable cornerRadius;
+/// Border width used for inputs and tabs. Stripe default: <code>1.0</code>.
+@property (nonatomic) CGFloat borderWidth;
+/// Border width used for selected buttons and tabs.
+/// Stripe default: <code>borderWidth * 1.5</code>. Set <code>nil</code> to keep Stripe’s default.
+@property (nonatomic, strong) NSNumber * _Nullable selectedBorderWidth;
+/// Color palette for the PaymentSheet.
+@property (nonatomic, strong) StripeAPMAppearanceColors * _Nonnull colors;
+/// Primary button (e.g. “Pay”) appearance.
+@property (nonatomic, strong) StripeAPMAppearancePrimaryButton * _Nonnull primaryButton;
+/// Shadow applied to inputs and tabs.
+@property (nonatomic, strong) StripeAPMAppearanceShadow * _Nonnull shadow;
+/// Font configuration. The font’s size and weight are ignored — Stripe derives all
+/// sizes from the family and <code>sizeScaleFactor</code>.
+@property (nonatomic, strong) StripeAPMAppearanceFont * _Nonnull font;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class UIFont;
+/// Font configuration mirroring the publicly stable surface of <code>PaymentSheet.Appearance.Font</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM23StripeAPMAppearanceFont")
+@interface StripeAPMAppearanceFont : NSObject
+/// Base font family. The size and weight are ignored by Stripe — only the family is used.
+/// Default: <code>UIFont.systemFont(ofSize: UIFont.labelFontSize)</code>.
+@property (nonatomic, strong) UIFont * _Nonnull base;
+/// Scale factor applied to all font sizes. Must be > 0. Stripe default: <code>1.0</code>.
+@property (nonatomic) CGFloat sizeScaleFactor;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Primary-button appearance mirroring <code>PaymentSheet.Appearance.PrimaryButton</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM32StripeAPMAppearancePrimaryButton")
+@interface StripeAPMAppearancePrimaryButton : NSObject
+/// Background color. <code>nil</code> falls back to <code>colors.primary</code>.
+@property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+/// Text color. <code>nil</code> lets Stripe pick black/white based on contrast.
+@property (nonatomic, strong) UIColor * _Nullable textColor;
+/// Background color in disabled state. <code>nil</code> falls back to <code>backgroundColor</code>.
+@property (nonatomic, strong) UIColor * _Nullable disabledBackgroundColor;
+/// Text color in disabled state. <code>nil</code> falls back to <code>textColor</code> at 0.6 alpha.
+@property (nonatomic, strong) UIColor * _Nullable disabledTextColor;
+/// Background color in success state. Stripe default: <code>.systemGreen</code>.
+@property (nonatomic, strong) UIColor * _Nonnull successBackgroundColor;
+/// Text color in success state. <code>nil</code> falls back to <code>textColor</code>.
+@property (nonatomic, strong) UIColor * _Nullable successTextColor;
+/// Corner radius override. <code>nil</code> inherits <code>Appearance.cornerRadius</code>.
+@property (nonatomic, strong) NSNumber * _Nullable cornerRadius;
+/// Border color. Stripe default: <code>.quaternaryLabel</code>.
+@property (nonatomic, strong) UIColor * _Nonnull borderColor;
+/// Border width. Stripe default: <code>1.0</code>.
+@property (nonatomic) CGFloat borderWidth;
+/// Font override. <code>nil</code> inherits <code>Appearance.font.base</code>.
+@property (nonatomic, strong) UIFont * _Nullable font;
+/// Shadow override. <code>nil</code> inherits <code>Appearance.shadow</code>.
+@property (nonatomic, strong) StripeAPMAppearanceShadow * _Nullable shadow;
+/// Button height. Stripe default: <code>44</code>.
+@property (nonatomic) CGFloat height;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Shadow configuration mirroring <code>PaymentSheet.Appearance.Shadow</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM25StripeAPMAppearanceShadow")
+@interface StripeAPMAppearanceShadow : NSObject
+/// Shadow color. Stripe default: <code>.black</code>.
+@property (nonatomic, strong) UIColor * _Nonnull color;
+/// Shadow opacity. Stripe default: <code>0.05</code>.
+@property (nonatomic) CGFloat opacity;
+/// Shadow offset. Stripe default: <code>(0, 2)</code>.
+@property (nonatomic) CGSize offset;
+/// Shadow blur radius. Stripe default: <code>4</code>.
+@property (nonatomic) CGFloat radius;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// Convenience: a fully-disabled shadow (Stripe’s <code>Shadow.disabled</code>).
++ (StripeAPMAppearanceShadow * _Nonnull)disabled SWIFT_WARN_UNUSED_RESULT;
 @end
 
 #endif
@@ -615,6 +763,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import CoreFoundation;
 @import ObjectiveC;
 #endif
 
@@ -641,6 +790,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSURL;
 @class StripeAPMConfig;
 @class UIViewController;
+@class StripeAPMAppearanceConfig;
 /// Presents Stripe’s PaymentSheet, then polls Spreedly for the transaction result.
 /// The final <code>PaymentResult</code> is published through <code>Spreedly.shared().publishPaymentResult()</code>.
 SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
@@ -654,8 +804,154 @@ SWIFT_CLASS("_TtC17SpreedlyStripeAPM25SpreedlyStripeAPMCheckout")
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config;
 /// Configures and presents the Stripe PaymentSheet from the given view controller.
 + (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config from:(UIViewController * _Nonnull)viewController;
+/// Presents the Stripe APM payment sheet using the topmost view controller with optional appearance theming.
+/// \param config Stripe APM configuration with credentials and transaction token.
+///
+/// \param appearance Optional theming overrides for the PaymentSheet. Pass <code>nil</code> to use Stripe defaults.
+///
++ (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config appearance:(StripeAPMAppearanceConfig * _Nullable)appearance;
+/// Configures and presents the Stripe PaymentSheet from the given view controller, with optional appearance theming.
+/// \param config Stripe APM configuration with credentials and transaction token.
+///
+/// \param appearance Optional theming overrides for the PaymentSheet. Pass <code>nil</code> to use Stripe defaults.
+///
+/// \param viewController The view controller used to present the sheet.
+///
++ (void)presentWithConfig:(StripeAPMConfig * _Nonnull)config appearance:(StripeAPMAppearanceConfig * _Nullable)appearance from:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class UIColor;
+/// Color palette mirroring <code>PaymentSheet.Appearance.Colors</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM25StripeAPMAppearanceColors")
+@interface StripeAPMAppearanceColors : NSObject
+/// Primary brand color. Stripe default: <code>.systemBlue</code>.
+@property (nonatomic, strong) UIColor * _Nonnull primary;
+/// Sheet background. Stripe default: <code>.systemBackground</code>.
+@property (nonatomic, strong) UIColor * _Nonnull background;
+/// Background of inputs, tabs, and other components.
+@property (nonatomic, strong) UIColor * _Nonnull componentBackground;
+/// Border color for inputs, tabs, and other components.
+@property (nonatomic, strong) UIColor * _Nonnull componentBorder;
+/// Border color used for selected buttons and tabs.
+/// <code>nil</code> falls back to <code>primary</code>.
+@property (nonatomic, strong) UIColor * _Nullable selectedComponentBorder;
+/// Divider color used inside inputs and tabs.
+@property (nonatomic, strong) UIColor * _Nonnull componentDivider;
+/// Default text color appearing over the background.
+@property (nonatomic, strong) UIColor * _Nonnull text;
+/// Text color for secondary text (e.g. input labels).
+@property (nonatomic, strong) UIColor * _Nonnull textSecondary;
+/// Text color used over <code>componentBackground</code>.
+@property (nonatomic, strong) UIColor * _Nonnull componentText;
+/// Input placeholder text color.
+@property (nonatomic, strong) UIColor * _Nonnull componentPlaceholderText;
+/// Icon color used in the sheet (e.g. close, back).
+@property (nonatomic, strong) UIColor * _Nonnull icon;
+/// Color for errors and destructive actions.
+@property (nonatomic, strong) UIColor * _Nonnull danger;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSNumber;
+@class StripeAPMAppearancePrimaryButton;
+@class StripeAPMAppearanceShadow;
+@class StripeAPMAppearanceFont;
+/// Appearance customization for the Stripe APM PaymentSheet.
+/// Mirrors the publicly stable, non-experimental subset of <code>PaymentSheet.Appearance</code> from
+/// the Stripe iOS SDK. Construct an instance, set only the values you want to override,
+/// and pass it to one of the <code>SpreedlyStripeAPMCheckout.present(...)</code> overloads.
+/// Any property left at its default is forwarded as Stripe’s own default (no override).
+/// <h3>Example</h3>
+/// \code
+/// let appearance = StripeAPMAppearanceConfig()
+/// appearance.cornerRadius = 8
+/// appearance.colors.primary = .systemPurple
+/// appearance.primaryButton.backgroundColor = .systemPurple
+/// appearance.primaryButton.height = 52
+///
+/// SpreedlyStripeAPMCheckout.present(config: config, appearance: appearance)
+///
+/// \endcode
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM25StripeAPMAppearanceConfig")
+@interface StripeAPMAppearanceConfig : NSObject
+/// Corner radius used for buttons, inputs, and tabs in the PaymentSheet.
+/// Stripe default: <code>6.0</code>. Set <code>nil</code> to keep Stripe’s adaptive default.
+@property (nonatomic, strong) NSNumber * _Nullable cornerRadius;
+/// Border width used for inputs and tabs. Stripe default: <code>1.0</code>.
+@property (nonatomic) CGFloat borderWidth;
+/// Border width used for selected buttons and tabs.
+/// Stripe default: <code>borderWidth * 1.5</code>. Set <code>nil</code> to keep Stripe’s default.
+@property (nonatomic, strong) NSNumber * _Nullable selectedBorderWidth;
+/// Color palette for the PaymentSheet.
+@property (nonatomic, strong) StripeAPMAppearanceColors * _Nonnull colors;
+/// Primary button (e.g. “Pay”) appearance.
+@property (nonatomic, strong) StripeAPMAppearancePrimaryButton * _Nonnull primaryButton;
+/// Shadow applied to inputs and tabs.
+@property (nonatomic, strong) StripeAPMAppearanceShadow * _Nonnull shadow;
+/// Font configuration. The font’s size and weight are ignored — Stripe derives all
+/// sizes from the family and <code>sizeScaleFactor</code>.
+@property (nonatomic, strong) StripeAPMAppearanceFont * _Nonnull font;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class UIFont;
+/// Font configuration mirroring the publicly stable surface of <code>PaymentSheet.Appearance.Font</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM23StripeAPMAppearanceFont")
+@interface StripeAPMAppearanceFont : NSObject
+/// Base font family. The size and weight are ignored by Stripe — only the family is used.
+/// Default: <code>UIFont.systemFont(ofSize: UIFont.labelFontSize)</code>.
+@property (nonatomic, strong) UIFont * _Nonnull base;
+/// Scale factor applied to all font sizes. Must be > 0. Stripe default: <code>1.0</code>.
+@property (nonatomic) CGFloat sizeScaleFactor;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Primary-button appearance mirroring <code>PaymentSheet.Appearance.PrimaryButton</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM32StripeAPMAppearancePrimaryButton")
+@interface StripeAPMAppearancePrimaryButton : NSObject
+/// Background color. <code>nil</code> falls back to <code>colors.primary</code>.
+@property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+/// Text color. <code>nil</code> lets Stripe pick black/white based on contrast.
+@property (nonatomic, strong) UIColor * _Nullable textColor;
+/// Background color in disabled state. <code>nil</code> falls back to <code>backgroundColor</code>.
+@property (nonatomic, strong) UIColor * _Nullable disabledBackgroundColor;
+/// Text color in disabled state. <code>nil</code> falls back to <code>textColor</code> at 0.6 alpha.
+@property (nonatomic, strong) UIColor * _Nullable disabledTextColor;
+/// Background color in success state. Stripe default: <code>.systemGreen</code>.
+@property (nonatomic, strong) UIColor * _Nonnull successBackgroundColor;
+/// Text color in success state. <code>nil</code> falls back to <code>textColor</code>.
+@property (nonatomic, strong) UIColor * _Nullable successTextColor;
+/// Corner radius override. <code>nil</code> inherits <code>Appearance.cornerRadius</code>.
+@property (nonatomic, strong) NSNumber * _Nullable cornerRadius;
+/// Border color. Stripe default: <code>.quaternaryLabel</code>.
+@property (nonatomic, strong) UIColor * _Nonnull borderColor;
+/// Border width. Stripe default: <code>1.0</code>.
+@property (nonatomic) CGFloat borderWidth;
+/// Font override. <code>nil</code> inherits <code>Appearance.font.base</code>.
+@property (nonatomic, strong) UIFont * _Nullable font;
+/// Shadow override. <code>nil</code> inherits <code>Appearance.shadow</code>.
+@property (nonatomic, strong) StripeAPMAppearanceShadow * _Nullable shadow;
+/// Button height. Stripe default: <code>44</code>.
+@property (nonatomic) CGFloat height;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Shadow configuration mirroring <code>PaymentSheet.Appearance.Shadow</code>.
+SWIFT_CLASS("_TtC17SpreedlyStripeAPM25StripeAPMAppearanceShadow")
+@interface StripeAPMAppearanceShadow : NSObject
+/// Shadow color. Stripe default: <code>.black</code>.
+@property (nonatomic, strong) UIColor * _Nonnull color;
+/// Shadow opacity. Stripe default: <code>0.05</code>.
+@property (nonatomic) CGFloat opacity;
+/// Shadow offset. Stripe default: <code>(0, 2)</code>.
+@property (nonatomic) CGSize offset;
+/// Shadow blur radius. Stripe default: <code>4</code>.
+@property (nonatomic) CGFloat radius;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+/// Convenience: a fully-disabled shadow (Stripe’s <code>Shadow.disabled</code>).
++ (StripeAPMAppearanceShadow * _Nonnull)disabled SWIFT_WARN_UNUSED_RESULT;
 @end
 
 #endif
