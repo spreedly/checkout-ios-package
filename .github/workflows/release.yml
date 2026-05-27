@@ -281,6 +281,7 @@ jobs:
           echo "Verified: Package.resolved correctly pins checkout-ios-package @ ${RELEASE_VERSION}"
 
       - name: Create TestFlight tag with updated Package.resolved
+        if: ${{ !contains(github.event.client_payload.tag_name || github.event.inputs.tag_name || '', '-dev.') }}
         env:
           RELEASE_VERSION: ${{ github.event.client_payload.tag_name || github.event.inputs.tag_name }}
           IS_PRERELEASE: ${{ github.event.client_payload.is_prerelease || github.event.inputs.is_prerelease }}
