@@ -4,17 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>LICENSE</key>
-		<data>
-		NDX2AVb1wpjZKZjeqbY8J3FQsew=
-		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Headers/SpreedlyBraintree-Swift.h</key>
 		<data>
 		29a0GBl8aH8hrkEl6FdEGx8b/mQ=
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Info.plist</key>
 		<data>
-		9au/xAzTFe86K9WSL/7DdlUqFAA=
+		zdOxM12XHbl2h9SO8Ds/gWMutvQ=
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -22,7 +18,7 @@
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		5E3OhsBQKI9k3SjK0fTaul7++Ec=
+		IZUVO1vXdIliratciB/H72ZN6xk=
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -30,7 +26,7 @@
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		5E3OhsBQKI9k3SjK0fTaul7++Ec=
+		IZUVO1vXdIliratciB/H72ZN6xk=
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/module.modulemap</key>
 		<data>
@@ -38,28 +34,40 @@
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/SpreedlyBraintree</key>
 		<data>
-		7KNlDCG4XeuKHCE1SwVcFUpfi/M=
+		+WdzutiDMyE2RU7pqSL/Um4Yp3A=
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/_CodeSignature/CodeResources</key>
 		<data>
-		k55LoMEercpxoYs3H2axvtF54uE=
+		jCc/48PoXJM+hzmuDYL6O2ACwNI=
 		</data>
 		<key>ios-arm64/SpreedlyBraintree.framework/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SMUktZbeJof3R0MHhvGuAhqdNHU=
+			0VNMrZv6AHiGTKFpH5pZYDTI7qs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		EdBzjrkn3UxjZrZZsVbwudYlnXg=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/DWARF/SpreedlyBraintree</key>
+		<data>
+		SrvnJptrWWKlztQelPQLoBfuiK8=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyBraintree.yml</key>
+		<data>
+		X9ZZT465XhT7mC98A3KSwHviBEc=
+		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Headers/SpreedlyBraintree-Swift.h</key>
 		<data>
 		zAQ1Y365I4fK0M3d/OP7KdFTf8Q=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Info.plist</key>
 		<data>
-		vesNdNbHanWuxtvWTKEAEfKdHDg=
+		4gEYkx7niW6OYlVgkrnoVpylxDk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -67,7 +75,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		FsIVYv/fZGnsdj87F9MxfUL8lyg=
+		bViLFXEMDBGP/5T8nOK8r4goQQA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -75,7 +83,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		FsIVYv/fZGnsdj87F9MxfUL8lyg=
+		bViLFXEMDBGP/5T8nOK8r4goQQA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -83,7 +91,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		H6dQkKpY2tezJewXpNucq35AKf4=
+		FhPYs/7Tx7N/0TgVaTblzw8wNLQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -91,7 +99,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		H6dQkKpY2tezJewXpNucq35AKf4=
+		FhPYs/7Tx7N/0TgVaTblzw8wNLQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/module.modulemap</key>
 		<data>
@@ -99,35 +107,40 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/SpreedlyBraintree</key>
 		<data>
-		upDq3p+11ApKg80f9rTFjLxkwos=
+		0vLyOEc173kCowj8MpaD8hkX4O4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/_CodeSignature/CodeResources</key>
 		<data>
-		r8va+W+XY/c9mLq0dFFO/KwfOtE=
+		5NOSolqE05LlxCWP61L2WaNsK6w=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SMUktZbeJof3R0MHhvGuAhqdNHU=
+			0VNMrZv6AHiGTKFpH5pZYDTI7qs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		EdBzjrkn3UxjZrZZsVbwudYlnXg=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/DWARF/SpreedlyBraintree</key>
+		<data>
+		2yMKWpyLNUmtUs45xOv9pg79Re8=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyBraintree.yml</key>
+		<data>
+		xqCDcssRjGc6C/Nzeom3lkrXJrM=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyBraintree.yml</key>
+		<data>
+		VXF92kQdNPd0dvY7y56noI52Fyo=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			NDX2AVb1wpjZKZjeqbY8J3FQsew=
-			</data>
-			<key>hash2</key>
-			<data>
-			2fOb5bs7rjpLv3OJGMGNZ2jbDwkbds/h+KCk+LWD540=
-			</data>
-		</dict>
 		<key>ios-arm64/SpreedlyBraintree.framework/Headers/SpreedlyBraintree-Swift.h</key>
 		<dict>
 			<key>hash</key>
@@ -143,11 +156,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			9au/xAzTFe86K9WSL/7DdlUqFAA=
+			zdOxM12XHbl2h9SO8Ds/gWMutvQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			Wjk4BzefM7vjil9HkTsXhQn9P9INpGDvaPau7aWvkxo=
+			kyH+vCpX/IEZVKZXZ8B7M1rNXJ91ywrQopMG2yAP8Yw=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -165,11 +178,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5E3OhsBQKI9k3SjK0fTaul7++Ec=
+			IZUVO1vXdIliratciB/H72ZN6xk=
 			</data>
 			<key>hash2</key>
 			<data>
-			jvFjrXLJTnQhcTFaOjPd81uLZHzpyuYqb1anYAJtvVY=
+			7CFAHQB4rlLROYBWmc7D/Q5ocyxc6XWc9bVR591QvWU=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -187,11 +200,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5E3OhsBQKI9k3SjK0fTaul7++Ec=
+			IZUVO1vXdIliratciB/H72ZN6xk=
 			</data>
 			<key>hash2</key>
 			<data>
-			jvFjrXLJTnQhcTFaOjPd81uLZHzpyuYqb1anYAJtvVY=
+			7CFAHQB4rlLROYBWmc7D/Q5ocyxc6XWc9bVR591QvWU=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyBraintree.framework/Modules/module.modulemap</key>
@@ -209,36 +222,69 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7KNlDCG4XeuKHCE1SwVcFUpfi/M=
+			+WdzutiDMyE2RU7pqSL/Um4Yp3A=
 			</data>
 			<key>hash2</key>
 			<data>
-			qcBVnA8QdOFv5ggRewO1jK5J7MSc2mShxiWnUv1tHB8=
+			MyKAaoSZaNPv8/G/JBfTlaJz3H41XKYV71qJXd4zEoY=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyBraintree.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			k55LoMEercpxoYs3H2axvtF54uE=
+			jCc/48PoXJM+hzmuDYL6O2ACwNI=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ja6m9/B0HeoI1NB8UGPAYDFBAmdKn1YANdNpkHoMElc=
+			XoynyVsg61AA/Nen1xsnSjaB1Ol1ycgGQd/j8qTNoC8=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyBraintree.framework/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SMUktZbeJof3R0MHhvGuAhqdNHU=
+			0VNMrZv6AHiGTKFpH5pZYDTI7qs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JIR0tOqZfHQIjIzCwSX5AhvImHrss0Yc5JUFP525Wv8=
+			9GvrMkZUCkSh6AycUTR0K4zE8GSKC+gbMXTZoLkJfxs=
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			EdBzjrkn3UxjZrZZsVbwudYlnXg=
+			</data>
+			<key>hash2</key>
+			<data>
+			KHzVxy71udtudZqqNbvmj/QrfcsmY4hzBsIVnBguZIY=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/DWARF/SpreedlyBraintree</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			SrvnJptrWWKlztQelPQLoBfuiK8=
+			</data>
+			<key>hash2</key>
+			<data>
+			Xx1MH362srjxQoSeaddmgfmNBCbzHHy6cl0NYKvV8X4=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyBraintree.yml</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			X9ZZT465XhT7mC98A3KSwHviBEc=
+			</data>
+			<key>hash2</key>
+			<data>
+			iQfmZJNUAZ4ZOlYBrmv8opPNq16duSARjXtAfSLJNcQ=
+			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Headers/SpreedlyBraintree-Swift.h</key>
 		<dict>
@@ -255,11 +301,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vesNdNbHanWuxtvWTKEAEfKdHDg=
+			4gEYkx7niW6OYlVgkrnoVpylxDk=
 			</data>
 			<key>hash2</key>
 			<data>
-			W9+S+6s/SuNel6Af+TrwM73XyLAXorBEQU4X8YC1PHs=
+			NaPThc/h6ogmtGasfn7SfTq4DZkpffb7V/c03UFG90M=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -277,11 +323,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FsIVYv/fZGnsdj87F9MxfUL8lyg=
+			bViLFXEMDBGP/5T8nOK8r4goQQA=
 			</data>
 			<key>hash2</key>
 			<data>
-			xWjS0LVmqgkqiZsMg0lOqZ0F4AdWsj1JFTaedFI+Ov0=
+			Jy+49cpRAOUQxeuA4ypgqni5W6MDrT0Gsyybz5qp1Wk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -299,11 +345,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FsIVYv/fZGnsdj87F9MxfUL8lyg=
+			bViLFXEMDBGP/5T8nOK8r4goQQA=
 			</data>
 			<key>hash2</key>
 			<data>
-			xWjS0LVmqgkqiZsMg0lOqZ0F4AdWsj1JFTaedFI+Ov0=
+			Jy+49cpRAOUQxeuA4ypgqni5W6MDrT0Gsyybz5qp1Wk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -321,11 +367,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			H6dQkKpY2tezJewXpNucq35AKf4=
+			FhPYs/7Tx7N/0TgVaTblzw8wNLQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			h+PIWOcY9ahsH1CsdrjaMZeVDiB2TBZNMDQjPSlNaU8=
+			He0E0TDSKdB1ioXeBxSlS8ue1lXruL7rJL4uYoLa0U4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/SpreedlyBraintree.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -343,11 +389,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			H6dQkKpY2tezJewXpNucq35AKf4=
+			FhPYs/7Tx7N/0TgVaTblzw8wNLQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			h+PIWOcY9ahsH1CsdrjaMZeVDiB2TBZNMDQjPSlNaU8=
+			He0E0TDSKdB1ioXeBxSlS8ue1lXruL7rJL4uYoLa0U4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/Modules/module.modulemap</key>
@@ -365,36 +411,80 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			upDq3p+11ApKg80f9rTFjLxkwos=
+			0vLyOEc173kCowj8MpaD8hkX4O4=
 			</data>
 			<key>hash2</key>
 			<data>
-			6L8O55Vr3F5GIGwiu1BZHeoAGiqRv4yQjLmnM8vBViU=
+			KIwVyKiuNJKbE/rPxiy6TT8gzra+r+c8KzopS5YJOtY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r8va+W+XY/c9mLq0dFFO/KwfOtE=
+			5NOSolqE05LlxCWP61L2WaNsK6w=
 			</data>
 			<key>hash2</key>
 			<data>
-			R80J9hYb5p6Wpg0x08E1b7/zWpqyMOyJ8VqicY04Dhw=
+			Q2n1D6Z5VswsK770TdexH+o6TKLSbpn766lmJ5tBfPc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyBraintree.framework/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SMUktZbeJof3R0MHhvGuAhqdNHU=
+			0VNMrZv6AHiGTKFpH5pZYDTI7qs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JIR0tOqZfHQIjIzCwSX5AhvImHrss0Yc5JUFP525Wv8=
+			9GvrMkZUCkSh6AycUTR0K4zE8GSKC+gbMXTZoLkJfxs=
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			EdBzjrkn3UxjZrZZsVbwudYlnXg=
+			</data>
+			<key>hash2</key>
+			<data>
+			KHzVxy71udtudZqqNbvmj/QrfcsmY4hzBsIVnBguZIY=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/DWARF/SpreedlyBraintree</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2yMKWpyLNUmtUs45xOv9pg79Re8=
+			</data>
+			<key>hash2</key>
+			<data>
+			xBN7sa9nZWDZW5wPGD+69x5UkZZJLYD5Z3Py6ekIsP8=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyBraintree.yml</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			xqCDcssRjGc6C/Nzeom3lkrXJrM=
+			</data>
+			<key>hash2</key>
+			<data>
+			QEAapewK6Np/Z7OcraO/UL5li9wnoiJsZynfTLDVNX8=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyBraintree.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyBraintree.yml</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			VXF92kQdNPd0dvY7y56noI52Fyo=
+			</data>
+			<key>hash2</key>
+			<data>
+			RwyJx8vpg2tRcgpdg5jG30++vN1gNGhSt5x4yKlwkSg=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>
