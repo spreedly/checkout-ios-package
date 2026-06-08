@@ -73,6 +73,7 @@ end
 | **Security** | `SpreedlySecurity` | Encryption and secure field storage (required) |
 | **UI** | `SpreedlyUI` | Pre-built payment forms and hosted field components (required) |
 | **Stripe APM** | `SpreedlyStripeAPM` | Stripe APM via native PaymentSheet (iDEAL, Bancontact, EPS, P24, SEPA) |
+| **Stripe Radar** | `SpreedlyStripeRadar` | **Session ID only** — headless Radar device data (`radar_session_id` for fraud signals). Does not include Payment Sheet or checkout UI. Independent of `SpreedlyStripeAPM`. |
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
 
 ## Integration Guides
