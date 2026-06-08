@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyBraintree'
-  s.version          = '1.3.8'
+  s.version          = '1.4.0-dev.20260608.1'
   s.summary          = 'Braintree (PayPal/Venmo) module for the Spreedly iOS SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }

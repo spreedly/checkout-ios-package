@@ -1,0 +1,35 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyStripeRadar
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+import Foundation
+import SpreedlyCore
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc @_inheritsConvenienceInitializers @objcMembers final public class SpreedlyStripeRadar : ObjectiveC.NSObject {
+  public enum Keys {
+    public static let radarSessionId: Swift.String
+  }
+  public enum Analytics {
+    public static let provider: Swift.String
+  }
+  @objc public static let radarSessionIdKey: Swift.String
+  @objc public static let analyticsProvider: Swift.String
+  public static func createRadarSession(_ config: SpreedlyStripeRadar.StripeRadarConfig) async -> Swift.String?
+  @objc(createRadarSessionWithConfig:completion:) public static func createRadarSession(config: SpreedlyStripeRadar.StripeRadarConfigObjC, completion: @escaping (Swift.String?) -> Swift.Void)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct StripeRadarConfig : Swift.Sendable {
+  public let publishableKey: Swift.String
+  public let stripeAccount: Swift.String?
+  public init(publishableKey: Swift.String, stripeAccount: Swift.String? = nil)
+}
+@objc @objcMembers final public class StripeRadarConfigObjC : ObjectiveC.NSObject {
+  @objc final public let publishableKey: Swift.String
+  @objc final public let stripeAccount: Swift.String?
+  @objc public init(publishableKey: Swift.String, stripeAccount: Swift.String? = nil)
+  @objc deinit
+}
