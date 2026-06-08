@@ -25,6 +25,9 @@ public enum SPLSecureContainerKey {
   public static let state: Swift.String
   public static let zipCode: Swift.String
   public static let country: Swift.String
+  public static let routingNumber: Swift.String
+  public static let accountNumber: Swift.String
+  public static let bankName: Swift.String
 }
 @_hasMissingDesignatedInitializers public class SecureValueContainer {
   public static let shared: SpreedlySecurity.SecureValueContainer
