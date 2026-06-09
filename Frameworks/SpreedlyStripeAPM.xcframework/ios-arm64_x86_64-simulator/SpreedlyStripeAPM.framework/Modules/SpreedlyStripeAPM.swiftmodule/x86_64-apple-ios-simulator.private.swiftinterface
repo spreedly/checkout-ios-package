@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
-// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyStripeAPM
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyStripeAPM
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
 import Foundation
 import SpreedlyCore
 import Swift
@@ -13,5 +13,65 @@ import _SwiftConcurrencyShims
   @objc public static func handleStripeReturnURL(_ url: Foundation.URL) -> Swift.Bool
   @objc(presentWithConfig:) public static func present(config: SpreedlyCore.StripeAPMConfig)
   @objc(presentWithConfig:from:) public static func present(config: SpreedlyCore.StripeAPMConfig, from viewController: UIKit.UIViewController)
+  @objc(presentWithConfig:appearance:) public static func present(config: SpreedlyCore.StripeAPMConfig, appearance: SpreedlyStripeAPM.StripeAPMAppearanceConfig?)
+  @objc(presentWithConfig:appearance:from:) public static func present(config: SpreedlyCore.StripeAPMConfig, appearance: SpreedlyStripeAPM.StripeAPMAppearanceConfig?, from viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class StripeAPMAppearanceConfig : ObjectiveC.NSObject {
+  @objc public var cornerRadius: Foundation.NSNumber?
+  @objc public var borderWidth: CoreFoundation.CGFloat
+  @objc public var selectedBorderWidth: Foundation.NSNumber?
+  @objc public var colors: SpreedlyStripeAPM.StripeAPMAppearanceColors
+  @objc public var primaryButton: SpreedlyStripeAPM.StripeAPMAppearancePrimaryButton
+  @objc public var shadow: SpreedlyStripeAPM.StripeAPMAppearanceShadow
+  @objc public var font: SpreedlyStripeAPM.StripeAPMAppearanceFont
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class StripeAPMAppearanceColors : ObjectiveC.NSObject {
+  @objc public var primary: UIKit.UIColor
+  @objc public var background: UIKit.UIColor
+  @objc public var componentBackground: UIKit.UIColor
+  @objc public var componentBorder: UIKit.UIColor
+  @objc public var selectedComponentBorder: UIKit.UIColor?
+  @objc public var componentDivider: UIKit.UIColor
+  @objc public var text: UIKit.UIColor
+  @objc public var textSecondary: UIKit.UIColor
+  @objc public var componentText: UIKit.UIColor
+  @objc public var componentPlaceholderText: UIKit.UIColor
+  @objc public var icon: UIKit.UIColor
+  @objc public var danger: UIKit.UIColor
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class StripeAPMAppearancePrimaryButton : ObjectiveC.NSObject {
+  @objc public var backgroundColor: UIKit.UIColor?
+  @objc public var textColor: UIKit.UIColor?
+  @objc public var disabledBackgroundColor: UIKit.UIColor?
+  @objc public var disabledTextColor: UIKit.UIColor?
+  @objc public var successBackgroundColor: UIKit.UIColor
+  @objc public var successTextColor: UIKit.UIColor?
+  @objc public var cornerRadius: Foundation.NSNumber?
+  @objc public var borderColor: UIKit.UIColor
+  @objc public var borderWidth: CoreFoundation.CGFloat
+  @objc public var font: UIKit.UIFont?
+  @objc public var shadow: SpreedlyStripeAPM.StripeAPMAppearanceShadow?
+  @objc public var height: CoreFoundation.CGFloat
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class StripeAPMAppearanceShadow : ObjectiveC.NSObject {
+  @objc public var color: UIKit.UIColor
+  @objc public var opacity: CoreFoundation.CGFloat
+  @objc public var offset: CoreFoundation.CGSize
+  @objc public var radius: CoreFoundation.CGFloat
+  @objc override dynamic public init()
+  @objc public static func disabled() -> SpreedlyStripeAPM.StripeAPMAppearanceShadow
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class StripeAPMAppearanceFont : ObjectiveC.NSObject {
+  @objc public var base: UIKit.UIFont
+  @objc public var sizeScaleFactor: CoreFoundation.CGFloat
+  @objc override dynamic public init()
   @objc deinit
 }
