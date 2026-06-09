@@ -130,8 +130,8 @@ All `Spreedly*` frameworks in a single app build must use the **same version**. 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
 | iOS | 14.0 | 18 |
-| Swift | 5.10 | 5.10 |
-| Xcode | 16.1 | 16.4 |
+| Swift | 6.0 | 6.3 |
+| Xcode | 26.0 | 26.5 |
 
 ### Architecture Support
 
