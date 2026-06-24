@@ -31,7 +31,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout SDK repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           repository: spreedly/checkout-ios-sdk
           token: ${{ secrets.SDK_REPO_TOKEN }}
