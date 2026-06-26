@@ -38,6 +38,7 @@ Then add the products to your target:
         .product(name: "SpreedlyCore", package: "checkout-ios-package"),
         .product(name: "SpreedlySecurity", package: "checkout-ios-package"),
         .product(name: "SpreedlyUI", package: "checkout-ios-package"),
+        // .product(name: "SpreedlyClickToPay", package: "checkout-ios-package"),
     ]
 )
 ```
@@ -53,6 +54,7 @@ pod 'SpreedlyUI', '~> 1.3'
 # Optional — add as needed
 # pod 'SpreedlyStripeAPM', '~> 1.3'
 # pod 'SpreedlyBraintree', '~> 1.3'
+# pod 'SpreedlyClickToPay', '~> 1.3'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
@@ -75,6 +77,7 @@ end
 | **Stripe APM** | `SpreedlyStripeAPM` | Stripe APM via native PaymentSheet (iDEAL, Bancontact, EPS, P24, SEPA) |
 | **Stripe Radar** | `SpreedlyStripeRadar` | **Session ID only** — headless Radar device data (`radar_session_id` for fraud signals). Does not include Payment Sheet or checkout UI. Independent of `SpreedlyStripeAPM`. |
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
+| **Click to Pay** | `SpreedlyClickToPay` | Mastercard Click to Pay (SRC) checkout and tokenize |
 
 ## Integration Guides
 
