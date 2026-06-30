@@ -4,17 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>LICENSE</key>
-		<data>
-		NDX2AVb1wpjZKZjeqbY8J3FQsew=
-		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<data>
-		N54u5IEelK83QUZs6S3ygp/6Ets=
+		uokSrMuV3CcFKfZoAMQpxme7/2M=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Info.plist</key>
 		<data>
-		IOfuMZJqAlitp2qGyjFnZneUoYQ=
+		U+hl0SuGJzwWgV53FwPV1UYL0qc=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -22,31 +18,31 @@
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		xmbd6FWvoolNlUNhFqe49OXt9hs=
+		VXlDBCH7Ta+J3mVfy05AQ8c1V/E=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		QGAFtd2I3hsO3BNI/5VslRIva/o=
+		UPLPaY0az4bz7j49VMq2+gctY5Q=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		xmbd6FWvoolNlUNhFqe49OXt9hs=
+		VXlDBCH7Ta+J3mVfy05AQ8c1V/E=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/module.modulemap</key>
 		<data>
-		ZnxA5a5u0iEhILZhINRDn+BCAdg=
+		FLa/T5eYZxQHxF3KVHco6gKxcBM=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		WX41oXqFzitZUGzu2d529j41Jn8=
+		z/Ze4b5CTYi/hJATUL6xDK+ozuo=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
 		<data>
-		0g6vGEvhJhfUNuZQnW79smBZNCY=
+		wKxRnBEYLyJq1AGRfDFGa9atAwQ=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Info.plist</key>
 		<data>
-		5dtk4V23N70EFUkX0abL/ztrUqM=
+		gf53QXBAtmxUQYuJd7usVI/MDYs=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -414,7 +410,7 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/Info.plist</key>
 		<data>
-		rF3UJ86N4NAANndopbBLru996Xs=
+		kmiUeDWd57hoZZYG7GSMvfTHC20=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -791,11 +787,11 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Assets.car</key>
 		<data>
-		POiQQZKPVGqwzSK2SdC/3Vz1lBI=
+		GRJtjTQWB5N61BIwLFFLZh8/ExA=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Info.plist</key>
 		<data>
-		gWyx6HK2iW+O/Wib1zQAGcECEF4=
+		aV2iALezNrrcVYRRDhgNduMaqZ8=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -1185,7 +1181,7 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/Info.plist</key>
 		<data>
-		V5OnI6/43LrSlL1lK5BsteSBKOU=
+		8k4uyY9xpe34rVolirZv3t7B1GM=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
@@ -1567,11 +1563,11 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		EzpBHAbDiElyCEhZoPiUiMGXnXc=
+		j0mpAxlwrFWdaNiSBN3XuQFJi1k=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Info.plist</key>
 		<data>
-		IztD70/O7QshC4asXWHefP1Cegw=
+		Zb9wgre+7Wv1UrlGillV9ipEmtc=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/au_becs_bsb.json</key>
 		<data>
@@ -1957,11 +1953,11 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Assets.car</key>
 		<data>
-		E9waPoAemIIKzUvt3MStkFLtL5U=
+		N6Lya5SeCfbzpB/Z9EGS0M1yN9E=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Info.plist</key>
 		<data>
-		y5Q9xSkaW83c5oO3DoV/H2+6lWM=
+		4H273r8T1jYfTXCObwuUhVFrUuI=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/au_becs_bsb.json</key>
 		<data>
@@ -2342,7 +2338,7 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
-		0CYhKCz5ZUaZznbfhNSXZv6osrs=
+		NuTXGczFC6GM+MwFFNdDO9vJsgg=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -2353,13 +2349,25 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		NSYR2q4aQCPK3t3dyOImaBIoGsI=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<data>
+		flOOKGum3+iHxIbr7it/DhnbIJY=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<data>
+		Wied77zsMAr4L1gH6WxrY5k4Z0Q=
+		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<data>
-		J2dqEiB76rG/Y9pxZfSe6xWBD9Q=
+		KFUXLGcyLxdtboAyrtMlpDsHEPU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Info.plist</key>
 		<data>
-		YSjxiAdrLxccZs/6WG9YFWYhsms=
+		nNWdnxhp1I60u/vYyq846w5Gp2o=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -2367,15 +2375,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		lMv3sfx90jN5aa6iHA9Dft64BYg=
+		gKDX6g/HHH8mwzO7hh7d7iy2eYA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		BAXJaqaxhdlLz8B+9J1AA4ShZ5o=
+		MoJRLhA0HpK1Fcvo7kKuVJPmidA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		lMv3sfx90jN5aa6iHA9Dft64BYg=
+		gKDX6g/HHH8mwzO7hh7d7iy2eYA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -2383,31 +2391,31 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		X13E6hAkzzNDNZqiWu6BKKHxRPM=
+		lvtU2jMgQkJ9RiYrxEjoeL0Fg68=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		nRh8saGBZJ7bFJBqBY8bDuaczPY=
+		c1BqqDIqRDJuQGkdSh5rvIb4mSY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		X13E6hAkzzNDNZqiWu6BKKHxRPM=
+		lvtU2jMgQkJ9RiYrxEjoeL0Fg68=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/module.modulemap</key>
 		<data>
-		ZnxA5a5u0iEhILZhINRDn+BCAdg=
+		FLa/T5eYZxQHxF3KVHco6gKxcBM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		AqWXQ8VltLDDZRJD/Wdj1bPw3Yo=
+		VPs+N68OTx3YKjwJFKgt8TseCfc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
 		<data>
-		0g6vGEvhJhfUNuZQnW79smBZNCY=
+		wKxRnBEYLyJq1AGRfDFGa9atAwQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Info.plist</key>
 		<data>
-		pYawRustOtGbvXaLP5w34Xug1OE=
+		A4lAaeQzR0XdhIDYGLXPemhGY7k=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -2775,7 +2783,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/Info.plist</key>
 		<data>
-		phguDenRHmTv/u92mYh4HJW/d/Y=
+		VhWrxvv6kwz5P3tTYUNnv9w9Dj4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -3152,11 +3160,11 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Assets.car</key>
 		<data>
-		POiQQZKPVGqwzSK2SdC/3Vz1lBI=
+		GRJtjTQWB5N61BIwLFFLZh8/ExA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Info.plist</key>
 		<data>
-		US2ICJZKRhjZUeITKARtYz8HfDg=
+		HaV5eZb/CiQgmBr4JWRDEcH+uzE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -3546,7 +3554,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/Info.plist</key>
 		<data>
-		TGENmNZvSQN79SYWMqpIVWVRvJE=
+		1UE88iMvJnRXRBHSjQ11Ogtzszw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
@@ -3928,11 +3936,11 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		/dBUIndmexw8RLWKZWwzuwFwLRo=
+		j0mpAxlwrFWdaNiSBN3XuQFJi1k=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Info.plist</key>
 		<data>
-		fWe4q4YNsNADBmUf+1WO1FNzth8=
+		mcSQV4gw038eaM2bwgB6AXn+qb8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/au_becs_bsb.json</key>
 		<data>
@@ -4318,11 +4326,11 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Assets.car</key>
 		<data>
-		5CDDctvtVyFMf2g3q9sPNpNF9G8=
+		NJ1A3OeQzBDBpRgU6wGEAeCYiFM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Info.plist</key>
 		<data>
-		jz+vOir1j6FTAHNKYfLLuON8Kh8=
+		zXnDyLqt2z/PvFzPO3oSHn1TzSA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/au_becs_bsb.json</key>
 		<data>
@@ -4703,7 +4711,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
-		yy0ziy5Y5K6NOqPejsIy6FjzOs4=
+		OtM1UMJibhEmXdRXkV/QcBmdXcM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -4714,48 +4722,41 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		NSYR2q4aQCPK3t3dyOImaBIoGsI=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<data>
+		vmPAhcC5dNoNUBkCYdceEYcgY7A=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<data>
+		ulbrxXdX2gyNWAqczjXCXkhhV0g=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyStripeAPM.yml</key>
+		<data>
+		YJWmPVdgKNHXZkzXF1OEiU6QB38=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			NDX2AVb1wpjZKZjeqbY8J3FQsew=
-			</data>
-			<key>hash2</key>
-			<data>
-			2fOb5bs7rjpLv3OJGMGNZ2jbDwkbds/h+KCk+LWD540=
-			</data>
-		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			N54u5IEelK83QUZs6S3ygp/6Ets=
-			</data>
 			<key>hash2</key>
 			<data>
-			cWjVSEI7z76FjrXOVCLuWW5QYPGHVj/Cql8yko0p1IY=
+			u29PoD/bDCKTzoiVr8Q6hIA4+2GP9V3sI70E0QXQLsg=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IOfuMZJqAlitp2qGyjFnZneUoYQ=
-			</data>
 			<key>hash2</key>
 			<data>
-			0WTp74X6e49SARjMOLRDU2sze+XESX69+a1qge7Swzo=
+			9W2PR0T5DCdu/wJD+mcPw7yjwqPBp3BdcnIg5Rbt9MU=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gcwBsH4BgyFY4sVtNt+/xOKS3vY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Qnesa0n4URGWAopawg9bGx36dUwkYV00BoCJ8LFzlyg=
@@ -4763,87 +4764,55 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xmbd6FWvoolNlUNhFqe49OXt9hs=
-			</data>
 			<key>hash2</key>
 			<data>
-			Q/mGHYeSyyr7PQ+If7R27ZI2NqbndC/k3XSCDXtRRAA=
+			qa2JK1pNwqpxDamPCFlS9MNwh9HoV9FeGg6jdkoYSJk=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QGAFtd2I3hsO3BNI/5VslRIva/o=
-			</data>
 			<key>hash2</key>
 			<data>
-			9z5gbCUeEMHMQcjNEm6h7NRqt9Lma6KF4Be6NF/JQ/E=
+			ldFjxAMEPLp2DFtFFSLdF0s3X2EM7oOvfBAGflQNSTo=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xmbd6FWvoolNlUNhFqe49OXt9hs=
-			</data>
 			<key>hash2</key>
 			<data>
-			Q/mGHYeSyyr7PQ+If7R27ZI2NqbndC/k3XSCDXtRRAA=
+			qa2JK1pNwqpxDamPCFlS9MNwh9HoV9FeGg6jdkoYSJk=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZnxA5a5u0iEhILZhINRDn+BCAdg=
-			</data>
 			<key>hash2</key>
 			<data>
-			+XdwqTs6ySO3ljl+MiChtRms712W0fi8O8HJdDr30f4=
+			FN4Mzabdw1Lbd8RHFIHkrrPLMYnvEamktnNCGC5hOJU=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			WX41oXqFzitZUGzu2d529j41Jn8=
-			</data>
 			<key>hash2</key>
 			<data>
-			ZSqqWuGuDCMT673ujxeGGsA7fkNBAeqBgy8X6Ka7RKY=
+			4hJ8slrCkD2j9mss28acjmD0IilzK10YkQNE7vMiHjU=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0g6vGEvhJhfUNuZQnW79smBZNCY=
-			</data>
 			<key>hash2</key>
 			<data>
-			OHAn5+u3k9189rNffnCnPen809P6XqsF3kPEDDKT9ec=
+			hrqtiErkXbtbAXU8NS3aDUd7dmXriIqcsW9awc5wL8w=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5dtk4V23N70EFUkX0abL/ztrUqM=
-			</data>
 			<key>hash2</key>
 			<data>
-			7nE8uCIvu5YTv+5H8PRczfp8WsajbRg871ikNiEQ8KA=
+			kFmA5YyqTp8P25EJthYgA7M8xrgkUeVejiNLEPTKwfg=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/jNTxKfZ7aaj4jYeI/TqFjNzuQU=
-			</data>
 			<key>hash2</key>
 			<data>
 			Ww5JyUk34o+Hs3mxlBEfW8SMVpmbF4vk9sRZKRbet4E=
@@ -4851,10 +4820,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -4864,10 +4829,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -4877,10 +4838,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -4890,10 +4847,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9mEe8FaTUoaP8LM7ze4J1Wp5UTE=
-			</data>
 			<key>hash2</key>
 			<data>
 			0azItOHsw8WKmU3tapCKgpsbuBYcFRdAPi9nYe9ur9w=
@@ -4903,10 +4856,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			f33/KLIliR7uGxgNQBqcD+UIwRc=
-			</data>
 			<key>hash2</key>
 			<data>
 			hPxOV2QQfg/R1clBK3jBjqY+3xQphOCfIEJ4b7HVdUg=
@@ -4916,10 +4865,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -4929,10 +4874,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hKEvAbNeQ9jlArjRP6emt0feAnA=
-			</data>
 			<key>hash2</key>
 			<data>
 			rHrpAYKrCfaEENqw8DBdCYnQ8BaXRcbIED68cl/wSTA=
@@ -4942,10 +4883,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -4955,10 +4892,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			D8fOi3rrlE2nkNGqS0MeM02g0M0=
-			</data>
 			<key>hash2</key>
 			<data>
 			G7KzJc/T2k35X6kBE/OOULHhw/1A33AgChAwsfuYvr4=
@@ -4968,10 +4901,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			l7Z/iY/IlIO7Zi+2gs9l6KiDVTY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Dxz9RFcOEJWpu41XcWWMi1MQiOsLjP15qUnHycuqlI4=
@@ -4981,10 +4910,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -4994,10 +4919,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			a29Vark3D2sBCSaobLGe2nsS/5o=
-			</data>
 			<key>hash2</key>
 			<data>
 			W7QZktoHstMLQwbshN2NDoK3/s9GAWjiIPEwfg0QrKM=
@@ -5007,10 +4928,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5020,10 +4937,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GRY9I6ZAIxdGYXsn6LlXnYhMKuE=
-			</data>
 			<key>hash2</key>
 			<data>
 			zoS/wgYnT3D+/rGAC775KQcgURCGyKQXKfyE5zX6fdI=
@@ -5033,10 +4946,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			afhdqdok4AqATZa/byTR2sFBcWI=
-			</data>
 			<key>hash2</key>
 			<data>
 			OlRbdDQ5Fk3domn3zhqPj4S/qNm6FbJM33ua7k4QbUM=
@@ -5046,10 +4955,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5059,10 +4964,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BzyypbuORLm1RRGCkspMvLkrRCk=
-			</data>
 			<key>hash2</key>
 			<data>
 			jyhfguaSa3eGFbRwb5pO0d1RylWvGubLja7V8MdW9bs=
@@ -5072,10 +4973,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5085,10 +4982,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LIMFxF7+E3OYiYK2dqtJitndnxs=
-			</data>
 			<key>hash2</key>
 			<data>
 			lLi/saiGmFA6In5Hzk+a7Lk2TOOeOJNSR7NZYVWMqac=
@@ -5098,10 +4991,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2B417hSOrlwnrfjymov8hRFM7Uk=
-			</data>
 			<key>hash2</key>
 			<data>
 			NfTOXxmDesL8/ndnTyO4u4LIUNSMUsHM/UpbS6v+9z0=
@@ -5111,10 +5000,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VPnyELaODmBDDtaoyqKh8EWkoIs=
-			</data>
 			<key>hash2</key>
 			<data>
 			sKQ298m3w1HEetUhIvbwJZMiKE099f3G1x5F6ZSYzE8=
@@ -5124,10 +5009,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5137,10 +5018,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5150,10 +5027,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5163,10 +5036,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+pTTUmJwgnNugXnoDuo/9fMd3n0=
-			</data>
 			<key>hash2</key>
 			<data>
 			I98DDiW93g8dag3IX+OCFrPp+0yv3rADAZ0Y9lcG4lI=
@@ -5176,10 +5045,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			P7E+i4TJrnaSbyJDrpglVYsIwwg=
-			</data>
 			<key>hash2</key>
 			<data>
 			ZrbmACdnL7PmDN/SbzoEkSq+WCyBWPAxH9LCADFJwJc=
@@ -5189,10 +5054,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1KJYhItd4xa97gTLcL/MGhN9GwM=
-			</data>
 			<key>hash2</key>
 			<data>
 			PhsTcDiso+mYXbNxe/NnYbBSKaCosOdb1EG0X8YLK8s=
@@ -5202,10 +5063,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5215,10 +5072,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			uMh8C5Ed6hyRQ+qjnDIC1hh2ZoQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			AgkkT6Y/6U3F3ZIJxj8sUnZ8Z38Hqc5tvGdQ8zEh+/M=
@@ -5228,10 +5081,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			m2EpIlQubAmTwlH1R5LPlj32/S8=
-			</data>
 			<key>hash2</key>
 			<data>
 			FH6XjmPX1qW2FiJvPIvDlNdDGrNq9bIpCpkqPXBoIKA=
@@ -5241,10 +5090,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5254,10 +5099,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			8JpVQD04ePeaiNvR0WgEHsr4Drg=
-			</data>
 			<key>hash2</key>
 			<data>
 			ItHALuwMqFJ6lhv1k6IVNK8kPDJfO48dko7ODjQOw2Q=
@@ -5267,10 +5108,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5280,10 +5117,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5293,10 +5126,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ehJqgQMrB6P6B5D1r0zURpqmuk0=
-			</data>
 			<key>hash2</key>
 			<data>
 			7FS+s/Z61Wrq8nhLta4MKNLhT0XNu8Mj3+4sX71tT94=
@@ -5306,10 +5135,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Kmh7zjhUEwEgKeswmcNZurfFE3M=
-			</data>
 			<key>hash2</key>
 			<data>
 			K6GFhEVXNAEfdeBiOsWMyC+nL+IKVCm9hsRoHdcNj/E=
@@ -5319,10 +5144,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -5332,10 +5153,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			POH3w6m6F6plV1B9aXK1190uKNg=
-			</data>
 			<key>hash2</key>
 			<data>
 			2EA52et8I3KyZRpaOT5PDL0aDuCP+bB/zAoa0uPt7Xc=
@@ -5345,10 +5162,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5okRyVxfChpH8unvTc6oTX6NoQc=
-			</data>
 			<key>hash2</key>
 			<data>
 			+kdmv9d/kzoVMhU1yfZ5ly4jgvqV0rG3mn+lOwnXzuU=
@@ -5358,10 +5171,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			M1cYKTrVDyCYNdna5iZ9y0ZOzbE=
-			</data>
 			<key>hash2</key>
 			<data>
 			rPC22JescQnH/kC36UnVUolOS41oXWqoRZrYvQyrbPo=
@@ -5371,21 +5180,13 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			rF3UJ86N4NAANndopbBLru996Xs=
-			</data>
 			<key>hash2</key>
 			<data>
-			jj+IWK0fM+3aZ9xj/d6ukPNuAlcJoouTAMG5yCmuwe8=
+			N50xd55JeymWwqEjO1RIspqXNMH4P8yceRHB/S8BzPo=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Jl4rnqNCtAsimxvKMUtFXPb+LnY=
-			</data>
 			<key>hash2</key>
 			<data>
 			7EzdlvW9iweswAoXvkRzuYpuBhU3tcUMbqCPX9aoIgY=
@@ -5393,10 +5194,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4lxzp1hl5oGRUHqLjPcynVbfUR8=
-			</data>
 			<key>hash2</key>
 			<data>
 			ISxbdAQipue1zE083tTSm42GDqU5KqBsvYHpOL1smlY=
@@ -5406,10 +5203,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BKMzDSb+vJTtnDvVprifPigCgKg=
-			</data>
 			<key>hash2</key>
 			<data>
 			BC6dISzjvCnYe1BSp9OXcsuxvPck7h0TgnA0ND7DKkk=
@@ -5419,10 +5212,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2KDGFsgIDwm4T7Xr+fv5n0YVH2w=
-			</data>
 			<key>hash2</key>
 			<data>
 			BT5zNOql1bdnn8063+sPMOFynIh3OqI4T/FXr2Qrh6E=
@@ -5432,10 +5221,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Ch6ZT+DX7aIXEIqoB63YbRLY80s=
-			</data>
 			<key>hash2</key>
 			<data>
 			F+fW63GxxeoF+sf8Xg0MsPwf/s+zPzUl7y5XAC2IkDs=
@@ -5445,10 +5230,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Fr0EOtRyfVpMchLOtIsGTekc7fY=
-			</data>
 			<key>hash2</key>
 			<data>
 			PKavWeYgYcjl0ls3Cxj+fbyPNSlem/im1xzrTc77CMQ=
@@ -5458,10 +5239,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			a+4iqDg5AVIzpPMDNMDW/Z8c31g=
-			</data>
 			<key>hash2</key>
 			<data>
 			r7wZfDHgmCzeWVzHkBBdBRBHeEzIb41vT+TFC6g1zD0=
@@ -5471,10 +5248,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Ntjf3xCG9CbwvDJ/oMuHrI9hx2o=
-			</data>
 			<key>hash2</key>
 			<data>
 			cTj0OQEFazqLCyzup3nodGiE7kSuZG3ReXkpIpep9F0=
@@ -5484,10 +5257,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZJcjZZfgIOVold7tPgzUA+7dGhQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			/WIR1ImeBuhGTM5Plsj2TLz4gxj5Q8SbubFbxBHF6p0=
@@ -5497,10 +5266,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1oRGwiybSQn2OJfUJgunrsGofD0=
-			</data>
 			<key>hash2</key>
 			<data>
 			VETgppdSNxHy497WBAw1YPxm4/VHPD9+n8KjCwYmEDw=
@@ -5510,10 +5275,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2OgYc1s4LwWC23stEpQtZOJivhY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Iu16wDiZ7n0p2iP8CuUJ0X+DAJ9yNINy099uHFKulVE=
@@ -5523,10 +5284,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Hv7H+WQF6k4JIA2FGK/Lky3JxhQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			Q/Skg4mAk5UWIABUi/36UWbwAG9OSlAFeta2AS+3MEo=
@@ -5536,10 +5293,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QKgXb/BpT4FrxbgoYBF1Yixl2OU=
-			</data>
 			<key>hash2</key>
 			<data>
 			3gJaFcWBgx8cDVA4QqiAJPuRHGCedy62LmXMpsKNRUY=
@@ -5549,10 +5302,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yO0TIEPQKKdcbnXIMAnmT/jdCF8=
-			</data>
 			<key>hash2</key>
 			<data>
 			JqReYMw/8K8fEQAhFDL0RWz47IKXPcg7+hK81hEXhGM=
@@ -5562,10 +5311,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			uz42VnqSc4KrOoEyDzDHTUbOSmI=
-			</data>
 			<key>hash2</key>
 			<data>
 			7out0rzB6V2b1prVYYIXoBCXuMfGG/WikKWO0qAUzYo=
@@ -5575,10 +5320,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KCDWgOKj23Kax1tfEkkmHKxtN4A=
-			</data>
 			<key>hash2</key>
 			<data>
 			AH340NtZqfykRqgo2FP3mQ1/S8a5/MSNIHNxHJpZEi0=
@@ -5588,10 +5329,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5yby6d64nHLVajINhukhvSAoZZY=
-			</data>
 			<key>hash2</key>
 			<data>
 			28ATiGMQAzQtg0xLlDlNNw8EASkYlNvMvgGfCAKtwAc=
@@ -5601,10 +5338,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ORjp1M/HSoI6/EZbaaGaBImrplQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			eINEQjQ+FaFaPwANzBmWsPncpyHDms8KoRA4mm0P8p8=
@@ -5614,10 +5347,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IMllNTxDPZTRbw81XlYgzUwqBAM=
-			</data>
 			<key>hash2</key>
 			<data>
 			dFuRzkGKcI0Vq6fHPLdFBOHElS+3SrZtWWOzKB3zgns=
@@ -5627,10 +5356,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ASJgu4acCFKC1a7zRd70d4LiI1U=
-			</data>
 			<key>hash2</key>
 			<data>
 			25ZGZVbG9VcrCITvQ9x9FwYXMFN6b4NYrLhF8bX88TM=
@@ -5640,10 +5365,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			JdL9hzIW8yOEpLd4mKSJQZiSVrM=
-			</data>
 			<key>hash2</key>
 			<data>
 			OFwKEykjrJcXH2gOYNyZFMfMSEHRClvDuzKWYIsktJc=
@@ -5653,10 +5374,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Q+mu/9w3bug9JN5X6CaF/mNqPYk=
-			</data>
 			<key>hash2</key>
 			<data>
 			CHcDSY8+ufpUJgdf0ayCuHAm+mzzXZOhxBB50Elrmcw=
@@ -5666,10 +5383,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/Bo8Tnapl5eLEmCcju4Tuave45U=
-			</data>
 			<key>hash2</key>
 			<data>
 			XXrgsD5coOdkzHiwdnlm5N+qA59qIa2xLWPdnA2Uqpk=
@@ -5679,10 +5392,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			E0HIyciHsDgTEm1yKLeS0v0uhhc=
-			</data>
 			<key>hash2</key>
 			<data>
 			iUFEbHEQLvjNkKQymKse4vI4Z5kJCIjqtMEyZRstCGI=
@@ -5692,10 +5401,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1KXJuCn98PR2bvhFHRkOTrEsK7Q=
-			</data>
 			<key>hash2</key>
 			<data>
 			4J87/uoV8dl3tnrUfy5Df5gfMpKs8CNrlQ1RUNx5arA=
@@ -5705,10 +5410,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ld92h9uxADEl26bGloVNsrm939s=
-			</data>
 			<key>hash2</key>
 			<data>
 			4kMz6QdDqDQwFDW1bdlFdiH+XTR5Tc5ryO9bgEiqbG8=
@@ -5718,10 +5419,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6PlEJp9JHy+rLOqWO5aLESQwkNY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Dl0UMUc4H4StDn4V341ZOXEDzCu6mSixRCe4Uk7y2sQ=
@@ -5731,10 +5428,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			PXtWE8ofYifgMJB4Thcy3rf2kz4=
-			</data>
 			<key>hash2</key>
 			<data>
 			VKXETA9aY2dUUrVbx7GH3MlnGR+Gnu1g0DPdTdHY5aE=
@@ -5744,10 +5437,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9pERvJTZH09RgonWy/kHgXFh5j0=
-			</data>
 			<key>hash2</key>
 			<data>
 			q54EE+t0fLE9f9OWS2ejmrG5hChJef4W7VvL8kmO46o=
@@ -5757,10 +5446,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fklCkIQIZZEhUd1z3ZZJMeaLUV4=
-			</data>
 			<key>hash2</key>
 			<data>
 			l4C0p+3/2IVzfHQjq0gn4Dez8DmIzpq/wAVmyijVflM=
@@ -5770,10 +5455,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			RRvd1VXQ38BG53yWnQ3PJRvEWDM=
-			</data>
 			<key>hash2</key>
 			<data>
 			sfEziNQd/w6At94PJxE32Z2j7AFeDvJVE5/NTio7f8g=
@@ -5783,10 +5464,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cPOdLMYKjhTcjBpILj5o5Mp7z3Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			Q3M5uxL0iMXl36SGqIFJh3CHgTK5Ea2pFSBDGmrkFGM=
@@ -5796,10 +5473,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			x/ptGIleXzJ91ofES5xXRF4gXHA=
-			</data>
 			<key>hash2</key>
 			<data>
 			fnkDS0iEfiXlhlBIBwQiebUhLGrE/qIkTBAFcQ+/0n8=
@@ -5809,10 +5482,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			W4/wc7xpnOIJFiEU7w/gQoLPEOA=
-			</data>
 			<key>hash2</key>
 			<data>
 			SbMjAjlo8W1t7F1MsLOw991Drk8JS6Px+aOhff7JLKA=
@@ -5822,10 +5491,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			wibM5ZpwrPlmPAFizHBu84wLVZw=
-			</data>
 			<key>hash2</key>
 			<data>
 			BNU5gySal8UZkMN4s5/Ih4oOyJ97dzDzJCiBt1Ikxdg=
@@ -5835,10 +5500,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AS1jf0yXfeese9oMAO2sQnZiPSg=
-			</data>
 			<key>hash2</key>
 			<data>
 			v+phtrJxEJDKP2ZNroMZHf7dlNd6vmFJZ1vDJ0kOnYo=
@@ -5848,10 +5509,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Jm2oHQH5Ez7dZ1CSs6cEFCmD0BY=
-			</data>
 			<key>hash2</key>
 			<data>
 			PMmSNSYPqQPCJRXGJKDhqJiEOwZ5f0LOHD/DLWDHylM=
@@ -5861,10 +5518,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			vtMZvDjy416Q8riIwIAvoDbbBv8=
-			</data>
 			<key>hash2</key>
 			<data>
 			Xkcro9DX+7HIDWvNkg4hptEIRc1oVHNjHfmtYE2frDQ=
@@ -5874,10 +5527,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YE5sjiKSlf9VvSX58c8tCKf8iuk=
-			</data>
 			<key>hash2</key>
 			<data>
 			hSS1teEp9iZc42es1ns6G34RUGi/4a3f/2mLcolCcbI=
@@ -5887,10 +5536,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dfU7DCNNKfPI8fldaQqf9HchVpM=
-			</data>
 			<key>hash2</key>
 			<data>
 			4cE28CJ0ZomQBU1AfATCYSKVdhcymmHyWQOsbOJLqC4=
@@ -5900,10 +5545,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OhsiFL2vMbimZdMSOYil2gShmIU=
-			</data>
 			<key>hash2</key>
 			<data>
 			E3WBYZ0+XcVEIRoz+d+HGtINSFm5srDntCe7YlOs4Gg=
@@ -5913,10 +5554,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6/qbjo4E0f4bwwg9iMli2dKerxM=
-			</data>
 			<key>hash2</key>
 			<data>
 			3CeiFsGhlyB7D3UTqYHO1PoIJZ7KQqHkoTRll5Pqjq0=
@@ -5926,32 +5563,20 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			POiQQZKPVGqwzSK2SdC/3Vz1lBI=
-			</data>
 			<key>hash2</key>
 			<data>
-			fbnuY85LxGUB5NexDTtwXRZkt9R/ngzLOeEy6HhPW38=
+			4nk9GnL3BW6NAvjVvUYhdv8nIxksvjEcwBuojHmRvtk=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gWyx6HK2iW+O/Wib1zQAGcECEF4=
-			</data>
 			<key>hash2</key>
 			<data>
-			DIPSFSbAfuI38vhg0tZxBnF6lSq2h7UuvC17lOHAzyw=
+			Epck6wMC5I9+VIIti6meZvqvfOmsVsvpR30iQ9c7Ow0=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KVQcLXIg958z1kiZmo8ZmmCYxZs=
-			</data>
 			<key>hash2</key>
 			<data>
 			YjIr0uoZ9gU21STiXaYAZXIyfHROzQHuPdCFo6Dxgn0=
@@ -5959,10 +5584,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zTbH04mADlXs4e5YfR+m3uuNW6s=
-			</data>
 			<key>hash2</key>
 			<data>
 			9X2SXBfAZ89JMwc0ozxSjer9VCRfy2W0GEDXAnkpJdU=
@@ -5972,10 +5593,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GcHW6AswiATSJgedMmoEVSgOnw8=
-			</data>
 			<key>hash2</key>
 			<data>
 			zhnZSh4iCLSA9FawKdPP2W24fOC/QFh1CGazjT9lK1Y=
@@ -5985,10 +5602,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yJjP8/7ApRu9hog5MIxt+SDXXtc=
-			</data>
 			<key>hash2</key>
 			<data>
 			xRD8c2QQolPuDuiNly4N4A4DhCRO/GG9Tg8Embqdn+0=
@@ -5998,10 +5611,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gHzvPUaPTEsPkY74Jnvvg2znKrg=
-			</data>
 			<key>hash2</key>
 			<data>
 			IHUxRKqHf4QLjwK+YP4TBndFZUa+hGXAdrG6H5mVTrU=
@@ -6011,10 +5620,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			c2DhR919lR+QQ7ie2PlI7BkYyw0=
-			</data>
 			<key>hash2</key>
 			<data>
 			utHbGZGB5OHmwrCJTngjQfEaQjdGQQ7Xz5LK8kscDU8=
@@ -6024,10 +5629,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hk0nG/lL6UHDPr8fWp6DXMRQ+QU=
-			</data>
 			<key>hash2</key>
 			<data>
 			sf/2wqygvtiW63zrekPZiscqWWiR0jqL+Auy9281CJE=
@@ -6037,10 +5638,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LTLL8UH6nSb2IzaS6xiRVhp5qDQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			m4FxyRi1kKC9fXZRjLle20zPJnbUAiDNBkkBh0llsgw=
@@ -6050,10 +5647,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3BueVnP6FbTIcM60qKkInDo6LKA=
-			</data>
 			<key>hash2</key>
 			<data>
 			/CaeOsLwiew0OUA1eJcFbHZV3xlCPHkUYjPm7b1xeTk=
@@ -6063,10 +5656,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			j3UnOj96RBjB37CjnkKo+ddXzkE=
-			</data>
 			<key>hash2</key>
 			<data>
 			ErZhbYuACTsirURjPd4cfiFh7ejgmVFrk+LFv7CtGYM=
@@ -6076,10 +5665,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zJD9bGlVD69HqKF7T++hmd2dtSk=
-			</data>
 			<key>hash2</key>
 			<data>
 			itoPQRV54W99LaBPT7H6NaXJKsM+EZ5ANIpEXy61Ngw=
@@ -6089,10 +5674,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			s7XWEh25HDZrBnP5VsOog6lU4Ic=
-			</data>
 			<key>hash2</key>
 			<data>
 			FMDrzaMXZHl+QCSzoyIUVb2R/pqxwXa5spFojttfWDw=
@@ -6102,10 +5683,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Q9SyNkKsNcGAOHXhOfpVyPOY0dU=
-			</data>
 			<key>hash2</key>
 			<data>
 			cswljBj7YlyPAOL86M56O9C2Hy33eu6vufNWh2M/29Q=
@@ -6115,10 +5692,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hzyWIL5rY0QUHkBgqEmLpS//1Z8=
-			</data>
 			<key>hash2</key>
 			<data>
 			5n//dCyUstNoQMXyNsgVCX6Aywe/UhGyCEfyEmtq9zQ=
@@ -6128,10 +5701,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/form_specs.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KixFm11meBK2VlgOrJv18aLNn2o=
-			</data>
 			<key>hash2</key>
 			<data>
 			U3rmQk4uoLZGY6KKKT87Mq+XRaATeK52oggf07f8EIU=
@@ -6139,10 +5708,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			W0y6h1SjY7kn1fy576h3asB2Q0U=
-			</data>
 			<key>hash2</key>
 			<data>
 			mlxIMxAsLM/KF9cu0VWY2OEVRzeLhfnDJqqwgzfwhgo=
@@ -6152,10 +5717,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			rBeiQooJlYvZIUsHkbFMeSjDTJs=
-			</data>
 			<key>hash2</key>
 			<data>
 			eezlfXHXpWZGIeFsmFKLeeb8c3MENkeyqjbl2fJWmDA=
@@ -6165,10 +5726,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+QRPlmoWqDrCDfRRpjDm7TWjGkw=
-			</data>
 			<key>hash2</key>
 			<data>
 			4Uu+eNHnzWWgigDSWLp+VkLbeNQkz7tSSVtVDeVMgPI=
@@ -6178,10 +5735,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			J8CLixLq2SoPln+l35K/DIIQH9A=
-			</data>
 			<key>hash2</key>
 			<data>
 			lOiIzdCWpY67vTAs9QFn8NiLiqnmxeJ/RXbUTSZd/f4=
@@ -6191,10 +5744,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kJdj9Jw3oyxFZ3ACHMxTx+X3C5s=
-			</data>
 			<key>hash2</key>
 			<data>
 			osvIVZdaeXjgMbJ56ydXFscsCybNh3wzfVBZlpnS9fs=
@@ -6204,10 +5753,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			vmtm5rc8ZzVZQ5C0WOlX9Wamam4=
-			</data>
 			<key>hash2</key>
 			<data>
 			VNi6M71CXiVV+XaRiM4HGaOmdpt1GfF/HFblnCwQ79Y=
@@ -6217,10 +5762,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			wBzLSjRPL9E2peK9Bgun1XcG5iQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			dAgfHfQua3MkB6MbXorybTzy9Nx9uK7cuMIoN/w6u60=
@@ -6230,10 +5771,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ONFPqWrWCLrRmp2dRJSwQl6rALU=
-			</data>
 			<key>hash2</key>
 			<data>
 			vOjKUBhJ+20tv3VWfJ5KYsd9k0Y7q7OLPyOtemeCJko=
@@ -6243,10 +5780,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			g0JIX88ELaNekoEpjcDpEnQF0yI=
-			</data>
 			<key>hash2</key>
 			<data>
 			H7ApU/vRE360YeENJrbDePlEGcKeXuI8aNGgl003c+M=
@@ -6256,10 +5789,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lpHA+Mqf9nPThbgZG9moVci6nYo=
-			</data>
 			<key>hash2</key>
 			<data>
 			NNKsOi92nFxuTo5WdeI5yw8utPtWh3Pe5tWf0OvdUto=
@@ -6269,10 +5798,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			e6WdgWrOEXFte56AcTsgb4B4rXw=
-			</data>
 			<key>hash2</key>
 			<data>
 			fCg008fKJtYjCIZAceDOfXI53vJ4ZObkco+HlPLf3LU=
@@ -6282,10 +5807,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VQwtMjmdbCE22+lzwLiD4VVFr0o=
-			</data>
 			<key>hash2</key>
 			<data>
 			YqDYNebmOxMOVDvVBchpK48uKG6/MnFbvATQO3axVJg=
@@ -6295,10 +5816,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xHWR4E5fHbkRYSeqvT8p+iWkpdI=
-			</data>
 			<key>hash2</key>
 			<data>
 			mOIVjuxRWALTqiXk0Ae/O0B58vAlYNMqWyE0wG5JLc4=
@@ -6308,10 +5825,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			d9EGNBJ4d/eQUKN8HkME2X6hVsw=
-			</data>
 			<key>hash2</key>
 			<data>
 			8csNhZIw/evdAI20fjNwV0KGkqY8bdvp5jqfK+MORbI=
@@ -6321,10 +5834,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			C1e0Q//ASi2UgGerRPWAS/yAhzM=
-			</data>
 			<key>hash2</key>
 			<data>
 			eTaJKeQ20PA7oGa3YXeRlV+f6cFsZ/uJpINz+BsrSM8=
@@ -6334,10 +5843,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UbhBd3RLt2JTU41lXYmXfTPKwI8=
-			</data>
 			<key>hash2</key>
 			<data>
 			ott7H5V0Qa54U1X7hWSTNXDgDB3Mw1UsjMtz6u5DozQ=
@@ -6347,10 +5852,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NGM/ktPlg3raJ0jiwfCzaY6oqg4=
-			</data>
 			<key>hash2</key>
 			<data>
 			lot1o5vrqxWaOUQoXf+iWRC1S+7hV/68xXVf1yKFil0=
@@ -6360,10 +5861,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			q9ZwvHVsde3QPDESYOp/xDcAa1w=
-			</data>
 			<key>hash2</key>
 			<data>
 			irBonpkfIOpuNYFjeDCYOcEw9JnNl+igwGUY1ztk/18=
@@ -6373,10 +5870,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			z8T+cc+yn0Nhh5YXq2/6x/00IYc=
-			</data>
 			<key>hash2</key>
 			<data>
 			biwI1Us+8vswDl4ArMbPZmLsY7WStMakRPIsTquCIqk=
@@ -6386,10 +5879,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LYFL2ObtCx0eeJLx459aP6OtdJI=
-			</data>
 			<key>hash2</key>
 			<data>
 			Wnf5YzV1uvCHr3Ql5mPOKuFeumXH0S+eApvbSh9qUMM=
@@ -6399,10 +5888,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cu+zG0Kw6NS92vlPaTPGgp0BvS0=
-			</data>
 			<key>hash2</key>
 			<data>
 			aCepmP9enBjNVvWIQhxXkPzovOVKG4EOxFzP0wG4ksk=
@@ -6412,10 +5897,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YMcdMekz2fDWWlw8OoytFyBvFC4=
-			</data>
 			<key>hash2</key>
 			<data>
 			aL6RmKoJ7zxH3dkp1ilbg6wWm0x0Sl3Ok/rJ9PT17nw=
@@ -6425,10 +5906,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tJcz9RlmxRO04ev83IRnjt+dsNw=
-			</data>
 			<key>hash2</key>
 			<data>
 			ftYP7ye449Dc7e2qo4h21w98RPiHq3gGYHKrYFuNyGI=
@@ -6438,10 +5915,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -6451,10 +5924,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kI//q5adHhfnsxLLgCeSRW479S0=
-			</data>
 			<key>hash2</key>
 			<data>
 			5mQ54tKNLxGiyox5n/CL+e3IqD4mdPkC7CodfLSCcSY=
@@ -6464,10 +5933,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AKhkXxTAxsB+oEGHCLlEDHKggyw=
-			</data>
 			<key>hash2</key>
 			<data>
 			Q1UeiHC9sg47/UbK/5HvsP2BgJqkuBaOsJUEIfpIwAQ=
@@ -6477,10 +5942,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iE1P8z7Rms4XqtyH7TGg9YmWxds=
-			</data>
 			<key>hash2</key>
 			<data>
 			xDYLApNJKe2GtVSYRZhQg4H9Tk3ZjAyHClyJDfJN1Z8=
@@ -6490,10 +5951,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YJhuZD7kPrBreYSj/64+fk4+o5I=
-			</data>
 			<key>hash2</key>
 			<data>
 			HMmhTPVnWoL41KVTLBY0mtH9C/pKUFYSCzagnzzz078=
@@ -6503,10 +5960,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			76+mtuS2rvdOh+0sw3060ymVF5I=
-			</data>
 			<key>hash2</key>
 			<data>
 			ry3poGvwiDS9Dbwk2Xt8YKA9TG4yTtGRtLLd3FmYB10=
@@ -6516,21 +5969,13 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			V5OnI6/43LrSlL1lK5BsteSBKOU=
-			</data>
 			<key>hash2</key>
 			<data>
-			0B5aiy/1CToMMSHr43D5Y4+iHjyH65rJDHYD9OV4nB4=
+			qs98hy4eMLfdIrQyMCGys8HMDli7G3SADqhm+XnsPUo=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Tw8iM1cvO0zEvBct9Ol0jkglBT0=
-			</data>
 			<key>hash2</key>
 			<data>
 			xwsm15IcbvdzMq8W3eaKl8EVZ1tL07+Air+vD+BMptM=
@@ -6540,10 +5985,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GWt8Z9Gq75ozrSmR4+ztKGKOvNI=
-			</data>
 			<key>hash2</key>
 			<data>
 			thDy847R+n7/zPDUEpw5fX0D8FrK6rpDdTov2TgFp0I=
@@ -6553,10 +5994,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			q0Bw5XjLyuHuok3eJA9u4X21DCo=
-			</data>
 			<key>hash2</key>
 			<data>
 			s15Cy137VkXaOLHSlms4MzUvbMN90RrvCcO69WoFBMo=
@@ -6566,10 +6003,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tWS74FILkugAjEhByyQQjbzPtK0=
-			</data>
 			<key>hash2</key>
 			<data>
 			Ud4WvbaHhNZJsL2rJk2wuXiRYQ47+xpSeojFb6LbuSc=
@@ -6579,10 +6012,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QKAOvFF/BDmVXt4sP2vJ9Jw6fsI=
-			</data>
 			<key>hash2</key>
 			<data>
 			qQ/e4BBKXl/vrW7JTrMr3WepV4gFy9VZkGHcktfWQJ4=
@@ -6592,10 +6021,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/2ArAqkzauEw372dr/XpaZ6lrYk=
-			</data>
 			<key>hash2</key>
 			<data>
 			tIMf3qaYfu7ODrRP0YhNpETd6OKBU4W/g6fQBv79Mg8=
@@ -6605,10 +6030,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			U4uD+d9EOeYrr6XrZnpRFpyqXs8=
-			</data>
 			<key>hash2</key>
 			<data>
 			SOEv5popv9aVdumNRYT6SXoxV8J/7zpnTqKT0h+5tpE=
@@ -6618,10 +6039,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QKN7eh03w2E4cnu1A0VnYigLRkQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			KNZJpMNCptHAx2JWnz4My/1ixsUtDPeljzjjXP2zUpY=
@@ -6631,10 +6048,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aZEbEFOBotOuWI9DlZqG6UYDl9Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			OGdaITynVQiE3WkQCkbCFNn2nA0pfMM7WWwF/z91i44=
@@ -6644,10 +6057,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7Tvcli2P0nxxglZcqm2lQiVwyAU=
-			</data>
 			<key>hash2</key>
 			<data>
 			pgInLvOqUzplaEqJZbGZE5AegFTWY1x336K8d77lgk4=
@@ -6657,10 +6066,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AkW/+4VzQU7wBjyOAN3A/AQr9Tg=
-			</data>
 			<key>hash2</key>
 			<data>
 			7M4IDBuXBfar4S4FDRgHBiRTtMBkS7kH9cYBJUKepWo=
@@ -6670,10 +6075,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			F8eV7Vq1+LYQBPpDnnEalnJfGsk=
-			</data>
 			<key>hash2</key>
 			<data>
 			UB3HsB/XnL5GNhOadw/9p5PI1GPvdc3vBHAwKvBGwlg=
@@ -6683,10 +6084,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			EtDVlCM9hhVGknrk4oT3FvZEa28=
-			</data>
 			<key>hash2</key>
 			<data>
 			Tg8KFg/o/BUP0sCb1Kx3UUQfwXFYz+H+xYNvqzPr69g=
@@ -6696,10 +6093,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			t3RywMeBYyyN4Mkf9dKumhJTW0I=
-			</data>
 			<key>hash2</key>
 			<data>
 			GaC/4PzXcw2M19XjJaLXubNa0Bk7Dam1jvkG55klWuc=
@@ -6709,10 +6102,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2PelmfGxuH9Y6znk7bvuH+PB5xc=
-			</data>
 			<key>hash2</key>
 			<data>
 			00qs3HH5byB/CdfMbDv719pqL8obipvq0L80+JqdscY=
@@ -6722,10 +6111,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			CQbqZsl7VAYj0rEscDK8lFl5DZk=
-			</data>
 			<key>hash2</key>
 			<data>
 			iVLKez8peTrO6ELTJTfbQ26bhvejUe2hdVHahGJwDP4=
@@ -6735,10 +6120,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MFoTzdX14HKktIG9PztwTxs+yDg=
-			</data>
 			<key>hash2</key>
 			<data>
 			j4vodwUBlRRCbY/kyq74wzobFp8LtBfpvMpEXHPl3ZI=
@@ -6748,10 +6129,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			jSu/lVjVK1/EkLWdkSicM6T805g=
-			</data>
 			<key>hash2</key>
 			<data>
 			fP4GYQQepPsrFucpOJ8uDBtFjib1FIpFdKjEHv6oKGk=
@@ -6761,10 +6138,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BY1Hfb0lbZr4aHG2w6aJ5+kTo+k=
-			</data>
 			<key>hash2</key>
 			<data>
 			RF19Kr5SZ8wbiLsB2T3QPfl12jWzS+eWai7xcFPHnBk=
@@ -6774,10 +6147,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			M3+Zdsy+fzYOMkNtG9r91UE4+kQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			g5ACyhF6SF0J/phoBKhMTKYxaKGppAIdcx0D4nETBTM=
@@ -6787,10 +6156,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			m/2T+OnyRajDkbt7Q6jQW2tNT5s=
-			</data>
 			<key>hash2</key>
 			<data>
 			/SEo/BWNalk80j/rGvndD7hubk8mEnZgpF922KuvNyk=
@@ -6800,10 +6165,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QlKMBUyxPwpCtnrPz4fUvIounDI=
-			</data>
 			<key>hash2</key>
 			<data>
 			svneCiG9fG+TJ1wfP1bvqUE1lwZ70I5erruAYT5OKtQ=
@@ -6813,10 +6174,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QPJ+2aBhSM59nRvJ2dO2AJwJZeo=
-			</data>
 			<key>hash2</key>
 			<data>
 			DDZXEayq2iUP9uZhk7CXeIGGiXu2Kkz/2ymanPJm7MY=
@@ -6826,10 +6183,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			oUzz4OKlrfybJRtc0/ydnKZvK7o=
-			</data>
 			<key>hash2</key>
 			<data>
 			fBUP/0oNJu99+gjXIvSP5LkDgMg5wJ+l8SmoDHR7tco=
@@ -6839,10 +6192,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			esV04N35u1jRGfpUG+USHxhStJ4=
-			</data>
 			<key>hash2</key>
 			<data>
 			mh8npNfHhuTliw9D1c4E+7MJyp3/djxXC1vML6/EBu4=
@@ -6852,10 +6201,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LoGvYxQ4lWjdb75ym2eHmh5PEz8=
-			</data>
 			<key>hash2</key>
 			<data>
 			Fy2k8XTjj+/DhPDrM/+100RAmrrLG6w2bJRFJcRCY14=
@@ -6865,10 +6210,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ooiYPd2TI/WXCPs5jMCu/86QZtY=
-			</data>
 			<key>hash2</key>
 			<data>
 			GtagGsOpHe8jEibP41n4kwunx/Kp8UBhHronKBUHzf8=
@@ -6878,10 +6219,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			28V4TQgqcRHh+WuGz6FnLQE3Uxc=
-			</data>
 			<key>hash2</key>
 			<data>
 			9xZw5G1WfOG5ZSt6TGZTOy7PQNLxPTuqcySvulgvdMk=
@@ -6891,10 +6228,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MJZBtEMqcIJ+12t+TdzdSREvLAA=
-			</data>
 			<key>hash2</key>
 			<data>
 			7smuVcMPX5dZW0i/F3NuBWMCIfn70Sa/Hep/MRYV5C8=
@@ -6904,10 +6237,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9zNMliufOB1XM5uF7j6/Q93tENA=
-			</data>
 			<key>hash2</key>
 			<data>
 			LOWp1fwfhjyuEobRfFKDTlyp6efjSGtlkvL5OBBTriI=
@@ -6917,10 +6246,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2Uz7tzGu3sSQjNyGMYworpJ09PY=
-			</data>
 			<key>hash2</key>
 			<data>
 			aoWSMxHW7x6wFDknbjKISJZKhaEhStmRSuJsw3/FbEQ=
@@ -6930,10 +6255,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			q2Nq1Bn9IZ4i2iiN4bvD1+9Vng0=
-			</data>
 			<key>hash2</key>
 			<data>
 			EKKGJzCcm9K/tMbrApCrsqK+rTy5hWSlRtKdLjnKDro=
@@ -6943,10 +6264,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			nyVbPaz9TlL6J2FRdWDfSDilfHw=
-			</data>
 			<key>hash2</key>
 			<data>
 			FEHBl9qUqOarT2d+8EJ8gOGdze6vnCzQ4Oz97QZ378E=
@@ -6956,10 +6273,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Np5IphcxOTJl1EBOg2rs5xjXqRE=
-			</data>
 			<key>hash2</key>
 			<data>
 			/kQvwReGW+17JRUWq2hB0jGW0RR85EISaNE8k35WBFA=
@@ -6969,10 +6282,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dOG90FqngHYR9kdEjSytfBvoBLw=
-			</data>
 			<key>hash2</key>
 			<data>
 			AhUduDc9Anf0b+CTT9cXJn30txsQlEZnCMmdqxKnQto=
@@ -6982,10 +6291,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ErzhC/W9Dsxe+LgUYiNshpQVvCs=
-			</data>
 			<key>hash2</key>
 			<data>
 			5vpB2Iyi0DcT4lFnMRsdtG3ZQ76Gx3fPEgxOssLugVE=
@@ -6995,10 +6300,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -7008,10 +6309,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n/tZx0cw6xlv3UZdh0t7sv4TxUI=
-			</data>
 			<key>hash2</key>
 			<data>
 			iu0iSsCQcXyr7lYDiEiCLq4HSBxm/naxY9uXBu/PH8c=
@@ -7021,10 +6318,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2Q7AAPXZBe156q8xZcoFvRTXUnQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			HtVTWRE/QpXmKI/XpHCuXAZK1omX0EHWxVK7cN4yflQ=
@@ -7034,10 +6327,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6jQMw22QSKvjot3fxvoQbQKLVdY=
-			</data>
 			<key>hash2</key>
 			<data>
 			M2z1SMwnDGlPV8NtzpR9MfBS/SZcjF/jlmdZy0qWdBU=
@@ -7047,10 +6336,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+qFsSUEiMdnBNtXSlXLc5koUIXU=
-			</data>
 			<key>hash2</key>
 			<data>
 			nsfyV9lRWwfSxrirakqjJ7xnaMuqVzBxx5FaDoxIBbM=
@@ -7060,10 +6345,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7AwwpGadJvHnPEo2hZRKhDwCCtE=
-			</data>
 			<key>hash2</key>
 			<data>
 			P5EF1QvPKlXj4BFeto9CEB93mKUYXh3/8D7Q6DfAgKE=
@@ -7073,32 +6354,20 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			EzpBHAbDiElyCEhZoPiUiMGXnXc=
-			</data>
 			<key>hash2</key>
 			<data>
-			lhvYBPDkeIzzQg36V+UPwJxuw0C3gRE/sJmWCckCpyw=
+			2WZBnR2RsJjx+2b74w1pQCzhRrsNwejFjqxenonIkhE=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IztD70/O7QshC4asXWHefP1Cegw=
-			</data>
 			<key>hash2</key>
 			<data>
-			NYvsTPJeAj/WjBmuJKtKp0MVhmjtvevmWMR26BKKm4I=
+			8HWUmewnHhR6MF3GsMuCz3vmNVhe0V8IQwXQvYoKcnE=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/au_becs_bsb.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1bTo7i6sVSY85whK/COW4EpBVzo=
-			</data>
 			<key>hash2</key>
 			<data>
 			Cd+piF3bgclsVb3Hd3/63GxvuDk9oZaFGb5SOKNpzso=
@@ -7106,10 +6375,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Y3ryHF+VBNxqte1acmylrj0qjcY=
-			</data>
 			<key>hash2</key>
 			<data>
 			BAXxYwmOM84kKbevjmPDmwzqUlQDimCal6qDXT+f3ec=
@@ -7119,10 +6384,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BZPKe1Ma/MCNgc1vuPTwWAqNk78=
-			</data>
 			<key>hash2</key>
 			<data>
 			VYCzn2kBrw7epGXXTcq8JPq9eia4swSvjyTbBBTMMgU=
@@ -7132,10 +6393,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zqyLtT8qpJkADdMigyu4w7lAEtU=
-			</data>
 			<key>hash2</key>
 			<data>
 			2GBcL27tPePMyhpx0Vc+YwMmW8C3m3OluFIkQR6LyK8=
@@ -7145,10 +6402,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Tx6NfPx0Bz6NwMbdM9cOalmX7JM=
-			</data>
 			<key>hash2</key>
 			<data>
 			RZFN0Z362knSvwEMnAKn/57qLcJyF/UlJ5ZxH5/5elY=
@@ -7158,10 +6411,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			seMKGYmmyF+ZKEKehozJS1hg2V0=
-			</data>
 			<key>hash2</key>
 			<data>
 			RHUjebHMZJXct6oyQP0T3DSqYUhOxFbHw2KXarhqIhI=
@@ -7171,10 +6420,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KwbCWRGKHBI12sUeIQW8jbzdnXA=
-			</data>
 			<key>hash2</key>
 			<data>
 			oB8nxsJT9rMAwcg5GvEuF5cbJuRa2LDfkyRKbLavAks=
@@ -7184,10 +6429,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KLiJKhbM+OW0GeFRPlYnWClj6p0=
-			</data>
 			<key>hash2</key>
 			<data>
 			qYIqTsRvCWyhuZk6KGd2vPxS/sCEOr2YNDoze2/hNzs=
@@ -7197,10 +6438,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xM+T2UYuPc/Lv1Sf0dSokMt5Yfc=
-			</data>
 			<key>hash2</key>
 			<data>
 			SlafgDgUgADLUgXv5QGIoVsyEExzWsLGphJ8qlVSq7U=
@@ -7210,10 +6447,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GzV1F6Rs8XfuD5U2F2sHNuXB4dY=
-			</data>
 			<key>hash2</key>
 			<data>
 			wGhAafD3KDDTtnGEuBocQK1k5O4tukwtPNhqQmS/s1I=
@@ -7223,10 +6456,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			HWIyMV0qLMVDMdMXhhnUr7cAlrQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			cKLdcWYmePqQZtkBGJ3uSxbKnfSkMKXxtqINl4e+wUA=
@@ -7236,10 +6465,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iFGkpsezc43P01HHC7B4BIvvOoY=
-			</data>
 			<key>hash2</key>
 			<data>
 			BioJEkll9550f/a5WqDCVr7NAPZLwxOklbJx6d4McOk=
@@ -7249,10 +6474,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QSebbhugzgfGwQZdWnWf90gQgnI=
-			</data>
 			<key>hash2</key>
 			<data>
 			izrS8x+73xj+xYHguFxQQbMtAHRz6pax38QKIgBi5jY=
@@ -7262,10 +6483,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aiB6IeNBPe1vS0Peuipn/S02kew=
-			</data>
 			<key>hash2</key>
 			<data>
 			9B0eKR/yG7aoDZNfk3WlzRoZ19XuMG7rZPl7t/9lIxQ=
@@ -7275,10 +6492,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BBOAnwmqLx1WuhcR8CNr2yR5oMo=
-			</data>
 			<key>hash2</key>
 			<data>
 			4YHOsVnPySda8GF94KPH96MV1TwRSj2umaKNIMp92rI=
@@ -7288,10 +6501,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aedFCGmRgAY1UcKlD00vJYfaOuo=
-			</data>
 			<key>hash2</key>
 			<data>
 			OH6U/1TTjyT6JMTsB6GCUBq4JzuJHSvWi7+l2zgCPUA=
@@ -7301,10 +6510,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KrHUi5hfT0XLL/3wkRwNvBaO1gw=
-			</data>
 			<key>hash2</key>
 			<data>
 			rKx1Pkb1te02M+rBEkIWdZcJm/E5hjLpvdebknzz5nA=
@@ -7314,10 +6519,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2FSl/FW+cFuqJL4skOWZ+7xDfMw=
-			</data>
 			<key>hash2</key>
 			<data>
 			FXRXw2ouxAu7Ogp9KUYINMK8KXw2fOFZ1hXf7tQl8t8=
@@ -7327,10 +6528,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aM7xrsqb3UuBXWHTcfWRM3yQ8f0=
-			</data>
 			<key>hash2</key>
 			<data>
 			mTc7aWVBikxZksl7qb8idsnEZljMr4MAI2Btz9MPLqA=
@@ -7340,10 +6537,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hwqmoMQHKFdcqEDKaRYKs44TH68=
-			</data>
 			<key>hash2</key>
 			<data>
 			4J2tg7Jyu++4Axkkmzg805TS8Big10Nk6K+WzGKcE7s=
@@ -7353,10 +6546,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			E/9p0T5FOOaNXy4RMr4r7Zh3clc=
-			</data>
 			<key>hash2</key>
 			<data>
 			ss55q+a8O+iXrmOlz7gIZz2wWVTqrm9Zz5H5GEhUgg8=
@@ -7366,10 +6555,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			K8oVBpa6jZhezX8AF91TFd9bknI=
-			</data>
 			<key>hash2</key>
 			<data>
 			LI31VmsTUD6WoAzIB3mOk0fi1qlh4G6Ih56/V5r+x/M=
@@ -7379,10 +6564,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OxTKIQpsxyYHJduZbGvQQqu6kVQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			/FadpUEd7bz/5M0xxDtax7cPKb55QifGo74LAkYE8IQ=
@@ -7392,10 +6573,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QVMl9UbsJd672Vib+4SbJfoYzpk=
-			</data>
 			<key>hash2</key>
 			<data>
 			NdSOxlb9mo7/2oIP6Hcmr/zLtLWHqayukUbRgdXGTHE=
@@ -7405,10 +6582,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			wg8aN03U6PE5DIpZ5ARJvQ28ol8=
-			</data>
 			<key>hash2</key>
 			<data>
 			sfVfDApvUURfol09XPHpBWXmt/K/vhkeekd6ulucivg=
@@ -7418,10 +6591,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Fp0nzyWvWpl5QWv4MfflXcqixKQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			hPhq6eKUpCcY5OVq9X5X/fV+0wPpRJT4r5qrmW3Z8+c=
@@ -7431,10 +6600,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			XFnjLL7k42p89vRO7pRUY91nics=
-			</data>
 			<key>hash2</key>
 			<data>
 			WDjxnhu3k0/5MuTdWM2zWK5fogl5/N1nSZFjzGcdZ7w=
@@ -7444,10 +6609,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			erxkMth3bNuu74uGYXQ7LQwiw+k=
-			</data>
 			<key>hash2</key>
 			<data>
 			d/5wtrG3+bEKka5PUU5BgAzLpPH8x33QPB9dsNKmCKM=
@@ -7457,10 +6618,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UrLB55VNB3Iu8Zd9ovcI6UGEF+8=
-			</data>
 			<key>hash2</key>
 			<data>
 			yHOZC/POxXY8SjdMydP0/Tkj7IclNS7TPB1P0v9uSKo=
@@ -7470,10 +6627,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MDxxTfuV7zhPFSHJh+n1MWelQIY=
-			</data>
 			<key>hash2</key>
 			<data>
 			f9AAIFW6N+wkQzpK6fadQPTCTZD1Td1+gMYwlmBhz08=
@@ -7483,10 +6636,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			X0tqqmECi0jC84ELKH7RiO0mPB4=
-			</data>
 			<key>hash2</key>
 			<data>
 			Uy/B/KCj6Kto6ivuPi4EWoRecfHQXWlrGosmrIJCEdU=
@@ -7496,10 +6645,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OotsbdZDDhIFgobTTrcwUJrdw5E=
-			</data>
 			<key>hash2</key>
 			<data>
 			GQuRbbsLxV+qdETj7kLsKE3Hs6zVpVI/9PfbvwpU5h4=
@@ -7509,10 +6654,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			47n+4nAVUPVOyWTZd9YpEOic800=
-			</data>
 			<key>hash2</key>
 			<data>
 			Imz5f05nOk5c9h34tR3y7gHxlmYoidF1zXqWKBcNtUw=
@@ -7522,10 +6663,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fHD0Zu6SwCcqpocIemOoG8kTEhE=
-			</data>
 			<key>hash2</key>
 			<data>
 			EYOf9QsyfjGPScjX0X/SgXSAYKd9lEYgAHOwG0ZCn3k=
@@ -7535,10 +6672,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cT+sKxbIbMkGuni3bVRn5phKhpU=
-			</data>
 			<key>hash2</key>
 			<data>
 			SSyzo5zlzbBToVaLKzcJ+nE7Nf+Lxos7X2eKDRLkZ40=
@@ -7548,10 +6681,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			V9g3UQDYJk2784gVLoJ55GSFVEk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PSdZKqn/H8uKudzHUPrv6+DO9CookoJfBCCwhW1twns=
@@ -7561,10 +6690,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gEHMv8lKmr5o+8ISg+Wx1mCr9l8=
-			</data>
 			<key>hash2</key>
 			<data>
 			X2YESbRKI4moXjxDmaypPcECBAYPFDIn3gYn0e8qwJI=
@@ -7574,10 +6699,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -7587,10 +6708,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			15ArqANq6OHdJQZbJGrEid+ay68=
-			</data>
 			<key>hash2</key>
 			<data>
 			VhlzRBbZjzMVCMEBD+moYe3Iq+gfwi5rmbD+uMvsyZk=
@@ -7600,10 +6717,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			br4a+d6JgxiZJcc8M5ubemmgygg=
-			</data>
 			<key>hash2</key>
 			<data>
 			FEvl30rQiQ1BsPICeNQjnzM2j9YmjDgnt1si0OPM7g0=
@@ -7613,10 +6726,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			FiF5QXmBylgznd9jg65R1xVy0/Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			kWONvYUNOhPDLgqSgtVwd3AwiqxZo3jJ8iQy26iCdM0=
@@ -7626,10 +6735,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Mw5ubyEye4IyXP/dLlGIZKUMPII=
-			</data>
 			<key>hash2</key>
 			<data>
 			FH8jAGnPYQwNYFYtc1wOcVPx/LFlSK7hf4vEeTZ9vAI=
@@ -7639,10 +6744,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7vGvmL+9jEcMJnWGPX+dA/Xz9nM=
-			</data>
 			<key>hash2</key>
 			<data>
 			FRTRt4xMQPMe258G4PmYCH1R0HKBeNvmIMojyy1/nhI=
@@ -7652,32 +6753,20 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			E9waPoAemIIKzUvt3MStkFLtL5U=
-			</data>
 			<key>hash2</key>
 			<data>
-			/K2J4DU2n+MNX6djMgTw4l7/zNwATNWkdVsIjagAhtI=
+			OfFh8p01SOCGvkJEZFqxshBuj77+QnZcNS5ka1OY9Sw=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			y5Q9xSkaW83c5oO3DoV/H2+6lWM=
-			</data>
 			<key>hash2</key>
 			<data>
-			Ic2RpqXMJ6mj2DUfROl3ZNSXeof5t7g2v3VtO4wjvMg=
+			80+PgjfjN0OYRhBDOfvnrvcmZKMaado5Ehb8lGgAzCY=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/au_becs_bsb.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yEwltBJubtFnHH2tjp1tIZLap/E=
-			</data>
 			<key>hash2</key>
 			<data>
 			w8BoD80byn9hOVcWVsJFl14VsG019QYXo3d+WjVUlq4=
@@ -7685,10 +6774,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0+wqRX7Z9nSrAjKvyegOEr+lFmo=
-			</data>
 			<key>hash2</key>
 			<data>
 			gfEqb/M2UKqFSb8cOwZ1HrA1qgR2Ix/NEoTmgu1BEn8=
@@ -7698,10 +6783,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			v+R9uDLYw66iAdIYZCiV2fkvOSo=
-			</data>
 			<key>hash2</key>
 			<data>
 			oqa3e+ElWv7uQn2V/rNZSansbtDksM60d0xYnbY5290=
@@ -7711,10 +6792,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tgDAVZJK0jBMhSAcz6EXt61KIIg=
-			</data>
 			<key>hash2</key>
 			<data>
 			S5xb3p4oBRhxz2kHUrW7uA4A+Ux68DlIVz0Ni18ogMc=
@@ -7724,10 +6801,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			57HEDPvqa1w1JhYCQkZFJX4eBSo=
-			</data>
 			<key>hash2</key>
 			<data>
 			U3y/t7sYGgGdDSOgyMIlIOXWtx0s649nkY/VJnqeGNQ=
@@ -7737,10 +6810,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NpZbbx0u5Ni2fODcSMhWlBktXRs=
-			</data>
 			<key>hash2</key>
 			<data>
 			IRvSH5spsrs/sPdlBtSvxPBvfSWl7qOvvs7nEyY83ls=
@@ -7750,10 +6819,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gd+q5ccSMwBYD2dEv30J3b2K98Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			dI8l/1UE8d8bANNLtRYWeMqEV+B7HESPVuG+4XytTUg=
@@ -7763,10 +6828,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n3xcmzd7B7O8NjzwyH+9vI0svkU=
-			</data>
 			<key>hash2</key>
 			<data>
 			uVYaBO6C1NWGUE2kZBc64s4yWc5S5DXNokocYDacqBw=
@@ -7776,10 +6837,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ydedaiQrcJIixYM5/gKzdjjFqJY=
-			</data>
 			<key>hash2</key>
 			<data>
 			8GyaIaU/C9gwUB0i0OAucDVjfZF7YQzQP3XLcxvwRUA=
@@ -7789,10 +6846,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AsZywLo2GIO+y6DKuVs5ePE16m8=
-			</data>
 			<key>hash2</key>
 			<data>
 			xWWYNjp9gZpre3WnyMMaU0V+hFA1jRn26PnjnWL4eGY=
@@ -7802,10 +6855,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dyjkC17zhHhU591ImL18RJRMA+E=
-			</data>
 			<key>hash2</key>
 			<data>
 			BSoy17UHYo60urPnK4FrxYoTi+hEnyggrU4UIOJ+Opo=
@@ -7815,10 +6864,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			biLeEd9ZGZfJGQ0e3oz3uAlNIbo=
-			</data>
 			<key>hash2</key>
 			<data>
 			o2YsnXknJY8nEmeC0SW3FFmEJkvqWtcBbV6kZUL6U7k=
@@ -7828,10 +6873,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			oxefqVyAaAMU7FZjMfXQdOjneJg=
-			</data>
 			<key>hash2</key>
 			<data>
 			y3erOXq2Zsaoeuj8IoP4QFpc9Nqyad1kQhFv2tSdn9Q=
@@ -7841,10 +6882,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/SZcK3F3SdwdwLYu+5t3ZcAzmRQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			9cV96LYtxVUyzvINYjeFpWNRrQLVZQZJyPVi6dkQSz4=
@@ -7854,10 +6891,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MdOn0n4G7Aibh/49QCHPD3zHaZI=
-			</data>
 			<key>hash2</key>
 			<data>
 			T9MwtjZLhMqzc0mix0S2KUKWkqeLzDYZHrLPB4ZmMZA=
@@ -7867,10 +6900,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			bme7OZfQv7oKQMAq8rkwYfcWo0s=
-			</data>
 			<key>hash2</key>
 			<data>
 			7J6Jtqks9etJsE0F3NNlRenxzs2EAVcmZ5fdizlJ4dc=
@@ -7880,10 +6909,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OWZXBL51ZPUwFaTkgAShQSpGNaQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			YsHLvjT02K9KMlEX7kA0VoXYetb9xWPEGwYhkK6dL/c=
@@ -7893,10 +6918,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9rpCYaHsZeuMdiQSqLCPN0iRN/Q=
-			</data>
 			<key>hash2</key>
 			<data>
 			MCgJf23fqWCjV9+qVjLbturqm+v77VfWoUHJHojlOH4=
@@ -7906,10 +6927,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0y/i3yhKoY16FU62eY/jUonTzNU=
-			</data>
 			<key>hash2</key>
 			<data>
 			2iheImLisN7LDm4JMup+g1VOhzgVT65qCYCxy9Cwd4s=
@@ -7919,10 +6936,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SmdSeSwleQQ4TSvkkzFvHxDM1g8=
-			</data>
 			<key>hash2</key>
 			<data>
 			MsnuLWV9592qaOyvGie09INee3kyXiCpYMZrwpPrGHY=
@@ -7932,10 +6945,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4E7wC0MD6ZkWHQlD7bnuZCugsig=
-			</data>
 			<key>hash2</key>
 			<data>
 			aECnf0hEk0XoJ37pG5HCg3vj48aVG85/mvXP9abyRoc=
@@ -7945,10 +6954,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			bW8D+MJjDdN7q5hj9dak3kLIcN4=
-			</data>
 			<key>hash2</key>
 			<data>
 			p0O9asvjE0MtCXco799qV9n0hXv6tZgTYd61p/Uc98I=
@@ -7958,10 +6963,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/localized_address_data.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AYP3yqVVgkwF9+4KwMYNMXVL/lA=
-			</data>
 			<key>hash2</key>
 			<data>
 			XFdjm3zQhkqR4OWREA7OERZ7IUDx6L/sZgKad3ZdzL0=
@@ -7969,10 +6970,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			mkiyeRo9fxP99zafqQd7tXaIGIo=
-			</data>
 			<key>hash2</key>
 			<data>
 			S4g3HcWfu1abhy85gOZ2TTM26MCNugXVwNMn/6nTK+U=
@@ -7982,10 +6979,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			buvMupjwfUHV/jg6zjQkBpGKuUc=
-			</data>
 			<key>hash2</key>
 			<data>
 			8dgp3nfntQ1ZQLFx/Oe3IsQazSTEHqTYkdMjinT2v+E=
@@ -7995,10 +6988,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OuUTZ3Qnl3VuffNqVT7/FEI3+K8=
-			</data>
 			<key>hash2</key>
 			<data>
 			f5mPCSLGiOR+jsyr0zpsJ6qPK10uW0gATcPGXdqVPF8=
@@ -8008,10 +6997,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Mv/NBRYFIZZMrc5XGkPSFzqG4RE=
-			</data>
 			<key>hash2</key>
 			<data>
 			HkWPCrnG9hTxCIn22nXF8dtXe8dc0O/KdUWhaEXjzDQ=
@@ -8021,10 +7006,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7UW3ARMI3l7KsSEfT4Xzs8L1/QE=
-			</data>
 			<key>hash2</key>
 			<data>
 			KBSnrcN1s+BncRem25TQ7DxHmebjeMOeq9pNEqxmECc=
@@ -8034,10 +7015,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4tWpRHsoxwZ4DUSbNLIW4Sl4t6E=
-			</data>
 			<key>hash2</key>
 			<data>
 			zK6PkGiW5Tim+upJEL2gHkDrT7kR/OMgFSy6RUvGkWA=
@@ -8047,10 +7024,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IyCGaJ6xVx6Yp7S/Kxv1uD7wbRY=
-			</data>
 			<key>hash2</key>
 			<data>
 			pisdipmkt4gn2FdbQYBbkepCin+x65+UO/5C9wsc7Q0=
@@ -8060,10 +7033,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gGkx2UUuF02bpI/LEVpLOqjOB6Q=
-			</data>
 			<key>hash2</key>
 			<data>
 			inaziDBnMV0oPeIxzYpsgvvH3ZdK1SVgqS4sAocYqaI=
@@ -8073,10 +7042,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6QPKoLjnkPauADA60Kr1XOxnE30=
-			</data>
 			<key>hash2</key>
 			<data>
 			9Xatrd+9qAERil7b5idPCnpT3/TRpUlBooDEUlA2GqI=
@@ -8086,10 +7051,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			O9rcRqeiihZyOOKSWP7NRFimNpw=
-			</data>
 			<key>hash2</key>
 			<data>
 			iN37JlSArvq/s/W0SH9cmvoRMoAGgHMEXqiFQCKe0AQ=
@@ -8099,10 +7060,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UDvCPaZfckCx2NM4tSCBM32KNKI=
-			</data>
 			<key>hash2</key>
 			<data>
 			m9O2ozfB+b43vUp0tXfFlrPT+or4mTysEojY3iWlums=
@@ -8112,10 +7069,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			eodtR+oBowT6hoSKBjpPIiCn7yU=
-			</data>
 			<key>hash2</key>
 			<data>
 			wI5/bneOg2z8+IgLsUbXnBnaRNIWgzVkJE6GWeU8pII=
@@ -8125,10 +7078,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BGWJ7xgQkMHa5tmS8siGZ+i2yPE=
-			</data>
 			<key>hash2</key>
 			<data>
 			UCgSC5Xtzq07M6qgCZm80D9mdJFQkNuFRG8AeHcP9PQ=
@@ -8138,10 +7087,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			FH2+92UcQYOdkUoPlHZxtVFLYpY=
-			</data>
 			<key>hash2</key>
 			<data>
 			LEljXBKIMKoOtAYNx49Gc3/Etiot7hEwWQE44JWDQPA=
@@ -8151,10 +7096,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			j3jX+LYExY41w6GFcBXoUThTpsY=
-			</data>
 			<key>hash2</key>
 			<data>
 			kL2WfIo/PcZWbPKEFQTEC/DpSPFTcupEPkGLMi4YPG0=
@@ -8164,10 +7105,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			qSGPXQoMD7o+C6OWRMHtQ8G1udc=
-			</data>
 			<key>hash2</key>
 			<data>
 			BqRkitEmgMC0I62iAJq/Wy+rGtZg7O9KkSmliPSdYP8=
@@ -8177,10 +7114,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1+AfPX4DeXqWUkFIyJVo+zWmKXQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			jGC5x/A8J4UNZ229zOGWkDcuHD6RXXAD5YOMKS58HlM=
@@ -8190,10 +7123,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OKC5LL8pGmP3w136eNV4geWyIRg=
-			</data>
 			<key>hash2</key>
 			<data>
 			mA9KTF0gcPAcz2CS2ILdT8JDpJ9CUyNymQU9dPv/j6Y=
@@ -8203,10 +7132,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+S5RbOkL17lPLpHovyhIx6nCChg=
-			</data>
 			<key>hash2</key>
 			<data>
 			DdE5v3bXjFPo3glN2gUQ///eY4J52G8cU8FmKxOebgc=
@@ -8216,10 +7141,6 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3LPDWTh/jMKF6JVrd+yDVS/E6ZY=
-			</data>
 			<key>hash2</key>
 			<data>
 			j+a6b2EA5+x9JeO6L57OZu5W5BaOzRtvzjC1tOwMElc=
@@ -8229,21 +7150,13 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0CYhKCz5ZUaZznbfhNSXZv6osrs=
-			</data>
 			<key>hash2</key>
 			<data>
-			mGD1UWNpHSw3my3cihs/c0ot9ZhBMqxvMt2C9UrsjZY=
+			0Bt8sL2dx5fuRWwFJ70OL7zSgEhM4XJ2WNnM89KbXMQ=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Q8e/vo1bIrW5FPuh4WJcj3VylNE=
-			</data>
 			<key>hash2</key>
 			<data>
 			a0XjOQjyuGokkSKGbcC1uO4O+ZcnOQ4jfQ7oK25bmuI=
@@ -8251,34 +7164,43 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			J2dqEiB76rG/Y9pxZfSe6xWBD9Q=
-			</data>
 			<key>hash2</key>
 			<data>
-			PHYai/hffK9C7N6qIUlIqa11SrrK+i7jLCJu3sUlM6M=
+			FdNQyHamX30C92uuQjpxrmoPm7bSRa/n5Gfpc1dy0uA=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AXl9CjBNLrtBwxnX4gUDoGUrVdykazgeDz/VGABCZUc=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			l9C7s0aN3/W25AVhgNx0ikhRN/gI/EqSL7IJM9mzKIc=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			D6HvsTuIC0C9ELN0a0LbGGqXFftsbU0799RVUmvBQWI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YSjxiAdrLxccZs/6WG9YFWYhsms=
-			</data>
 			<key>hash2</key>
 			<data>
-			9yYkitW3Tq02zzBL5jxBeyQAKTvICUpbh0BwLP63kjY=
+			xLUSnYg0YmkRKVZKJmHNdRZQqesDsV31MJSw03N8SZc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gcwBsH4BgyFY4sVtNt+/xOKS3vY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Qnesa0n4URGWAopawg9bGx36dUwkYV00BoCJ8LFzlyg=
@@ -8286,43 +7208,27 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lMv3sfx90jN5aa6iHA9Dft64BYg=
-			</data>
 			<key>hash2</key>
 			<data>
-			RXlWNpevucqQg/iFIUY6BUqRKz8JPYX4DgE4zBcmYwY=
+			ItNw7Gd607yi/Bps8b7FiEIJJDndSncGhm14yn0A/q0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BAXJaqaxhdlLz8B+9J1AA4ShZ5o=
-			</data>
 			<key>hash2</key>
 			<data>
-			Ipgk0RtdNxtiewPznKk0gp0/l/1TY2s5ROaiqf6w69I=
+			0q1gY7pIoZy5DgP1doYlnKAnlAUUvKX3MFupBBrwozc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lMv3sfx90jN5aa6iHA9Dft64BYg=
-			</data>
 			<key>hash2</key>
 			<data>
-			RXlWNpevucqQg/iFIUY6BUqRKz8JPYX4DgE4zBcmYwY=
+			ItNw7Gd607yi/Bps8b7FiEIJJDndSncGhm14yn0A/q0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gcwBsH4BgyFY4sVtNt+/xOKS3vY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Qnesa0n4URGWAopawg9bGx36dUwkYV00BoCJ8LFzlyg=
@@ -8330,87 +7236,55 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			X13E6hAkzzNDNZqiWu6BKKHxRPM=
-			</data>
 			<key>hash2</key>
 			<data>
-			BnfIQgYGfG1ZLpRhZvCAzGplBAbHa+rzsAJcjx/+uzU=
+			sz/zBudAaYkJ8n5I2akPbEM2AzeAJOUHOJYmGDgLJNE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			nRh8saGBZJ7bFJBqBY8bDuaczPY=
-			</data>
 			<key>hash2</key>
 			<data>
-			Z12ovXo+55o+AAr5WfmRHq8Y7QuaOjGTYiLjGOhb3vA=
+			3oOX8dikK0ItxTokW27E6FRUUVfbkKaUYu5KL+bsgYY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			X13E6hAkzzNDNZqiWu6BKKHxRPM=
-			</data>
 			<key>hash2</key>
 			<data>
-			BnfIQgYGfG1ZLpRhZvCAzGplBAbHa+rzsAJcjx/+uzU=
+			sz/zBudAaYkJ8n5I2akPbEM2AzeAJOUHOJYmGDgLJNE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZnxA5a5u0iEhILZhINRDn+BCAdg=
-			</data>
 			<key>hash2</key>
 			<data>
-			+XdwqTs6ySO3ljl+MiChtRms712W0fi8O8HJdDr30f4=
+			FN4Mzabdw1Lbd8RHFIHkrrPLMYnvEamktnNCGC5hOJU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AqWXQ8VltLDDZRJD/Wdj1bPw3Yo=
-			</data>
 			<key>hash2</key>
 			<data>
-			iGwjr9tb+b5iDqgkkX1caiVelcEWZfefXEh7dOw8z28=
+			ROKr8WmskLyT9YbOJ3UumLk+g9HnMjUkxCvjyhIzL3Q=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0g6vGEvhJhfUNuZQnW79smBZNCY=
-			</data>
 			<key>hash2</key>
 			<data>
-			OHAn5+u3k9189rNffnCnPen809P6XqsF3kPEDDKT9ec=
+			hrqtiErkXbtbAXU8NS3aDUd7dmXriIqcsW9awc5wL8w=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			pYawRustOtGbvXaLP5w34Xug1OE=
-			</data>
 			<key>hash2</key>
 			<data>
-			aQFX4OCtkM6UhRZxnBYVkqlqrzp9dNiF2W7OV4GTo/8=
+			4hfrd83oRzyVlRzM+PxqvDfAoJg6wZLh9pV1B9XrmIU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/jNTxKfZ7aaj4jYeI/TqFjNzuQU=
-			</data>
 			<key>hash2</key>
 			<data>
 			Ww5JyUk34o+Hs3mxlBEfW8SMVpmbF4vk9sRZKRbet4E=
@@ -8418,10 +7292,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8431,10 +7301,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8444,10 +7310,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8457,10 +7319,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9mEe8FaTUoaP8LM7ze4J1Wp5UTE=
-			</data>
 			<key>hash2</key>
 			<data>
 			0azItOHsw8WKmU3tapCKgpsbuBYcFRdAPi9nYe9ur9w=
@@ -8470,10 +7328,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			f33/KLIliR7uGxgNQBqcD+UIwRc=
-			</data>
 			<key>hash2</key>
 			<data>
 			hPxOV2QQfg/R1clBK3jBjqY+3xQphOCfIEJ4b7HVdUg=
@@ -8483,10 +7337,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8496,10 +7346,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hKEvAbNeQ9jlArjRP6emt0feAnA=
-			</data>
 			<key>hash2</key>
 			<data>
 			rHrpAYKrCfaEENqw8DBdCYnQ8BaXRcbIED68cl/wSTA=
@@ -8509,10 +7355,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8522,10 +7364,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			D8fOi3rrlE2nkNGqS0MeM02g0M0=
-			</data>
 			<key>hash2</key>
 			<data>
 			G7KzJc/T2k35X6kBE/OOULHhw/1A33AgChAwsfuYvr4=
@@ -8535,10 +7373,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			l7Z/iY/IlIO7Zi+2gs9l6KiDVTY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Dxz9RFcOEJWpu41XcWWMi1MQiOsLjP15qUnHycuqlI4=
@@ -8548,10 +7382,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8561,10 +7391,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			a29Vark3D2sBCSaobLGe2nsS/5o=
-			</data>
 			<key>hash2</key>
 			<data>
 			W7QZktoHstMLQwbshN2NDoK3/s9GAWjiIPEwfg0QrKM=
@@ -8574,10 +7400,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8587,10 +7409,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GRY9I6ZAIxdGYXsn6LlXnYhMKuE=
-			</data>
 			<key>hash2</key>
 			<data>
 			zoS/wgYnT3D+/rGAC775KQcgURCGyKQXKfyE5zX6fdI=
@@ -8600,10 +7418,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			afhdqdok4AqATZa/byTR2sFBcWI=
-			</data>
 			<key>hash2</key>
 			<data>
 			OlRbdDQ5Fk3domn3zhqPj4S/qNm6FbJM33ua7k4QbUM=
@@ -8613,10 +7427,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8626,10 +7436,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BzyypbuORLm1RRGCkspMvLkrRCk=
-			</data>
 			<key>hash2</key>
 			<data>
 			jyhfguaSa3eGFbRwb5pO0d1RylWvGubLja7V8MdW9bs=
@@ -8639,10 +7445,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8652,10 +7454,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LIMFxF7+E3OYiYK2dqtJitndnxs=
-			</data>
 			<key>hash2</key>
 			<data>
 			lLi/saiGmFA6In5Hzk+a7Lk2TOOeOJNSR7NZYVWMqac=
@@ -8665,10 +7463,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2B417hSOrlwnrfjymov8hRFM7Uk=
-			</data>
 			<key>hash2</key>
 			<data>
 			NfTOXxmDesL8/ndnTyO4u4LIUNSMUsHM/UpbS6v+9z0=
@@ -8678,10 +7472,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VPnyELaODmBDDtaoyqKh8EWkoIs=
-			</data>
 			<key>hash2</key>
 			<data>
 			sKQ298m3w1HEetUhIvbwJZMiKE099f3G1x5F6ZSYzE8=
@@ -8691,10 +7481,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8704,10 +7490,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8717,10 +7499,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8730,10 +7508,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+pTTUmJwgnNugXnoDuo/9fMd3n0=
-			</data>
 			<key>hash2</key>
 			<data>
 			I98DDiW93g8dag3IX+OCFrPp+0yv3rADAZ0Y9lcG4lI=
@@ -8743,10 +7517,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			P7E+i4TJrnaSbyJDrpglVYsIwwg=
-			</data>
 			<key>hash2</key>
 			<data>
 			ZrbmACdnL7PmDN/SbzoEkSq+WCyBWPAxH9LCADFJwJc=
@@ -8756,10 +7526,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1KJYhItd4xa97gTLcL/MGhN9GwM=
-			</data>
 			<key>hash2</key>
 			<data>
 			PhsTcDiso+mYXbNxe/NnYbBSKaCosOdb1EG0X8YLK8s=
@@ -8769,10 +7535,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8782,10 +7544,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			uMh8C5Ed6hyRQ+qjnDIC1hh2ZoQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			AgkkT6Y/6U3F3ZIJxj8sUnZ8Z38Hqc5tvGdQ8zEh+/M=
@@ -8795,10 +7553,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			m2EpIlQubAmTwlH1R5LPlj32/S8=
-			</data>
 			<key>hash2</key>
 			<data>
 			FH6XjmPX1qW2FiJvPIvDlNdDGrNq9bIpCpkqPXBoIKA=
@@ -8808,10 +7562,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8821,10 +7571,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			8JpVQD04ePeaiNvR0WgEHsr4Drg=
-			</data>
 			<key>hash2</key>
 			<data>
 			ItHALuwMqFJ6lhv1k6IVNK8kPDJfO48dko7ODjQOw2Q=
@@ -8834,10 +7580,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8847,10 +7589,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8860,10 +7598,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ehJqgQMrB6P6B5D1r0zURpqmuk0=
-			</data>
 			<key>hash2</key>
 			<data>
 			7FS+s/Z61Wrq8nhLta4MKNLhT0XNu8Mj3+4sX71tT94=
@@ -8873,10 +7607,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Kmh7zjhUEwEgKeswmcNZurfFE3M=
-			</data>
 			<key>hash2</key>
 			<data>
 			K6GFhEVXNAEfdeBiOsWMyC+nL+IKVCm9hsRoHdcNj/E=
@@ -8886,10 +7616,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbQ/dSb9i8lvUUQ2cFeoPorG/Fk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PRtKkzcfIrb5m2bNc0mOZExEDb4F2zhdFOUE/K+KGZo=
@@ -8899,10 +7625,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			POH3w6m6F6plV1B9aXK1190uKNg=
-			</data>
 			<key>hash2</key>
 			<data>
 			2EA52et8I3KyZRpaOT5PDL0aDuCP+bB/zAoa0uPt7Xc=
@@ -8912,10 +7634,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5okRyVxfChpH8unvTc6oTX6NoQc=
-			</data>
 			<key>hash2</key>
 			<data>
 			+kdmv9d/kzoVMhU1yfZ5ly4jgvqV0rG3mn+lOwnXzuU=
@@ -8925,10 +7643,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			M1cYKTrVDyCYNdna5iZ9y0ZOzbE=
-			</data>
 			<key>hash2</key>
 			<data>
 			rPC22JescQnH/kC36UnVUolOS41oXWqoRZrYvQyrbPo=
@@ -8938,21 +7652,13 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			phguDenRHmTv/u92mYh4HJW/d/Y=
-			</data>
 			<key>hash2</key>
 			<data>
-			vhPZUsNDHE/Kts1ZLhoVAt04Bx4b6IHTockUKhKTcoc=
+			5ZKHQKtiTL/L5awRKGzxt8TmcmX8HH0hfOgszLWpi3Y=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Jl4rnqNCtAsimxvKMUtFXPb+LnY=
-			</data>
 			<key>hash2</key>
 			<data>
 			7EzdlvW9iweswAoXvkRzuYpuBhU3tcUMbqCPX9aoIgY=
@@ -8960,10 +7666,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4lxzp1hl5oGRUHqLjPcynVbfUR8=
-			</data>
 			<key>hash2</key>
 			<data>
 			ISxbdAQipue1zE083tTSm42GDqU5KqBsvYHpOL1smlY=
@@ -8973,10 +7675,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BKMzDSb+vJTtnDvVprifPigCgKg=
-			</data>
 			<key>hash2</key>
 			<data>
 			BC6dISzjvCnYe1BSp9OXcsuxvPck7h0TgnA0ND7DKkk=
@@ -8986,10 +7684,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2KDGFsgIDwm4T7Xr+fv5n0YVH2w=
-			</data>
 			<key>hash2</key>
 			<data>
 			BT5zNOql1bdnn8063+sPMOFynIh3OqI4T/FXr2Qrh6E=
@@ -8999,10 +7693,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Ch6ZT+DX7aIXEIqoB63YbRLY80s=
-			</data>
 			<key>hash2</key>
 			<data>
 			F+fW63GxxeoF+sf8Xg0MsPwf/s+zPzUl7y5XAC2IkDs=
@@ -9012,10 +7702,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Fr0EOtRyfVpMchLOtIsGTekc7fY=
-			</data>
 			<key>hash2</key>
 			<data>
 			PKavWeYgYcjl0ls3Cxj+fbyPNSlem/im1xzrTc77CMQ=
@@ -9025,10 +7711,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			a+4iqDg5AVIzpPMDNMDW/Z8c31g=
-			</data>
 			<key>hash2</key>
 			<data>
 			r7wZfDHgmCzeWVzHkBBdBRBHeEzIb41vT+TFC6g1zD0=
@@ -9038,10 +7720,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Ntjf3xCG9CbwvDJ/oMuHrI9hx2o=
-			</data>
 			<key>hash2</key>
 			<data>
 			cTj0OQEFazqLCyzup3nodGiE7kSuZG3ReXkpIpep9F0=
@@ -9051,10 +7729,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ZJcjZZfgIOVold7tPgzUA+7dGhQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			/WIR1ImeBuhGTM5Plsj2TLz4gxj5Q8SbubFbxBHF6p0=
@@ -9064,10 +7738,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1oRGwiybSQn2OJfUJgunrsGofD0=
-			</data>
 			<key>hash2</key>
 			<data>
 			VETgppdSNxHy497WBAw1YPxm4/VHPD9+n8KjCwYmEDw=
@@ -9077,10 +7747,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2OgYc1s4LwWC23stEpQtZOJivhY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Iu16wDiZ7n0p2iP8CuUJ0X+DAJ9yNINy099uHFKulVE=
@@ -9090,10 +7756,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Hv7H+WQF6k4JIA2FGK/Lky3JxhQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			Q/Skg4mAk5UWIABUi/36UWbwAG9OSlAFeta2AS+3MEo=
@@ -9103,10 +7765,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QKgXb/BpT4FrxbgoYBF1Yixl2OU=
-			</data>
 			<key>hash2</key>
 			<data>
 			3gJaFcWBgx8cDVA4QqiAJPuRHGCedy62LmXMpsKNRUY=
@@ -9116,10 +7774,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yO0TIEPQKKdcbnXIMAnmT/jdCF8=
-			</data>
 			<key>hash2</key>
 			<data>
 			JqReYMw/8K8fEQAhFDL0RWz47IKXPcg7+hK81hEXhGM=
@@ -9129,10 +7783,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			uz42VnqSc4KrOoEyDzDHTUbOSmI=
-			</data>
 			<key>hash2</key>
 			<data>
 			7out0rzB6V2b1prVYYIXoBCXuMfGG/WikKWO0qAUzYo=
@@ -9142,10 +7792,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KCDWgOKj23Kax1tfEkkmHKxtN4A=
-			</data>
 			<key>hash2</key>
 			<data>
 			AH340NtZqfykRqgo2FP3mQ1/S8a5/MSNIHNxHJpZEi0=
@@ -9155,10 +7801,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5yby6d64nHLVajINhukhvSAoZZY=
-			</data>
 			<key>hash2</key>
 			<data>
 			28ATiGMQAzQtg0xLlDlNNw8EASkYlNvMvgGfCAKtwAc=
@@ -9168,10 +7810,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ORjp1M/HSoI6/EZbaaGaBImrplQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			eINEQjQ+FaFaPwANzBmWsPncpyHDms8KoRA4mm0P8p8=
@@ -9181,10 +7819,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IMllNTxDPZTRbw81XlYgzUwqBAM=
-			</data>
 			<key>hash2</key>
 			<data>
 			dFuRzkGKcI0Vq6fHPLdFBOHElS+3SrZtWWOzKB3zgns=
@@ -9194,10 +7828,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ASJgu4acCFKC1a7zRd70d4LiI1U=
-			</data>
 			<key>hash2</key>
 			<data>
 			25ZGZVbG9VcrCITvQ9x9FwYXMFN6b4NYrLhF8bX88TM=
@@ -9207,10 +7837,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			JdL9hzIW8yOEpLd4mKSJQZiSVrM=
-			</data>
 			<key>hash2</key>
 			<data>
 			OFwKEykjrJcXH2gOYNyZFMfMSEHRClvDuzKWYIsktJc=
@@ -9220,10 +7846,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Q+mu/9w3bug9JN5X6CaF/mNqPYk=
-			</data>
 			<key>hash2</key>
 			<data>
 			CHcDSY8+ufpUJgdf0ayCuHAm+mzzXZOhxBB50Elrmcw=
@@ -9233,10 +7855,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/Bo8Tnapl5eLEmCcju4Tuave45U=
-			</data>
 			<key>hash2</key>
 			<data>
 			XXrgsD5coOdkzHiwdnlm5N+qA59qIa2xLWPdnA2Uqpk=
@@ -9246,10 +7864,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			E0HIyciHsDgTEm1yKLeS0v0uhhc=
-			</data>
 			<key>hash2</key>
 			<data>
 			iUFEbHEQLvjNkKQymKse4vI4Z5kJCIjqtMEyZRstCGI=
@@ -9259,10 +7873,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1KXJuCn98PR2bvhFHRkOTrEsK7Q=
-			</data>
 			<key>hash2</key>
 			<data>
 			4J87/uoV8dl3tnrUfy5Df5gfMpKs8CNrlQ1RUNx5arA=
@@ -9272,10 +7882,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ld92h9uxADEl26bGloVNsrm939s=
-			</data>
 			<key>hash2</key>
 			<data>
 			4kMz6QdDqDQwFDW1bdlFdiH+XTR5Tc5ryO9bgEiqbG8=
@@ -9285,10 +7891,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6PlEJp9JHy+rLOqWO5aLESQwkNY=
-			</data>
 			<key>hash2</key>
 			<data>
 			Dl0UMUc4H4StDn4V341ZOXEDzCu6mSixRCe4Uk7y2sQ=
@@ -9298,10 +7900,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			PXtWE8ofYifgMJB4Thcy3rf2kz4=
-			</data>
 			<key>hash2</key>
 			<data>
 			VKXETA9aY2dUUrVbx7GH3MlnGR+Gnu1g0DPdTdHY5aE=
@@ -9311,10 +7909,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9pERvJTZH09RgonWy/kHgXFh5j0=
-			</data>
 			<key>hash2</key>
 			<data>
 			q54EE+t0fLE9f9OWS2ejmrG5hChJef4W7VvL8kmO46o=
@@ -9324,10 +7918,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fklCkIQIZZEhUd1z3ZZJMeaLUV4=
-			</data>
 			<key>hash2</key>
 			<data>
 			l4C0p+3/2IVzfHQjq0gn4Dez8DmIzpq/wAVmyijVflM=
@@ -9337,10 +7927,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			RRvd1VXQ38BG53yWnQ3PJRvEWDM=
-			</data>
 			<key>hash2</key>
 			<data>
 			sfEziNQd/w6At94PJxE32Z2j7AFeDvJVE5/NTio7f8g=
@@ -9350,10 +7936,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cPOdLMYKjhTcjBpILj5o5Mp7z3Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			Q3M5uxL0iMXl36SGqIFJh3CHgTK5Ea2pFSBDGmrkFGM=
@@ -9363,10 +7945,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			x/ptGIleXzJ91ofES5xXRF4gXHA=
-			</data>
 			<key>hash2</key>
 			<data>
 			fnkDS0iEfiXlhlBIBwQiebUhLGrE/qIkTBAFcQ+/0n8=
@@ -9376,10 +7954,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			W4/wc7xpnOIJFiEU7w/gQoLPEOA=
-			</data>
 			<key>hash2</key>
 			<data>
 			SbMjAjlo8W1t7F1MsLOw991Drk8JS6Px+aOhff7JLKA=
@@ -9389,10 +7963,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			wibM5ZpwrPlmPAFizHBu84wLVZw=
-			</data>
 			<key>hash2</key>
 			<data>
 			BNU5gySal8UZkMN4s5/Ih4oOyJ97dzDzJCiBt1Ikxdg=
@@ -9402,10 +7972,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AS1jf0yXfeese9oMAO2sQnZiPSg=
-			</data>
 			<key>hash2</key>
 			<data>
 			v+phtrJxEJDKP2ZNroMZHf7dlNd6vmFJZ1vDJ0kOnYo=
@@ -9415,10 +7981,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Jm2oHQH5Ez7dZ1CSs6cEFCmD0BY=
-			</data>
 			<key>hash2</key>
 			<data>
 			PMmSNSYPqQPCJRXGJKDhqJiEOwZ5f0LOHD/DLWDHylM=
@@ -9428,10 +7990,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			vtMZvDjy416Q8riIwIAvoDbbBv8=
-			</data>
 			<key>hash2</key>
 			<data>
 			Xkcro9DX+7HIDWvNkg4hptEIRc1oVHNjHfmtYE2frDQ=
@@ -9441,10 +7999,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YE5sjiKSlf9VvSX58c8tCKf8iuk=
-			</data>
 			<key>hash2</key>
 			<data>
 			hSS1teEp9iZc42es1ns6G34RUGi/4a3f/2mLcolCcbI=
@@ -9454,10 +8008,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dfU7DCNNKfPI8fldaQqf9HchVpM=
-			</data>
 			<key>hash2</key>
 			<data>
 			4cE28CJ0ZomQBU1AfATCYSKVdhcymmHyWQOsbOJLqC4=
@@ -9467,10 +8017,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OhsiFL2vMbimZdMSOYil2gShmIU=
-			</data>
 			<key>hash2</key>
 			<data>
 			E3WBYZ0+XcVEIRoz+d+HGtINSFm5srDntCe7YlOs4Gg=
@@ -9480,10 +8026,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeCore.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6/qbjo4E0f4bwwg9iMli2dKerxM=
-			</data>
 			<key>hash2</key>
 			<data>
 			3CeiFsGhlyB7D3UTqYHO1PoIJZ7KQqHkoTRll5Pqjq0=
@@ -9493,32 +8035,20 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			POiQQZKPVGqwzSK2SdC/3Vz1lBI=
-			</data>
 			<key>hash2</key>
 			<data>
-			fbnuY85LxGUB5NexDTtwXRZkt9R/ngzLOeEy6HhPW38=
+			4nk9GnL3BW6NAvjVvUYhdv8nIxksvjEcwBuojHmRvtk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			US2ICJZKRhjZUeITKARtYz8HfDg=
-			</data>
 			<key>hash2</key>
 			<data>
-			fiTg0i6Bpjq5PPTUU6SGH97lfCN0gM66YQNgXRt4YdI=
+			4rTmhKjybk4iRoZzEWQCe73plJV7RR9pkCsd9qOH7aI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KVQcLXIg958z1kiZmo8ZmmCYxZs=
-			</data>
 			<key>hash2</key>
 			<data>
 			YjIr0uoZ9gU21STiXaYAZXIyfHROzQHuPdCFo6Dxgn0=
@@ -9526,10 +8056,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zTbH04mADlXs4e5YfR+m3uuNW6s=
-			</data>
 			<key>hash2</key>
 			<data>
 			9X2SXBfAZ89JMwc0ozxSjer9VCRfy2W0GEDXAnkpJdU=
@@ -9539,10 +8065,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GcHW6AswiATSJgedMmoEVSgOnw8=
-			</data>
 			<key>hash2</key>
 			<data>
 			zhnZSh4iCLSA9FawKdPP2W24fOC/QFh1CGazjT9lK1Y=
@@ -9552,10 +8074,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yJjP8/7ApRu9hog5MIxt+SDXXtc=
-			</data>
 			<key>hash2</key>
 			<data>
 			xRD8c2QQolPuDuiNly4N4A4DhCRO/GG9Tg8Embqdn+0=
@@ -9565,10 +8083,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gHzvPUaPTEsPkY74Jnvvg2znKrg=
-			</data>
 			<key>hash2</key>
 			<data>
 			IHUxRKqHf4QLjwK+YP4TBndFZUa+hGXAdrG6H5mVTrU=
@@ -9578,10 +8092,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			c2DhR919lR+QQ7ie2PlI7BkYyw0=
-			</data>
 			<key>hash2</key>
 			<data>
 			utHbGZGB5OHmwrCJTngjQfEaQjdGQQ7Xz5LK8kscDU8=
@@ -9591,10 +8101,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hk0nG/lL6UHDPr8fWp6DXMRQ+QU=
-			</data>
 			<key>hash2</key>
 			<data>
 			sf/2wqygvtiW63zrekPZiscqWWiR0jqL+Auy9281CJE=
@@ -9604,10 +8110,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LTLL8UH6nSb2IzaS6xiRVhp5qDQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			m4FxyRi1kKC9fXZRjLle20zPJnbUAiDNBkkBh0llsgw=
@@ -9617,10 +8119,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3BueVnP6FbTIcM60qKkInDo6LKA=
-			</data>
 			<key>hash2</key>
 			<data>
 			/CaeOsLwiew0OUA1eJcFbHZV3xlCPHkUYjPm7b1xeTk=
@@ -9630,10 +8128,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			j3UnOj96RBjB37CjnkKo+ddXzkE=
-			</data>
 			<key>hash2</key>
 			<data>
 			ErZhbYuACTsirURjPd4cfiFh7ejgmVFrk+LFv7CtGYM=
@@ -9643,10 +8137,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zJD9bGlVD69HqKF7T++hmd2dtSk=
-			</data>
 			<key>hash2</key>
 			<data>
 			itoPQRV54W99LaBPT7H6NaXJKsM+EZ5ANIpEXy61Ngw=
@@ -9656,10 +8146,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			s7XWEh25HDZrBnP5VsOog6lU4Ic=
-			</data>
 			<key>hash2</key>
 			<data>
 			FMDrzaMXZHl+QCSzoyIUVb2R/pqxwXa5spFojttfWDw=
@@ -9669,10 +8155,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Q9SyNkKsNcGAOHXhOfpVyPOY0dU=
-			</data>
 			<key>hash2</key>
 			<data>
 			cswljBj7YlyPAOL86M56O9C2Hy33eu6vufNWh2M/29Q=
@@ -9682,10 +8164,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hzyWIL5rY0QUHkBgqEmLpS//1Z8=
-			</data>
 			<key>hash2</key>
 			<data>
 			5n//dCyUstNoQMXyNsgVCX6Aywe/UhGyCEfyEmtq9zQ=
@@ -9695,10 +8173,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/form_specs.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KixFm11meBK2VlgOrJv18aLNn2o=
-			</data>
 			<key>hash2</key>
 			<data>
 			U3rmQk4uoLZGY6KKKT87Mq+XRaATeK52oggf07f8EIU=
@@ -9706,10 +8180,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			W0y6h1SjY7kn1fy576h3asB2Q0U=
-			</data>
 			<key>hash2</key>
 			<data>
 			mlxIMxAsLM/KF9cu0VWY2OEVRzeLhfnDJqqwgzfwhgo=
@@ -9719,10 +8189,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			rBeiQooJlYvZIUsHkbFMeSjDTJs=
-			</data>
 			<key>hash2</key>
 			<data>
 			eezlfXHXpWZGIeFsmFKLeeb8c3MENkeyqjbl2fJWmDA=
@@ -9732,10 +8198,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+QRPlmoWqDrCDfRRpjDm7TWjGkw=
-			</data>
 			<key>hash2</key>
 			<data>
 			4Uu+eNHnzWWgigDSWLp+VkLbeNQkz7tSSVtVDeVMgPI=
@@ -9745,10 +8207,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			J8CLixLq2SoPln+l35K/DIIQH9A=
-			</data>
 			<key>hash2</key>
 			<data>
 			lOiIzdCWpY67vTAs9QFn8NiLiqnmxeJ/RXbUTSZd/f4=
@@ -9758,10 +8216,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kJdj9Jw3oyxFZ3ACHMxTx+X3C5s=
-			</data>
 			<key>hash2</key>
 			<data>
 			osvIVZdaeXjgMbJ56ydXFscsCybNh3wzfVBZlpnS9fs=
@@ -9771,10 +8225,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			vmtm5rc8ZzVZQ5C0WOlX9Wamam4=
-			</data>
 			<key>hash2</key>
 			<data>
 			VNi6M71CXiVV+XaRiM4HGaOmdpt1GfF/HFblnCwQ79Y=
@@ -9784,10 +8234,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			wBzLSjRPL9E2peK9Bgun1XcG5iQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			dAgfHfQua3MkB6MbXorybTzy9Nx9uK7cuMIoN/w6u60=
@@ -9797,10 +8243,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ONFPqWrWCLrRmp2dRJSwQl6rALU=
-			</data>
 			<key>hash2</key>
 			<data>
 			vOjKUBhJ+20tv3VWfJ5KYsd9k0Y7q7OLPyOtemeCJko=
@@ -9810,10 +8252,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			g0JIX88ELaNekoEpjcDpEnQF0yI=
-			</data>
 			<key>hash2</key>
 			<data>
 			H7ApU/vRE360YeENJrbDePlEGcKeXuI8aNGgl003c+M=
@@ -9823,10 +8261,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lpHA+Mqf9nPThbgZG9moVci6nYo=
-			</data>
 			<key>hash2</key>
 			<data>
 			NNKsOi92nFxuTo5WdeI5yw8utPtWh3Pe5tWf0OvdUto=
@@ -9836,10 +8270,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			e6WdgWrOEXFte56AcTsgb4B4rXw=
-			</data>
 			<key>hash2</key>
 			<data>
 			fCg008fKJtYjCIZAceDOfXI53vJ4ZObkco+HlPLf3LU=
@@ -9849,10 +8279,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VQwtMjmdbCE22+lzwLiD4VVFr0o=
-			</data>
 			<key>hash2</key>
 			<data>
 			YqDYNebmOxMOVDvVBchpK48uKG6/MnFbvATQO3axVJg=
@@ -9862,10 +8288,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xHWR4E5fHbkRYSeqvT8p+iWkpdI=
-			</data>
 			<key>hash2</key>
 			<data>
 			mOIVjuxRWALTqiXk0Ae/O0B58vAlYNMqWyE0wG5JLc4=
@@ -9875,10 +8297,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			d9EGNBJ4d/eQUKN8HkME2X6hVsw=
-			</data>
 			<key>hash2</key>
 			<data>
 			8csNhZIw/evdAI20fjNwV0KGkqY8bdvp5jqfK+MORbI=
@@ -9888,10 +8306,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			C1e0Q//ASi2UgGerRPWAS/yAhzM=
-			</data>
 			<key>hash2</key>
 			<data>
 			eTaJKeQ20PA7oGa3YXeRlV+f6cFsZ/uJpINz+BsrSM8=
@@ -9901,10 +8315,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UbhBd3RLt2JTU41lXYmXfTPKwI8=
-			</data>
 			<key>hash2</key>
 			<data>
 			ott7H5V0Qa54U1X7hWSTNXDgDB3Mw1UsjMtz6u5DozQ=
@@ -9914,10 +8324,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NGM/ktPlg3raJ0jiwfCzaY6oqg4=
-			</data>
 			<key>hash2</key>
 			<data>
 			lot1o5vrqxWaOUQoXf+iWRC1S+7hV/68xXVf1yKFil0=
@@ -9927,10 +8333,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			q9ZwvHVsde3QPDESYOp/xDcAa1w=
-			</data>
 			<key>hash2</key>
 			<data>
 			irBonpkfIOpuNYFjeDCYOcEw9JnNl+igwGUY1ztk/18=
@@ -9940,10 +8342,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			z8T+cc+yn0Nhh5YXq2/6x/00IYc=
-			</data>
 			<key>hash2</key>
 			<data>
 			biwI1Us+8vswDl4ArMbPZmLsY7WStMakRPIsTquCIqk=
@@ -9953,10 +8351,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LYFL2ObtCx0eeJLx459aP6OtdJI=
-			</data>
 			<key>hash2</key>
 			<data>
 			Wnf5YzV1uvCHr3Ql5mPOKuFeumXH0S+eApvbSh9qUMM=
@@ -9966,10 +8360,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cu+zG0Kw6NS92vlPaTPGgp0BvS0=
-			</data>
 			<key>hash2</key>
 			<data>
 			aCepmP9enBjNVvWIQhxXkPzovOVKG4EOxFzP0wG4ksk=
@@ -9979,10 +8369,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YMcdMekz2fDWWlw8OoytFyBvFC4=
-			</data>
 			<key>hash2</key>
 			<data>
 			aL6RmKoJ7zxH3dkp1ilbg6wWm0x0Sl3Ok/rJ9PT17nw=
@@ -9992,10 +8378,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tJcz9RlmxRO04ev83IRnjt+dsNw=
-			</data>
 			<key>hash2</key>
 			<data>
 			ftYP7ye449Dc7e2qo4h21w98RPiHq3gGYHKrYFuNyGI=
@@ -10005,10 +8387,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -10018,10 +8396,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kI//q5adHhfnsxLLgCeSRW479S0=
-			</data>
 			<key>hash2</key>
 			<data>
 			5mQ54tKNLxGiyox5n/CL+e3IqD4mdPkC7CodfLSCcSY=
@@ -10031,10 +8405,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AKhkXxTAxsB+oEGHCLlEDHKggyw=
-			</data>
 			<key>hash2</key>
 			<data>
 			Q1UeiHC9sg47/UbK/5HvsP2BgJqkuBaOsJUEIfpIwAQ=
@@ -10044,10 +8414,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iE1P8z7Rms4XqtyH7TGg9YmWxds=
-			</data>
 			<key>hash2</key>
 			<data>
 			xDYLApNJKe2GtVSYRZhQg4H9Tk3ZjAyHClyJDfJN1Z8=
@@ -10057,10 +8423,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			YJhuZD7kPrBreYSj/64+fk4+o5I=
-			</data>
 			<key>hash2</key>
 			<data>
 			HMmhTPVnWoL41KVTLBY0mtH9C/pKUFYSCzagnzzz078=
@@ -10070,10 +8432,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentSheet.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			76+mtuS2rvdOh+0sw3060ymVF5I=
-			</data>
 			<key>hash2</key>
 			<data>
 			ry3poGvwiDS9Dbwk2Xt8YKA9TG4yTtGRtLLd3FmYB10=
@@ -10083,21 +8441,13 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			TGENmNZvSQN79SYWMqpIVWVRvJE=
-			</data>
 			<key>hash2</key>
 			<data>
-			2Mpf5+jQTBKC6Gh1t4nJ13fcSjsRvhK1/vgGTRwUH50=
+			vnRgly020rum1PZUPUuOVv7qfHWRA6Tb9ZbMOqXeaQA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Tw8iM1cvO0zEvBct9Ol0jkglBT0=
-			</data>
 			<key>hash2</key>
 			<data>
 			xwsm15IcbvdzMq8W3eaKl8EVZ1tL07+Air+vD+BMptM=
@@ -10107,10 +8457,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GWt8Z9Gq75ozrSmR4+ztKGKOvNI=
-			</data>
 			<key>hash2</key>
 			<data>
 			thDy847R+n7/zPDUEpw5fX0D8FrK6rpDdTov2TgFp0I=
@@ -10120,10 +8466,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			q0Bw5XjLyuHuok3eJA9u4X21DCo=
-			</data>
 			<key>hash2</key>
 			<data>
 			s15Cy137VkXaOLHSlms4MzUvbMN90RrvCcO69WoFBMo=
@@ -10133,10 +8475,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tWS74FILkugAjEhByyQQjbzPtK0=
-			</data>
 			<key>hash2</key>
 			<data>
 			Ud4WvbaHhNZJsL2rJk2wuXiRYQ47+xpSeojFb6LbuSc=
@@ -10146,10 +8484,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QKAOvFF/BDmVXt4sP2vJ9Jw6fsI=
-			</data>
 			<key>hash2</key>
 			<data>
 			qQ/e4BBKXl/vrW7JTrMr3WepV4gFy9VZkGHcktfWQJ4=
@@ -10159,10 +8493,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/2ArAqkzauEw372dr/XpaZ6lrYk=
-			</data>
 			<key>hash2</key>
 			<data>
 			tIMf3qaYfu7ODrRP0YhNpETd6OKBU4W/g6fQBv79Mg8=
@@ -10172,10 +8502,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			U4uD+d9EOeYrr6XrZnpRFpyqXs8=
-			</data>
 			<key>hash2</key>
 			<data>
 			SOEv5popv9aVdumNRYT6SXoxV8J/7zpnTqKT0h+5tpE=
@@ -10185,10 +8511,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QKN7eh03w2E4cnu1A0VnYigLRkQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			KNZJpMNCptHAx2JWnz4My/1ixsUtDPeljzjjXP2zUpY=
@@ -10198,10 +8520,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aZEbEFOBotOuWI9DlZqG6UYDl9Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			OGdaITynVQiE3WkQCkbCFNn2nA0pfMM7WWwF/z91i44=
@@ -10211,10 +8529,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7Tvcli2P0nxxglZcqm2lQiVwyAU=
-			</data>
 			<key>hash2</key>
 			<data>
 			pgInLvOqUzplaEqJZbGZE5AegFTWY1x336K8d77lgk4=
@@ -10224,10 +8538,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AkW/+4VzQU7wBjyOAN3A/AQr9Tg=
-			</data>
 			<key>hash2</key>
 			<data>
 			7M4IDBuXBfar4S4FDRgHBiRTtMBkS7kH9cYBJUKepWo=
@@ -10237,10 +8547,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			F8eV7Vq1+LYQBPpDnnEalnJfGsk=
-			</data>
 			<key>hash2</key>
 			<data>
 			UB3HsB/XnL5GNhOadw/9p5PI1GPvdc3vBHAwKvBGwlg=
@@ -10250,10 +8556,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			EtDVlCM9hhVGknrk4oT3FvZEa28=
-			</data>
 			<key>hash2</key>
 			<data>
 			Tg8KFg/o/BUP0sCb1Kx3UUQfwXFYz+H+xYNvqzPr69g=
@@ -10263,10 +8565,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			t3RywMeBYyyN4Mkf9dKumhJTW0I=
-			</data>
 			<key>hash2</key>
 			<data>
 			GaC/4PzXcw2M19XjJaLXubNa0Bk7Dam1jvkG55klWuc=
@@ -10276,10 +8574,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2PelmfGxuH9Y6znk7bvuH+PB5xc=
-			</data>
 			<key>hash2</key>
 			<data>
 			00qs3HH5byB/CdfMbDv719pqL8obipvq0L80+JqdscY=
@@ -10289,10 +8583,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			CQbqZsl7VAYj0rEscDK8lFl5DZk=
-			</data>
 			<key>hash2</key>
 			<data>
 			iVLKez8peTrO6ELTJTfbQ26bhvejUe2hdVHahGJwDP4=
@@ -10302,10 +8592,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MFoTzdX14HKktIG9PztwTxs+yDg=
-			</data>
 			<key>hash2</key>
 			<data>
 			j4vodwUBlRRCbY/kyq74wzobFp8LtBfpvMpEXHPl3ZI=
@@ -10315,10 +8601,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			jSu/lVjVK1/EkLWdkSicM6T805g=
-			</data>
 			<key>hash2</key>
 			<data>
 			fP4GYQQepPsrFucpOJ8uDBtFjib1FIpFdKjEHv6oKGk=
@@ -10328,10 +8610,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BY1Hfb0lbZr4aHG2w6aJ5+kTo+k=
-			</data>
 			<key>hash2</key>
 			<data>
 			RF19Kr5SZ8wbiLsB2T3QPfl12jWzS+eWai7xcFPHnBk=
@@ -10341,10 +8619,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			M3+Zdsy+fzYOMkNtG9r91UE4+kQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			g5ACyhF6SF0J/phoBKhMTKYxaKGppAIdcx0D4nETBTM=
@@ -10354,10 +8628,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			m/2T+OnyRajDkbt7Q6jQW2tNT5s=
-			</data>
 			<key>hash2</key>
 			<data>
 			/SEo/BWNalk80j/rGvndD7hubk8mEnZgpF922KuvNyk=
@@ -10367,10 +8637,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QlKMBUyxPwpCtnrPz4fUvIounDI=
-			</data>
 			<key>hash2</key>
 			<data>
 			svneCiG9fG+TJ1wfP1bvqUE1lwZ70I5erruAYT5OKtQ=
@@ -10380,10 +8646,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QPJ+2aBhSM59nRvJ2dO2AJwJZeo=
-			</data>
 			<key>hash2</key>
 			<data>
 			DDZXEayq2iUP9uZhk7CXeIGGiXu2Kkz/2ymanPJm7MY=
@@ -10393,10 +8655,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			oUzz4OKlrfybJRtc0/ydnKZvK7o=
-			</data>
 			<key>hash2</key>
 			<data>
 			fBUP/0oNJu99+gjXIvSP5LkDgMg5wJ+l8SmoDHR7tco=
@@ -10406,10 +8664,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			esV04N35u1jRGfpUG+USHxhStJ4=
-			</data>
 			<key>hash2</key>
 			<data>
 			mh8npNfHhuTliw9D1c4E+7MJyp3/djxXC1vML6/EBu4=
@@ -10419,10 +8673,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LoGvYxQ4lWjdb75ym2eHmh5PEz8=
-			</data>
 			<key>hash2</key>
 			<data>
 			Fy2k8XTjj+/DhPDrM/+100RAmrrLG6w2bJRFJcRCY14=
@@ -10432,10 +8682,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ooiYPd2TI/WXCPs5jMCu/86QZtY=
-			</data>
 			<key>hash2</key>
 			<data>
 			GtagGsOpHe8jEibP41n4kwunx/Kp8UBhHronKBUHzf8=
@@ -10445,10 +8691,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			28V4TQgqcRHh+WuGz6FnLQE3Uxc=
-			</data>
 			<key>hash2</key>
 			<data>
 			9xZw5G1WfOG5ZSt6TGZTOy7PQNLxPTuqcySvulgvdMk=
@@ -10458,10 +8700,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MJZBtEMqcIJ+12t+TdzdSREvLAA=
-			</data>
 			<key>hash2</key>
 			<data>
 			7smuVcMPX5dZW0i/F3NuBWMCIfn70Sa/Hep/MRYV5C8=
@@ -10471,10 +8709,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9zNMliufOB1XM5uF7j6/Q93tENA=
-			</data>
 			<key>hash2</key>
 			<data>
 			LOWp1fwfhjyuEobRfFKDTlyp6efjSGtlkvL5OBBTriI=
@@ -10484,10 +8718,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2Uz7tzGu3sSQjNyGMYworpJ09PY=
-			</data>
 			<key>hash2</key>
 			<data>
 			aoWSMxHW7x6wFDknbjKISJZKhaEhStmRSuJsw3/FbEQ=
@@ -10497,10 +8727,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			q2Nq1Bn9IZ4i2iiN4bvD1+9Vng0=
-			</data>
 			<key>hash2</key>
 			<data>
 			EKKGJzCcm9K/tMbrApCrsqK+rTy5hWSlRtKdLjnKDro=
@@ -10510,10 +8736,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			nyVbPaz9TlL6J2FRdWDfSDilfHw=
-			</data>
 			<key>hash2</key>
 			<data>
 			FEHBl9qUqOarT2d+8EJ8gOGdze6vnCzQ4Oz97QZ378E=
@@ -10523,10 +8745,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Np5IphcxOTJl1EBOg2rs5xjXqRE=
-			</data>
 			<key>hash2</key>
 			<data>
 			/kQvwReGW+17JRUWq2hB0jGW0RR85EISaNE8k35WBFA=
@@ -10536,10 +8754,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dOG90FqngHYR9kdEjSytfBvoBLw=
-			</data>
 			<key>hash2</key>
 			<data>
 			AhUduDc9Anf0b+CTT9cXJn30txsQlEZnCMmdqxKnQto=
@@ -10549,10 +8763,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ErzhC/W9Dsxe+LgUYiNshpQVvCs=
-			</data>
 			<key>hash2</key>
 			<data>
 			5vpB2Iyi0DcT4lFnMRsdtG3ZQ76Gx3fPEgxOssLugVE=
@@ -10562,10 +8772,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -10575,10 +8781,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n/tZx0cw6xlv3UZdh0t7sv4TxUI=
-			</data>
 			<key>hash2</key>
 			<data>
 			iu0iSsCQcXyr7lYDiEiCLq4HSBxm/naxY9uXBu/PH8c=
@@ -10588,10 +8790,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2Q7AAPXZBe156q8xZcoFvRTXUnQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			HtVTWRE/QpXmKI/XpHCuXAZK1omX0EHWxVK7cN4yflQ=
@@ -10601,10 +8799,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6jQMw22QSKvjot3fxvoQbQKLVdY=
-			</data>
 			<key>hash2</key>
 			<data>
 			M2z1SMwnDGlPV8NtzpR9MfBS/SZcjF/jlmdZy0qWdBU=
@@ -10614,10 +8808,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+qFsSUEiMdnBNtXSlXLc5koUIXU=
-			</data>
 			<key>hash2</key>
 			<data>
 			nsfyV9lRWwfSxrirakqjJ7xnaMuqVzBxx5FaDoxIBbM=
@@ -10627,10 +8817,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePayments.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7AwwpGadJvHnPEo2hZRKhDwCCtE=
-			</data>
 			<key>hash2</key>
 			<data>
 			P5EF1QvPKlXj4BFeto9CEB93mKUYXh3/8D7Q6DfAgKE=
@@ -10640,32 +8826,20 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/dBUIndmexw8RLWKZWwzuwFwLRo=
-			</data>
 			<key>hash2</key>
 			<data>
-			Qvmyw5c3wk8ef7/hRIO9nMfRPYe/9OqCJkUbb7x1jeE=
+			2WZBnR2RsJjx+2b74w1pQCzhRrsNwejFjqxenonIkhE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fWe4q4YNsNADBmUf+1WO1FNzth8=
-			</data>
 			<key>hash2</key>
 			<data>
-			zkn0SfFTvzuf7sTtZTUSNIq0qYIZ6JzXXj/xrUIME6I=
+			SL9T1PPMqDMWzdyTMqaz9vYD4+8dmS9ILXTTluaYAeo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/au_becs_bsb.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1bTo7i6sVSY85whK/COW4EpBVzo=
-			</data>
 			<key>hash2</key>
 			<data>
 			Cd+piF3bgclsVb3Hd3/63GxvuDk9oZaFGb5SOKNpzso=
@@ -10673,10 +8847,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Y3ryHF+VBNxqte1acmylrj0qjcY=
-			</data>
 			<key>hash2</key>
 			<data>
 			BAXxYwmOM84kKbevjmPDmwzqUlQDimCal6qDXT+f3ec=
@@ -10686,10 +8856,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BZPKe1Ma/MCNgc1vuPTwWAqNk78=
-			</data>
 			<key>hash2</key>
 			<data>
 			VYCzn2kBrw7epGXXTcq8JPq9eia4swSvjyTbBBTMMgU=
@@ -10699,10 +8865,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zqyLtT8qpJkADdMigyu4w7lAEtU=
-			</data>
 			<key>hash2</key>
 			<data>
 			2GBcL27tPePMyhpx0Vc+YwMmW8C3m3OluFIkQR6LyK8=
@@ -10712,10 +8874,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Tx6NfPx0Bz6NwMbdM9cOalmX7JM=
-			</data>
 			<key>hash2</key>
 			<data>
 			RZFN0Z362knSvwEMnAKn/57qLcJyF/UlJ5ZxH5/5elY=
@@ -10725,10 +8883,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			seMKGYmmyF+ZKEKehozJS1hg2V0=
-			</data>
 			<key>hash2</key>
 			<data>
 			RHUjebHMZJXct6oyQP0T3DSqYUhOxFbHw2KXarhqIhI=
@@ -10738,10 +8892,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KwbCWRGKHBI12sUeIQW8jbzdnXA=
-			</data>
 			<key>hash2</key>
 			<data>
 			oB8nxsJT9rMAwcg5GvEuF5cbJuRa2LDfkyRKbLavAks=
@@ -10751,10 +8901,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KLiJKhbM+OW0GeFRPlYnWClj6p0=
-			</data>
 			<key>hash2</key>
 			<data>
 			qYIqTsRvCWyhuZk6KGd2vPxS/sCEOr2YNDoze2/hNzs=
@@ -10764,10 +8910,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			xM+T2UYuPc/Lv1Sf0dSokMt5Yfc=
-			</data>
 			<key>hash2</key>
 			<data>
 			SlafgDgUgADLUgXv5QGIoVsyEExzWsLGphJ8qlVSq7U=
@@ -10777,10 +8919,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			GzV1F6Rs8XfuD5U2F2sHNuXB4dY=
-			</data>
 			<key>hash2</key>
 			<data>
 			wGhAafD3KDDTtnGEuBocQK1k5O4tukwtPNhqQmS/s1I=
@@ -10790,10 +8928,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			HWIyMV0qLMVDMdMXhhnUr7cAlrQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			cKLdcWYmePqQZtkBGJ3uSxbKnfSkMKXxtqINl4e+wUA=
@@ -10803,10 +8937,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iFGkpsezc43P01HHC7B4BIvvOoY=
-			</data>
 			<key>hash2</key>
 			<data>
 			BioJEkll9550f/a5WqDCVr7NAPZLwxOklbJx6d4McOk=
@@ -10816,10 +8946,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QSebbhugzgfGwQZdWnWf90gQgnI=
-			</data>
 			<key>hash2</key>
 			<data>
 			izrS8x+73xj+xYHguFxQQbMtAHRz6pax38QKIgBi5jY=
@@ -10829,10 +8955,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aiB6IeNBPe1vS0Peuipn/S02kew=
-			</data>
 			<key>hash2</key>
 			<data>
 			9B0eKR/yG7aoDZNfk3WlzRoZ19XuMG7rZPl7t/9lIxQ=
@@ -10842,10 +8964,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BBOAnwmqLx1WuhcR8CNr2yR5oMo=
-			</data>
 			<key>hash2</key>
 			<data>
 			4YHOsVnPySda8GF94KPH96MV1TwRSj2umaKNIMp92rI=
@@ -10855,10 +8973,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aedFCGmRgAY1UcKlD00vJYfaOuo=
-			</data>
 			<key>hash2</key>
 			<data>
 			OH6U/1TTjyT6JMTsB6GCUBq4JzuJHSvWi7+l2zgCPUA=
@@ -10868,10 +8982,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KrHUi5hfT0XLL/3wkRwNvBaO1gw=
-			</data>
 			<key>hash2</key>
 			<data>
 			rKx1Pkb1te02M+rBEkIWdZcJm/E5hjLpvdebknzz5nA=
@@ -10881,10 +8991,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2FSl/FW+cFuqJL4skOWZ+7xDfMw=
-			</data>
 			<key>hash2</key>
 			<data>
 			FXRXw2ouxAu7Ogp9KUYINMK8KXw2fOFZ1hXf7tQl8t8=
@@ -10894,10 +9000,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aM7xrsqb3UuBXWHTcfWRM3yQ8f0=
-			</data>
 			<key>hash2</key>
 			<data>
 			mTc7aWVBikxZksl7qb8idsnEZljMr4MAI2Btz9MPLqA=
@@ -10907,10 +9009,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hwqmoMQHKFdcqEDKaRYKs44TH68=
-			</data>
 			<key>hash2</key>
 			<data>
 			4J2tg7Jyu++4Axkkmzg805TS8Big10Nk6K+WzGKcE7s=
@@ -10920,10 +9018,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			E/9p0T5FOOaNXy4RMr4r7Zh3clc=
-			</data>
 			<key>hash2</key>
 			<data>
 			ss55q+a8O+iXrmOlz7gIZz2wWVTqrm9Zz5H5GEhUgg8=
@@ -10933,10 +9027,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			K8oVBpa6jZhezX8AF91TFd9bknI=
-			</data>
 			<key>hash2</key>
 			<data>
 			LI31VmsTUD6WoAzIB3mOk0fi1qlh4G6Ih56/V5r+x/M=
@@ -10946,10 +9036,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OxTKIQpsxyYHJduZbGvQQqu6kVQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			/FadpUEd7bz/5M0xxDtax7cPKb55QifGo74LAkYE8IQ=
@@ -10959,10 +9045,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			QVMl9UbsJd672Vib+4SbJfoYzpk=
-			</data>
 			<key>hash2</key>
 			<data>
 			NdSOxlb9mo7/2oIP6Hcmr/zLtLWHqayukUbRgdXGTHE=
@@ -10972,10 +9054,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			wg8aN03U6PE5DIpZ5ARJvQ28ol8=
-			</data>
 			<key>hash2</key>
 			<data>
 			sfVfDApvUURfol09XPHpBWXmt/K/vhkeekd6ulucivg=
@@ -10985,10 +9063,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Fp0nzyWvWpl5QWv4MfflXcqixKQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			hPhq6eKUpCcY5OVq9X5X/fV+0wPpRJT4r5qrmW3Z8+c=
@@ -10998,10 +9072,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			XFnjLL7k42p89vRO7pRUY91nics=
-			</data>
 			<key>hash2</key>
 			<data>
 			WDjxnhu3k0/5MuTdWM2zWK5fogl5/N1nSZFjzGcdZ7w=
@@ -11011,10 +9081,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			erxkMth3bNuu74uGYXQ7LQwiw+k=
-			</data>
 			<key>hash2</key>
 			<data>
 			d/5wtrG3+bEKka5PUU5BgAzLpPH8x33QPB9dsNKmCKM=
@@ -11024,10 +9090,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UrLB55VNB3Iu8Zd9ovcI6UGEF+8=
-			</data>
 			<key>hash2</key>
 			<data>
 			yHOZC/POxXY8SjdMydP0/Tkj7IclNS7TPB1P0v9uSKo=
@@ -11037,10 +9099,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MDxxTfuV7zhPFSHJh+n1MWelQIY=
-			</data>
 			<key>hash2</key>
 			<data>
 			f9AAIFW6N+wkQzpK6fadQPTCTZD1Td1+gMYwlmBhz08=
@@ -11050,10 +9108,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			X0tqqmECi0jC84ELKH7RiO0mPB4=
-			</data>
 			<key>hash2</key>
 			<data>
 			Uy/B/KCj6Kto6ivuPi4EWoRecfHQXWlrGosmrIJCEdU=
@@ -11063,10 +9117,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OotsbdZDDhIFgobTTrcwUJrdw5E=
-			</data>
 			<key>hash2</key>
 			<data>
 			GQuRbbsLxV+qdETj7kLsKE3Hs6zVpVI/9PfbvwpU5h4=
@@ -11076,10 +9126,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			47n+4nAVUPVOyWTZd9YpEOic800=
-			</data>
 			<key>hash2</key>
 			<data>
 			Imz5f05nOk5c9h34tR3y7gHxlmYoidF1zXqWKBcNtUw=
@@ -11089,10 +9135,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fHD0Zu6SwCcqpocIemOoG8kTEhE=
-			</data>
 			<key>hash2</key>
 			<data>
 			EYOf9QsyfjGPScjX0X/SgXSAYKd9lEYgAHOwG0ZCn3k=
@@ -11102,10 +9144,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cT+sKxbIbMkGuni3bVRn5phKhpU=
-			</data>
 			<key>hash2</key>
 			<data>
 			SSyzo5zlzbBToVaLKzcJ+nE7Nf+Lxos7X2eKDRLkZ40=
@@ -11115,10 +9153,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			V9g3UQDYJk2784gVLoJ55GSFVEk=
-			</data>
 			<key>hash2</key>
 			<data>
 			PSdZKqn/H8uKudzHUPrv6+DO9CookoJfBCCwhW1twns=
@@ -11128,10 +9162,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gEHMv8lKmr5o+8ISg+Wx1mCr9l8=
-			</data>
 			<key>hash2</key>
 			<data>
 			X2YESbRKI4moXjxDmaypPcECBAYPFDIn3gYn0e8qwJI=
@@ -11141,10 +9171,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
 			<key>hash2</key>
 			<data>
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
@@ -11154,10 +9180,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			15ArqANq6OHdJQZbJGrEid+ay68=
-			</data>
 			<key>hash2</key>
 			<data>
 			VhlzRBbZjzMVCMEBD+moYe3Iq+gfwi5rmbD+uMvsyZk=
@@ -11167,10 +9189,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			br4a+d6JgxiZJcc8M5ubemmgygg=
-			</data>
 			<key>hash2</key>
 			<data>
 			FEvl30rQiQ1BsPICeNQjnzM2j9YmjDgnt1si0OPM7g0=
@@ -11180,10 +9198,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			FiF5QXmBylgznd9jg65R1xVy0/Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			kWONvYUNOhPDLgqSgtVwd3AwiqxZo3jJ8iQy26iCdM0=
@@ -11193,10 +9207,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Mw5ubyEye4IyXP/dLlGIZKUMPII=
-			</data>
 			<key>hash2</key>
 			<data>
 			FH8jAGnPYQwNYFYtc1wOcVPx/LFlSK7hf4vEeTZ9vAI=
@@ -11206,10 +9216,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7vGvmL+9jEcMJnWGPX+dA/Xz9nM=
-			</data>
 			<key>hash2</key>
 			<data>
 			FRTRt4xMQPMe258G4PmYCH1R0HKBeNvmIMojyy1/nhI=
@@ -11219,32 +9225,20 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5CDDctvtVyFMf2g3q9sPNpNF9G8=
-			</data>
 			<key>hash2</key>
 			<data>
-			k64qD3xh7RDgqgNvBrUymmWEo920R4wHP3/oW6AHVKo=
+			bpK769Cee9vt/ZW2r3iFahXcBEeuY8Y6C1e3MD10xDA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			jz+vOir1j6FTAHNKYfLLuON8Kh8=
-			</data>
 			<key>hash2</key>
 			<data>
-			GYg8IJfT/z7KzuSfKFzCEQxbjiFHEnbrpZ1N3VLJZPE=
+			YZxhbOAzC1qgMof6YXzOn/IV9YMyc4Mcrw7pdTZ7R+0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/au_becs_bsb.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yEwltBJubtFnHH2tjp1tIZLap/E=
-			</data>
 			<key>hash2</key>
 			<data>
 			w8BoD80byn9hOVcWVsJFl14VsG019QYXo3d+WjVUlq4=
@@ -11252,10 +9246,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0+wqRX7Z9nSrAjKvyegOEr+lFmo=
-			</data>
 			<key>hash2</key>
 			<data>
 			gfEqb/M2UKqFSb8cOwZ1HrA1qgR2Ix/NEoTmgu1BEn8=
@@ -11265,10 +9255,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			v+R9uDLYw66iAdIYZCiV2fkvOSo=
-			</data>
 			<key>hash2</key>
 			<data>
 			oqa3e+ElWv7uQn2V/rNZSansbtDksM60d0xYnbY5290=
@@ -11278,10 +9264,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			tgDAVZJK0jBMhSAcz6EXt61KIIg=
-			</data>
 			<key>hash2</key>
 			<data>
 			S5xb3p4oBRhxz2kHUrW7uA4A+Ux68DlIVz0Ni18ogMc=
@@ -11291,10 +9273,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/da.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			57HEDPvqa1w1JhYCQkZFJX4eBSo=
-			</data>
 			<key>hash2</key>
 			<data>
 			U3y/t7sYGgGdDSOgyMIlIOXWtx0s649nkY/VJnqeGNQ=
@@ -11304,10 +9282,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/de.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NpZbbx0u5Ni2fODcSMhWlBktXRs=
-			</data>
 			<key>hash2</key>
 			<data>
 			IRvSH5spsrs/sPdlBtSvxPBvfSWl7qOvvs7nEyY83ls=
@@ -11317,10 +9291,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gd+q5ccSMwBYD2dEv30J3b2K98Y=
-			</data>
 			<key>hash2</key>
 			<data>
 			dI8l/1UE8d8bANNLtRYWeMqEV+B7HESPVuG+4XytTUg=
@@ -11330,10 +9300,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n3xcmzd7B7O8NjzwyH+9vI0svkU=
-			</data>
 			<key>hash2</key>
 			<data>
 			uVYaBO6C1NWGUE2kZBc64s4yWc5S5DXNokocYDacqBw=
@@ -11343,10 +9309,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			ydedaiQrcJIixYM5/gKzdjjFqJY=
-			</data>
 			<key>hash2</key>
 			<data>
 			8GyaIaU/C9gwUB0i0OAucDVjfZF7YQzQP3XLcxvwRUA=
@@ -11356,10 +9318,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AsZywLo2GIO+y6DKuVs5ePE16m8=
-			</data>
 			<key>hash2</key>
 			<data>
 			xWWYNjp9gZpre3WnyMMaU0V+hFA1jRn26PnjnWL4eGY=
@@ -11369,10 +9327,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/es.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dyjkC17zhHhU591ImL18RJRMA+E=
-			</data>
 			<key>hash2</key>
 			<data>
 			BSoy17UHYo60urPnK4FrxYoTi+hEnyggrU4UIOJ+Opo=
@@ -11382,10 +9336,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			biLeEd9ZGZfJGQ0e3oz3uAlNIbo=
-			</data>
 			<key>hash2</key>
 			<data>
 			o2YsnXknJY8nEmeC0SW3FFmEJkvqWtcBbV6kZUL6U7k=
@@ -11395,10 +9345,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			oxefqVyAaAMU7FZjMfXQdOjneJg=
-			</data>
 			<key>hash2</key>
 			<data>
 			y3erOXq2Zsaoeuj8IoP4QFpc9Nqyad1kQhFv2tSdn9Q=
@@ -11408,10 +9354,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/SZcK3F3SdwdwLYu+5t3ZcAzmRQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			9cV96LYtxVUyzvINYjeFpWNRrQLVZQZJyPVi6dkQSz4=
@@ -11421,10 +9363,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MdOn0n4G7Aibh/49QCHPD3zHaZI=
-			</data>
 			<key>hash2</key>
 			<data>
 			T9MwtjZLhMqzc0mix0S2KUKWkqeLzDYZHrLPB4ZmMZA=
@@ -11434,10 +9372,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			bme7OZfQv7oKQMAq8rkwYfcWo0s=
-			</data>
 			<key>hash2</key>
 			<data>
 			7J6Jtqks9etJsE0F3NNlRenxzs2EAVcmZ5fdizlJ4dc=
@@ -11447,10 +9381,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OWZXBL51ZPUwFaTkgAShQSpGNaQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			YsHLvjT02K9KMlEX7kA0VoXYetb9xWPEGwYhkK6dL/c=
@@ -11460,10 +9390,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9rpCYaHsZeuMdiQSqLCPN0iRN/Q=
-			</data>
 			<key>hash2</key>
 			<data>
 			MCgJf23fqWCjV9+qVjLbturqm+v77VfWoUHJHojlOH4=
@@ -11473,10 +9399,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/id.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0y/i3yhKoY16FU62eY/jUonTzNU=
-			</data>
 			<key>hash2</key>
 			<data>
 			2iheImLisN7LDm4JMup+g1VOhzgVT65qCYCxy9Cwd4s=
@@ -11486,10 +9408,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/it.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SmdSeSwleQQ4TSvkkzFvHxDM1g8=
-			</data>
 			<key>hash2</key>
 			<data>
 			MsnuLWV9592qaOyvGie09INee3kyXiCpYMZrwpPrGHY=
@@ -11499,10 +9417,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4E7wC0MD6ZkWHQlD7bnuZCugsig=
-			</data>
 			<key>hash2</key>
 			<data>
 			aECnf0hEk0XoJ37pG5HCg3vj48aVG85/mvXP9abyRoc=
@@ -11512,10 +9426,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			bW8D+MJjDdN7q5hj9dak3kLIcN4=
-			</data>
 			<key>hash2</key>
 			<data>
 			p0O9asvjE0MtCXco799qV9n0hXv6tZgTYd61p/Uc98I=
@@ -11525,10 +9435,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/localized_address_data.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			AYP3yqVVgkwF9+4KwMYNMXVL/lA=
-			</data>
 			<key>hash2</key>
 			<data>
 			XFdjm3zQhkqR4OWREA7OERZ7IUDx6L/sZgKad3ZdzL0=
@@ -11536,10 +9442,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			mkiyeRo9fxP99zafqQd7tXaIGIo=
-			</data>
 			<key>hash2</key>
 			<data>
 			S4g3HcWfu1abhy85gOZ2TTM26MCNugXVwNMn/6nTK+U=
@@ -11549,10 +9451,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			buvMupjwfUHV/jg6zjQkBpGKuUc=
-			</data>
 			<key>hash2</key>
 			<data>
 			8dgp3nfntQ1ZQLFx/Oe3IsQazSTEHqTYkdMjinT2v+E=
@@ -11562,10 +9460,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OuUTZ3Qnl3VuffNqVT7/FEI3+K8=
-			</data>
 			<key>hash2</key>
 			<data>
 			f5mPCSLGiOR+jsyr0zpsJ6qPK10uW0gATcPGXdqVPF8=
@@ -11575,10 +9469,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Mv/NBRYFIZZMrc5XGkPSFzqG4RE=
-			</data>
 			<key>hash2</key>
 			<data>
 			HkWPCrnG9hTxCIn22nXF8dtXe8dc0O/KdUWhaEXjzDQ=
@@ -11588,10 +9478,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7UW3ARMI3l7KsSEfT4Xzs8L1/QE=
-			</data>
 			<key>hash2</key>
 			<data>
 			KBSnrcN1s+BncRem25TQ7DxHmebjeMOeq9pNEqxmECc=
@@ -11601,10 +9487,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			4tWpRHsoxwZ4DUSbNLIW4Sl4t6E=
-			</data>
 			<key>hash2</key>
 			<data>
 			zK6PkGiW5Tim+upJEL2gHkDrT7kR/OMgFSy6RUvGkWA=
@@ -11614,10 +9496,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IyCGaJ6xVx6Yp7S/Kxv1uD7wbRY=
-			</data>
 			<key>hash2</key>
 			<data>
 			pisdipmkt4gn2FdbQYBbkepCin+x65+UO/5C9wsc7Q0=
@@ -11627,10 +9505,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gGkx2UUuF02bpI/LEVpLOqjOB6Q=
-			</data>
 			<key>hash2</key>
 			<data>
 			inaziDBnMV0oPeIxzYpsgvvH3ZdK1SVgqS4sAocYqaI=
@@ -11640,10 +9514,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6QPKoLjnkPauADA60Kr1XOxnE30=
-			</data>
 			<key>hash2</key>
 			<data>
 			9Xatrd+9qAERil7b5idPCnpT3/TRpUlBooDEUlA2GqI=
@@ -11653,10 +9523,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			O9rcRqeiihZyOOKSWP7NRFimNpw=
-			</data>
 			<key>hash2</key>
 			<data>
 			iN37JlSArvq/s/W0SH9cmvoRMoAGgHMEXqiFQCKe0AQ=
@@ -11666,10 +9532,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UDvCPaZfckCx2NM4tSCBM32KNKI=
-			</data>
 			<key>hash2</key>
 			<data>
 			m9O2ozfB+b43vUp0tXfFlrPT+or4mTysEojY3iWlums=
@@ -11679,10 +9541,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			eodtR+oBowT6hoSKBjpPIiCn7yU=
-			</data>
 			<key>hash2</key>
 			<data>
 			wI5/bneOg2z8+IgLsUbXnBnaRNIWgzVkJE6GWeU8pII=
@@ -11692,10 +9550,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BGWJ7xgQkMHa5tmS8siGZ+i2yPE=
-			</data>
 			<key>hash2</key>
 			<data>
 			UCgSC5Xtzq07M6qgCZm80D9mdJFQkNuFRG8AeHcP9PQ=
@@ -11705,10 +9559,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			FH2+92UcQYOdkUoPlHZxtVFLYpY=
-			</data>
 			<key>hash2</key>
 			<data>
 			LEljXBKIMKoOtAYNx49Gc3/Etiot7hEwWQE44JWDQPA=
@@ -11718,10 +9568,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/th.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			j3jX+LYExY41w6GFcBXoUThTpsY=
-			</data>
 			<key>hash2</key>
 			<data>
 			kL2WfIo/PcZWbPKEFQTEC/DpSPFTcupEPkGLMi4YPG0=
@@ -11731,10 +9577,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			qSGPXQoMD7o+C6OWRMHtQ8G1udc=
-			</data>
 			<key>hash2</key>
 			<data>
 			BqRkitEmgMC0I62iAJq/Wy+rGtZg7O9KkSmliPSdYP8=
@@ -11744,10 +9586,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1+AfPX4DeXqWUkFIyJVo+zWmKXQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			jGC5x/A8J4UNZ229zOGWkDcuHD6RXXAD5YOMKS58HlM=
@@ -11757,10 +9595,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OKC5LL8pGmP3w136eNV4geWyIRg=
-			</data>
 			<key>hash2</key>
 			<data>
 			mA9KTF0gcPAcz2CS2ILdT8JDpJ9CUyNymQU9dPv/j6Y=
@@ -11770,10 +9604,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			+S5RbOkL17lPLpHovyhIx6nCChg=
-			</data>
 			<key>hash2</key>
 			<data>
 			DdE5v3bXjFPo3glN2gUQ///eY4J52G8cU8FmKxOebgc=
@@ -11783,10 +9613,6 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3LPDWTh/jMKF6JVrd+yDVS/E6ZY=
-			</data>
 			<key>hash2</key>
 			<data>
 			j+a6b2EA5+x9JeO6L57OZu5W5BaOzRtvzjC1tOwMElc=
@@ -11796,27 +9622,47 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			yy0ziy5Y5K6NOqPejsIy6FjzOs4=
-			</data>
 			<key>hash2</key>
 			<data>
-			A85liu/h0BmcRjiCFY+ou56pl2k2DnYA3XC1D9AbxV4=
+			/O+d0vbnT3d0efxSsgv4UKc3zeEaKjlJy4fmpbLaeN8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Q8e/vo1bIrW5FPuh4WJcj3VylNE=
-			</data>
 			<key>hash2</key>
 			<data>
 			a0XjOQjyuGokkSKGbcC1uO4O+ZcnOQ4jfQ7oK25bmuI=
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			FdNQyHamX30C92uuQjpxrmoPm7bSRa/n5Gfpc1dy0uA=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			E1Xg5e5HvQFXG30VsrLLinXp+9LjP03GbPKeGMm3Orc=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2btPSrHjq2DJEyg/GDhNqPmOEtQXXqvO9CxZtm2Eyso=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyStripeAPM.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			oEfUk9pv/mb/Pla5FeKoomfhaIqkOvW6XEUZ7vBtuFE=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>
