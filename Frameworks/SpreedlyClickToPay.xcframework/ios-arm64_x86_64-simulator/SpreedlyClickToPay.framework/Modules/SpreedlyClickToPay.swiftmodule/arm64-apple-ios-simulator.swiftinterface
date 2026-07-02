@@ -1,0 +1,519 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyClickToPay
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+import Combine
+import Foundation
+import SpreedlyCore
+import SpreedlySecurity
+import SpreedlyUI
+import Swift
+import SwiftUI
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import _WebKit_SwiftUI
+@objc @objcMembers final public class ClickToPayNewCardFields : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let primaryAccountNumber: Swift.String
+  @objc final public let panExpirationMonth: Swift.String
+  @objc final public let panExpirationYearTwoDigit: Swift.String
+  @objc final public let cardSecurityCode: Swift.String
+  @objc final public let cardholderFirstName: Swift.String
+  @objc final public let cardholderLastName: Swift.String
+  @objc public init(primaryAccountNumber: Swift.String, panExpirationMonth: Swift.String, panExpirationYearTwoDigit: Swift.String, cardSecurityCode: Swift.String, cardholderFirstName: Swift.String, cardholderLastName: Swift.String)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class ClickToPayButtonConfig : ObjectiveC.NSObject, Swift.Sendable {
+  @objc public static let mcButtonWidthMax: CoreFoundation.CGFloat
+  @objc public static let mcButtonHeightMin: CoreFoundation.CGFloat
+  @objc public static let mcButtonHeightMax: CoreFoundation.CGFloat
+  final public var cardBrands: [SpreedlyClickToPay.ClickToPayCardBrand]
+  @objc final public var isEnabled: Swift.Bool
+  @objc final public var isDark: Swift.Bool
+  @objc final public var buttonWidth: CoreFoundation.CGFloat
+  @objc final public var buttonHeight: CoreFoundation.CGFloat
+  @objc final public var theme: Swift.String?
+  @objc final public var buttonAccessibilityLabel: Swift.String
+  @objc final public var accessibilityIdentifier: Swift.String
+  @objc override dynamic public init()
+  @nonobjc public init(cardBrands: [SpreedlyClickToPay.ClickToPayCardBrand] = [], isEnabled: Swift.Bool = true, isDark: Swift.Bool = false, buttonWidth: CoreFoundation.CGFloat = 0, buttonHeight: CoreFoundation.CGFloat = 0, theme: Swift.String? = nil, buttonAccessibilityLabel: Swift.String? = nil, accessibilityIdentifier: Swift.String = "spreedly_click_to_pay_button")
+  @objc final public var cardBrandWireValues: [Swift.String] {
+    @objc get
+    @objc set
+  }
+  @objc deinit
+}
+@objc public enum ClickToPayCardBrand : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case mastercard
+  case visa
+  case discover
+  case amex
+  public var mcWireValue: Swift.String {
+    get
+  }
+  public static let defaultCheckoutBrands: [SpreedlyClickToPay.ClickToPayCardBrand]
+  public static func brands(fromWireValues values: [Swift.String]) -> [SpreedlyClickToPay.ClickToPayCardBrand]
+  public static func brand(fromWireValue value: Swift.String) -> SpreedlyClickToPay.ClickToPayCardBrand?
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyClickToPay.ClickToPayCardBrand]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyClickToPay.ClickToPayCardBrand] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension Swift.Array where Element == SpreedlyClickToPay.ClickToPayCardBrand {
+  public func mcWireAttribute() -> Swift.String
+  public func mcWireValues() -> [Swift.String]
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class ClickToPayCheckoutConfig : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public var initConfig: SpreedlyClickToPay.ClickToPayInitConfig
+  @objc final public var srcDpaId: Swift.String
+  @objc final public var locale: Swift.String
+  @objc final public var isSandbox: Swift.Bool
+  @objc final public var dpaPresentationName: Swift.String
+  @objc final public var dpaName: Swift.String
+  @objc final public var customer: SpreedlyClickToPay.ClickToPayCustomer?
+  @objc final public var doLookup: Swift.Bool
+  @objc final public var displayCards: SpreedlyClickToPay.ClickToPayDisplayCardsConfig
+  @objc final public var otp: SpreedlyClickToPay.ClickToPayOtpConfig
+  @objc final public var tokenizeBilling: SpreedlyClickToPay.ClickToPayTokenizeBilling?
+  @objc final public var tokenizeMetadata: [Swift.String : Swift.String]?
+  final public var eligibleForCardUpdater: Swift.Bool?
+  @objc final public var isTest: Swift.Bool
+  @objc final public var merchantHostedCardList: Swift.Bool
+  @objc override convenience dynamic public init()
+  public init(initConfig: SpreedlyClickToPay.ClickToPayInitConfig = ClickToPayInitConfig(), srcDpaId: Swift.String = "", locale: Swift.String = "en_US", isSandbox: Swift.Bool = true, dpaPresentationName: Swift.String = "Spreedly C2P Sandbox", dpaName: Swift.String = "SpreedlyC2PSandbox", customer: SpreedlyClickToPay.ClickToPayCustomer? = nil, doLookup: Swift.Bool = true, displayCards: SpreedlyClickToPay.ClickToPayDisplayCardsConfig = ClickToPayDisplayCardsConfig(), otp: SpreedlyClickToPay.ClickToPayOtpConfig = ClickToPayOtpConfig(), tokenizeBilling: SpreedlyClickToPay.ClickToPayTokenizeBilling? = nil, tokenizeMetadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil, isTest: Swift.Bool = false, merchantHostedCardList: Swift.Bool = false)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ClickToPayCheckoutController : Combine.ObservableObject {
+  final public var config: SpreedlyClickToPay.ClickToPayCheckoutConfig {
+    get
+  }
+  @Combine.Published<SpreedlyClickToPay.ClickToPayFlowState> @_projectedValueProperty($state) final public var state: SpreedlyClickToPay.ClickToPayFlowState {
+    get
+  }
+  final public var $state: Combine.Published<SpreedlyClickToPay.ClickToPayFlowState>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.String> @_projectedValueProperty($statusMessage) final public var statusMessage: Swift.String {
+    get
+  }
+  final public var $statusMessage: Combine.Published<Swift.String>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.Bool> @_projectedValueProperty($isWebViewLoading) final public var isWebViewLoading: Swift.Bool {
+    get
+  }
+  final public var $isWebViewLoading: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.Bool> @_projectedValueProperty($checkoutDcfDismissed) final public var checkoutDcfDismissed: Swift.Bool {
+    get
+  }
+  final public var $checkoutDcfDismissed: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @Combine.Published<[[Swift.String : Any]]> @_projectedValueProperty($maskedCards) final public var maskedCards: [[Swift.String : Any]] {
+    get
+  }
+  final public var $maskedCards: Combine.Published<[[Swift.String : Any]]>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.String?> @_projectedValueProperty($selectedCardId) final public var selectedCardId: Swift.String? {
+    get
+  }
+  final public var $selectedCardId: Combine.Published<Swift.String?>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.String?> @_projectedValueProperty($otpHint) final public var otpHint: Swift.String? {
+    get
+  }
+  final public var $otpHint: Combine.Published<Swift.String?>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.Bool> @_projectedValueProperty($manualCardEntrySelected) final public var manualCardEntrySelected: Swift.Bool {
+    get
+  }
+  final public var $manualCardEntrySelected: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.Bool> @_projectedValueProperty($newUserCardEntry) final public var newUserCardEntry: Swift.Bool {
+    get
+  }
+  final public var $newUserCardEntry: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.Bool> @_projectedValueProperty($awaitingExternalOtpChannel) final public var awaitingExternalOtpChannel: Swift.Bool {
+    get
+  }
+  final public var $awaitingExternalOtpChannel: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @Combine.Published<Swift.String?> @_projectedValueProperty($selectedOtpChannelId) final public var selectedOtpChannelId: Swift.String? {
+    get
+  }
+  final public var $selectedOtpChannelId: Combine.Published<Swift.String?>.Publisher {
+    get
+  }
+  @Combine.Published<[SpreedlyClickToPay.ClickToPayValidationChannel]> @_projectedValueProperty($otpValidationChannels) final public var otpValidationChannels: [SpreedlyClickToPay.ClickToPayValidationChannel] {
+    get
+  }
+  final public var $otpValidationChannels: Combine.Published<[SpreedlyClickToPay.ClickToPayValidationChannel]>.Publisher {
+    get
+  }
+  final public var events: Combine.PassthroughSubject<SpreedlyClickToPay.ClickToPayEvent, Swift.Never> {
+    get
+  }
+  public init(config: SpreedlyClickToPay.ClickToPayCheckoutConfig)
+  final public func beginCheckout()
+  final public func setRememberMeSelected(_ value: Swift.Bool)
+  final public func signOut(onComplete: ((Swift.Bool) -> Swift.Void)? = nil)
+  final public func lookup(customer: SpreedlyClickToPay.ClickToPayCustomer)
+  final public func selectOtpChannel(_ channelId: Swift.String)
+  final public func initiateOtp()
+  final public func validateOtp(_ value: Swift.String)
+  final public func showManualCardEntry()
+  final public func dismissManualCardEntry()
+  final public func setPendingVerificationValue(_ value: Swift.String?)
+  final public func checkoutWithNewCard(fields: SpreedlyClickToPay.ClickToPayNewCardFields, rememberMe: Swift.Bool = false)
+  final public func selectCard(id: Swift.String)
+  final public func checkoutSelectedCard(rememberMe: Swift.Bool = false, verificationValue: Swift.String? = nil, srcDigitalCardId: Swift.String? = nil)
+  final public func tokenize(verificationValue: Swift.String, billing: SpreedlyCore.ClickToPayBillingFields? = nil, paymentMetadata: [Swift.String : Swift.String]? = nil)
+  final public var flowSnapshot: SpreedlyClickToPay.ClickToPayCheckoutFlowSnapshot {
+    get
+  }
+  final public var typedMaskedCards: [SpreedlyClickToPay.ClickToPayMaskedCard] {
+    get
+  }
+  final public func webViewHost() -> some SwiftUICore.View
+  
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+public struct ClickToPayCheckoutFlowSnapshot : Swift.Sendable {
+  public var checkoutId: Swift.String?
+  public var phase: SpreedlyClickToPay.ClickToPayFlowState
+  public var message: Swift.String
+  public var awaitingExternalOtpChannel: Swift.Bool
+  public var otpValidationChannels: [SpreedlyClickToPay.ClickToPayValidationChannel]
+  public var selectedOtpChannelId: Swift.String?
+  public var maskedCards: [SpreedlyClickToPay.ClickToPayMaskedCard]
+  public var selectedCardId: Swift.String?
+  public var cardsReady: Swift.Bool
+  public init(checkoutId: Swift.String? = nil, phase: SpreedlyClickToPay.ClickToPayFlowState = .idle, message: Swift.String = "Ready", awaitingExternalOtpChannel: Swift.Bool = false, otpValidationChannels: [SpreedlyClickToPay.ClickToPayValidationChannel] = [], selectedOtpChannelId: Swift.String? = nil, maskedCards: [SpreedlyClickToPay.ClickToPayMaskedCard] = [], selectedCardId: Swift.String? = nil, cardsReady: Swift.Bool = false)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class ClickToPayCheckoutViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency weak public var clickToPayDelegate: (any SpreedlyClickToPay.ClickToPayDelegate)?
+  @objc @_Concurrency.MainActor @preconcurrency public init(config: SpreedlyClickToPay.ClickToPayCheckoutConfig)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
+  @objc(presentWithConfig:from:) @_Concurrency.MainActor @preconcurrency public static func present(config: SpreedlyClickToPay.ClickToPayCheckoutConfig, from viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @objcMembers final public class ClickToPayCustomer : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public var email: Swift.String?
+  @objc final public var phoneNumber: Swift.String?
+  @objc final public var countryCode: Swift.String?
+  @objc final public var mainLookupMethod: SpreedlyClickToPay.ClickToPayMainLookupMethod
+  @objc public init(email: Swift.String? = nil, phoneNumber: Swift.String? = nil, countryCode: Swift.String? = nil, mainLookupMethod: SpreedlyClickToPay.ClickToPayMainLookupMethod = .email)
+  @objc final public func hasEmail() -> Swift.Bool
+  @objc final public func hasPhoneLookup() -> Swift.Bool
+  @objc final public func isValidForLookup() -> Swift.Bool
+  @objc deinit
+}
+@objc public enum ClickToPayEventKind : Swift.Int, Swift.Sendable {
+  case checkoutStarted
+  case initialized
+  case newUser
+  case existingUser
+  case verifiedUser
+  case otpInitiated
+  case otpChannelSelectionRequired
+  case otpResponse
+  case otpResend
+  case otpNotYou
+  case displayCardsReady
+  case addNewCard
+  case checkoutCancelled
+  case checkoutDifferentPaymentMethod
+  case checkoutError
+  case checkoutWindowOpened
+  case checkoutWindowClosed
+  case sessionDeleted
+  case checkoutComplete
+  case paymentMethodTokenized
+  case error
+  case validationErrors
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol ClickToPayDelegate {
+  @objc optional func clickToPay(_ checkout: SpreedlyClickToPay.ClickToPayCheckoutViewController?, didReceiveEvent event: SpreedlyClickToPay.ClickToPayEventKind, userInfo: [Swift.String : Any]?)
+}
+public enum ClickToPayEvent : Swift.Equatable, Swift.Sendable {
+  case checkoutStarted(checkoutId: Swift.String)
+  case initialized(checkoutId: Swift.String, success: Swift.Bool, availableCardBrands: [Swift.String])
+  case newUser(checkoutId: Swift.String)
+  case existingUser(checkoutId: Swift.String)
+  case verifiedUser(checkoutId: Swift.String)
+  case otpInitiated(checkoutId: Swift.String, maskedValidationChannel: Swift.String?, channels: [SpreedlyClickToPay.ClickToPayValidationChannel], network: Swift.String?, rememberMe: Swift.Bool)
+  case otpChannelSelectionRequired(checkoutId: Swift.String, channels: [SpreedlyClickToPay.ClickToPayValidationChannel])
+  case otpResponse(checkoutId: Swift.String, success: Swift.Bool, errorReason: Swift.String?)
+  case otpResend(checkoutId: Swift.String)
+  case otpNotYou(checkoutId: Swift.String)
+  case displayCardsReady(checkoutId: Swift.String, cards: [SpreedlyClickToPay.ClickToPayMaskedCard])
+  case addNewCard(checkoutId: Swift.String, brands: [Swift.String])
+  case checkoutCancelled(checkoutId: Swift.String)
+  case checkoutDifferentPaymentMethod(checkoutId: Swift.String)
+  case checkoutError(checkoutId: Swift.String, actionCode: Swift.String)
+  case checkoutWindowOpened(checkoutId: Swift.String)
+  case checkoutWindowClosed(checkoutId: Swift.String)
+  case sessionDeleted(checkoutId: Swift.String, deviceRecognized: Swift.Bool?)
+  case checkoutComplete(checkoutId: Swift.String, metadata: SpreedlyCore.ClickToPayMetadata)
+  case paymentMethodTokenized(checkoutId: Swift.String, token: Swift.String)
+  case error(checkoutId: Swift.String, code: SpreedlyClickToPay.ClickToPayErrorCode, message: Swift.String)
+  case validationErrors(checkoutId: Swift.String, errors: [SpreedlyClickToPay.ClickToPayFieldError])
+  public var checkoutId: Swift.String {
+    get
+  }
+  public static func == (a: SpreedlyClickToPay.ClickToPayEvent, b: SpreedlyClickToPay.ClickToPayEvent) -> Swift.Bool
+}
+extension SpreedlyClickToPay.ClickToPayEvent : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+public enum ClickToPayFlowState : Swift.String, Swift.Sendable {
+  case idle
+  case loadingWebView
+  case mcScriptReady
+  case initialized
+  case lookupComplete
+  case newUserEnrollment
+  case cardsLoaded
+  case otpRequired
+  case checkoutInProgress
+  case complete
+  case tokenizing
+  case finished
+  case failed
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc public enum ClickToPayMainLookupMethod : Swift.Int, Swift.Sendable {
+  case email
+  case phoneNumber
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ClickToPayOtpChannelSelection : Swift.Int, Swift.Sendable {
+  case inline
+  case external
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers final public class ClickToPayInitConfig : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public var transactionAmount: Swift.Double
+  @objc final public var transactionCurrencyCode: Swift.String
+  @objc final public var dynamicDataType: Swift.String
+  final public var cardBrands: [SpreedlyClickToPay.ClickToPayCardBrand]
+  @nonobjc public init(transactionAmount: Swift.Double = 100, transactionCurrencyCode: Swift.String = "USD", dynamicDataType: Swift.String = "NONE", cardBrands: [SpreedlyClickToPay.ClickToPayCardBrand] = ClickToPayCardBrand.defaultCheckoutBrands)
+  @objc convenience public init(transactionAmount: Swift.Double, transactionCurrencyCode: Swift.String, dynamicDataType: Swift.String)
+  @objc(initWithAmountCents:transactionCurrencyCode:) convenience public init(amountCents: Swift.Int, transactionCurrencyCode: Swift.String)
+  @nonobjc convenience public init(amountCents: Swift.Int, transactionCurrencyCode: Swift.String = "USD", dynamicDataType: Swift.String = "NONE", cardBrands: [SpreedlyClickToPay.ClickToPayCardBrand] = ClickToPayCardBrand.defaultCheckoutBrands)
+  @objc final public var cardBrandWireValues: [Swift.String] {
+    @objc get
+    @objc set
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class ClickToPayTokenizeBilling : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public var firstName: Swift.String?
+  @objc final public var lastName: Swift.String?
+  @objc final public var fullName: Swift.String?
+  @objc final public var month: Swift.String?
+  @objc final public var year: Swift.String?
+  @objc final public var addressLine1: Swift.String?
+  @objc final public var addressLine2: Swift.String?
+  @objc final public var city: Swift.String?
+  @objc final public var state: Swift.String?
+  @objc final public var zip: Swift.String?
+  @objc final public var country: Swift.String?
+  @objc final public var email: Swift.String?
+  @objc final public var phoneNumber: Swift.String?
+  @objc final public var company: Swift.String?
+  @objc final public var shippingAddressLine1: Swift.String?
+  @objc final public var shippingAddressLine2: Swift.String?
+  @objc final public var shippingCity: Swift.String?
+  @objc final public var shippingState: Swift.String?
+  @objc final public var shippingZip: Swift.String?
+  @objc final public var shippingCountry: Swift.String?
+  @objc final public var shippingPhoneNumber: Swift.String?
+  @objc override dynamic public init()
+  final public func toBillingFields(fallbackEmail: Swift.String? = nil) -> SpreedlyCore.ClickToPayBillingFields
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class ClickToPayMaskedCard : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let srcDigitalCardId: Swift.String
+  @objc final public let panLastFour: Swift.String?
+  @objc final public let cardBrand: Swift.String?
+  @objc public init(srcDigitalCardId: Swift.String, panLastFour: Swift.String? = nil, cardBrand: Swift.String? = nil)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class ClickToPayValidationChannel : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let identityType: Swift.String
+  @objc final public let validationChannelId: Swift.String
+  @objc final public let maskedValidationChannel: Swift.String?
+  @objc public init(identityType: Swift.String, validationChannelId: Swift.String, maskedValidationChannel: Swift.String? = nil)
+  @objc deinit
+}
+@objc public enum ClickToPayErrorCode : Swift.Int, Swift.Sendable {
+  case c2pInit
+  case c2pLookup
+  case c2pOtp
+  case c2pCheckout
+  case c2pTokenize
+  case networkTimeout
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class ClickToPayFieldError : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let key: Swift.String
+  @objc final public let attribute: Swift.String
+  @objc final public let message: Swift.String
+  @objc public init(iframeAttribute: Swift.String, message: Swift.String)
+  @objc deinit
+}
+extension SpreedlyCore.ClickToPayBillingFields {
+  public static func iframeParity(email: Swift.String? = nil) -> SpreedlyCore.ClickToPayBillingFields
+}
+@objc public enum ClickToPayCardSelectionType : Swift.Int, Swift.Sendable {
+  case radioButton
+  case gridView
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ClickToPayOtpPresentation : Swift.Int, Swift.Sendable {
+  case overlay
+  case none
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers final public class ClickToPayDisplayCardsConfig : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public var displaySignOut: Swift.Bool
+  @objc final public var displayAddCard: Swift.Bool
+  @objc final public var displayPreferredCard: Swift.Bool
+  @objc final public var cardSelectionType: SpreedlyClickToPay.ClickToPayCardSelectionType
+  @objc public init(displaySignOut: Swift.Bool = true, displayAddCard: Swift.Bool = true, displayPreferredCard: Swift.Bool = true, cardSelectionType: SpreedlyClickToPay.ClickToPayCardSelectionType = .radioButton)
+  @objc deinit
+}
+@objc @objcMembers final public class ClickToPayOtpConfig : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public var rememberMe: Swift.Bool
+  @objc final public var presentation: SpreedlyClickToPay.ClickToPayOtpPresentation
+  @objc final public var channelSelection: SpreedlyClickToPay.ClickToPayOtpChannelSelection
+  @objc final public var requestedValidationChannelId: Swift.String?
+  @objc public init(rememberMe: Swift.Bool = false, presentation: SpreedlyClickToPay.ClickToPayOtpPresentation = .overlay, channelSelection: SpreedlyClickToPay.ClickToPayOtpChannelSelection = .inline, requestedValidationChannelId: Swift.String? = nil)
+  @objc deinit
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyClickToPayButton : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(checkoutConfig: SpreedlyClickToPay.ClickToPayCheckoutConfig, buttonConfig: SpreedlyClickToPay.ClickToPayButtonConfig = ClickToPayButtonConfig(), presentingViewController: UIKit.UIViewController? = nil, prepareForPresentation: (() async -> Swift.Bool)? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s18SpreedlyClickToPay0abcD6ButtonV4bodyQrvp", 0) __
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency final public class SpreedlyClickToPayButtonViewController : UIKit.UIViewController {
+  @objc @_Concurrency.MainActor @preconcurrency final public var checkoutConfig: SpreedlyClickToPay.ClickToPayCheckoutConfig {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency final public var buttonConfig: SpreedlyClickToPay.ClickToPayButtonConfig {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor @preconcurrency final public var prepareForPresentation: (() async -> Swift.Bool)?
+  @objc @_Concurrency.MainActor @preconcurrency public init(checkoutConfig: SpreedlyClickToPay.ClickToPayCheckoutConfig)
+  @objc @_Concurrency.MainActor @preconcurrency public init(checkoutConfig: SpreedlyClickToPay.ClickToPayCheckoutConfig, buttonConfig: SpreedlyClickToPay.ClickToPayButtonConfig)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func viewDidLoad()
+  @objc @_Concurrency.MainActor @preconcurrency final public func setPrepareForPresentationBlocking(_ handler: (() -> Swift.Bool)?)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class SpreedlyClickToPayCheckout : ObjectiveC.NSObject {
+  public static func setAutoTokenizeAuthRefresher(_ refresher: (() async -> Swift.Bool)?)
+  @objc public static func setAutoTokenizeAuthRefresherBlocking(_ refresher: (() -> Swift.Bool)?)
+  @objc weak public static var delegate: (any SpreedlyClickToPay.ClickToPayDelegate)?
+  @objc public static var isActive: Swift.Bool {
+    @objc get
+  }
+  public static var events: Combine.PassthroughSubject<SpreedlyClickToPay.ClickToPayEvent, Swift.Never> {
+    get
+  }
+  public static var state: Combine.AnyPublisher<SpreedlyClickToPay.ClickToPayCheckoutFlowSnapshot, Swift.Never> {
+    get
+  }
+  @objc public static func present(config: SpreedlyClickToPay.ClickToPayCheckoutConfig)
+  @objc public static func present(config: SpreedlyClickToPay.ClickToPayCheckoutConfig, from viewController: UIKit.UIViewController)
+  @objc public static func cancel()
+  @objc public static func signOut(onComplete: ((Swift.Bool) -> Swift.Void)? = nil)
+  @objc public static func lookup(customer: SpreedlyClickToPay.ClickToPayCustomer)
+  @objc public static func selectOtpChannel(_ channelId: Swift.String)
+  @objc public static func initiateOtp()
+  @objc public static func validateOtp(_ value: Swift.String)
+  @objc public static func selectCard(_ srcDigitalCardId: Swift.String)
+  @objc public static func checkoutSelectedCard(srcDigitalCardId: Swift.String? = nil, verificationValue: Swift.String? = nil, rememberMe: Swift.Bool = false)
+  @objc public static func checkoutWithNewCard(fields: SpreedlyClickToPay.ClickToPayNewCardFields, rememberMe: Swift.Bool = false)
+  public static func makeController(config: SpreedlyClickToPay.ClickToPayCheckoutConfig) -> SpreedlyClickToPay.ClickToPayCheckoutController
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension SpreedlyClickToPay.ClickToPayCardBrand : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayCardBrand : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayCardBrand : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayEventKind : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayEventKind : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayEventKind : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayFlowState : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayFlowState : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayFlowState : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayMainLookupMethod : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayMainLookupMethod : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayMainLookupMethod : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayOtpChannelSelection : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayOtpChannelSelection : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayOtpChannelSelection : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayErrorCode : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayErrorCode : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayErrorCode : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayCardSelectionType : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayCardSelectionType : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayCardSelectionType : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.ClickToPayOtpPresentation : Swift.Equatable {}
+extension SpreedlyClickToPay.ClickToPayOtpPresentation : Swift.Hashable {}
+extension SpreedlyClickToPay.ClickToPayOtpPresentation : Swift.RawRepresentable {}
+extension SpreedlyClickToPay.SpreedlyClickToPayButton : Swift.Sendable {}
