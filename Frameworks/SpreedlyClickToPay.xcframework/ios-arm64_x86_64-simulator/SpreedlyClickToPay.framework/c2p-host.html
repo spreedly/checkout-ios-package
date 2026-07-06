@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spreedly C2P Host</title>
+  <link rel="stylesheet" href="{{UI_KIT_BASE}}/components/src-ui-kit/src-ui-kit.css" />
+  <style>
+    body {
+      font-family: -apple-system, sans-serif;
+      padding: 0;
+      margin: 0;
+      min-height: 100%;
+      overscroll-behavior: none;
+    }
+    html { min-height: 100%; }
+    /* Internal bridge status — not merchant UI; native sheet shows loaders/banners instead. */
+    #status {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    #mc-otp-host, #mc-cards-host { margin-top: 0; min-height: 48px; width: 100%; }
+    src-otp-input, src-card-list { display: block; width: 100%; min-height: 48px; }
+    src-otp-input[style*="visibility: hidden"], src-card-list[style*="visibility: hidden"] { display: none !important; }
+    #dcfWeb {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 9999;
+      visibility: hidden;
+      background: transparent;
+    }
+    #dcfWeb.loaded { visibility: visible; }
+  </style>
+</head>
+<body>
+  <div id="status">Loading Mastercard Click to Pay…</div>
+
+  <!-- MC UI kit hosts — components come from src-ui-kit.esm.js (not integration lib.js alone) -->
+  <div id="mc-otp-host"></div>
+  <div id="mc-cards-host"></div>
+
+  <iframe id="dcfWeb" name="dcfWeb" src="about:blank" title="MC DCF"></iframe>
+
+  <!-- Static lib.js tag; native host loads this HTML with MC HTTPS baseURL (Android loadDataWithBaseURL parity). -->
+  <script id="c2p-mc-lib" data-c2p-mc-lib="1" src="{{MC_LIB_URL}}"></script>
+  <script type="module" src="{{UI_KIT_BASE}}/components/src-ui-kit/src-ui-kit.esm.js?preload=src-loader,src-mark" data-c2p-ui-kit="1"></script>
+  <script>
+    (function() {
+      const status = document.getElementById('status');
+      const locale = '{{LOCALE}}';
+      const uiConfig = {{UI_CONFIG_JSON}};
+      let click2payInstance = null;
+      let otpWired = false;
+      let cardsWired = false;
+      let uiKitPreloadPromise = null;
+
+      const state = {
+        availableCardBrands: [],
+        otpValue: '',
+        rememberMe: false,
+        srcDigitalCardId: null,
+        otpChannelRequested: null
+      };
+
+      function postToNative(method, payload) {
+        const message = { method: method, payload: payload || {} };
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.c2pBridge) {
+          window.webkit.messageHandlers.c2pBridge.postMessage(message);
+        }
+      }
+
+      /// Strip PAN / email / CVV patterns from MC error text before bridging to native logs.
+      function sanitizeBridgeText(text) {
+        if (text == null || text === '') return text;
+        var s = String(text);
+        s = s.replace(/\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{1,7}\b/g, '[REDACTED]');
+        s = s.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[REDACTED]');
+        s = s.replace(/(?:cvv|cvc|security[\s_]?code|verification)[\s:=]+\d{3,4}\b/gi, '[REDACTED]');
+        return s;
+      }
+
+      function postError(method, error) {
+        const message = error && error.message ? error.message : String(error);
+        postToNative(method, { success: false, error: sanitizeBridgeText(message) });
+      }
+
+      function formatMcError(e) {
+        try {
+          return sanitizeBridgeText(JSON.stringify(e, Object.getOwnPropertyNames(e)));
+        } catch (_err) {
+          return sanitizeBridgeText(String(e && e.message ? e.message : e));
+        }
+      }
+
+      /// MC `encryptCard` resolves to `{ encryptedCard: "<JWE string>", ... }` — not a raw string.
+      /// `checkoutWithNewCard` requires `encryptedCard` as a string (iframe: `card.encryptedCard`).
+      function resolveEncryptedCardPayload(encryptResult) {
+        if (encryptResult == null) {
+          throw new Error('encryptCard returned empty result');
+        }
+        if (typeof encryptResult === 'string') {
+          return encryptResult;
+        }
+        if (typeof encryptResult.encryptedCard === 'string') {
+          return encryptResult.encryptedCard;
+        }
+        throw new Error('encryptCard result missing encryptedCard string');
+      }
+
+      function normalizeCheckoutResponse(response) {
+        if (!response || typeof response !== 'object') {
+          return { checkoutActionCode: null };
+        }
+        const headers = response.headers || {};
+        const data = response.checkoutResponseData || {};
+        return {
+          success: true,
+          checkoutActionCode: response.checkoutActionCode,
+          headers: headers,
+          checkoutResponseData: data,
+          'x-src-cx-flow-id': headers['x-src-cx-flow-id'],
+          srcCorrelationId: data.srcCorrelationId,
+          'merchant-transaction-id': headers['merchant-transaction-id']
+        };
+      }
+
+      function dcfWindowRef() {
+        const iframe = document.getElementById('dcfWeb');
+        iframe.style.visibility = 'visible';
+        iframe.classList.add('loaded');
+        return iframe.contentWindow;
+      }
+
+      function resetDcfFrame(recreate) {
+        const iframe = document.getElementById('dcfWeb');
+        if (!iframe) return;
+        iframe.classList.remove('loaded');
+        iframe.style.visibility = 'hidden';
+        iframe.src = 'about:blank';
+        if (recreate !== true || !iframe.parentNode) return;
+        const replacement = document.createElement('iframe');
+        replacement.id = 'dcfWeb';
+        replacement.name = 'dcfWeb';
+        replacement.title = 'MC DCF';
+        replacement.src = 'about:blank';
+        iframe.parentNode.replaceChild(replacement, iframe);
+      }
+
+      function ensureInstance() {
+        if (!click2payInstance) {
+          if (typeof Click2Pay === 'undefined') {
+            throw new Error('Click2Pay global not found');
+          }
+          click2payInstance = new Click2Pay();
+        }
+        return click2payInstance;
+      }
+
+      function otpEl() { return document.getElementById('mc-otp'); }
+      function cardsEl() { return document.getElementById('mc-cards'); }
+
+      function uiKitBaseUrl() {
+        const host = (window.location && window.location.hostname) ? window.location.hostname : '';
+        if (host.includes('sandbox')) return 'https://sandbox.src.mastercard.com/srci/integration';
+        if (host.includes('stage')) return 'https://stage.src.mastercard.com/srci/integration';
+        if (host.includes('itf')) return 'https://itf.src.mastercard.com/srci/integration';
+        if (host.includes('src.mastercard.com')) return 'https://src.mastercard.com/srci/integration';
+        return '{{UI_KIT_BASE}}';
+      }
+
+      function preloadSrcUiKit() {
+        if (uiKitPreloadPromise) return uiKitPreloadPromise;
+        uiKitPreloadPromise = whenDefinedOrTimeout('src-otp-input', 20000).catch(function(err) {
+          const base = uiKitBaseUrl();
+          const cssHref = base + '/components/src-ui-kit/src-ui-kit.css';
+          const moduleSrc = base + '/components/src-ui-kit/src-ui-kit.esm.js?preload=src-loader,src-mark';
+          if (!document.head.querySelector('link[href*="src-ui-kit.css"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = cssHref;
+            document.head.appendChild(link);
+          }
+          if (!document.querySelector('script[data-c2p-ui-kit="1"]')) {
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = moduleSrc;
+            script.setAttribute('data-c2p-ui-kit', '1');
+            document.head.appendChild(script);
+          }
+          return whenDefinedOrTimeout('src-otp-input', 20000);
+        });
+        return uiKitPreloadPromise;
+      }
+
+      function whenDefinedOrTimeout(tagName, timeoutMs) {
+        if (window.customElements.get(tagName)) {
+          return Promise.resolve();
+        }
+        return Promise.race([
+          window.customElements.whenDefined(tagName),
+          new Promise(function(_, reject) {
+            setTimeout(function() {
+              reject(new Error(tagName + ' not registered after ' + timeoutMs + 'ms'));
+            }, timeoutMs);
+          })
+        ]);
+      }
+
+      async function ensureOtpElement() {
+        await preloadSrcUiKit();
+        await whenDefinedOrTimeout('src-otp-input', 20000);
+        let el = otpEl();
+        if (!el) {
+          el = document.createElement('src-otp-input');
+          el.id = 'mc-otp';
+          el.style.visibility = 'hidden';
+          el.type = 'none';
+          document.getElementById('mc-otp-host').appendChild(el);
+        }
+        return el;
+      }
+
+      async function ensureCardsElement() {
+        await preloadSrcUiKit();
+        await whenDefinedOrTimeout('src-card-list', 20000);
+        let el = cardsEl();
+        if (!el) {
+          el = document.createElement('src-card-list');
+          el.id = 'mc-cards';
+          el.style.visibility = 'hidden';
+          document.getElementById('mc-cards-host').appendChild(el);
+        }
+        return el;
+      }
+
+      function wireOtpElement() {
+        if (otpWired) return;
+        const el = otpEl();
+        if (!el) return;
+
+        el.addEventListener('otpChanged', function(event) {
+          state.otpValue = event.detail;
+        });
+
+        el.addEventListener('continue', async function() {
+          try {
+            await submitOtpValidation(state.otpValue);
+          } catch (error) {
+            const errText = formatMcError(error);
+            if (el.errorReason !== undefined) {
+              try { el.errorReason = error.reason || 'CODE_INVALID'; } catch (_e) {}
+            }
+            postToNative('validate', { success: false, error: errText, errorReason: error.reason });
+          }
+        });
+
+        el.addEventListener('resendOtp', function(event) {
+          state.otpValue = '';
+          state.otpChannelRequested = { requestedValidationChannelId: event.detail };
+          postToNative('otp-resend', { channelId: event.detail });
+          window.c2pRunCommand('initiateValidation', state.otpChannelRequested);
+        });
+
+        el.addEventListener('notYouRequested', function() {
+          el.style.visibility = 'hidden';
+          el.type = 'none';
+          postToNative('otp-not-you', {});
+        });
+
+        el.addEventListener('rememberMe', function(event) {
+          state.rememberMe = !!(event.detail && event.detail.rememberMe);
+          postToNative('otp-remember-me', { rememberMe: state.rememberMe });
+        });
+
+        otpWired = true;
+      }
+
+      function wireCardList() {
+        if (cardsWired) return;
+        const el = cardsEl();
+        if (!el) return;
+
+        el.addEventListener('selectSrcDigitalCardId', function(event) {
+          state.srcDigitalCardId = event.detail;
+          postToNative('cardSelected', { srcDigitalCardId: event.detail });
+        });
+
+        el.addEventListener('rememberMe', function(event) {
+          state.rememberMe = !!(event.detail && event.detail.rememberMe);
+          postToNative('otp-remember-me', { rememberMe: state.rememberMe });
+        });
+
+        const checkoutFromList = async function() {
+          if (!state.srcDigitalCardId) {
+            status.textContent = 'Select a card first';
+            return;
+          }
+          await window.c2pRunCommand('checkoutWithCard', {
+            srcDigitalCardId: state.srcDigitalCardId,
+            rememberMe: state.rememberMe
+          });
+        };
+        el.addEventListener('continue', checkoutFromList);
+        el.addEventListener('checkout', checkoutFromList);
+        el.addEventListener('pay', checkoutFromList);
+
+        el.addEventListener('clickSignOutLink', function() {
+          window.c2pRunCommand('signOut', null);
+        });
+
+        el.addEventListener('clickAddCardLink', function() {
+          el.style.visibility = 'hidden';
+          el.style.display = 'none';
+          postToNative('add-new-card', { cardBrands: state.availableCardBrands });
+        });
+
+        cardsWired = true;
+      }
+
+      async function mountOtpComponent(initValidation) {
+        const el = await ensureOtpElement();
+        wireOtpElement();
+
+        const channels = initValidation.supportedValidationChannels || [{
+          identityType: 'EMAIL',
+          validationChannelId: 'EMAIL',
+          maskedValidationChannel: initValidation.maskedValidationChannel
+        }];
+
+        el.setAttribute('otp-resend-loading', 'false');
+        await el.loadSupportedValidationChannels(channels);
+        el.setAttribute('card-brands', state.availableCardBrands.join(','));
+        el.setAttribute('network-id', initValidation.network || 'mastercard');
+        el.setAttribute('locale', locale);
+        el.setAttribute('masked-identity-value', initValidation.maskedValidationChannel || '');
+        const displayRememberMe = !!(uiConfig.otp && uiConfig.otp.rememberMe);
+        el.setAttribute('display-remember-me', displayRememberMe ? 'true' : 'false');
+        state.rememberMe = displayRememberMe;
+        el.style.visibility = 'visible';
+        el.type = (uiConfig.otp && uiConfig.otp.type === 'none') ? 'none' : 'overlay';
+        status.textContent = 'Enter your verification code below';
+        postToNative('otp-ui-ready', { success: true });
+      }
+
+      function resolveOtpChannel(params) {
+        if (params && params.requestedValidationChannelId) {
+          return params;
+        }
+        if (params && params.validationChannelId) {
+          return { requestedValidationChannelId: params.validationChannelId };
+        }
+        return state.otpChannelRequested;
+      }
+
+      async function submitOtpValidation(otpValue) {
+        status.textContent = 'Verifying your code…';
+        const otpResponse = await ensureInstance().validate({ value: otpValue });
+        const el = otpEl();
+        if (el) {
+          el.style.visibility = 'hidden';
+          el.type = 'none';
+        }
+        postToNative('validate', { success: true, validate: otpResponse });
+        if (Array.isArray(otpResponse) && otpResponse.length > 0) {
+          await displayCards(otpResponse);
+        } else {
+          const cards = await ensureInstance().getCards();
+          await displayCards(Array.isArray(cards) ? cards : []);
+        }
+      }
+
+      async function displayCards(maskedCardData) {
+        if (!maskedCardData || maskedCardData.length === 0) {
+          postToNative('getCards', { success: true, cards: [], count: 0 });
+          return;
+        }
+
+        await ensureCardsElement();
+        wireCardList();
+
+        const el = cardsEl();
+        const mainCard = maskedCardData[0];
+        const displayCards = (uiConfig && uiConfig.displayCards) ? uiConfig.displayCards : {};
+        el.displaySignOut = typeof displayCards.displaySignOut === 'boolean' ? displayCards.displaySignOut : true;
+        el.displayPreferredCard = typeof displayCards.displayPreferredCard === 'boolean' ? displayCards.displayPreferredCard : true;
+        el.cardBrands = state.availableCardBrands.join(',');
+        el.cardSelectionType = (displayCards.cardSelectionType === 'gridView') ? 'gridView' : 'radioButton';
+        el.loadCards(maskedCardData);
+        el.displayAddCard = typeof displayCards.displayAddCard === 'boolean' ? displayCards.displayAddCard : true;
+        el.locale = locale;
+        // Remember me on saved-card checkout is native-only (default sheet CVV bar); MC card list omits duplicate toggle.
+        el.setAttribute('display-remember-me', 'false');
+        el.srcDigitalCardId = mainCard.srcDigitalCardId;
+        state.srcDigitalCardId = mainCard.srcDigitalCardId;
+        el.style.visibility = 'visible';
+
+        const otp = otpEl();
+        if (otp) {
+          otp.style.visibility = 'hidden';
+          otp.type = 'none';
+        }
+        status.textContent = 'Choose a saved card below';
+
+        postToNative('display-cards-ready', {
+          success: true,
+          cards: maskedCardData,
+          count: maskedCardData.length,
+          srcDigitalCardId: mainCard.srcDigitalCardId
+        });
+      }
+
+      window.c2pRunCommand = async function(command, params) {
+        status.textContent = 'Processing…';
+        try {
+          const instance = ensureInstance();
+          switch (command) {
+            case 'init': {
+              const result = await instance.init(params || {});
+              state.availableCardBrands = result.availableCardBrands || [];
+              postToNative('init', { success: true, c2pInitialization: result });
+              break;
+            }
+            case 'getCards': {
+              const cards = await instance.getCards();
+              const list = Array.isArray(cards) ? cards : [];
+              if (list.length > 0) {
+                await displayCards(list);
+              } else {
+                postToNative('getCards', { success: true, cards: list, count: list.length });
+              }
+              break;
+            }
+            case 'idLookup': {
+              const lookup = await instance.idLookup(params || {});
+              postToNative('idLookup', { success: true, lookup: lookup });
+              break;
+            }
+            case 'initiateValidation': {
+              const channel = resolveOtpChannel(params);
+              const mountOtp = !(params && params.mountOtp === false);
+              const validation = await instance.initiateValidation(channel || undefined);
+              postToNative('initiateValidation', { success: true, validation: validation });
+              if (mountOtp) {
+                try {
+                  await mountOtpComponent(validation);
+                } catch (mountError) {
+                  postToNative('otp-ui-ready', {
+                    success: false,
+                    error: sanitizeBridgeText(mountError && mountError.message ? mountError.message : String(mountError))
+                  });
+                }
+              }
+              break;
+            }
+            case 'remountOtp': {
+              const validation = params || {};
+              try {
+                await mountOtpComponent(validation);
+              } catch (mountError) {
+                postToNative('otp-ui-ready', {
+                  success: false,
+                  error: sanitizeBridgeText(mountError && mountError.message ? mountError.message : String(mountError))
+                });
+              }
+              break;
+            }
+            case 'validateOtp': {
+              const value = params && params.value != null ? String(params.value) : '';
+              if (!value) {
+                throw new Error('OTP value required');
+              }
+              state.otpValue = value;
+              try {
+                await submitOtpValidation(value);
+              } catch (error) {
+                postToNative('validate', {
+                  success: false,
+                  error: formatMcError(error),
+                  errorReason: error && error.reason ? error.reason : 'CODE_INVALID'
+                });
+              }
+              break;
+            }
+            case 'checkoutWithCard': {
+              const checkoutParams = Object.assign({}, params || {}, {
+                srcDigitalCardId: params.srcDigitalCardId || state.srcDigitalCardId,
+                windowRef: dcfWindowRef(),
+                rememberMe: state.rememberMe || !!(params && params.rememberMe)
+              });
+              postToNative('checkout-js-start', { command: 'checkoutWithCard' });
+              let response;
+              try {
+                response = await instance.checkoutWithCard(checkoutParams);
+              } finally {
+                postToNative('checkout-js-done', { command: 'checkoutWithCard' });
+              }
+              postToNative('checkoutWithCard', normalizeCheckoutResponse(response));
+              resetDcfFrame();
+              break;
+            }
+            case 'checkoutWithNewCard': {
+              const checkoutParams = Object.assign({}, params || {}, {
+                windowRef: dcfWindowRef(),
+                rememberMe: state.rememberMe || !!(params && params.rememberMe)
+              });
+              if (checkoutParams.encryptedCard != null) {
+                checkoutParams.encryptedCard = resolveEncryptedCardPayload(checkoutParams.encryptedCard);
+              }
+              postToNative('checkout-js-start', { command: 'checkoutWithNewCard' });
+              let response;
+              try {
+                response = await instance.checkoutWithNewCard(checkoutParams);
+              } finally {
+                postToNative('checkout-js-done', { command: 'checkoutWithNewCard' });
+              }
+              postToNative('checkoutWithNewCard', normalizeCheckoutResponse(response));
+              resetDcfFrame();
+              break;
+            }
+            case 'encryptCard': {
+              const encryptResult = await instance.encryptCard(params || {});
+              postToNative('encryptCard', {
+                success: true,
+                encryptedCard: resolveEncryptedCardPayload(encryptResult),
+                cardBrand: encryptResult && encryptResult.cardBrand ? encryptResult.cardBrand : null
+              });
+              break;
+            }
+            case 'signOut': {
+              let recognized = false;
+              try {
+                const result = await instance.signOut();
+                recognized = !!(result && result.recognized);
+              } catch (signOutError) {
+                postToNative('signOut', {
+                  success: false,
+                  error: formatMcError(signOutError)
+                });
+                break;
+              }
+              state.srcDigitalCardId = null;
+              const cards = cardsEl();
+              if (cards) {
+                cards.hidden = true;
+                cards.style.visibility = 'hidden';
+              }
+              const otp = otpEl();
+              if (otp) {
+                otp.style.visibility = 'hidden';
+                otp.type = 'none';
+              }
+              status.textContent = 'Signed out. Enter your email to continue.';
+              postToNative('signOut', { success: true, recognized: recognized });
+              break;
+            }
+            case 'resetDcf': {
+              resetDcfFrame(params && params.recreate === true);
+              postToNative('resetDcf', { success: true });
+              break;
+            }
+            default:
+              postToNative('error', { message: 'Unknown command: ' + command });
+          }
+        } catch (error) {
+          postError(command, { message: formatMcError(error) });
+          if (command === 'checkoutWithCard' || command === 'checkoutWithNewCard') {
+            resetDcfFrame(true);
+          }
+        }
+      };
+
+      /// WKWebView `loadHTMLString` may finish `window.load` before lib.js (~1.4MB) executes.
+      /// Use the static `#c2p-mc-lib` tag (dynamic injection is blocked) and poll for `Click2Pay`.
+      function mcLibScriptDiagnostics() {
+        var url = '{{MC_LIB_URL}}';
+        var diag = { scriptUrlHost: '', scriptLoad: 'pending', scriptError: null };
+        try {
+          diag.scriptUrlHost = new URL(url).host;
+        } catch (_urlErr) {
+          diag.scriptUrlHost = 'invalid-url';
+        }
+        var script = document.getElementById('c2p-mc-lib');
+        if (!script) {
+          diag.scriptLoad = 'error';
+          diag.scriptError = 'missing static #c2p-mc-lib tag';
+          return diag;
+        }
+        if (typeof Click2Pay !== 'undefined') {
+          diag.scriptLoad = 'already-defined';
+          return diag;
+        }
+        script.addEventListener('load', function() {
+          if (diag.scriptLoad === 'pending') diag.scriptLoad = 'static-onload';
+        });
+        script.addEventListener('error', function() {
+          diag.scriptLoad = 'static-onerror';
+          diag.scriptError = 'static lib.js tag onerror';
+        });
+        return diag;
+      }
+
+      function waitForClick2PayGlobal(maxMs, intervalMs) {
+        return new Promise(function(resolve) {
+          var start = Date.now();
+          function tick() {
+            if (typeof Click2Pay !== 'undefined') {
+              resolve({ hasSdk: true, waitedMs: Date.now() - start });
+              return;
+            }
+            if (Date.now() - start >= maxMs) {
+              resolve({ hasSdk: false, waitedMs: Date.now() - start });
+              return;
+            }
+            setTimeout(tick, intervalMs);
+          }
+          tick();
+        });
+      }
+
+      function onLibReady(scriptDiag, waitDiag) {
+        const hasSdk = typeof Click2Pay !== 'undefined';
+        const bootstrapDiag = {
+          typeofClick2Pay: typeof Click2Pay,
+          documentReadyState: document.readyState,
+          documentOrigin: (window.location && window.location.origin) ? window.location.origin : '',
+          hostLoadMode: 'loadHTMLString',
+          scriptLoad: scriptDiag && scriptDiag.scriptLoad,
+          scriptError: scriptDiag && scriptDiag.scriptError,
+          scriptUrlHost: scriptDiag && scriptDiag.scriptUrlHost,
+          waitedMs: waitDiag && waitDiag.waitedMs
+        };
+        status.textContent = hasSdk ? 'Preparing secure checkout…' : 'Connecting to Click to Pay…';
+        preloadSrcUiKit().then(function() {
+          postToNative('uiKitLoaded', { success: true, srcOtpDefined: !!window.customElements.get('src-otp-input') });
+        }).catch(function(err) {
+          postToNative('uiKitLoaded', { success: false, error: sanitizeBridgeText(err && err.message ? err.message : String(err)) });
+        });
+        postToNative('libLoaded', {
+          srcDpaId: '{{SRC_DPA_ID}}',
+          locale: locale,
+          click2PayAvailable: hasSdk,
+          bootstrapDiag: bootstrapDiag
+        });
+      }
+
+      function bootstrapMcLib() {
+        status.textContent = 'Preparing secure checkout…';
+        var scriptDiag = mcLibScriptDiagnostics();
+        waitForClick2PayGlobal(15000, 100).then(function(waitDiag) {
+          if (typeof Click2Pay !== 'undefined') {
+            if (scriptDiag.scriptLoad === 'pending' || scriptDiag.scriptLoad === 'static-onerror') {
+              scriptDiag.scriptLoad = 'poll-success';
+              scriptDiag.scriptError = null;
+            }
+          } else if (scriptDiag.scriptLoad === 'pending') {
+            scriptDiag.scriptLoad = 'timeout';
+            scriptDiag.scriptError = scriptDiag.scriptError || 'Click2Pay undefined after 15s poll';
+          }
+          onLibReady(scriptDiag, waitDiag);
+        });
+      }
+
+      bootstrapMcLib();
+    })();
+  </script>
+</body>
+</html>
