@@ -1,3 +1,68 @@
+## [1.4.1] - 2026-07-09
+
+### Release Type
+**Patch Version** (Distribution manifest fix — same XCFramework binaries as 1.4.0)
+
+### Fixed
+- **SPM manifest alignment**: `Package.swift` now declares only the five XCFrameworks included in this release. Use **1.4.1** instead of **1.4.0** for Swift Package Manager — resolving tag `1.4.0` fails because the manifest referenced modules without matching binary artifacts.
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Version History**: Semantic versioning maintained (1.4.1 - Patch Version)
+- **Security Validation**: Same signed XCFramework binaries as 1.4.0; SHA-256 checksums unchanged
+- **SBOM**: Software Bill of Materials included in release artifacts (version metadata updated to 1.4.1)
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.4.1")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore', '~> 1.4.1'
+pod 'SpreedlySecurity', '~> 1.4.1'
+pod 'SpreedlyUI', '~> 1.4.1'
+
+# Optional — add as needed
+# pod 'SpreedlyStripeAPM', '~> 1.4.1'
+# pod 'SpreedlyBraintree', '~> 1.4.1'
+```
+
+---
+
+## [1.4.0] - 2026-07-09
+
+### Release Type
+**Patch Version** (Bug fixes and improvements - backward compatible)
+
+### Change Requests
+  - (no tickets recorded)
+
+### PCI DSS Compliance
+This release has been documented for PCI DSS compliance requirements:
+- **Change Request Tracking**: All changes are tracked via Jira tickets (see above)
+- **Version History**: Semantic versioning maintained (1.4.0 - Patch Version)
+- **Security Validation**: All security scans and validations completed
+- **SBOM**: Software Bill of Materials included in release artifacts
+- **Audit Trail**: Complete release documentation available in this changelog
+
+### Installation
+```swift
+// Swift Package Manager — use 1.4.1 instead; 1.4.0 manifest is broken for SPM
+.package(url: "https://github.com/spreedly/checkout-ios-package.git", from: "1.4.0")
+```
+
+```ruby
+# CocoaPods
+pod 'SpreedlyCore',      :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.4.0'
+pod 'SpreedlySecurity',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.4.0'
+pod 'SpreedlyUI',        :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.4.0'
+```
+
+---
+
 ## [1.3.8] - 2026-05-11
 
 ### Release Type

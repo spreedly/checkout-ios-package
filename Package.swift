@@ -15,17 +15,13 @@ let package = Package(
         .library(name: "SpreedlyUI", targets: ["SpreedlyUI"]),
         // Gateway modules (optional — merchants add only what they use)
         .library(name: "SpreedlyStripeAPM", targets: ["SpreedlyStripeAPM"]),
-        .library(name: "SpreedlyStripeRadar", targets: ["SpreedlyStripeRadar"]),
         .library(name: "SpreedlyBraintree", targets: ["SpreedlyBraintree"]),
-        .library(name: "SpreedlyClickToPay", targets: ["SpreedlyClickToPay"]),
     ],
     targets: [
         .binaryTarget(name: "SpreedlyCore", path: "./Frameworks/SpreedlyCore.xcframework"),
         .binaryTarget(name: "SpreedlySecurity", path: "./Frameworks/SpreedlySecurity.xcframework"),
         .binaryTarget(name: "SpreedlyUI", path: "./Frameworks/SpreedlyUI.xcframework"),
         .binaryTarget(name: "SpreedlyStripeAPM", path: "./Frameworks/SpreedlyStripeAPM.xcframework"),
-        .binaryTarget(name: "SpreedlyStripeRadar", path: "./Frameworks/SpreedlyStripeRadar.xcframework"),
         .binaryTarget(name: "SpreedlyBraintree", path: "./Frameworks/SpreedlyBraintree.xcframework"),
-        .binaryTarget(name: "SpreedlyClickToPay", path: "./Frameworks/SpreedlyClickToPay.xcframework"),
     ]
 )

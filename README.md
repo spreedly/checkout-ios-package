@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.3.8-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.4.1-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -25,7 +25,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.3.8")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.4.1")
 ]
 ```
 
@@ -38,7 +38,6 @@ Then add the products to your target:
         .product(name: "SpreedlyCore", package: "checkout-ios-package"),
         .product(name: "SpreedlySecurity", package: "checkout-ios-package"),
         .product(name: "SpreedlyUI", package: "checkout-ios-package"),
-        // .product(name: "SpreedlyClickToPay", package: "checkout-ios-package"),
     ]
 )
 ```
@@ -47,14 +46,13 @@ Then add the products to your target:
 
 ```ruby
 # Podfile
-pod 'SpreedlyCore', '~> 1.3'
-pod 'SpreedlySecurity', '~> 1.3'
-pod 'SpreedlyUI', '~> 1.3'
+pod 'SpreedlyCore', '~> 1.4'
+pod 'SpreedlySecurity', '~> 1.4'
+pod 'SpreedlyUI', '~> 1.4'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', '~> 1.3'
-# pod 'SpreedlyBraintree', '~> 1.3'
-# pod 'SpreedlyClickToPay', '~> 1.3'
+# pod 'SpreedlyStripeAPM', '~> 1.4'
+# pod 'SpreedlyBraintree', '~> 1.4'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
@@ -75,9 +73,7 @@ end
 | **Security** | `SpreedlySecurity` | Encryption and secure field storage (required) |
 | **UI** | `SpreedlyUI` | Pre-built payment forms and hosted field components (required) |
 | **Stripe APM** | `SpreedlyStripeAPM` | Stripe APM via native PaymentSheet (iDEAL, Bancontact, EPS, P24, SEPA) |
-| **Stripe Radar** | `SpreedlyStripeRadar` | **Session ID only** — headless Radar device data (`radar_session_id` for fraud signals). Does not include Payment Sheet or checkout UI. Independent of `SpreedlyStripeAPM`. |
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
-| **Click to Pay** | `SpreedlyClickToPay` | Mastercard Click to Pay (SRC) checkout and tokenize |
 
 ## Integration Guides
 
@@ -125,7 +121,7 @@ The following changes are considered breaking and will only ship in a **major** 
 
 All `Spreedly*` frameworks in a single app build must use the **same version**. Pin explicitly:
 
-- **SPM:** `from: "1.3.8"` (accepts compatible minor/patch updates)
+- **SPM:** `from: "1.4.1"` (accepts compatible minor/patch updates)
 - **CocoaPods:** `~> X.Y` (accepts compatible patch updates within the minor)
 
 ## Compatibility
