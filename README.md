@@ -52,6 +52,7 @@ pod 'SpreedlyUI', '~> 1.4'
 
 # Optional — add as needed
 # pod 'SpreedlyStripeAPM', '~> 1.4'
+# pod 'SpreedlyStripeRadar', '~> 1.4'
 # pod 'SpreedlyBraintree', '~> 1.4'
 ```
 
@@ -73,6 +74,7 @@ end
 | **Security** | `SpreedlySecurity` | Encryption and secure field storage (required) |
 | **UI** | `SpreedlyUI` | Pre-built payment forms and hosted field components (required) |
 | **Stripe APM** | `SpreedlyStripeAPM` | Stripe APM via native PaymentSheet (iDEAL, Bancontact, EPS, P24, SEPA) |
+| **Stripe Radar** | `SpreedlyStripeRadar` | Session ID only — headless Radar device data for Stripe Payment Intents. Independent of `SpreedlyStripeAPM`. |
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
 
 ## Integration Guides
