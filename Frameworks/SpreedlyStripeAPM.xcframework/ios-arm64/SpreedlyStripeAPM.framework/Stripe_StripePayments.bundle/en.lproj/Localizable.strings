@@ -41,7 +41,7 @@
 "GrabPay" = "GrabPay";
 
 /* Source type brand name */
-"iDEAL" = "iDEAL";
+"iDEAL | Wero" = "iDEAL | Wero";
 
 /* Payment Method type brand name */
 "Klarna" = "Klarna";
@@ -75,9 +75,6 @@
 
 /* Default missing source type label */
 "Unknown" = "Unknown";
-
-/* Payment Method type brand name */
-"UPI" = "UPI";
 
 /* Payment Method type name for US bank account payments. */
 "US bank account" = "US bank account";
