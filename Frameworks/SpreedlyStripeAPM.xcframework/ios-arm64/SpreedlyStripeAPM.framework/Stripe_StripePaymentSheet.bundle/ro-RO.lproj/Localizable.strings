@@ -1,4 +1,14 @@
+"%1$@ ×%2$d" = "%1$@ × %2$li";
+
+"%@ will no longer be saved to your wallet." = "%@ nu va mai fi salvat în portofelul dvs.";
+
 "+ Add" = "+ Adăugare";
+
+"1 %1$@ = %2$@ %3$@ (includes %4$@%% conversion fee)." = "1 %1$@ = %2$@ %3$@ (include %4$@%% taxă de conversie).";
+
+"1 %@ = %@ %@" = "1 %1$@ = %2$@ %3$@";
+
+"Accept" = "Acceptare";
 
 "Add US bank account" = "Adăugați un cont bancar din SUA";
 
@@ -18,10 +28,6 @@
 
 "Approve payment" = "Aprobare plată";
 
-"Are you sure you want to remove this card?" = "Sigur doriți să eliminați acest card?";
-
-"Are you sure you want to remove this linked account?" = "Sigur doriți să eliminați acest cont asociat?";
-
 "Back" = "Înapoi";
 
 "Bank" = "Bancă";
@@ -40,8 +46,6 @@
 
 "Buy now or pay later with Klarna" = "Cumpărați acum sau plătiți mai târziu folosind Klarna";
 
-"Buy using a UPI ID" = "Cumpărați folosind un ID UPI";
-
 "By confirming your payment with PayPal, you allow %@ to charge your PayPal account for future payments in accordance with their terms." = "Prin confirmarea plății cu PayPal, permiteți %@ să vă taxeze contul PayPal pentru plățile viitoare în conformitate cu termenii acesteia.";
 
 "By continuing to Amazon Pay, you allow %@ to charge your Amazon Pay account for future payments in accordance with their terms." = "Prin continuarea către Amazon Pay, permiteți %@ să vă taxeze contul Amazon Pay pentru plățile viitoare în conformitate cu termenii acesteia.";
@@ -56,15 +60,23 @@
 
 "By continuing, you agree to authorize payments pursuant to <terms>these terms</terms>." = "Continuând, sunteți de acord să autorizați plățile în conformitate cu <terms>acești termeni</terms>.";
 
+"By continuing, you agree to save your information for future purchases with %1$@ and <link>%2$@</link> according to %2$@ <terms>terms</terms> and <privacy>privacy</privacy>." = "Continuând, sunteți de acord să vă salvați informațiile pentru achiziții viitoare cu %1$@ și <link>%2$@</link>, conform <terms>Termenilor</terms> și <privacy>confidențialității</privacy> %2$@.";
+
 "By continuing, you agree to save your information for future purchases with %@ and <link>Link</link> according to Link <terms>terms</terms> and <privacy>privacy</privacy>." = "Continuând, sunteți de acord să vă salvați informațiile pentru achiziții viitoare cu %@ și <link>Link</link> în conformitate cu <terms>Termenii</terms> și <privacy>confidențialitatea</privacy> Link.";
 
 "By continuing, you agree to save your information for future purchases with %@." = "Continuând, sunteți de acord să vă salvați informațiile pentru achiziții viitoare cu %@.";
 
 "By continuing, you authorize %@ to automatically debit your Satispay Balance on a recurring basis in accordance with your purchase or subscription plan." = "Continuând, autorizați %@ să vă debiteze automat soldul Satispay în mod recurent, în conformitate cu planul dvs. de achiziție sau de abonament.";
 
+"By continuing, you authorize %@ to automatically debit your Twint Balance on a recurring basis in accordance with your purchase or subscription plan." = "Continuând, autorizați %@ să debiteze automat soldul dvs. Twint în mod recurent, în conformitate cu planul dvs. de achiziție sau abonament.";
+
 "By continuing, you authorize %@ to debit your Cash App account for this payment and future payments in accordance with %@'s terms, until this authorization is revoked. You can change this anytime in your Cash App Settings." = "Continuând, autorizați %1$@ să debiteze contul dvs. Cash App pentru această plată și pentru plățile viitoare în conformitate cu termenii %2$@, până când această autorizație este revocată. Puteți schimba acest lucru oricând în setările Cash App.";
 
+"By joining %@, you agree to the <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin alăturarea la %@, sunteți de acord cu <terms>Termenii</terms> și <privacy>Politica de confidențialitate</privacy>.";
+
 "By joining Link, you agree to the <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin accesarea link-ului de asociere, sunteți de acord cu <terms>Termenii</terms> și <privacy>Politica de confidențialitate</privacy>.";
+
+"By providing phone number and email, you agree to create a %1$@ account subject to the %1$@ <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin furnizarea numărului de telefon și a adresei de e-mail, sunteți de acord să creați un cont %1$@ supus <terms>Termenilor</terms> și <privacy>Politicii de confidențialitate</privacy> %1$@.";
 
 "By providing phone number and email, you agree to create a Link account subject to the Link <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin furnizarea numărului de telefon și a adresei de e-mail, sunteți de acord să creați un cont Link supus <terms>Termenilor</terms> și <privacy>politicii de confidențialitate</privacy> Link.";
 
@@ -72,9 +84,13 @@
 
 "By providing your card information, you allow %@ to charge your card for future payments in accordance with their terms." = "Prin furnizarea informațiilor despre cardul dvs., permiteți %@ să vă taxeze cardul pentru plățile viitoare în conformitate cu termenii acesteia.";
 
+"By providing your email, you agree to create a %1$@ account and save your payment info to %1$@, according to the %1$@ <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin furnizarea adresei de e-mail, sunteți de acord să creați un cont %1$@ și să salvați informațiile de plată în %1$@, conform <terms>Termenilor</terms> și <privacy>Politicii de confidențialitate</privacy> %1$@.";
+
 "By providing your email, you agree to create a Link account and save your payment info to Link, according to the Link <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin furnizarea adresei de e-mail, sunteți de acord să creați un cont Link și să vă salvați informațiile de plată în Link, în conformitate cu <terms>Termenii</terms> și <privacy>Politica de confidențialitate</privacy> Link.";
 
 "By providing your payment information and confirming this payment, you authorise (A) %@ and Stripe, our payment service provider, to send instructions to your bank to debit your account and (B) your bank to debit your account in accordance with those instructions. As part of your rights, you are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited. Your rights are explained in a statement that you can obtain from your bank. You agree to receive notifications for future debits up to 2 days before they occur." = "Prin furnizarea informațiilor dvs. privind plata și confirmarea acestei plăți, autorizați (A) %@ și Stripe, furnizorul nostru de servicii de plată, să trimită instrucțiuni băncii dvs. pentru a vă debita contul și pentru ca (B) banca dvs. să facă acest lucru în conformitate cu instrucțiunile respective. Conform drepturilor dvs., aveți dreptul la o rambursare din partea băncii dvs. în conformitate cu termenii și condițiile acordului dvs. cu aceasta. O rambursare trebuie revendicată în termen de opt săptămâni de la data debitării contului. Drepturile dvs. sunt explicate într-o declarație pe care o puteți obține de la bancă. Sunteți de acord să primiți notificări pentru debitări viitoare cu până la două zile înainte de efectuarea acestora.";
+
+"By providing your phone number, you agree to create a %1$@ account and save your payment info to %1$@, according to the %1$@ <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Furnizând numărul dvs. de telefon, sunteți de acord să creați un cont %1$@ și să salvați informațiile de plată în %1$@, conform <terms>Termenilor</terms> și <privacy>Politicii de confidențialitate</privacy> %1$@.";
 
 "By providing your phone number, you agree to create a Link account and save your payment info to Link, according to the Link <terms>Terms</terms> and <privacy>Privacy Policy</privacy>." = "Prin furnizarea numărului dvs. de telefon, sunteți de acord să creați un cont Link și să salvați informațiile dvs. de plată în Link, în conformitate cu <terms>Termenii</terms> și <privacy>Politica de confidențialitate</privacy> Link.";
 
@@ -90,7 +106,11 @@
 
 "Card details cannot be changed." = "Detaliile cardului nu pot fi modificate.";
 
+"Card number. Supported cards include %@" = "Numărul cardului. Cardurile acceptate includ %@";
+
 "Change" = "Modificare";
+
+"Choose a card brand" = "Alegeți o marcă de carduri";
 
 "Choose a payment method" = "Alege o metodă de plată";
 
@@ -114,9 +134,13 @@
 
 "Continue another way" = "Continuați într-un alt mod";
 
+"Create an account with %@ for faster checkout across the web" = "Creați un cont cu %@ pentru o finalizare mai rapidă a comenzii online";
+
 "Create an account with Link for faster checkout across the web" = "Creați un cont cu Link pentru o finalizare mai rapidă a comenzii online";
 
 "Debit or credit card" = "Card de debit sau de credit";
+
+"Declarations" = "Declarații";
 
 "Default" = "Implicit";
 
@@ -124,9 +148,13 @@
 
 "Did you mean %@? %@." = "Ați vrut să spuneți %1$@? %2$@.";
 
+"Discount" = "Reducere";
+
 "EPS Bank" = "Banca EPS";
 
 "Enter address manually" = "Introduceți adresa manual";
+
+"Exchange rate and fees of your bank may apply." = "Se pot aplica cursurile valutare și taxele băncii dvs.";
 
 "FPX Bank" = "FPX Bank";
 
@@ -143,6 +171,8 @@
 "Last 4 digits of SSN" = "Ultimele 4 cifre de la SSN";
 
 "Log in or sign up" = "Conectați-vă sau înregistrați-vă";
+
+"Log out of %@" = "Deconectați-vă de la %@";
 
 "Log out of Link" = "Deconectare de la Link";
 
@@ -176,8 +206,6 @@
 
 "Open to see more information." = "Deschideți pentru a vedea mai multe informații.";
 
-"Open your UPI app to approve your payment within %@" = "Deschideți aplicația UPI pentru a aproba plata în termen de %@";
-
 "Or" = "Sau";
 
 "Or pay using" = "Sau poti alege ca metodă de plată";
@@ -194,11 +222,15 @@
 
 "Pay faster at %@ and thousands of businesses." = "Plătiți mai rapid la %@ și la alte mii de întreprinderi.";
 
+"Pay faster everywhere %@ is accepted." = "Plătiți mai repede oriunde este acceptat %@.";
+
 "Pay faster everywhere Link is accepted." = "Plătiți mai repede oriunde este acceptat Link.";
 
 "Pay over time with %@" = "Folosiți ca metodă de plată de-a lungul timpului %@";
 
 "Pay over time with Affirm" = "Folosiți ca metodă de plată de-a lungul timpului Affirm";
+
+"Pay with %@" = "Plătiți cu %@";
 
 "Pay with Link" = "Plătiți cu Link";
 
@@ -207,6 +239,8 @@
 "Payment" = "Plată";
 
 "Payment failed" = "Plata nu a reușit";
+
+"Payment method details cannot be changed." = "Detaliile despre metoda de plată nu pot fi modificate.";
 
 "Payment methods" = "Metode de plată";
 
@@ -220,9 +254,17 @@
 
 "Przelewy24 Bank" = "Banca Przelewy24";
 
+"Remove %@" = "Eliminare %@";
+
+"Remove bank?" = "Eliminați banca?";
+
 "Remove card?" = "Doresti sa elimini cardul?";
 
 "Remove linked account" = "Eliminare cont asociat";
+
+"Remove payment method" = "Eliminare metodă de plată";
+
+"Remove payment method?" = "Eliminați metoda de plată?";
 
 "SEPA debit details cannot be changed." = "Detaliile debitului SEPA nu pot fi modificate.";
 
@@ -234,6 +276,8 @@
 
 "Save for future payments" = "Salvează pentru plăți viitoare";
 
+"Save my info for faster checkout with %@" = "Salvează-mi datele pentru o finalizare mai rapidă a comenzii cu %@";
+
 "Save my info for faster checkout with Link" = "Salvează informațiile mele pentru finalizarea mai rapidă a comenzii cu Link";
 
 "Save payment details to %@ for future purchases" = "Salvează detaliile de plată în %@ pentru achiziții viitoare";
@@ -241,6 +285,8 @@
 "Save this account for future %@ payments" = "Salvează acest cont pentru plăți viitoare către %@";
 
 "Save your bank account in just a few steps." = "Salvați-vă contul bancar în doar câțiva pași.";
+
+"Save your info for secure 1-click checkout with %@" = "Salvați-vă informațiile pentru o finalizare securizată a comenzii cu un singur clic cu %@";
 
 "Save your info for secure 1-click checkout with Link" = "Salvați-vă informațiile pentru o finalizare securizată a comenzii cu un singur clic cu Link";
 
@@ -258,6 +304,8 @@
 
 "Set up" = "Configurare";
 
+"Shipping" = "Expediere";
+
 "Shipping to %@ is not supported." = "Expedierea către %@ nu este acceptată.";
 
 "Show menu" = "Afișare meniu";
@@ -270,9 +318,13 @@
 
 "Stripe will deposit $0.01 to your account in 1-2 business days. Then you’ll get an email with instructions to complete payment to %@." = "Stripe va depune 0,01 USD în contul dvs. în decurs de 1-2 zile lucrătoare. Apoi veți primi un e-mail cu instrucțiuni pentru a finaliza plata către %@.";
 
+"Subtotal" = "Subtotal";
+
 "Tap to close" = "Atingeți pentru a închide";
 
 "Tap to expand" = "Atingeți pentru a extinde";
+
+"Tax" = "Taxă";
 
 "The IBAN you entered is incomplete." = "Codul IBAN pe care l-ați introdus nu este complet.";
 
