@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyStripeRadar'
-  s.version          = '1.3.8'
+  s.version          = '1.5.0-rc.2'
   s.summary          = 'Stripe Radar module for the Spreedly iOS SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
