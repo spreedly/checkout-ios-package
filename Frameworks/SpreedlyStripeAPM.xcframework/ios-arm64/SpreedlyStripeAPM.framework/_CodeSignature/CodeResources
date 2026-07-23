@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyStripeAPM-Swift.h</key>
 		<data>
-		o2cOtI139zk0wG3231WBgyavYyE=
+		uokSrMuV3CcFKfZoAMQpxme7/2M=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		6hZCIj06bjNTaOhIrK0XpBLTImU=
+		kMFEFoYt5RWst3XOK6h/yaV8JEI=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,23 +18,23 @@
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		iAclD1GZTjlAt/FR9JXBiWizw0I=
+		VXlDBCH7Ta+J3mVfy05AQ8c1V/E=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		5gizkEn6Xv4xwpsf4Jf/bxdtvN4=
+		UPLPaY0az4bz7j49VMq2+gctY5Q=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		iAclD1GZTjlAt/FR9JXBiWizw0I=
+		VXlDBCH7Ta+J3mVfy05AQ8c1V/E=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		bVaiZbo3y7Mbq0wEOd9mgGjK1hY=
+		bv+98Goi4qJgQbUEQ/BJNooF7wk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		ZnxA5a5u0iEhILZhINRDn+BCAdg=
+		FLa/T5eYZxQHxF3KVHco6gKxcBM=
 		</data>
 		<key>en.lproj/Localizable.strings</key>
 		<dict>
@@ -52,7 +52,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			uTQtRxjfOBVZ6qee9DYp03s4tprsBYnIUWkfx7CZHkQ=
+			u29PoD/bDCKTzoiVr8Q6hIA4+2GP9V3sI70E0QXQLsg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -66,35 +66,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HKAOzzXOZc+P83FQBJLpTp5b6dD+emkNJoGtx5txBKk=
+			qa2JK1pNwqpxDamPCFlS9MNwh9HoV9FeGg6jdkoYSJk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VjJOS3tjdYxNTGt9uE30bgltQAnx4Fel3QFy7a/1IUA=
+			ldFjxAMEPLp2DFtFFSLdF0s3X2EM7oOvfBAGflQNSTo=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HKAOzzXOZc+P83FQBJLpTp5b6dD+emkNJoGtx5txBKk=
+			qa2JK1pNwqpxDamPCFlS9MNwh9HoV9FeGg6jdkoYSJk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gzShf5xcIts9kgEHAPDNYsFmdbKYazmoke2i3dGfyr4=
+			UOrT6uz7PGFrCjqPoFBd3pR8QlXBWQDS6qgj07Bizr4=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+XdwqTs6ySO3ljl+MiChtRms712W0fi8O8HJdDr30f4=
+			FN4Mzabdw1Lbd8RHFIHkrrPLMYnvEamktnNCGC5hOJU=
 			</data>
 		</dict>
 		<key>en.lproj/Localizable.strings</key>
