@@ -20,6 +20,7 @@ Each framework package includes a corresponding `.sha256` checksum file:
 - `SpreedlyStripeAPM.zip.sha256` - Checksum for SpreedlyStripeAPM framework
 - `SpreedlyStripeRadar.zip.sha256` - Checksum for SpreedlyStripeRadar framework
 - `SpreedlyBraintree.zip.sha256` - Checksum for SpreedlyBraintree framework
+- `SpreedlyClickToPay.zip.sha256` - Checksum for SpreedlyClickToPay framework
 
 ## Locating Checksums
 
@@ -38,7 +39,9 @@ package-repo/
 ├── SpreedlyStripeRadar.zip
 ├── SpreedlyStripeRadar.zip.sha256
 ├── SpreedlyBraintree.zip
-└── SpreedlyBraintree.zip.sha256
+├── SpreedlyBraintree.zip.sha256
+├── SpreedlyClickToPay.zip
+└── SpreedlyClickToPay.zip.sha256
 ```
 
 ## Verification Methods
