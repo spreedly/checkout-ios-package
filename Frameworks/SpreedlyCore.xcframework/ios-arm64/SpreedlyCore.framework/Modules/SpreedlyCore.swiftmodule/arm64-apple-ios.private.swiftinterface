@@ -17,6 +17,79 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 import os.log
 import os
+@objc @objcMembers final public class ClickToPayMetadata : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let flowId: Swift.String
+  @objc final public let correlationId: Swift.String
+  @objc final public let merchantTransactionId: Swift.String
+  @objc final public let dpaId: Swift.String
+  @objc final public let test: Swift.Bool
+  @objc public init(flowId: Swift.String, correlationId: Swift.String, merchantTransactionId: Swift.String, dpaId: Swift.String, test: Swift.Bool)
+  @objc deinit
+}
+public struct ClickToPayBillingFields : Swift.Sendable {
+  public var firstName: Swift.String?
+  public var lastName: Swift.String?
+  public var fullName: Swift.String?
+  public var month: Swift.String?
+  public var year: Swift.String?
+  public var addressLine1: Swift.String?
+  public var addressLine2: Swift.String?
+  public var city: Swift.String?
+  public var state: Swift.String?
+  public var zip: Swift.String?
+  public var country: Swift.String?
+  public var email: Swift.String?
+  public var phoneNumber: Swift.String?
+  public var company: Swift.String?
+  public var shippingAddressLine1: Swift.String?
+  public var shippingAddressLine2: Swift.String?
+  public var shippingCity: Swift.String?
+  public var shippingState: Swift.String?
+  public var shippingZip: Swift.String?
+  public var shippingCountry: Swift.String?
+  public var shippingPhoneNumber: Swift.String?
+  public init()
+}
+public struct ClickToPayPaymentMethodRequest : SpreedlyCore.PaymentMethodRequestProtocol {
+  public let type: SpreedlyCore.PaymentMethodType
+  public init(verificationValue: Swift.String, clickToPay: SpreedlyCore.ClickToPayMetadata, billing: SpreedlyCore.ClickToPayBillingFields? = nil, metadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil)
+  public var body: Foundation.Data? {
+    get
+  }
+}
+public enum ClickToPayTrace {
+  public static var isEnabled: Swift.Bool
+  public enum Category : Swift.String {
+    case flow
+    case bridge
+    case webView
+    case api
+    case mc
+    case state
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static func log(_ emoji: Swift.String, _ category: SpreedlyCore.ClickToPayTrace.Category, _ message: Swift.String)
+  public static func state(_ from: Swift.String, _ to: Swift.String, detail: Swift.String? = nil)
+  public static func success(_ message: Swift.String)
+  public static func failure(_ message: Swift.String)
+  public static func bridgeIn(method: Swift.String, payload: [Swift.String : Any]? = nil)
+  public static func bridgeOut(method: Swift.String, payload: [Swift.String : Any]? = nil)
+  public static func webView(_ message: Swift.String, url: Swift.String? = nil)
+  public static func mc(_ message: Swift.String)
+  public static func authSnapshotDescription(tag: Swift.String) -> Swift.String
+  public static func apiRequest(method: Swift.String, url: Swift.String, body: [Swift.String : Any]?)
+  public static func apiResponse(statusCode: Swift.Int, url: Swift.String, body: Swift.String?)
+  public static func apiResponse(statusCode: Swift.Int, url: Swift.String, bodyByteCount: Swift.Int)
+  public static func apiTokenizeErrors(_ errors: [SpreedlyCore.SpreedlyAPIError])
+  public static func apiNetworkError(url: Swift.String, networkError: SpreedlyCore.NetworkError)
+  public static func redactedJSONString(from dictionary: [Swift.String : Any]?) -> Swift.String?
+  public static func redactString(_ message: Swift.String) -> Swift.String
+  public static func redactDictionary(_ dict: [Swift.String : Any]) -> [Swift.String : Any]
+}
 public enum PaymentMethodType : Swift.String, Swift.CaseIterable, Swift.Sendable {
   case creditCard
   case bankAccount
@@ -1773,6 +1846,12 @@ extension SpreedlyCore.Spreedly {
   @objc public static func configureLogging(_ config: SpreedlyCore.SpreedlyLoggerConfiguration)
   public static func setLogger(_ logger: (any SpreedlyCore.SpreedlyLogger)?)
 }
+extension SpreedlyCore.Spreedly {
+  @discardableResult
+  public func createClickToPayPaymentMethod(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billing: SpreedlyCore.ClickToPayBillingFields? = nil, metadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:eligibleForCardUpdater:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?, eligibleForCardUpdater: Foundation.NSNumber?) -> SpreedlyCore.PaymentProcessingResult
+}
 @_spi(SpreedlySDKInternal) extension SpreedlyCore.Spreedly {
   @_spi(SpreedlySDKInternal) @objc dynamic public func resetPaymentSessionForDropIn()
   @_spi(SpreedlySDKInternal) @objc dynamic public func resetPaymentFormPreservingDisplayConfigForDropIn()
@@ -1987,6 +2066,9 @@ public struct BasicNetworkRequest : SpreedlyCore.NetworkRequest, Swift.Sendable 
   public let cachePolicy: Foundation.URLRequest.CachePolicy
   public init(baseURL: Swift.String, endpoint: Swift.String, method: SpreedlyCore.HTTPMethod, headers: [Swift.String : Swift.String] = [:], queryParameters: [Swift.String : Swift.String] = [:], body: Foundation.Data? = nil, timeoutInterval: Foundation.TimeInterval = 30.0, shouldCache: Swift.Bool = false, cachePolicy: Foundation.URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData)
 }
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.Equatable {}
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.Hashable {}
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.RawRepresentable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Equatable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Hashable {}
 extension SpreedlyCore.PaymentMethodType : Swift.RawRepresentable {}

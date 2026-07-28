@@ -414,6 +414,19 @@ typedef SWIFT_ENUM(NSInteger, CardNumberFormat, open) {
   CardNumberFormatMasked = 2,
 };
 
+/// Mastercard Click to Pay checkout metadata sent on tokenize (no PAN on wire).
+SWIFT_CLASS("_TtC12SpreedlyCore18ClickToPayMetadata")
+@interface ClickToPayMetadata : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull flowId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull correlationId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantTransactionId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull dpaId;
+@property (nonatomic, readonly) BOOL test;
+- (nonnull instancetype)initWithFlowId:(NSString * _Nonnull)flowId correlationId:(NSString * _Nonnull)correlationId merchantTransactionId:(NSString * _Nonnull)merchantTransactionId dpaId:(NSString * _Nonnull)dpaId test:(BOOL)test OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 SWIFT_ENUM_FWD_DECL(NSInteger, DocumentIdKey)
 SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 @interface DocumentId : NSObject
@@ -1002,6 +1015,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///   </li>
 /// </ul>
 - (BOOL)isDropInPreserveStateScheduled SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("", "isPreserveDropInFormOnRotationScheduled");
+@end
+
+@interface Spreedly (SWIFT_EXTENSION(SpreedlyCore))
+/// Objective-C compatible Click to Pay tokenize — billing keys match credit-card API field names.
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class SpreedlyLoggerConfiguration;
