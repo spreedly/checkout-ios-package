@@ -17,6 +17,79 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 import os.log
 import os
+@objc @objcMembers final public class ClickToPayMetadata : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let flowId: Swift.String
+  @objc final public let correlationId: Swift.String
+  @objc final public let merchantTransactionId: Swift.String
+  @objc final public let dpaId: Swift.String
+  @objc final public let test: Swift.Bool
+  @objc public init(flowId: Swift.String, correlationId: Swift.String, merchantTransactionId: Swift.String, dpaId: Swift.String, test: Swift.Bool)
+  @objc deinit
+}
+public struct ClickToPayBillingFields : Swift.Sendable {
+  public var firstName: Swift.String?
+  public var lastName: Swift.String?
+  public var fullName: Swift.String?
+  public var month: Swift.String?
+  public var year: Swift.String?
+  public var addressLine1: Swift.String?
+  public var addressLine2: Swift.String?
+  public var city: Swift.String?
+  public var state: Swift.String?
+  public var zip: Swift.String?
+  public var country: Swift.String?
+  public var email: Swift.String?
+  public var phoneNumber: Swift.String?
+  public var company: Swift.String?
+  public var shippingAddressLine1: Swift.String?
+  public var shippingAddressLine2: Swift.String?
+  public var shippingCity: Swift.String?
+  public var shippingState: Swift.String?
+  public var shippingZip: Swift.String?
+  public var shippingCountry: Swift.String?
+  public var shippingPhoneNumber: Swift.String?
+  public init()
+}
+public struct ClickToPayPaymentMethodRequest : SpreedlyCore.PaymentMethodRequestProtocol {
+  public let type: SpreedlyCore.PaymentMethodType
+  public init(verificationValue: Swift.String, clickToPay: SpreedlyCore.ClickToPayMetadata, billing: SpreedlyCore.ClickToPayBillingFields? = nil, metadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil)
+  public var body: Foundation.Data? {
+    get
+  }
+}
+public enum ClickToPayTrace {
+  public static var isEnabled: Swift.Bool
+  public enum Category : Swift.String {
+    case flow
+    case bridge
+    case webView
+    case api
+    case mc
+    case state
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static func log(_ emoji: Swift.String, _ category: SpreedlyCore.ClickToPayTrace.Category, _ message: Swift.String)
+  public static func state(_ from: Swift.String, _ to: Swift.String, detail: Swift.String? = nil)
+  public static func success(_ message: Swift.String)
+  public static func failure(_ message: Swift.String)
+  public static func bridgeIn(method: Swift.String, payload: [Swift.String : Any]? = nil)
+  public static func bridgeOut(method: Swift.String, payload: [Swift.String : Any]? = nil)
+  public static func webView(_ message: Swift.String, url: Swift.String? = nil)
+  public static func mc(_ message: Swift.String)
+  public static func authSnapshotDescription(tag: Swift.String) -> Swift.String
+  public static func apiRequest(method: Swift.String, url: Swift.String, body: [Swift.String : Any]?)
+  public static func apiResponse(statusCode: Swift.Int, url: Swift.String, body: Swift.String?)
+  public static func apiResponse(statusCode: Swift.Int, url: Swift.String, bodyByteCount: Swift.Int)
+  public static func apiTokenizeErrors(_ errors: [SpreedlyCore.SpreedlyAPIError])
+  public static func apiNetworkError(url: Swift.String, networkError: SpreedlyCore.NetworkError)
+  public static func redactedJSONString(from dictionary: [Swift.String : Any]?) -> Swift.String?
+  public static func redactString(_ message: Swift.String) -> Swift.String
+  public static func redactDictionary(_ dict: [Swift.String : Any]) -> [Swift.String : Any]
+}
 public enum PaymentMethodType : Swift.String, Swift.CaseIterable, Swift.Sendable {
   case creditCard
   case bankAccount
@@ -1015,6 +1088,12 @@ public enum TelemetryEvents {
   public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String? = nil, errorCode: Swift.String? = nil)
   public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
+  public static func paypalReady(environment: Swift.String)
+  public static func paypalEligible(currency: Swift.String, country: Swift.String, paypalWallet: Swift.Bool, payLater: Swift.Bool, credit: Swift.Bool, venmo: Swift.Bool)
+  public static func paypalButtonTapped(fundingSource: Swift.String)
+  public static func paypalApproved(fundingSource: Swift.String, orderId: Swift.String, durationMs: Swift.Int64)
+  public static func paypalCancelled(fundingSource: Swift.String, durationMs: Swift.Int64)
+  public static func paypalError(fundingSource: Swift.String, errorCode: Swift.String, durationMs: Swift.Int64)
   public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
   public static func sdkInitBlocked(reason: Swift.String, signals: Swift.String)
   public static func deviceDataCollected(provider: Swift.String, success: Swift.Bool, durationMs: Swift.Int64, errorType: Swift.String? = nil)
@@ -1048,6 +1127,12 @@ public enum TelemetryEvents {
   @objc public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String?, errorCode: Swift.String?)
   @objc public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   @objc public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
+  @objc public static func paypalReady(environment: Swift.String)
+  @objc public static func paypalEligible(currency: Swift.String, country: Swift.String, paypalWallet: Swift.Bool, payLater: Swift.Bool, credit: Swift.Bool, venmo: Swift.Bool)
+  @objc public static func paypalButtonTapped(fundingSource: Swift.String)
+  @objc public static func paypalApproved(fundingSource: Swift.String, orderId: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalCancelled(fundingSource: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalError(fundingSource: Swift.String, errorCode: Swift.String, durationMs: Swift.Int64)
   @objc public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
   @objc public static func sdkInitBlocked(reason: Swift.String, signals: Swift.String)
   @objc public static func deviceDataCollected(provider: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
@@ -1152,12 +1237,22 @@ public enum TelemetryEvents {
   @objc public var deviceData: Swift.String? {
     get
   }
+  @objc public var orderId: Swift.String? {
+    get
+  }
+  @objc public var payerId: Swift.String? {
+    get
+  }
+  @objc public var fundingSource: Swift.String? {
+    get
+  }
   @objc public var failureDetails: SpreedlyCore.FailedDetails? {
     get
   }
   @objc public static func initial() -> SpreedlyCore.PaymentResult
   public static func success(token: Swift.String, paymentResponse: SpreedlyCore.PaymentMethodResponse?, shouldRetain: Swift.Bool? = false) -> SpreedlyCore.PaymentResult
   @objc public static func completed(token: Swift.String, nonce: Swift.String, deviceData: Swift.String?, state: Swift.String? = "pending") -> SpreedlyCore.PaymentResult
+  @objc public static func paypalCompleted(transactionToken: Swift.String?, orderId: Swift.String, payerId: Swift.String?, fundingSource: Swift.String, state: Swift.String? = "pending") -> SpreedlyCore.PaymentResult
   @objc public static func canceled() -> SpreedlyCore.PaymentResult
   @objc public static func failure(details: SpreedlyCore.FailedDetails) -> SpreedlyCore.PaymentResult
   public static func failed(from networkError: SpreedlyCore.NetworkError) -> SpreedlyCore.PaymentResult
@@ -1187,6 +1282,86 @@ public enum TelemetryEvents {
   nonisolated public static var allCases: [SpreedlyCore.SpreedlyApiError] {
     get
   }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class PayPalCheckoutConfig : ObjectiveC.NSObject {
+  @objc final public let clientId: Swift.String
+  @objc final public let environment: SpreedlyCore.PayPalEnvironment
+  @objc final public let returnURL: Foundation.URL
+  @objc final public let merchantDisplayName: Swift.String
+  @objc final public let defaultPresentationMode: SpreedlyCore.PayPalPresentationMode
+  @objc final public let locale: Swift.String?
+  @objc public init(clientId: Swift.String, environment: SpreedlyCore.PayPalEnvironment, returnURL: Foundation.URL, merchantDisplayName: Swift.String = "", defaultPresentationMode: SpreedlyCore.PayPalPresentationMode = .automatic, locale: Swift.String? = nil)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalEligibilityDetails : ObjectiveC.NSObject {
+  @objc final public let fundingSource: SpreedlyCore.PayPalFundingSource
+  @objc final public let isEligible: Swift.Bool
+  @objc final public let payLaterProductCode: Swift.String?
+  @objc final public let countryCode: Swift.String?
+  @objc public init(fundingSource: SpreedlyCore.PayPalFundingSource, isEligible: Swift.Bool, payLaterProductCode: Swift.String? = nil, countryCode: Swift.String? = nil)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalEligibilityResult : ObjectiveC.NSObject {
+  @objc public init(details: [SpreedlyCore.PayPalEligibilityDetails])
+  @objc public func isEligible(_ fundingSource: SpreedlyCore.PayPalFundingSource) -> Swift.Bool
+  @objc public func details(for fundingSource: SpreedlyCore.PayPalFundingSource) -> SpreedlyCore.PayPalEligibilityDetails?
+  @objc deinit
+}
+@objc public enum PayPalEnvironment : Swift.Int {
+  case sandbox = 0
+  case production = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public let PayPalErrorDomain: Swift.String
+@objc public enum PayPalErrorCode : Swift.Int {
+  case network = 0
+  case canceled = 1
+  case validation = 2
+  case server = 3
+  case unknown = 4
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PayPalError : Foundation.NSError, @unchecked Swift.Sendable {
+  @objc final public let recoveryHint: Swift.String?
+  @objc public var isCanceled: Swift.Bool {
+    @objc get
+  }
+  @objc public init(code: SpreedlyCore.PayPalErrorCode, message: Swift.String, recoveryHint: Swift.String? = nil, underlying: (any Swift.Error)? = nil)
+  @objc deinit
+}
+@objc public enum PayPalFundingSource : Swift.Int {
+  case paypal = 0
+  case payLater = 1
+  case credit = 2
+  case venmo = 3
+  public var rawValueString: Swift.String {
+    get
+  }
+  public init?(string: Swift.String)
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PayPalPresentationMode : Swift.Int {
+  case automatic = 0
+  case popup = 1
+  case modal = 2
+  case redirect = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -1773,6 +1948,12 @@ extension SpreedlyCore.Spreedly {
   @objc public static func configureLogging(_ config: SpreedlyCore.SpreedlyLoggerConfiguration)
   public static func setLogger(_ logger: (any SpreedlyCore.SpreedlyLogger)?)
 }
+extension SpreedlyCore.Spreedly {
+  @discardableResult
+  public func createClickToPayPaymentMethod(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billing: SpreedlyCore.ClickToPayBillingFields? = nil, metadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:eligibleForCardUpdater:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?, eligibleForCardUpdater: Foundation.NSNumber?) -> SpreedlyCore.PaymentProcessingResult
+}
 public enum SpreedlySDK {
   public static let version: Swift.String
 }
@@ -1978,6 +2159,9 @@ public struct BasicNetworkRequest : SpreedlyCore.NetworkRequest, Swift.Sendable 
   public let cachePolicy: Foundation.URLRequest.CachePolicy
   public init(baseURL: Swift.String, endpoint: Swift.String, method: SpreedlyCore.HTTPMethod, headers: [Swift.String : Swift.String] = [:], queryParameters: [Swift.String : Swift.String] = [:], body: Foundation.Data? = nil, timeoutInterval: Foundation.TimeInterval = 30.0, shouldCache: Swift.Bool = false, cachePolicy: Foundation.URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData)
 }
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.Equatable {}
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.Hashable {}
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.RawRepresentable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Equatable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Hashable {}
 extension SpreedlyCore.PaymentMethodType : Swift.RawRepresentable {}
@@ -2016,6 +2200,18 @@ extension SpreedlyCore.ErrorType : Swift.RawRepresentable {}
 extension SpreedlyCore.SpreedlyApiError : Swift.Equatable {}
 extension SpreedlyCore.SpreedlyApiError : Swift.Hashable {}
 extension SpreedlyCore.SpreedlyApiError : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalEnvironment : Swift.Equatable {}
+extension SpreedlyCore.PayPalEnvironment : Swift.Hashable {}
+extension SpreedlyCore.PayPalEnvironment : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalErrorCode : Swift.Equatable {}
+extension SpreedlyCore.PayPalErrorCode : Swift.Hashable {}
+extension SpreedlyCore.PayPalErrorCode : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalFundingSource : Swift.Equatable {}
+extension SpreedlyCore.PayPalFundingSource : Swift.Hashable {}
+extension SpreedlyCore.PayPalFundingSource : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalPresentationMode : Swift.Equatable {}
+extension SpreedlyCore.PayPalPresentationMode : Swift.Hashable {}
+extension SpreedlyCore.PayPalPresentationMode : Swift.RawRepresentable {}
 extension SpreedlyCore.BankAccountType : Swift.Equatable {}
 extension SpreedlyCore.BankAccountType : Swift.Hashable {}
 extension SpreedlyCore.BankAccountType : Swift.RawRepresentable {}

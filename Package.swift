@@ -18,6 +18,7 @@ let package = Package(
         .library(name: "SpreedlyStripeRadar", targets: ["SpreedlyStripeRadar"]),
         .library(name: "SpreedlyBraintree", targets: ["SpreedlyBraintree"]),
         .library(name: "SpreedlyClickToPay", targets: ["SpreedlyClickToPay"]),
+        .library(name: "SpreedlyPayPal", targets: ["SpreedlyPayPal"]),
     ],
     targets: [
         .binaryTarget(name: "SpreedlyCore", path: "./Frameworks/SpreedlyCore.xcframework"),
@@ -27,5 +28,6 @@ let package = Package(
         .binaryTarget(name: "SpreedlyStripeRadar", path: "./Frameworks/SpreedlyStripeRadar.xcframework"),
         .binaryTarget(name: "SpreedlyBraintree", path: "./Frameworks/SpreedlyBraintree.xcframework"),
         .binaryTarget(name: "SpreedlyClickToPay", path: "./Frameworks/SpreedlyClickToPay.xcframework"),
+        .binaryTarget(name: "SpreedlyPayPal", path: "./Frameworks/SpreedlyPayPal.xcframework"),
     ]
 )
