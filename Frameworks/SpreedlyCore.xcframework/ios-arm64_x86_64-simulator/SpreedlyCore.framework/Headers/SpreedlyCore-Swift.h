@@ -414,6 +414,19 @@ typedef SWIFT_ENUM(NSInteger, CardNumberFormat, open) {
   CardNumberFormatMasked = 2,
 };
 
+/// Mastercard Click to Pay checkout metadata sent on tokenize (no PAN on wire).
+SWIFT_CLASS("_TtC12SpreedlyCore18ClickToPayMetadata")
+@interface ClickToPayMetadata : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull flowId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull correlationId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantTransactionId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull dpaId;
+@property (nonatomic, readonly) BOOL test;
+- (nonnull instancetype)initWithFlowId:(NSString * _Nonnull)flowId correlationId:(NSString * _Nonnull)correlationId merchantTransactionId:(NSString * _Nonnull)merchantTransactionId dpaId:(NSString * _Nonnull)dpaId test:(BOOL)test OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 SWIFT_ENUM_FWD_DECL(NSInteger, DocumentIdKey)
 SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 @interface DocumentId : NSObject
@@ -933,6 +946,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isInitialized;)
 /// \param eligibleForCardUpdater <code>NSNumber</code> wrapping <code>YES</code> / <code>NO</code>; <code>nil</code> means unset.
 ///
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload that also carries an opaque mandate. Added as a separate selector so
+/// the existing <code>createCreditCardObjC</code> selectors keep working unchanged.
+/// \param additionalFields Additional field strings keyed by field name.
+///
+/// \param metadata Optional metadata for the transaction.
+///
+/// \param eligibleForCardUpdater <code>NSNumber</code> wrapping <code>YES</code> / <code>NO</code>; <code>nil</code> means unset.
+///
+/// \param mandate Optional opaque mandate sent at <code>payment_method.mandate</code>. Spreedly Core owns
+/// the schema and validates it. Omitted when nil or empty; a value with no JSON
+/// representation fails tokenization with an error naming the key path.
+///
+- (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
 /// Telemetry module string for the bank-account drop-in. Emitted as <code>module</code> on
 /// <code>payment_sheet_presented</code>, <code>payment_sheet_dismissed</code>, and <code>validation_failed</code>
 /// so cross-platform dashboards can group ACH events under a single tag.
@@ -942,6 +968,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// string to omit. Pass <code>nil</code> for <code>shouldRetain</code> to use the SDK default; pass <code>@YES</code>/<code>@NO</code> to
 /// override. Mirrors <code>createCreditCardObjC</code> for additional-field handling.
 - (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload that also carries an opaque mandate. Added as a separate selector so
+/// the existing <code>createBankAccountObjC</code> selector keeps working unchanged.
+/// \param mandate Optional opaque mandate sent at <code>payment_method.mandate</code>. Spreedly
+/// Core owns the schema and validates it. Omitted when nil or empty; a value with no JSON
+/// representation fails tokenization with an error naming the key path.
+///
+- (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -1002,6 +1035,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///   </li>
 /// </ul>
 - (BOOL)isDropInPreserveStateScheduled SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("", "isPreserveDropInFormOnRotationScheduled");
+@end
+
+@interface Spreedly (SWIFT_EXTENSION(SpreedlyCore))
+/// Objective-C compatible Click to Pay tokenize — billing keys match credit-card API field names.
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload that also carries an opaque mandate. Added as a separate selector so
+/// the existing Click to Pay selectors keep working unchanged.
+/// \param mandate Optional opaque mandate sent at <code>payment_method.mandate</code>. Spreedly Core
+/// owns the schema and validates it. Omitted when nil or empty; a value with no JSON
+/// representation fails tokenization with an error naming the key path.
+///
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class SpreedlyLoggerConfiguration;
@@ -1827,6 +1873,19 @@ typedef SWIFT_ENUM(NSInteger, CardNumberFormat, open) {
   CardNumberFormatMasked = 2,
 };
 
+/// Mastercard Click to Pay checkout metadata sent on tokenize (no PAN on wire).
+SWIFT_CLASS("_TtC12SpreedlyCore18ClickToPayMetadata")
+@interface ClickToPayMetadata : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull flowId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull correlationId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantTransactionId;
+@property (nonatomic, readonly, copy) NSString * _Nonnull dpaId;
+@property (nonatomic, readonly) BOOL test;
+- (nonnull instancetype)initWithFlowId:(NSString * _Nonnull)flowId correlationId:(NSString * _Nonnull)correlationId merchantTransactionId:(NSString * _Nonnull)merchantTransactionId dpaId:(NSString * _Nonnull)dpaId test:(BOOL)test OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 SWIFT_ENUM_FWD_DECL(NSInteger, DocumentIdKey)
 SWIFT_CLASS("_TtC12SpreedlyCore10DocumentId")
 @interface DocumentId : NSObject
@@ -2346,6 +2405,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isInitialized;)
 /// \param eligibleForCardUpdater <code>NSNumber</code> wrapping <code>YES</code> / <code>NO</code>; <code>nil</code> means unset.
 ///
 - (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload that also carries an opaque mandate. Added as a separate selector so
+/// the existing <code>createCreditCardObjC</code> selectors keep working unchanged.
+/// \param additionalFields Additional field strings keyed by field name.
+///
+/// \param metadata Optional metadata for the transaction.
+///
+/// \param eligibleForCardUpdater <code>NSNumber</code> wrapping <code>YES</code> / <code>NO</code>; <code>nil</code> means unset.
+///
+/// \param mandate Optional opaque mandate sent at <code>payment_method.mandate</code>. Spreedly Core owns
+/// the schema and validates it. Omitted when nil or empty; a value with no JSON
+/// representation fails tokenization with an error naming the key path.
+///
+- (PaymentProcessingResult * _Nonnull)createCreditCardObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
 /// Telemetry module string for the bank-account drop-in. Emitted as <code>module</code> on
 /// <code>payment_sheet_presented</code>, <code>payment_sheet_dismissed</code>, and <code>validation_failed</code>
 /// so cross-platform dashboards can group ACH events under a single tag.
@@ -2355,6 +2427,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// string to omit. Pass <code>nil</code> for <code>shouldRetain</code> to use the SDK default; pass <code>@YES</code>/<code>@NO</code> to
 /// override. Mirrors <code>createCreditCardObjC</code> for additional-field handling.
 - (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload that also carries an opaque mandate. Added as a separate selector so
+/// the existing <code>createBankAccountObjC</code> selector keeps working unchanged.
+/// \param mandate Optional opaque mandate sent at <code>payment_method.mandate</code>. Spreedly
+/// Core owns the schema and validates it. Omitted when nil or empty; a value with no JSON
+/// representation fails tokenization with an error naming the key path.
+///
+- (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -2415,6 +2494,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 ///   </li>
 /// </ul>
 - (BOOL)isDropInPreserveStateScheduled SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("", "isPreserveDropInFormOnRotationScheduled");
+@end
+
+@interface Spreedly (SWIFT_EXTENSION(SpreedlyCore))
+/// Objective-C compatible Click to Pay tokenize — billing keys match credit-card API field names.
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C overload that also carries an opaque mandate. Added as a separate selector so
+/// the existing Click to Pay selectors keep working unchanged.
+/// \param mandate Optional opaque mandate sent at <code>payment_method.mandate</code>. Spreedly Core
+/// owns the schema and validates it. Omitted when nil or empty; a value with no JSON
+/// representation fails tokenization with an error naming the key path.
+///
+- (PaymentProcessingResult * _Nonnull)createClickToPayPaymentMethodWithMetadata:(ClickToPayMetadata * _Nonnull)clickToPay verificationValue:(NSString * _Nonnull)verificationValue billingFields:(NSDictionary<NSString *, NSString *> * _Nullable)billingFields metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata eligibleForCardUpdater:(NSNumber * _Nullable)eligibleForCardUpdater mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class SpreedlyLoggerConfiguration;

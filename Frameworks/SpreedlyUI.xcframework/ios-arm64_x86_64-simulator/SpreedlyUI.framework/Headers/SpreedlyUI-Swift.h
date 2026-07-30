@@ -424,6 +424,11 @@ SWIFT_CLASS("_TtC10SpreedlyUI35BankAccountFormDropInViewController")
 @interface BankAccountFormDropInViewController : UIViewController
 @property (nonatomic, strong) BankAccountFieldConfig * _Nonnull fieldConfig;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+/// Optional opaque mandate sent at <code>payment_method.mandate</code> when the form is submitted.
+/// Spreedly Core owns the schema and validates it; the SDK encodes and forwards it, never
+/// interpreting it, and omits it when nil or empty. A value with no JSON representation fails
+/// tokenization with an error naming the key. Set before the view loads.
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable mandate;
 /// Designated initializer; forwards to <code>UIViewController</code> so storyboard and nib paths still work.
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 /// Convenience initializer using the <code>.default</code> field config and no result callback.
@@ -479,6 +484,12 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 /// Raw value of <code>cardNumberFormat</code>. Kept for backward compatibility — prefer <code>cardNumberFormat</code>.
 @property (nonatomic) NSInteger cardNumberFormatRawValue;
 @property (nonatomic) BOOL enableAutofill;
+/// Optional opaque mandate sent at <code>payment_method.mandate</code> when the form is submitted.
+/// Spreedly Core owns the schema and validates it; the SDK encodes and forwards it, never
+/// interpreting it, and omits it when nil or empty. A value with no JSON representation fails
+/// tokenization with an error naming the key. Set before the view loads.
+/// Never put cardholder data in it.
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable mandate;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -1298,6 +1309,11 @@ SWIFT_CLASS("_TtC10SpreedlyUI35BankAccountFormDropInViewController")
 @interface BankAccountFormDropInViewController : UIViewController
 @property (nonatomic, strong) BankAccountFieldConfig * _Nonnull fieldConfig;
 @property (nonatomic, copy) void (^ _Nullable onProcessingResult)(PaymentProcessingResult * _Nonnull);
+/// Optional opaque mandate sent at <code>payment_method.mandate</code> when the form is submitted.
+/// Spreedly Core owns the schema and validates it; the SDK encodes and forwards it, never
+/// interpreting it, and omits it when nil or empty. A value with no JSON representation fails
+/// tokenization with an error naming the key. Set before the view loads.
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable mandate;
 /// Designated initializer; forwards to <code>UIViewController</code> so storyboard and nib paths still work.
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 /// Convenience initializer using the <code>.default</code> field config and no result callback.
@@ -1353,6 +1369,12 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 /// Raw value of <code>cardNumberFormat</code>. Kept for backward compatibility — prefer <code>cardNumberFormat</code>.
 @property (nonatomic) NSInteger cardNumberFormatRawValue;
 @property (nonatomic) BOOL enableAutofill;
+/// Optional opaque mandate sent at <code>payment_method.mandate</code> when the form is submitted.
+/// Spreedly Core owns the schema and validates it; the SDK encodes and forwards it, never
+/// interpreting it, and omits it when nil or empty. A value with no JSON representation fails
+/// tokenization with an error naming the key. Set before the view loads.
+/// Never put cardholder data in it.
+@property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable mandate;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
