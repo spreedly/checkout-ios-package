@@ -4,17 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>LICENSE</key>
-		<data>
-		NDX2AVb1wpjZKZjeqbY8J3FQsew=
-		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<data>
 		uokSrMuV3CcFKfZoAMQpxme7/2M=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Info.plist</key>
 		<data>
-		kMFEFoYt5RWst3XOK6h/yaV8JEI=
+		j8CTMgc1kcQG0SLBp0C4Ypf9yVM=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -38,7 +34,7 @@
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		eHHrU+Vzs1uyw28PeelYGl6/DOs=
+		Gb0ku4Rb/Rcz8R3mDmvVmHosBMk=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
 		<data>
@@ -1567,7 +1563,7 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		j0mpAxlwrFWdaNiSBN3XuQFJi1k=
+		XTGTAAohSqeRp7IcdLls7pGsrvE=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Info.plist</key>
 		<data>
@@ -2342,7 +2338,7 @@
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
-		8n93nKeIS9Rbn2ricxIqaLTDYF8=
+		QdkRJPEf1Hj9lLzryr6hqBX2ANs=
 		</data>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -2353,13 +2349,25 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		h1KF3BzGPMFXpClXU5aiNHmt1pM=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<data>
+		xdrNI/P/+SbD8VnXskZyTUHhJcI=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<data>
+		cSLXmEYcl3d7+IlEPY+wUYUinpk=
+		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<data>
 		KFUXLGcyLxdtboAyrtMlpDsHEPU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Info.plist</key>
 		<data>
-		0M0vFFXXUfa4dbfTRkQz9YzcFQ0=
+		hlqOH9/pN7FmF3FcuzMrY2XeAv4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -2399,7 +2407,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/SpreedlyStripeAPM</key>
 		<data>
-		oCDs/ZZBBLh2DTPk6pI3STFzMOk=
+		pb/U8KTIJ3ThTDm544ejQUNotTE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
 		<data>
@@ -4318,7 +4326,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Assets.car</key>
 		<data>
-		N6Lya5SeCfbzpB/Z9EGS0M1yN9E=
+		NJ1A3OeQzBDBpRgU6wGEAeCYiFM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Info.plist</key>
 		<data>
@@ -4703,7 +4711,7 @@
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/_CodeSignature/CodeResources</key>
 		<data>
-		CjVIWKJif8CyiyJ0KTIaGJnUz9Y=
+		G7y8foUQdd3/6UZfabbhR4XyqZM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -4714,16 +4722,25 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		h1KF3BzGPMFXpClXU5aiNHmt1pM=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<data>
+		uWIw1fn5U7OLpfWRHd45LBdph/Q=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<data>
+		fEiaKZkNEywgtp3iNIWm4umXbIY=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyStripeAPM.yml</key>
+		<data>
+		GeB+EIvZe5RGNJ6YSUxYWAQ1lBE=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			2fOb5bs7rjpLv3OJGMGNZ2jbDwkbds/h+KCk+LWD540=
-			</data>
-		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<dict>
 			<key>hash2</key>
@@ -4735,7 +4752,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			poQ3mvItMzJhsHIE0b4CDiO+Dcq4eUllHechrmXefd0=
+			xib5mNyC4LmACsrfw9sL0CzNAOullEqqD3n9cioufYY=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -4777,7 +4794,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3SoCeularpacNzlbTgXMHByRbioySqXzYB4GrW8unXQ=
+			1P34OofNvDDhfAEiffh7JZZybYE/+s4U8Yw7QHCDJmQ=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
@@ -6339,7 +6356,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2WZBnR2RsJjx+2b74w1pQCzhRrsNwejFjqxenonIkhE=
+			cFQS4tljlo8+D+9E5+ZxkmlawLoupl6PAC87/MPtTWo=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/Stripe_StripePaymentsUI.bundle/Info.plist</key>
@@ -7135,7 +7152,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2mK3Dz6224OYDod4x/ggRarBvBQJYCbvG+K6rX7NyMU=
+			LZq4Y8Dd0nxfe181Dg3qVSeKA33dH6LIQwJGBn0M9YA=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
@@ -7146,6 +7163,27 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QKNc0O5W/stWP8PLX8JOsx3RdU1fxQoKFB/zbDO5l0Q=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			v9WN1dYAEqLza+oxorFb3ZkW4WWXXkYAwJQuHbXOLWQ=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			aPeNIfuvUtbT/SaXtkunXIP4Z0w6LnJfiIBrrmAsXoU=
+			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Headers/SpreedlyStripeAPM-Swift.h</key>
 		<dict>
@@ -7158,7 +7196,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			weFEaqhTZcwj+jSUH73EQytQune/hgSAVFlw324fwh0=
+			8e+pmuz5I0kXtgC0U/x5+yZxUXDwRev1WBoHLSvQON0=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -7228,7 +7266,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fE0xUJ+q4Ae4kkNLcsKSaWZRiyeU/KBOqq2w50hW5d8=
+			5yKkRXajNLSuWQDLdH3bzQhSPyxXzVAqZ/hNix28brg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_Stripe3DS2.bundle/Assets.car</key>
@@ -9189,7 +9227,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OfFh8p01SOCGvkJEZFqxshBuj77+QnZcNS5ka1OY9Sw=
+			bpK769Cee9vt/ZW2r3iFahXcBEeuY8Y6C1e3MD10xDA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/Stripe_StripeUICore.bundle/Info.plist</key>
@@ -9586,7 +9624,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			42tnFXaucifK06goq1eguuFFKy/pdzvpeCld2CSTZRg=
+			wYOefeYH0kNRW//4rgU3Qy5BRgdFp9OjU/+SxKVALgo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyStripeAPM.framework/en.lproj/Localizable.strings</key>
@@ -9597,6 +9635,34 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QKNc0O5W/stWP8PLX8JOsx3RdU1fxQoKFB/zbDO5l0Q=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/DWARF/SpreedlyStripeAPM</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kNr4/JO/2ZMNss1ccdZqWc7dLT7dTWaRHsrqpXwKs1I=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyStripeAPM.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			yTXO1GqyjKLJsashv6IU9YK42TXYaMYLP6UY0ZtXsYQ=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyStripeAPM.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyStripeAPM.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			TpCx2Xv8FeQ0b1OZ81JMrvHCwUQ1I510XN1xo6E2e5I=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>
