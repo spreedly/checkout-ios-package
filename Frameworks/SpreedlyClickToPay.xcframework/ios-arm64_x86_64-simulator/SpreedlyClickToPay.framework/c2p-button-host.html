@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spreedly C2P Button</title>
+  <link rel="stylesheet" href="{{UI_KIT_BASE}}/components/src-ui-kit/src-ui-kit.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      width: 100%;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    src-button {
+      display: block;
+      width: auto;
+      min-height: 44px;
+    }
+  </style>
+</head>
+<body>
+  <src-button id="c2p-btn" card-brands="{{CARD_BRANDS}}" locale="{{LOCALE}}"{{SRC_BUTTON_EXTRA_ATTRS}}></src-button>
+
+  <script type="module" src="{{UI_KIT_BASE}}/components/src-ui-kit/src-ui-kit.esm.js?preload=src-button" data-c2p-ui-kit="1"></script>
+  <script>
+    (function() {
+      const handlerName = 'c2pButtonBridge';
+
+      function postToNative(method, payload) {
+        const message = { method: method, payload: payload || {} };
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers[handlerName]) {
+          window.webkit.messageHandlers[handlerName].postMessage(message);
+        }
+      }
+
+      function sanitizeBridgeText(text) {
+        if (text == null || text === '') return text;
+        return String(text);
+      }
+
+      function measurePaintedSize(el) {
+        if (!el) return { width: 0, height: 44 };
+        var painted = el;
+        if (el.shadowRoot) {
+          var interactive = el.shadowRoot.querySelector('button, a, [role="button"]');
+          if (interactive) {
+            painted = interactive;
+          }
+        }
+        const rect = painted.getBoundingClientRect();
+        const width = Math.ceil(rect.width);
+        const height = Math.ceil(rect.height);
+        return {
+          width: width > 0 ? width : 0,
+          height: height > 0 ? height : 44
+        };
+      }
+
+      function shrinkWrapHost(el) {
+        if (!el) return measurePaintedSize(el);
+        const painted = measurePaintedSize(el);
+        if (painted.width > 0) {
+          el.style.width = painted.width + 'px';
+        }
+        if (painted.height > 0) {
+          el.style.height = painted.height + 'px';
+          el.style.minHeight = '';
+        }
+        return painted;
+      }
+
+      function isPaintedButtonTarget(el, event) {
+        if (!el || !event || typeof event.composedPath !== 'function') return false;
+        var path = event.composedPath();
+        if (path.indexOf(el) === -1) return false;
+        if (!el.shadowRoot) return true;
+        var interactive = el.shadowRoot.querySelector('button, a, [role="button"]');
+        if (!interactive) return true;
+        return path.indexOf(interactive) !== -1;
+      }
+
+      function whenDefinedOrTimeout(tagName, timeoutMs) {
+        if (window.customElements.get(tagName)) {
+          return Promise.resolve();
+        }
+        return Promise.race([
+          window.customElements.whenDefined(tagName),
+          new Promise(function(_, reject) {
+            setTimeout(function() {
+              reject(new Error(tagName + ' not registered after ' + timeoutMs + 'ms'));
+            }, timeoutMs);
+          })
+        ]);
+      }
+
+      function wireButton(el) {
+        if (!el || el.__c2pWired) return;
+        el.__c2pWired = true;
+
+        var lastTapAt = 0;
+        function notifyTap() {
+          var now = Date.now();
+          if (now - lastTapAt < 400) return;
+          lastTapAt = now;
+          postToNative('buttonTapped', {});
+        }
+
+        // iframe parity: merchants assign src-button.onclick (not only addEventListener).
+        el.onclick = function(event) {
+          if (!isPaintedButtonTarget(el, event)) return;
+          notifyTap();
+        };
+
+        function wireShadowInteractions() {
+          if (!el.shadowRoot) return false;
+          el.shadowRoot.addEventListener('click', notifyTap, true);
+          const interactive = el.shadowRoot.querySelector('button, a, [role="button"]');
+          if (interactive) {
+            interactive.addEventListener('click', notifyTap);
+          }
+          return true;
+        }
+
+        if (!wireShadowInteractions()) {
+          const observer = new MutationObserver(function() {
+            if (wireShadowInteractions()) {
+              observer.disconnect();
+              postToNative('buttonReady', shrinkWrapHost(el));
+            }
+          });
+          observer.observe(el, { childList: true, subtree: true });
+        }
+
+        document.addEventListener('click', function(event) {
+          if (!isPaintedButtonTarget(el, event)) return;
+          notifyTap();
+        }, true);
+      }
+
+      function publishReady(el) {
+        postToNative('buttonReady', shrinkWrapHost(el));
+        // MC shadow DOM can resize after first paint — re-measure for native layout.
+        setTimeout(function() { postToNative('buttonReady', shrinkWrapHost(el)); }, 150);
+        setTimeout(function() { postToNative('buttonReady', shrinkWrapHost(el)); }, 600);
+      }
+
+      function applyEnabled(enabled) {
+        const el = document.getElementById('c2p-btn');
+        if (!el) return;
+        el.style.pointerEvents = enabled ? 'auto' : 'none';
+        el.style.opacity = enabled ? '1' : '0.45';
+      }
+
+      function applyAppearance(params) {
+        const el = document.getElementById('c2p-btn');
+        if (!el || !params) return;
+        if (params.dark === true) {
+          el.setAttribute('dark', '');
+        } else if (params.dark === false) {
+          el.removeAttribute('dark');
+        }
+        if (params.width > 0) {
+          el.setAttribute('width', String(params.width));
+          el.style.width = params.width + 'px';
+        } else {
+          el.removeAttribute('width');
+          el.style.width = '';
+        }
+        if (params.height > 0) {
+          el.setAttribute('height', String(params.height));
+          // Attribute only — do not inflate host minHeight; MC artwork keeps intrinsic height.
+        } else {
+          el.removeAttribute('height');
+        }
+        if (params.theme) {
+          el.setAttribute('theme', params.theme);
+        } else {
+          el.removeAttribute('theme');
+        }
+      }
+
+      window.c2pButtonCommand = function(command, params) {
+        const el = document.getElementById('c2p-btn');
+        if (!el) return;
+        switch (command) {
+          case 'setEnabled':
+            applyEnabled(!(params && params.enabled === false));
+            break;
+          case 'updateCardBrands':
+            if (params && params.cardBrands) {
+              el.setAttribute('card-brands', params.cardBrands);
+            }
+            postToNative('buttonReady', shrinkWrapHost(el));
+            break;
+          case 'updateAppearance':
+            applyAppearance(params || {});
+            postToNative('buttonReady', shrinkWrapHost(el));
+            break;
+          default:
+            break;
+        }
+      };
+
+      const initialEnabled = {{IS_ENABLED_JSON}};
+
+      whenDefinedOrTimeout('src-button', 20000)
+        .then(function() {
+          const el = document.getElementById('c2p-btn');
+          wireButton(el);
+          applyEnabled(initialEnabled);
+          publishReady(el);
+        })
+        .catch(function(err) {
+          postToNative('buttonError', {
+            error: sanitizeBridgeText(err && err.message ? err.message : String(err))
+          });
+        });
+    })();
+  </script>
+</body>
+</html>

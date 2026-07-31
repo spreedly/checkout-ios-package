@@ -17,6 +17,82 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 import os.log
 import os
+@objc @objcMembers final public class ClickToPayMetadata : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let flowId: Swift.String
+  @objc final public let correlationId: Swift.String
+  @objc final public let merchantTransactionId: Swift.String
+  @objc final public let dpaId: Swift.String
+  @objc final public let test: Swift.Bool
+  @objc public init(flowId: Swift.String, correlationId: Swift.String, merchantTransactionId: Swift.String, dpaId: Swift.String, test: Swift.Bool)
+  @objc deinit
+}
+public struct ClickToPayBillingFields : Swift.Sendable {
+  public var firstName: Swift.String?
+  public var lastName: Swift.String?
+  public var fullName: Swift.String?
+  public var month: Swift.String?
+  public var year: Swift.String?
+  public var addressLine1: Swift.String?
+  public var addressLine2: Swift.String?
+  public var city: Swift.String?
+  public var state: Swift.String?
+  public var zip: Swift.String?
+  public var country: Swift.String?
+  public var email: Swift.String?
+  public var phoneNumber: Swift.String?
+  public var company: Swift.String?
+  public var shippingAddressLine1: Swift.String?
+  public var shippingAddressLine2: Swift.String?
+  public var shippingCity: Swift.String?
+  public var shippingState: Swift.String?
+  public var shippingZip: Swift.String?
+  public var shippingCountry: Swift.String?
+  public var shippingPhoneNumber: Swift.String?
+  public init()
+}
+public struct ClickToPayPaymentMethodRequest : SpreedlyCore.PaymentMethodRequestProtocol {
+  public let type: SpreedlyCore.PaymentMethodType
+  public var mandate: SpreedlyCore.SpreedlyMandate? {
+    get
+  }
+  public init(verificationValue: Swift.String, clickToPay: SpreedlyCore.ClickToPayMetadata, billing: SpreedlyCore.ClickToPayBillingFields? = nil, metadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil, mandate: SpreedlyCore.SpreedlyMandate? = nil) throws
+  public var body: Foundation.Data? {
+    get
+  }
+}
+public enum ClickToPayTrace {
+  public static var isEnabled: Swift.Bool
+  public enum Category : Swift.String {
+    case flow
+    case bridge
+    case webView
+    case api
+    case mc
+    case state
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static func log(_ emoji: Swift.String, _ category: SpreedlyCore.ClickToPayTrace.Category, _ message: Swift.String)
+  public static func state(_ from: Swift.String, _ to: Swift.String, detail: Swift.String? = nil)
+  public static func success(_ message: Swift.String)
+  public static func failure(_ message: Swift.String)
+  public static func bridgeIn(method: Swift.String, payload: [Swift.String : Any]? = nil)
+  public static func bridgeOut(method: Swift.String, payload: [Swift.String : Any]? = nil)
+  public static func webView(_ message: Swift.String, url: Swift.String? = nil)
+  public static func mc(_ message: Swift.String)
+  public static func authSnapshotDescription(tag: Swift.String) -> Swift.String
+  public static func apiRequest(method: Swift.String, url: Swift.String, body: [Swift.String : Any]?)
+  public static func apiResponse(statusCode: Swift.Int, url: Swift.String, body: Swift.String?)
+  public static func apiResponse(statusCode: Swift.Int, url: Swift.String, bodyByteCount: Swift.Int)
+  public static func apiTokenizeErrors(_ errors: [SpreedlyCore.SpreedlyAPIError])
+  public static func apiNetworkError(url: Swift.String, networkError: SpreedlyCore.NetworkError)
+  public static func redactedJSONString(from dictionary: [Swift.String : Any]?) -> Swift.String?
+  public static func redactString(_ message: Swift.String) -> Swift.String
+  public static func redactDictionary(_ dict: [Swift.String : Any]) -> [Swift.String : Any]
+}
 public enum PaymentMethodType : Swift.String, Swift.CaseIterable, Swift.Sendable {
   case creditCard
   case bankAccount
@@ -76,13 +152,16 @@ public struct BasePaymentMethodRequest : SpreedlyCore.PaymentMethodRequestProtoc
   public let allowExpiredDate: Swift.Bool?
   public let allowBlankDate: Swift.Bool?
   public let eligibleForCardUpdater: Swift.Bool?
-  public init(paymentMethodData: any SpreedlyCore.PaymentMethodData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil, allowBlankDate: Swift.Bool? = nil, eligibleForCardUpdater: Swift.Bool? = nil)
+  public var mandate: SpreedlyCore.SpreedlyMandate? {
+    get
+  }
+  public init(paymentMethodData: any SpreedlyCore.PaymentMethodData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil, allowBlankDate: Swift.Bool? = nil, eligibleForCardUpdater: Swift.Bool? = nil, mandate: SpreedlyCore.SpreedlyMandate? = nil) throws
   public var body: Foundation.Data? {
     get
   }
 }
 public struct CreditCardRequest : SpreedlyCore.PaymentMethodRequestProtocol {
-  public init(cardData: any SpreedlyCore.CreditCardData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil, allowBlankDate: Swift.Bool? = nil, eligibleForCardUpdater: Swift.Bool? = nil)
+  public init(cardData: any SpreedlyCore.CreditCardData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, allowExpiredDate: Swift.Bool? = nil, allowBlankDate: Swift.Bool? = nil, eligibleForCardUpdater: Swift.Bool? = nil, mandate: SpreedlyCore.SpreedlyMandate? = nil) throws
   public var type: SpreedlyCore.PaymentMethodType {
     get
   }
@@ -91,7 +170,7 @@ public struct CreditCardRequest : SpreedlyCore.PaymentMethodRequestProtocol {
   }
 }
 public struct BankAccountRequest : SpreedlyCore.PaymentMethodRequestProtocol {
-  public init(bankAccountData: any SpreedlyCore.BankAccountData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil)
+  public init(bankAccountData: any SpreedlyCore.BankAccountData, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, mandate: SpreedlyCore.SpreedlyMandate? = nil) throws
   public var type: SpreedlyCore.PaymentMethodType {
     get
   }
@@ -305,6 +384,7 @@ public struct RecacheTransaction : Swift.Codable {
 extension SpreedlyCore.PaymentMethodResponse {
   public func toRecacheResponse() -> SpreedlyCore.RecacheResponse
 }
+public typealias SpreedlyMandate = [Swift.String : Any]
 public struct TransactionCompletionResponse : Swift.Codable {
   public let transaction: SpreedlyCore.CompletionTransaction?
   public let errors: [SpreedlyCore.CompletionError]?
@@ -756,6 +836,7 @@ public enum PaymentMethodAPIKeys {
   public static let paymentMethod: Swift.String
   public static let source: Swift.String
   public static let metadata: Swift.String
+  public static let mandate: Swift.String
   public static let email: Swift.String
   public static let phoneNumber: Swift.String
   public static let company: Swift.String
@@ -1720,13 +1801,15 @@ public enum ViewControllerUtils {
   @objc public func setNumberFormat(type: Swift.String)
   @objc public func setNumberFormat(cardNumberFormatRawValue: Swift.Int)
   @objc public func toggleMask()
-  public func createCreditCard(additionalFields: [SpreedlyCore.AdditionalField : Swift.String] = [:], metadata: [Swift.String : Swift.String]? = nil, shouldRetain: Swift.Bool? = false, eligibleForCardUpdater: Swift.Bool? = nil) -> SpreedlyCore.PaymentProcessingResult
+  public func createCreditCard(additionalFields: [SpreedlyCore.AdditionalField : Swift.String] = [:], metadata: [Swift.String : Swift.String]? = nil, shouldRetain: Swift.Bool? = false, eligibleForCardUpdater: Swift.Bool? = nil, mandate: SpreedlyCore.SpreedlyMandate? = nil) -> SpreedlyCore.PaymentProcessingResult
   @objc public func createCreditCardObjC(additionalFields: [Swift.String : Swift.String], metadata: [Swift.String : Swift.String]?) -> SpreedlyCore.PaymentProcessingResult
   @objc(createCreditCardObjCWithAdditionalFields:metadata:eligibleForCardUpdater:) public func createCreditCardObjCWithEligibleForCardUpdater(additionalFields: [Swift.String : Swift.String], metadata: [Swift.String : Swift.String]?, eligibleForCardUpdater: Foundation.NSNumber?) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createCreditCardObjCWithAdditionalFields:metadata:eligibleForCardUpdater:mandate:) public func createCreditCardObjCWithMandate(additionalFields: [Swift.String : Swift.String], metadata: [Swift.String : Swift.String]?, eligibleForCardUpdater: Foundation.NSNumber?, mandate: [Swift.String : Any]?) -> SpreedlyCore.PaymentProcessingResult
   @objc public static let bankAccountSheetModule: Swift.String
   @discardableResult
-  public func createBankAccount(additionalFields: [SpreedlyCore.AdditionalField : Swift.String] = [:], bankAccountType: SpreedlyCore.BankAccountType? = nil, bankAccountHolderType: SpreedlyCore.BankAccountHolderType? = nil, bankName: Swift.String? = nil, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, shouldRetain: Swift.Bool? = false) -> SpreedlyCore.PaymentProcessingResult
+  public func createBankAccount(additionalFields: [SpreedlyCore.AdditionalField : Swift.String] = [:], bankAccountType: SpreedlyCore.BankAccountType? = nil, bankAccountHolderType: SpreedlyCore.BankAccountHolderType? = nil, bankName: Swift.String? = nil, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, shouldRetain: Swift.Bool? = false, mandate: SpreedlyCore.SpreedlyMandate? = nil) -> SpreedlyCore.PaymentProcessingResult
   @objc public func createBankAccountObjC(additionalFields: [Swift.String : Swift.String], bankAccountType: Swift.String, bankAccountHolderType: Swift.String, bankName: Swift.String?, metadata: [Swift.String : Swift.String]?, allowBlankName: Foundation.NSNumber?, shouldRetain: Foundation.NSNumber?) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createBankAccountObjCWithAdditionalFields:bankAccountType:bankAccountHolderType:bankName:metadata:allowBlankName:shouldRetain:mandate:) public func createBankAccountObjCWithMandate(additionalFields: [Swift.String : Swift.String], bankAccountType: Swift.String, bankAccountHolderType: Swift.String, bankName: Swift.String?, metadata: [Swift.String : Swift.String]?, allowBlankName: Foundation.NSNumber?, shouldRetain: Foundation.NSNumber?, mandate: [Swift.String : Any]?) -> SpreedlyCore.PaymentProcessingResult
   @discardableResult
   @objc public func submitOffsitePayment(config: SpreedlyCore.OffsitePaymentConfig) -> SpreedlyCore.PaymentProcessingResult
   public func checkTransactionStatus(transactionToken: Swift.String) async throws -> SpreedlyCore.TransactionStatusResponse
@@ -1772,6 +1855,13 @@ extension SpreedlyCore.Spreedly {
   @objc public static func isLoggingEnabled() -> Swift.Bool
   @objc public static func configureLogging(_ config: SpreedlyCore.SpreedlyLoggerConfiguration)
   public static func setLogger(_ logger: (any SpreedlyCore.SpreedlyLogger)?)
+}
+extension SpreedlyCore.Spreedly {
+  @discardableResult
+  public func createClickToPayPaymentMethod(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billing: SpreedlyCore.ClickToPayBillingFields? = nil, metadata: [Swift.String : Swift.String]? = nil, eligibleForCardUpdater: Swift.Bool? = nil, mandate: SpreedlyCore.SpreedlyMandate? = nil) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:eligibleForCardUpdater:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?, eligibleForCardUpdater: Foundation.NSNumber?) -> SpreedlyCore.PaymentProcessingResult
+  @objc(createClickToPayPaymentMethodWithMetadata:verificationValue:billingFields:metadata:eligibleForCardUpdater:mandate:) dynamic public func createClickToPayPaymentMethodObjC(clickToPay: SpreedlyCore.ClickToPayMetadata, verificationValue: Swift.String, billingFields: [Swift.String : Swift.String]?, metadata: [Swift.String : Swift.String]?, eligibleForCardUpdater: Foundation.NSNumber?, mandate: [Swift.String : Any]?) -> SpreedlyCore.PaymentProcessingResult
 }
 @_spi(SpreedlySDKInternal) extension SpreedlyCore.Spreedly {
   @_spi(SpreedlySDKInternal) @objc dynamic public func resetPaymentSessionForDropIn()
@@ -1987,6 +2077,9 @@ public struct BasicNetworkRequest : SpreedlyCore.NetworkRequest, Swift.Sendable 
   public let cachePolicy: Foundation.URLRequest.CachePolicy
   public init(baseURL: Swift.String, endpoint: Swift.String, method: SpreedlyCore.HTTPMethod, headers: [Swift.String : Swift.String] = [:], queryParameters: [Swift.String : Swift.String] = [:], body: Foundation.Data? = nil, timeoutInterval: Foundation.TimeInterval = 30.0, shouldCache: Swift.Bool = false, cachePolicy: Foundation.URLRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData)
 }
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.Equatable {}
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.Hashable {}
+extension SpreedlyCore.ClickToPayTrace.Category : Swift.RawRepresentable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Equatable {}
 extension SpreedlyCore.PaymentMethodType : Swift.Hashable {}
 extension SpreedlyCore.PaymentMethodType : Swift.RawRepresentable {}
