@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyCore'
-  s.version          = '1.6.0'
+  s.version          = '1.6.0-dev.20260805.1'
   s.summary          = 'SpreedlyCore is the core framework of the Spreedly SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
