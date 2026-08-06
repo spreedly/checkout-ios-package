@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		P6N4TtnwnJ+EVFAfB5tIfAByMZk=
+		q77aIMtorv68mCpWbCd+aRlCxy0=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		nnYBnyJGHpPP5tHh8CxnCx8OXjg=
+		zO/F8jEhSx25rQ8YYxvdAApUViA=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		++CLSo7iTsgl+NP8q59iBvEJesM=
+		u9qZlEk9+9xO6k7J41vvXTezWuA=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		nBHP6vrXeSp5jSO0K4xxfTHFgXI=
+		6hIYWkswR77x+RUywg83zxFxFME=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		+TAqvLiwpcCtBs40c8y9rk0NbsM=
+		FcbKYF8a2bszOOOfJicutjzJ+Qc=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -93,7 +93,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			b4JjwGgNgxFTxMhNN6DtFIR44wBZvbsBB0ObImi1lGc=
+			CpbLAER4Sg/k87k6m6mgXiZiACaVec/Kd4ESh+yjgg4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
@@ -107,7 +107,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FQn1ogO7iJ/d0fNCSpBV2fEn/Hx+rx6OrZwDC+nzIXQ=
+			DRj7o8YKFCxzmxsMclshfn+rvyo0LPpA7BBDu5pihtg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -128,7 +128,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xkdgTDIQOWBu7WVHEIghr2bJMFlNSflJ6qV9b1bbQgA=
+			/PU8VmZgqM6EQ35mjoAQDaavKeIMjux4jL9UYc/CWXk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
@@ -142,7 +142,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Eo7XlFBtvIZh8vDVzMqhaG5SifCuSapWSPaY2qW7Yk4=
+			8F3Q22ybhizqq9b+71NcHfLuAjGd1SphXpdFWdtUKc8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

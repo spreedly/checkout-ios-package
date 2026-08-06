@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyClickToPay-Swift.h</key>
 		<data>
-		fty0+d3MhvWUyt/ggrLTPe+4Vec=
+		Kfvd8X49naT4a9nyifFCpRmVaC4=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		61lyHv9FSjhSHU4VHyYJWTQIesc=
+		EmQHMWmMR6WHaah2MmanXFrLjNM=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		nXDc07Sw2tm0g5ZQjCKDo7VwlHA=
+		mTLNSq1w1XFqrS+d89EyB2gNJ6A=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		hhkifHzv63MmJsu4bCMvslcdZys=
+		THKGQSdlASig+GD0GOlngLYHPbw=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		+caPDYNgwQ/XB/vTBUtxJpIRV7A=
+		Dw6DocpwMVnMEm8LIu3iceERRgo=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		4Kls/P/4DGLPvSzH0SLN5FElR1w=
+		I+cg4IqLri0WGsKuBsxEUlm79OY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -80,7 +80,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3v0in9S2YOhgy/tdREbbs3ayU0PlzuTVBTSOZx4ddQY=
+			aTclz+PRsM22R4Xz2DzVk8lwUIvxn/lQmBV+d+e1yH8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -101,7 +101,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			rk5iAEeTqt8ctped9lWSWWkzCe6MQ7lHOZRtQpDLSfE=
+			/dsEFJJkdeJ2tsIleZ5303EE2+k/8dFPP1a2Ob5C1Y8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
@@ -115,7 +115,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kH1on0uWXjYhfSCUnJ+C7RPbKLJ+T/9iBOg5X+1aA0U=
+			8JL5TTP34d6wi+xhc8eYugSFGf2W3MB65U4Xqbc7OTA=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -136,7 +136,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			48PkkkPMmN0dczKHLpNvoPGEecaPoUule0/tDJbqCWA=
+			DSws0P0T8ijhtuPQ4dg7buM6EcXKjlHSBtU/h+keXsY=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
@@ -150,7 +150,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3a2urFlzar3zxop4nPnHs1yEQU7kkLNbQJ+o1vTuFSc=
+			nekh7nKHvYKWn0KiNLZwaEJVeKZzQvv203e4P1ITEeA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
