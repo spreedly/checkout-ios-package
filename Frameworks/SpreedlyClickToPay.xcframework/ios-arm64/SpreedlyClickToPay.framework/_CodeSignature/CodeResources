@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyClickToPay-Swift.h</key>
 		<data>
-		hEQZstfS8MDrdY+neGiSb0uVi38=
+		F+dB8g5qBYkUgYcCZKq3wY6VfHY=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		A7G3Sw7Fgm098seHTvOe573WF8w=
+		aTlg5Vn231tfWfg2elZHGVK4dLU=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		YpLLiXxDxyiYja3C8RvyDlWs0V0=
+		/ZlQPLhG9uve9pfAHW/8cao13K8=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		yaTgESfW3dBmSaXHAqV1+oSX09A=
+		YCPW4WG/8Em+CC3CB5MLhfe6Frk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -60,7 +60,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			dDNJsMKmcMthT7hVkMqMSJApD9D76BVmfxoZv2gPaOU=
+			RjS7BNfZbdnd0o5u3DDX9AcCL4tPEn/mzc3TIAF/D2E=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -81,7 +81,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JRn1W464Kr5RjCHeVOjTYPOp9l7GoOaasyy13TvMIF8=
+			nFwbtPWd2DiHGumhkd02Hz/dm93o1YuUPCFlrxD+ns8=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftinterface</key>
@@ -95,7 +95,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fh3S//uk5Dlv6lhFSGyWiwpG1SRSB0jzFDObWmNQESM=
+			w7K3dIGyAAZdwagerp3xjxw8biToqkoicNpFCFFcWy8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
