@@ -3,36 +3,38 @@
   "specVersion": "1.4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-31T15:16:43Z",
+    "timestamp": "2026-08-12T12:51:09Z",
     "component": {
       "type": "library",
       "name": "Spreedly iOS SDK",
-      "version": "1.6.0",
-      "purl": "pkg:swift/spreedly/checkout-ios-sdk@1.6.0"
+      "version": "1.6.0-dev.20260812.1",
+      "purl": "pkg:swift/spreedly/checkout-ios-sdk@1.6.0-dev.20260812.1"
     },
-    "tools": [{ "name": "tag-release.yml", "version": "1.0" }]
+    "tools": [{ "name": "sync-package-publish.sh", "version": "1.0" }]
   },
   "components": [
-    { "type": "framework", "name": "SpreedlyBraintree", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "9b63169ebf4ce93799005a03c4cdca699276d0b89716b6d097e7a30f776b718f" }] }
+    { "type": "framework", "name": "SpreedlyBraintree", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "6c51808a5857012ae95540e58082f7db37736f479e0c21ead12d14f1e0568eeb" }] }
 ,
-    { "type": "framework", "name": "SpreedlyClickToPay", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "c1041fff9b99eb90bb90437b1beddc5cee01e89b67fe562f52adc0c136e856cc" }] }
+    { "type": "framework", "name": "SpreedlyClickToPay", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "dde82d5903ed4d4a38b14b7cac4be488053e836ec4b93e73df065109a03c26e0" }] }
 ,
-    { "type": "framework", "name": "SpreedlyCore", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "0c041d490ca9d9a9dc71326834b22a207017f8abc102e06ba06ee59b1cad27cc" }] }
+    { "type": "framework", "name": "SpreedlyCore", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "8b077556e22976b3f3fbb7fe3674b944eaa995cb371e2403e52766e12ca43322" }] }
 ,
-    { "type": "framework", "name": "SpreedlySecurity", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "a66db6dec32e2e8a1acacb2ce7b1c9f7ad62c90e83e05d56b8c79f1b0365018e" }] }
+    { "type": "framework", "name": "SpreedlyPayPal", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "fc5d2973f5acd127d5de76511d13dbdfdfc7cf00a44b5dd7ff4f9414dda930e1" }] }
 ,
-    { "type": "framework", "name": "SpreedlyStripeAPM", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "5188f367a1a5aa8ecb3501927b139ecd181c77b6156f952f2725c12ef9ddfb3a" }] }
+    { "type": "framework", "name": "SpreedlySecurity", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "7db6e39d4705814479ca717f185dfc8a779bb2370af5b6d565efc27475d610cc" }] }
 ,
-    { "type": "framework", "name": "SpreedlyStripeRadar", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "162cb546c599ed3ccdcaad4abbd9c146e167740724985ab23cf36a0199df3d7d" }] }
+    { "type": "framework", "name": "SpreedlyStripeAPM", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "4062f095f2652d9adf97eabf0eda8fb019beeef5adc5f60f01a4f0e969354242" }] }
 ,
-    { "type": "framework", "name": "SpreedlyUI", "version": "1.6.0", "hashes": [{ "alg": "SHA-256", "content": "70269a1553af4bcfa97cdd70821a6981289845217470f204a017115638927df2" }] }
+    { "type": "framework", "name": "SpreedlyStripeRadar", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "ac4883a953b9de037ce4f50ff4f62e27b2cf36b92de8e40ace66287495fb9886" }] }
+,
+    { "type": "framework", "name": "SpreedlyUI", "version": "1.6.0-dev.20260812.1", "hashes": [{ "alg": "SHA-256", "content": "3536a8617537af687066cd8470a464f4a89e7746a60377d36249cad672f4137a" }] }
   ],
   "dependencies": {
   "identity": "checkout-ios-sdk",
   "name": "SpreedlySDK",
-  "url": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk",
+  "url": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk",
   "version": "unspecified",
-  "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk",
+  "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk",
   "traits": [
     "default"
   ],
@@ -42,7 +44,7 @@
       "name": "Datadog",
       "url": "https://github.com/DataDog/dd-sdk-ios.git",
       "version": "3.7.0",
-      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/dd-sdk-ios",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/dd-sdk-ios",
       "traits": [
         "default"
       ],
@@ -52,7 +54,7 @@
           "name": "KSCrash",
           "url": "https://github.com/kstenerud/KSCrash.git",
           "version": "2.5.1",
-          "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/KSCrash",
+          "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/KSCrash",
           "traits": [
             "default"
           ],
@@ -65,7 +67,7 @@
           "name": "opentelemetry-swift-core",
           "url": "https://github.com/open-telemetry/opentelemetry-swift-core",
           "version": "2.3.0",
-          "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/opentelemetry-swift-core",
+          "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/opentelemetry-swift-core",
           "traits": [
             "default"
           ],
@@ -75,7 +77,7 @@
               "name": "swift-atomics",
               "url": "https://github.com/apple/swift-atomics.git",
               "version": "1.3.0",
-              "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/swift-atomics",
+              "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/swift-atomics",
               "traits": [
                 "default"
               ],
@@ -92,7 +94,7 @@
       "name": "Forter3DS",
       "url": "https://bitbucket.org/forter-mobile/forter-ios.git",
       "version": "2.1.0",
-      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/forter-ios",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/forter-ios",
       "traits": [
         "default"
       ],
@@ -105,7 +107,7 @@
       "name": "Stripe",
       "url": "https://github.com/stripe/stripe-ios-spm.git",
       "version": "25.11.0",
-      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/stripe-ios-spm",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/stripe-ios-spm",
       "traits": [
         "default"
       ],
@@ -118,7 +120,7 @@
       "name": "Braintree",
       "url": "https://github.com/braintree/braintree_ios.git",
       "version": "7.5.0",
-      "path": "/home/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/braintree_ios",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/braintree_ios",
       "traits": [
         "default"
       ],
