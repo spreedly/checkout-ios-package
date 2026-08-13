@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyUI'
-  s.version          = '1.6.0'
+  s.version          = '1.6.1-rc.1'
   s.summary          = 'SpreedlyUI is the ui framework of the Spreedly SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
