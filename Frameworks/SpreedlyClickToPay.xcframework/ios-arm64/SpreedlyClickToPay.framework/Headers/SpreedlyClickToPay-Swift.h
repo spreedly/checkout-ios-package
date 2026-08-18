@@ -421,7 +421,7 @@ typedef SWIFT_ENUM(NSInteger, ClickToPayCardSelectionType, open) {
 @class ClickToPayDisplayCardsConfig;
 @class ClickToPayOtpConfig;
 @class ClickToPayTokenizeBilling;
-/// Sole merchant configuration for Click to Pay checkout (Android <code>ClickToPayCheckoutConfig</code> parity).
+/// Sole merchant configuration for Click to Pay checkout.
 SWIFT_CLASS("_TtC18SpreedlyClickToPay24ClickToPayCheckoutConfig")
 @interface ClickToPayCheckoutConfig : NSObject
 @property (nonatomic, strong) ClickToPayInitConfig * _Nonnull initConfig;
@@ -699,12 +699,12 @@ SWIFT_CLASS("_TtC18SpreedlyClickToPay38SpreedlyClickToPayButtonViewController")
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
 
-/// Pattern B singleton for Click to Pay checkout (Android <code>SpreedlyClickToPayCheckout</code> parity).
+/// Pattern B singleton for Click to Pay checkout.
 SWIFT_CLASS("_TtC18SpreedlyClickToPay26SpreedlyClickToPayCheckout")
 @interface SpreedlyClickToPayCheckout : NSObject
 /// Objective-C / blocking interop for <code>setAutoTokenizeAuthRefresher</code>.
 + (void)setAutoTokenizeAuthRefresherBlocking:(BOOL (^ _Nullable)(void))refresher;
-/// Global flow-event handler for singleton <code>present</code> / <code>presentWithConfig:from:</code> (iframe <code>Spreedly.on</code> parity).
+/// Global flow-event handler for singleton <code>present</code> / <code>presentWithConfig:from:</code>.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, weak) id <ClickToPayDelegate> _Nullable delegate;)
 + (id <ClickToPayDelegate> _Nullable)delegate SWIFT_WARN_UNUSED_RESULT;
 + (void)setDelegate:(id <ClickToPayDelegate> _Nullable)value;

@@ -648,6 +648,7 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 - (NSString * _Nonnull)getDescription SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class NSDictionary;
 /// Represents the various states and outcomes of a payment process.
 /// This class works with both Swift and Objective-C, providing
 /// a unified API for payment result handling.
@@ -719,6 +720,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// Non-nil on successful recache; nil for card tokenization, Braintree nonce, and failure results.
 /// Useful for tracking which CVV-cache cycle a payment method is on after recaching.
 @property (nonatomic, readonly, copy) NSString * _Nullable paymentMethodUpdatedAt;
+/// ObjC-friendly nested dictionary of the tokenize API response (camelCase keys).
+/// Shape: <code>{ transaction: { …, paymentMethod: { lastFourDigits, … } }, errors?: […] }</code>.
+/// <code>nil</code> when there is no <code>paymentResponse</code> (e.g. Braintree nonce-only success).
+@property (nonatomic, readonly, strong) NSDictionary * _Nullable paymentResponseDictionary;
 /// The transaction state (when available).
 @property (nonatomic, readonly, copy) NSString * _Nullable state;
 /// Indicates if the card should be retained for future payments (only available for successful payments from CardFormDropIn).
