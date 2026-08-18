@@ -178,7 +178,7 @@ public struct BankAccountRequest : SpreedlyCore.PaymentMethodRequestProtocol {
     get
   }
 }
-public struct PaymentMethodResponse : Swift.Codable {
+public struct PaymentMethodResponse : Swift.Decodable {
   public let transaction: SpreedlyCore.Transaction?
   public let errors: [SpreedlyCore.SpreedlyAPIError]?
   public var transactionToken: Swift.String? {
@@ -193,17 +193,15 @@ public struct PaymentMethodResponse : Swift.Codable {
   public var message: Swift.String? {
     get
   }
-  public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-public struct SpreedlyAPIError : Swift.Codable {
+public struct SpreedlyAPIError : Swift.Decodable {
   public let attribute: Swift.String?
   public let key: Swift.String?
   public let message: Swift.String?
-  public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-public struct Transaction : Swift.Codable {
+public struct Transaction : Swift.Decodable {
   public let token: Swift.String
   public let createdAt: Swift.String?
   public let updatedAt: Swift.String?
@@ -214,11 +212,61 @@ public struct Transaction : Swift.Codable {
   public let messageKey: Swift.String?
   public let message: Swift.String?
   public let paymentMethod: SpreedlyCore.PaymentMethod?
-  public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-public struct PaymentMethod : Swift.Codable {
-  public func encode(to encoder: any Swift.Encoder) throws
+public struct PaymentMethod : Swift.Decodable {
+  public let token: Swift.String
+  public let createdAt: Swift.String?
+  public let updatedAt: Swift.String?
+  public let email: Swift.String?
+  public let data: Swift.String?
+  public let storageState: Swift.String?
+  public let test: Swift.Bool?
+  public let metadata: [Swift.String : Swift.String]?
+  public let callbackUrl: Swift.String?
+  public let lastFourDigits: Swift.String?
+  public let firstSixDigits: Swift.String?
+  public let cardType: Swift.String?
+  public let firstName: Swift.String?
+  public let lastName: Swift.String?
+  public let month: Swift.Int?
+  public let year: Swift.Int?
+  public let address1: Swift.String?
+  public let address2: Swift.String?
+  public let city: Swift.String?
+  public let state: Swift.String?
+  public let zip: Swift.String?
+  public let country: Swift.String?
+  public let phoneNumber: Swift.String?
+  public let company: Swift.String?
+  public let fullName: Swift.String?
+  public let eligibleForCardUpdater: Swift.Bool?
+  public let shippingAddress1: Swift.String?
+  public let shippingAddress2: Swift.String?
+  public let shippingCity: Swift.String?
+  public let shippingState: Swift.String?
+  public let shippingZip: Swift.String?
+  public let shippingCountry: Swift.String?
+  public let shippingPhoneNumber: Swift.String?
+  public let issuerIdentificationNumber: Swift.String?
+  public let clickToPay: Swift.Bool?
+  public let managed: Swift.Bool?
+  public let binMetadata: SpreedlyCore.BinMetadata?
+  public let subscribedToMastercardAbu: Swift.Bool?
+  public let paymentMethodType: Swift.String?
+  public let errors: [Swift.String]?
+  public let fingerprint: Swift.String?
+  public let verificationValue: Swift.String?
+  public let number: Swift.String?
+  public let bankName: Swift.String?
+  public let accountType: Swift.String?
+  public let accountHolderType: Swift.String?
+  public let routingNumberDisplayDigits: Swift.String?
+  public let accountNumberDisplayDigits: Swift.String?
+  public let routingNumber: Swift.String?
+  public let accountNumber: Swift.String?
+  public let documentId: Swift.String?
+  public let bic: Swift.String?
   public init(from decoder: any Swift.Decoder) throws
 }
 @objc public enum OffsitePaymentMethodType : Swift.Int {
@@ -347,7 +395,7 @@ public struct RecacheRequest : SpreedlyCore.RecacheRequestProtocol {
     get
   }
 }
-public struct RecacheResponse : Swift.Codable {
+public struct RecacheResponse : Swift.Decodable {
   public let transaction: SpreedlyCore.RecacheTransaction?
   public let errors: [SpreedlyCore.SpreedlyAPIError]?
   public var transactionToken: Swift.String? {
@@ -363,10 +411,9 @@ public struct RecacheResponse : Swift.Codable {
     get
   }
   public init(from paymentMethodResponse: SpreedlyCore.PaymentMethodResponse)
-  public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-public struct RecacheTransaction : Swift.Codable {
+public struct RecacheTransaction : Swift.Decodable {
   public let token: Swift.String
   public let createdAt: Swift.String?
   public let updatedAt: Swift.String?
@@ -378,7 +425,6 @@ public struct RecacheTransaction : Swift.Codable {
   public let message: Swift.String?
   public let paymentMethod: SpreedlyCore.PaymentMethod?
   public init(from transaction: SpreedlyCore.Transaction)
-  public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
 extension SpreedlyCore.PaymentMethodResponse {
@@ -704,6 +750,7 @@ public struct TransactionPaymentMethod : Swift.Codable {
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct BinMetadata : Swift.Codable {
+  public let message: Swift.String?
   public let cardBrand: Swift.String?
   public let issuingBank: Swift.String?
   public let cardType: Swift.String?
@@ -1219,6 +1266,9 @@ public enum TelemetryEvents {
     get
   }
   @objc public var paymentMethodUpdatedAt: Swift.String? {
+    @objc get
+  }
+  @objc public var paymentResponseDictionary: Foundation.NSDictionary? {
     @objc get
   }
   @objc public var state: Swift.String? {
