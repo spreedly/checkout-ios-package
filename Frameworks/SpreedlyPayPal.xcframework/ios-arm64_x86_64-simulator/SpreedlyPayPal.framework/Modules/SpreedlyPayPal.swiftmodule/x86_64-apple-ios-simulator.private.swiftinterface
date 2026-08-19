@@ -1,0 +1,538 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyPayPal
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+import AuthenticationServices
+import Combine
+import CorePayments
+import Foundation
+import PayPalWebPayments
+import PaymentButtons
+import SafariServices
+import SpreedlyCore
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc public enum PayPalButtonColor : Swift.Int {
+  case gold = 0
+  case white = 1
+  case black = 2
+  case silver = 3
+  case blue = 4
+  case darkBlue = 5
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PayPalButtonEdges : Swift.Int {
+  case hard = 0
+  case soft = 1
+  case rounded = 2
+  case custom = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PayPalButtonSize : Swift.Int {
+  case mini = 0
+  case collapsed = 1
+  case expanded = 2
+  case full = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PayPalButtonLabel : Swift.Int {
+  case none = 0
+  case checkout = 1
+  case buyNow = 2
+  case payWith = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc(PayPalButtonKind) public enum PayPalButtonKind : Swift.Int {
+  case payPal = 0
+  case payLater = 1
+  case credit = 2
+  case venmo = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class PayPalButtonAppearance : ObjectiveC.NSObject {
+  @objc public static let minimumCustomCornerRadius: CoreFoundation.CGFloat
+  @objc final public let color: SpreedlyPayPal.PayPalButtonColor
+  @objc final public let edges: SpreedlyPayPal.PayPalButtonEdges
+  @objc final public let size: SpreedlyPayPal.PayPalButtonSize
+  @objc final public let customCornerRadius: CoreFoundation.CGFloat
+  @objc final public let label: SpreedlyPayPal.PayPalButtonLabel
+  @objc public init(color: SpreedlyPayPal.PayPalButtonColor = .gold, edges: SpreedlyPayPal.PayPalButtonEdges = .soft, size: SpreedlyPayPal.PayPalButtonSize = .collapsed, customCornerRadius: CoreFoundation.CGFloat = 10, label: SpreedlyPayPal.PayPalButtonLabel = .none)
+  @objc public static var `default`: SpreedlyPayPal.PayPalButtonAppearance {
+    @objc get
+  }
+  @objc public static func resolvedColor(_ color: SpreedlyPayPal.PayPalButtonColor, for kind: SpreedlyPayPal.PayPalButtonKind) -> SpreedlyPayPal.PayPalButtonColor
+  @objc public static func allowedColors(for kind: SpreedlyPayPal.PayPalButtonKind) -> [Foundation.NSNumber]
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class PayPalButtonBaseView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency public var onTap: (() -> Swift.Void)?
+  @objc @_Concurrency.MainActor @preconcurrency public var fundingSource: SpreedlyCore.PayPalFundingSource
+  @objc @_Concurrency.MainActor @preconcurrency public var appearance: SpreedlyPayPal.PayPalButtonAppearance {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyPayPalButton : SwiftUI.UIViewRepresentable {
+  @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default, action: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public func makeUIView(context: SpreedlyPayPal.SpreedlyPayPalButton.Context) -> SpreedlyPayPal.SpreedlyPayPalButtonView
+  @_Concurrency.MainActor @preconcurrency public func updateUIView(_ uiView: SpreedlyPayPal.SpreedlyPayPalButtonView, context: SpreedlyPayPal.SpreedlyPayPalButton.Context)
+  public typealias Body = Swift.Never
+  public typealias Coordinator = Swift.Void
+  public typealias UIViewType = SpreedlyPayPal.SpreedlyPayPalButtonView
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyPayPalPayLaterButton : SwiftUI.UIViewRepresentable {
+  @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default, action: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public func makeUIView(context: SpreedlyPayPal.SpreedlyPayPalPayLaterButton.Context) -> SpreedlyPayPal.SpreedlyPayPalPayLaterButtonView
+  @_Concurrency.MainActor @preconcurrency public func updateUIView(_ uiView: SpreedlyPayPal.SpreedlyPayPalPayLaterButtonView, context: SpreedlyPayPal.SpreedlyPayPalPayLaterButton.Context)
+  public typealias Body = Swift.Never
+  public typealias Coordinator = Swift.Void
+  public typealias UIViewType = SpreedlyPayPal.SpreedlyPayPalPayLaterButtonView
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyPayPalCreditButton : SwiftUI.UIViewRepresentable {
+  @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default, action: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public func makeUIView(context: SpreedlyPayPal.SpreedlyPayPalCreditButton.Context) -> SpreedlyPayPal.SpreedlyPayPalCreditButtonView
+  @_Concurrency.MainActor @preconcurrency public func updateUIView(_ uiView: SpreedlyPayPal.SpreedlyPayPalCreditButtonView, context: SpreedlyPayPal.SpreedlyPayPalCreditButton.Context)
+  public typealias Body = Swift.Never
+  public typealias Coordinator = Swift.Void
+  public typealias UIViewType = SpreedlyPayPal.SpreedlyPayPalCreditButtonView
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyPayPalButtonContainer : SwiftUI.UIViewRepresentable {
+  @_Concurrency.MainActor @preconcurrency public init(eligibility: SpreedlyCore.PayPalEligibilityResult? = nil, visibilityConfig: SpreedlyPayPal.PayPalFundingVisibilityConfig? = nil, appearance: SpreedlyPayPal.PayPalButtonAppearance = .default, showPayPal: Swift.Bool = true, showPayLater: Swift.Bool = true, showCredit: Swift.Bool = true, showVenmo: Swift.Bool = true, disabledFundingSources: [SpreedlyCore.PayPalFundingSource] = [], onFundingSourceSelected: @escaping (SpreedlyCore.PayPalFundingSource) -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public func makeUIView(context: SpreedlyPayPal.SpreedlyPayPalButtonContainer.Context) -> SpreedlyPayPal.SpreedlyPayPalButtonContainerView
+  @_Concurrency.MainActor @preconcurrency public func updateUIView(_ uiView: SpreedlyPayPal.SpreedlyPayPalButtonContainerView, context: SpreedlyPayPal.SpreedlyPayPalButtonContainer.Context)
+  @available(iOS 16.0, *)
+  @_Concurrency.MainActor @preconcurrency public func sizeThatFits(_ proposal: SwiftUICore.ProposedViewSize, uiView: SpreedlyPayPal.SpreedlyPayPalButtonContainerView, context: SpreedlyPayPal.SpreedlyPayPalButtonContainer.Context) -> CoreFoundation.CGSize?
+  public typealias Body = Swift.Never
+  public typealias Coordinator = Swift.Void
+  public typealias UIViewType = SpreedlyPayPal.SpreedlyPayPalButtonContainerView
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyVenmoButton : SwiftUI.UIViewRepresentable {
+  @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = PayPalButtonAppearance(
+        color: .blue,
+        edges: .soft,
+        size: .collapsed
+    ), action: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public func makeUIView(context: SpreedlyPayPal.SpreedlyVenmoButton.Context) -> SpreedlyPayPal.SpreedlyVenmoButtonView
+  @_Concurrency.MainActor @preconcurrency public func updateUIView(_ uiView: SpreedlyPayPal.SpreedlyVenmoButtonView, context: SpreedlyPayPal.SpreedlyVenmoButton.Context)
+  public typealias Body = Swift.Never
+  public typealias Coordinator = Swift.Void
+  public typealias UIViewType = SpreedlyPayPal.SpreedlyVenmoButtonView
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class SpreedlyPayPalButtonContainerView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency public var eligibility: SpreedlyCore.PayPalEligibilityResult? {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var visibilityConfig: SpreedlyPayPal.PayPalFundingVisibilityConfig? {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var appearance: SpreedlyPayPal.PayPalButtonAppearance {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var showPayPal: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var showPayLater: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var showCredit: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var showVenmo: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor @preconcurrency public var disabledFundingSources: [SpreedlyCore.PayPalFundingSource] {
+    get
+    set
+  }
+  @objc(setDisabledFundingSourcesRaw:) @_Concurrency.MainActor @preconcurrency public func setDisabledFundingSourcesRaw(_ rawValues: [Foundation.NSNumber])
+  @objc @_Concurrency.MainActor @preconcurrency public var onFundingSourceSelected: ((SpreedlyCore.PayPalFundingSource) -> Swift.Void)?
+  @objc @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default)
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class SpreedlyPayPalButtonView : SpreedlyPayPal.PayPalButtonBaseView {
+  @_Concurrency.MainActor @preconcurrency @objc override public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class SpreedlyPayPalCreditButtonView : SpreedlyPayPal.PayPalButtonBaseView {
+  @_Concurrency.MainActor @preconcurrency @objc override public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class SpreedlyPayPalPayLaterButtonView : SpreedlyPayPal.PayPalButtonBaseView {
+  @_Concurrency.MainActor @preconcurrency @objc override public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = .default)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class SpreedlyVenmoButtonView : SpreedlyPayPal.VenmoButtonBaseView {
+  @_Concurrency.MainActor @preconcurrency @objc override public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = super)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency public class VenmoButtonBaseView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency public var onTap: (() -> Swift.Void)?
+  @objc @_Concurrency.MainActor @preconcurrency public var appearance: SpreedlyPayPal.PayPalButtonAppearance {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public init(appearance: SpreedlyPayPal.PayPalButtonAppearance = PayPalButtonAppearance(
+        color: .blue,
+        edges: .soft,
+        size: .collapsed
+    ))
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+@objc @objcMembers public class PayPalCancelData : ObjectiveC.NSObject {
+  @objc final public let orderId: Swift.String?
+  @nonobjc final public let fundingSource: SpreedlyCore.PayPalFundingSource?
+  @objc(fundingSourceRaw) public var fundingSourceRaw: Foundation.NSNumber? {
+    @objc get
+  }
+  @objc final public let message: Swift.String?
+  @objc convenience public init(orderId: Swift.String?)
+  public init(orderId: Swift.String?, fundingSource: SpreedlyCore.PayPalFundingSource? = nil, message: Swift.String? = nil)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalCheckoutResult : ObjectiveC.NSObject {
+  @objc final public let orderId: Swift.String
+  @objc final public let payerId: Swift.String
+  @objc final public let fundingSource: SpreedlyCore.PayPalFundingSource
+  @objc final public let state: Swift.String
+  @objc public init(orderId: Swift.String, payerId: Swift.String, fundingSource: SpreedlyCore.PayPalFundingSource, state: Swift.String)
+  @objc deinit
+}
+@objc public protocol PayPalCheckoutDelegate {
+  @objc(payPalCheckoutDidApprove:) func payPalCheckout(didApprove result: SpreedlyPayPal.PayPalCheckoutResult)
+  @objc(payPalCheckoutDidCancel:) func payPalCheckout(didCancel data: SpreedlyPayPal.PayPalCancelData)
+  @objc(payPalCheckoutDidFailWithError:) func payPalCheckout(didFailWithError error: any Swift.Error)
+}
+public enum PayPalCheckoutEvent {
+  case ready
+  case eligible(fundingSources: [SpreedlyCore.PayPalFundingSource], visibility: SpreedlyPayPal.PayPalFundingVisibilityConfig)
+  case approved(SpreedlyPayPal.PayPalCheckoutResult)
+  case cancelled(SpreedlyPayPal.PayPalCancelData)
+  case error(SpreedlyCore.PayPalError)
+  case launched(fundingSource: SpreedlyCore.PayPalFundingSource, webFunding: Swift.String)
+  case vaultLaunched(setupTokenIdPrefix: Swift.String)
+  case vaultApproved(SpreedlyPayPal.PayPalVaultApproveData)
+  case vaultCancelled(SpreedlyPayPal.PayPalVaultCancelData)
+  case recurringPublished(SpreedlyPayPal.PayPalRecurringResult)
+  case processDeath(sessionBindId: Swift.String, mode: SpreedlyPayPal.PayPalProcessDeathMode)
+  case vaultOrphanPaymentToken(setupTokenId: Swift.String, label: Swift.String?)
+  public var name: Swift.String {
+    get
+  }
+}
+@objc public enum PayPalCheckoutIntent : Swift.Int {
+  case capture = 0
+  case authorize = 1
+  public var wireValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class PayPalCheckoutSessionOptions : ObjectiveC.NSObject {
+  @objc final public let commit: Swift.Bool
+  @objc final public let presentationMode: SpreedlyCore.PayPalPresentationMode
+  @objc final public let transactionToken: Swift.String?
+  @objc public init(commit: Swift.Bool = true, presentationMode: SpreedlyCore.PayPalPresentationMode = .automatic, transactionToken: Swift.String? = nil)
+  @objc public static var `default`: SpreedlyPayPal.PayPalCheckoutSessionOptions {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PayPalFundingVisibilityConfig : ObjectiveC.NSObject {
+  @objc final public let currencyCode: Swift.String
+  @objc final public let amountCents: Foundation.NSNumber?
+  @objc final public let countryCode: Swift.String?
+  @objc final public let locale: Swift.String?
+  final public let disabledFundingSources: [SpreedlyCore.PayPalFundingSource]
+  @objc override convenience dynamic public init()
+  @objc(initWithCurrencyCode:amountCents:countryCode:) convenience public init(currencyCode: Swift.String, amountCents: Foundation.NSNumber?, countryCode: Swift.String?)
+  public init(currencyCode: Swift.String = "USD", amountCents: Foundation.NSNumber? = nil, countryCode: Swift.String? = nil, locale: Swift.String? = nil, disabledFundingSources: [SpreedlyCore.PayPalFundingSource] = [])
+  @objc deinit
+}
+public protocol PayPalOrderProvider : AnyObject {
+  func createOrder(fundingSource: SpreedlyCore.PayPalFundingSource) async throws -> Swift.String
+  func createOrder(fundingSource: SpreedlyCore.PayPalFundingSource, intent: SpreedlyPayPal.PayPalCheckoutIntent) async throws -> Swift.String
+  func captureOrder(orderId: Swift.String) async throws
+}
+extension SpreedlyPayPal.PayPalOrderProvider {
+  public func createOrder(fundingSource: SpreedlyCore.PayPalFundingSource, intent: SpreedlyPayPal.PayPalCheckoutIntent) async throws -> Swift.String
+}
+@objc public protocol PayPalOrderProviderObjC {
+  @objc(createOrderWithFundingSource:completion:) func createOrder(fundingSource: SpreedlyCore.PayPalFundingSource, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
+  @objc(captureOrderWithOrderId:completion:) func captureOrder(orderId: Swift.String, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  @objc(createOrderWithFundingSource:intent:completion:) optional func createOrder(fundingSource: SpreedlyCore.PayPalFundingSource, intent: SpreedlyPayPal.PayPalCheckoutIntent, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
+}
+@objc public enum PayPalProcessDeathMode : Swift.Int {
+  case checkout = 0
+  case vault = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class PayPalProcessDeathRecovery : ObjectiveC.NSObject {
+  @objc final public let sessionBindId: Swift.String
+  @objc final public let mode: SpreedlyPayPal.PayPalProcessDeathMode
+  @objc final public let message: Swift.String
+  @objc public init(sessionBindId: Swift.String, mode: SpreedlyPayPal.PayPalProcessDeathMode, message: Swift.String)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalSetupTokenResult : ObjectiveC.NSObject {
+  @objc final public let setupTokenId: Swift.String
+  @objc final public let customerId: Swift.String?
+  @objc public init(setupTokenId: Swift.String, customerId: Swift.String? = nil)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PayPalPaymentTokenResult : ObjectiveC.NSObject {
+  @objc final public let label: Swift.String?
+  @objc @available(*, deprecated, message: "Saved-method identity lives on your backend. Use label for display only.")
+  public var paymentTokenId: Swift.String {
+    @objc get
+  }
+  @objc final public let customerId: Swift.String?
+  @objc public init(label: Swift.String? = nil)
+  @objc @available(*, deprecated, message: "Use init(label:).")
+  convenience public init(paymentTokenId: Swift.String, customerId: Swift.String? = nil)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PayPalVaultApproveData : ObjectiveC.NSObject {
+  @objc final public let label: Swift.String?
+  @objc final public let setupTokenId: Swift.String
+  @objc @available(*, deprecated, message: "Saved-method identity lives on your backend. Use label for display only.")
+  public var paymentTokenId: Swift.String {
+    @objc get
+  }
+  @objc final public let customerId: Swift.String?
+  @objc public init(label: Swift.String? = nil, setupTokenId: Swift.String)
+  @objc @available(*, deprecated, message: "Use init(label:setupTokenId:).")
+  convenience public init(paymentTokenId: Swift.String, customerId: Swift.String?, setupTokenId: Swift.String)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalVaultCancelData : ObjectiveC.NSObject {
+  @objc final public let setupTokenId: Swift.String?
+  @objc final public let message: Swift.String?
+  @objc public init(setupTokenId: Swift.String? = nil, message: Swift.String? = nil)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PayPalRecurringResult : ObjectiveC.NSObject {
+  @objc final public let orderId: Swift.String
+  @objc final public let success: Swift.Bool
+  @objc final public let message: Swift.String?
+  @objc final public let vaultId: Swift.String
+  @objc final public let customerId: Swift.String?
+  @objc public init(orderId: Swift.String, success: Swift.Bool, message: Swift.String? = nil)
+  @objc @available(*, deprecated, message: "Use init(orderId:success:message:).")
+  convenience public init(orderId: Swift.String?, vaultId: Swift.String, customerId: Swift.String? = nil, success: Swift.Bool, message: Swift.String? = nil)
+  @objc deinit
+}
+@objc public protocol PayPalVaultDelegate {
+  @objc(payPalVaultDidApprove:) func payPalVault(didApprove result: SpreedlyPayPal.PayPalVaultApproveData)
+  @objc(payPalVaultDidApprove:paymentResult:) optional func payPalVault(didApprove result: SpreedlyPayPal.PayPalVaultApproveData, paymentResult: SpreedlyCore.PaymentResult)
+  @objc(payPalVaultDidCancel:) func payPalVault(didCancel data: SpreedlyPayPal.PayPalVaultCancelData)
+  @objc(payPalVaultDidFailWithError:) func payPalVault(didFailWithError error: any Swift.Error)
+  @objc(payPalVaultDidOrphanSetupTokenId:label:) optional func payPalVault(didOrphanSetupTokenId setupTokenId: Swift.String, label: Swift.String?)
+}
+@objc public enum PayPalVaultUsageType : Swift.Int {
+  case merchant = 0
+  case platform = 1
+  @available(*, deprecated, message: "Android-aligned subset is merchant and platform only.")
+  case consumer = 2
+  public var wireValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PayPalVaultUsagePattern : Swift.Int {
+  case immediate = 0
+  case deferred = 1
+  case recurringPrepaid = 2
+  case recurringPostpaid = 3
+  case subscriptionPrepaid = 4
+  case subscriptionPostpaid = 5
+  @available(*, deprecated, message: "Android-aligned subset omits UNSCHEDULED_* until product needs them.")
+  case unscheduledPrepaid = 6
+  @available(*, deprecated, message: "Android-aligned subset omits UNSCHEDULED_* until product needs them.")
+  case unscheduledPostpaid = 7
+  @available(*, deprecated, message: "Android-aligned subset omits INSTALLMENT_* until product needs them.")
+  case installmentPrepaid = 8
+  @available(*, deprecated, message: "Android-aligned subset omits INSTALLMENT_* until product needs them.")
+  case installmentPostpaid = 9
+  public var wireValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class PayPalVaultSessionOptions : ObjectiveC.NSObject {
+  @objc final public let usageType: SpreedlyPayPal.PayPalVaultUsageType
+  final public let usagePattern: SpreedlyPayPal.PayPalVaultUsagePattern?
+  @objc final public let consentDescription: Swift.String?
+  @objc final public let customerId: Swift.String?
+  @objc final public let presentationMode: SpreedlyCore.PayPalPresentationMode
+  @objc final public let transactionToken: Swift.String?
+  public init(usageType: SpreedlyPayPal.PayPalVaultUsageType = .merchant, usagePattern: SpreedlyPayPal.PayPalVaultUsagePattern? = nil, consentDescription: Swift.String? = nil, customerId: Swift.String? = nil, presentationMode: SpreedlyCore.PayPalPresentationMode = .automatic, transactionToken: Swift.String? = nil)
+  @objc(initWithUsageType:usagePatternNumber:consentDescription:customerId:presentationMode:transactionToken:) public init(usageType: SpreedlyPayPal.PayPalVaultUsageType, usagePatternNumber: Foundation.NSNumber?, consentDescription: Swift.String?, customerId: Swift.String?, presentationMode: SpreedlyCore.PayPalPresentationMode, transactionToken: Swift.String?)
+  @objc public static var `default`: SpreedlyPayPal.PayPalVaultSessionOptions {
+    @objc get
+  }
+  @objc deinit
+}
+public protocol PayPalVaultTokenProvider : AnyObject {
+  func createSetupToken(options: SpreedlyPayPal.PayPalVaultSessionOptions) async throws -> SpreedlyPayPal.PayPalSetupTokenResult
+  func createPaymentToken(setupTokenId: Swift.String) async throws -> SpreedlyPayPal.PayPalPaymentTokenResult
+}
+@objc public protocol PayPalVaultTokenProviderObjC {
+  @objc(createSetupTokenWithOptions:completion:) func createSetupToken(options: SpreedlyPayPal.PayPalVaultSessionOptions, completion: @escaping (SpreedlyPayPal.PayPalSetupTokenResult?, (any Swift.Error)?) -> Swift.Void)
+  @objc(createPaymentTokenWithSetupTokenId:completion:) func createPaymentToken(setupTokenId: Swift.String, completion: @escaping (SpreedlyPayPal.PayPalPaymentTokenResult?, (any Swift.Error)?) -> Swift.Void)
+}
+@objc public enum PayPalCheckoutInitializationErrorCode : Swift.Int {
+  case missingClientId = 0
+  case invalidReturnURL = 1
+  case alreadyInitialized = 2
+  case deviceBlocked = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyPayPalCheckout : ObjectiveC.NSObject {
+  @objc public static var isInitialized: Swift.Bool {
+    @objc get
+  }
+  public static var events: Combine.AnyPublisher<SpreedlyPayPal.PayPalCheckoutEvent, Swift.Never> {
+    get
+  }
+  @objc public static var isActive: Swift.Bool {
+    @objc get
+  }
+  @objc public static func currentOrderId() -> Swift.String?
+  @objc public static func cancel()
+  @objc public static func finalizeIfActive()
+  @objc public static func hasUnresolvedProcessDeathRecovery() -> Swift.Bool
+  @objc public static func getProcessDeathRecovery() -> SpreedlyPayPal.PayPalProcessDeathRecovery?
+  @objc public static func consumeProcessDeathRecovery() -> SpreedlyPayPal.PayPalProcessDeathRecovery?
+  @objc @discardableResult
+  public static func acknowledgeProcessDeathRecovery(_ recovery: SpreedlyPayPal.PayPalProcessDeathRecovery) -> Swift.Bool
+  @objc @discardableResult
+  public static func discardUnreadableProcessDeathRecovery() -> Swift.Bool
+  @objc public static func initialize(config: SpreedlyCore.PayPalCheckoutConfig) throws
+  @objc public static func findEligibleMethods(currency: Swift.String, locale: Swift.String, country: Swift.String, amount: Swift.String) async throws -> SpreedlyCore.PayPalEligibilityResult
+  @discardableResult
+  public static func findEligibleMethods(visibility: SpreedlyPayPal.PayPalFundingVisibilityConfig = PayPalFundingVisibilityConfig()) -> [SpreedlyCore.PayPalFundingSource]
+  @objc(findEligibleMethodsWithVisibility:) public static func findEligibleMethodRawValues(visibility: SpreedlyPayPal.PayPalFundingVisibilityConfig) -> [Foundation.NSNumber]
+  @objc public static var venmoWebCheckoutReturnURL: Foundation.URL? {
+    @objc get
+  }
+  @objc public static var venmoWebCheckoutCancelURL: Foundation.URL? {
+    @objc get
+  }
+  @objc(signOutOfPayPal) public static func signOutOfPayPal()
+  @objc(findEligibleMethodsWithCurrency:locale:country:amount:completion:) public static func findEligibleMethods(currency: Swift.String, locale: Swift.String, country: Swift.String, amount: Swift.String, completion: @escaping (SpreedlyCore.PayPalEligibilityResult?, (any Swift.Error)?) -> Swift.Void)
+  public static func startCheckout(fundingSource: SpreedlyCore.PayPalFundingSource, options: SpreedlyPayPal.PayPalCheckoutSessionOptions = .default, orderProvider: any SpreedlyPayPal.PayPalOrderProvider, onApprove: @escaping (SpreedlyPayPal.PayPalCheckoutResult) -> Swift.Void, onCancel: @escaping (SpreedlyPayPal.PayPalCancelData) -> Swift.Void, onError: @escaping (SpreedlyCore.PayPalError) -> Swift.Void)
+  @objc public static func start(orderId: Swift.String, fundingSource: SpreedlyCore.PayPalFundingSource, options: SpreedlyPayPal.PayPalCheckoutSessionOptions = .default, onApprove: @escaping (SpreedlyPayPal.PayPalCheckoutResult) -> Swift.Void, onCancel: @escaping (SpreedlyPayPal.PayPalCancelData) -> Swift.Void, onError: @escaping (SpreedlyCore.PayPalError) -> Swift.Void)
+  @objc(startCheckoutWithFundingSource:options:orderProvider:delegate:) public static func startCheckout(fundingSource: SpreedlyCore.PayPalFundingSource, options: SpreedlyPayPal.PayPalCheckoutSessionOptions, orderProvider: any SpreedlyPayPal.PayPalOrderProviderObjC, delegate: any SpreedlyPayPal.PayPalCheckoutDelegate)
+  @objc(startWithOrderId:fundingSource:options:delegate:) public static func start(orderId: Swift.String, fundingSource: SpreedlyCore.PayPalFundingSource, options: SpreedlyPayPal.PayPalCheckoutSessionOptions, delegate: any SpreedlyPayPal.PayPalCheckoutDelegate)
+  @objc deinit
+}
+extension SpreedlyPayPal.SpreedlyPayPalCheckout {
+  public static func startVaultSession(provider: any SpreedlyPayPal.PayPalVaultTokenProvider, options: SpreedlyPayPal.PayPalVaultSessionOptions = .default, onApprove: @escaping (SpreedlyPayPal.PayPalVaultApproveData, SpreedlyCore.PaymentResult) -> Swift.Void, onCancel: @escaping (SpreedlyPayPal.PayPalVaultCancelData) -> Swift.Void, onError: @escaping (SpreedlyCore.PayPalError) -> Swift.Void, onOrphanPaymentToken: ((Swift.String, Swift.String?) -> Swift.Void)? = nil)
+  @objc(startVaultSessionWithProvider:options:delegate:) public static func startVaultSession(provider: any SpreedlyPayPal.PayPalVaultTokenProviderObjC, options: SpreedlyPayPal.PayPalVaultSessionOptions, delegate: any SpreedlyPayPal.PayPalVaultDelegate)
+  @objc(publishRecurringResult:) public static func publishRecurringResult(_ result: SpreedlyPayPal.PayPalRecurringResult)
+}
+extension SpreedlyPayPal.PayPalButtonColor : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalButtonColor : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalButtonColor : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalButtonEdges : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalButtonEdges : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalButtonEdges : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalButtonSize : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalButtonSize : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalButtonSize : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalButtonLabel : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalButtonLabel : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalButtonLabel : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalButtonKind : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalButtonKind : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalButtonKind : Swift.RawRepresentable {}
+extension SpreedlyPayPal.SpreedlyPayPalButton : Swift.Sendable {}
+extension SpreedlyPayPal.SpreedlyPayPalPayLaterButton : Swift.Sendable {}
+extension SpreedlyPayPal.SpreedlyPayPalCreditButton : Swift.Sendable {}
+extension SpreedlyPayPal.SpreedlyPayPalButtonContainer : Swift.Sendable {}
+extension SpreedlyPayPal.SpreedlyVenmoButton : Swift.Sendable {}
+extension SpreedlyPayPal.PayPalCheckoutIntent : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalCheckoutIntent : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalCheckoutIntent : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalProcessDeathMode : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalProcessDeathMode : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalProcessDeathMode : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalVaultUsageType : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalVaultUsageType : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalVaultUsageType : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalVaultUsagePattern : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalVaultUsagePattern : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalVaultUsagePattern : Swift.RawRepresentable {}
+extension SpreedlyPayPal.PayPalCheckoutInitializationErrorCode : Swift.Equatable {}
+extension SpreedlyPayPal.PayPalCheckoutInitializationErrorCode : Swift.Hashable {}
+extension SpreedlyPayPal.PayPalCheckoutInitializationErrorCode : Swift.RawRepresentable {}

@@ -695,7 +695,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic) CGFloat borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor surfaceColor:(UIColor * _Nullable)surfaceColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
-/// Convenience initializer using Android-style configuration
+/// Convenience initializer using hex color configuration
 /// \param primaryColorHex Primary brand color used for buttons and highlights (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color used for accents and borders (e.g., “#AFB4B5”)
@@ -766,7 +766,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param themeConfig The theme configuration to set as global (used for both light and dark modes)
 ///
 + (void)setGlobalThemeWithConfig:(SPLThemeConfig * _Nonnull)themeConfig;
-/// Set global theme with separate light and dark themes using Android-style hex color configuration
+/// Set global theme with separate light and dark themes using hex color configuration
 /// \param lightPrimaryColorHex Primary brand color for light mode (e.g., “#0077C8”)
 ///
 /// \param lightSecondaryColorHex Secondary brand color for light mode (e.g., “#AFB4B5”)
@@ -794,7 +794,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param borderRadius Corner radius for form elements (default: 8.0)
 ///
 + (void)setGlobalThemeWithLightHexColorsWithLightPrimaryColorHex:(NSString * _Nonnull)lightPrimaryColorHex lightSecondaryColorHex:(NSString * _Nullable)lightSecondaryColorHex lightFormBorderColorHex:(NSString * _Nullable)lightFormBorderColorHex lightFormBackgroundColorHex:(NSString * _Nullable)lightFormBackgroundColorHex lightFieldBackgroundColorHex:(NSString * _Nullable)lightFieldBackgroundColorHex lightFieldLabelColorHex:(NSString * _Nullable)lightFieldLabelColorHex darkPrimaryColorHex:(NSString * _Nonnull)darkPrimaryColorHex darkSecondaryColorHex:(NSString * _Nullable)darkSecondaryColorHex darkFormBorderColorHex:(NSString * _Nullable)darkFormBorderColorHex darkFormBackgroundColorHex:(NSString * _Nullable)darkFormBackgroundColorHex darkFieldBackgroundColorHex:(NSString * _Nullable)darkFieldBackgroundColorHex darkFieldLabelColorHex:(NSString * _Nullable)darkFieldLabelColorHex borderRadius:(CGFloat)borderRadius;
-/// Set global theme using Android-style hex color configuration (backward compatibility - uses same theme for both modes)
+/// Set global theme using hex color configuration (backward compatibility - uses same theme for both modes)
 /// \param primaryColorHex Primary brand color (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color (e.g., “#AFB4B5”)
