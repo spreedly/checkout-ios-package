@@ -1143,6 +1143,18 @@ public enum TelemetryEvents {
   public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String? = nil, errorCode: Swift.String? = nil)
   public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
+  public static func paypalReady(environment: Swift.String)
+  public static func paypalEligible(currency: Swift.String, country: Swift.String, paypalWallet: Swift.Bool, payLater: Swift.Bool, credit: Swift.Bool, venmo: Swift.Bool)
+  public static func paypalButtonTapped(fundingSource: Swift.String)
+  public static func paypalApproved(fundingSource: Swift.String, orderId: Swift.String, durationMs: Swift.Int64)
+  public static func paypalCancelled(fundingSource: Swift.String, durationMs: Swift.Int64)
+  public static func paypalError(fundingSource: Swift.String, errorCode: Swift.String, durationMs: Swift.Int64)
+  public static func paypalVaultStarted(usageType: Swift.String, rdaAvailable: Swift.Bool)
+  public static func paypalVaultApproved(durationMs: Swift.Int64)
+  public static func paypalVaultCancelled(source: Swift.String, durationMs: Swift.Int64)
+  public static func paypalVaultError(errorCode: Swift.String, durationMs: Swift.Int64)
+  public static func paypalVaultOrphanPaymentToken(durationMs: Swift.Int64)
+  public static func paypalRecurringCompleted(success: Swift.Bool, errorType: Swift.String?, durationMs: Swift.Int64)
   public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
   public static func sdkInitBlocked(reason: Swift.String, signals: Swift.String)
   public static func deviceDataCollected(provider: Swift.String, success: Swift.Bool, durationMs: Swift.Int64, errorType: Swift.String? = nil)
@@ -1176,6 +1188,18 @@ public enum TelemetryEvents {
   @objc public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String?, errorCode: Swift.String?)
   @objc public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   @objc public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
+  @objc public static func paypalReady(environment: Swift.String)
+  @objc public static func paypalEligible(currency: Swift.String, country: Swift.String, paypalWallet: Swift.Bool, payLater: Swift.Bool, credit: Swift.Bool, venmo: Swift.Bool)
+  @objc public static func paypalButtonTapped(fundingSource: Swift.String)
+  @objc public static func paypalApproved(fundingSource: Swift.String, orderId: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalCancelled(fundingSource: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalError(fundingSource: Swift.String, errorCode: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalVaultStarted(usageType: Swift.String, rdaAvailable: Swift.Bool)
+  @objc public static func paypalVaultApproved(durationMs: Swift.Int64)
+  @objc public static func paypalVaultCancelled(source: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalVaultError(errorCode: Swift.String, durationMs: Swift.Int64)
+  @objc public static func paypalVaultOrphanPaymentToken(durationMs: Swift.Int64)
+  @objc public static func paypalRecurringCompleted(success: Swift.Bool, errorType: Swift.String?, durationMs: Swift.Int64)
   @objc public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
   @objc public static func sdkInitBlocked(reason: Swift.String, signals: Swift.String)
   @objc public static func deviceDataCollected(provider: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
@@ -1283,12 +1307,36 @@ public enum TelemetryEvents {
   @objc public var deviceData: Swift.String? {
     get
   }
+  @objc public var orderId: Swift.String? {
+    get
+  }
+  @objc public var payerId: Swift.String? {
+    get
+  }
+  @objc public var fundingSource: Swift.String? {
+    get
+  }
+  @objc public var vaultId: Swift.String? {
+    get
+  }
+  @objc public var customerId: Swift.String? {
+    get
+  }
+  @objc public var paymentMethodType: Swift.String? {
+    get
+  }
   @objc public var failureDetails: SpreedlyCore.FailedDetails? {
     get
   }
   @objc public static func initial() -> SpreedlyCore.PaymentResult
   public static func success(token: Swift.String, paymentResponse: SpreedlyCore.PaymentMethodResponse?, shouldRetain: Swift.Bool? = false) -> SpreedlyCore.PaymentResult
   @objc public static func completed(token: Swift.String, nonce: Swift.String, deviceData: Swift.String?, state: Swift.String? = "pending") -> SpreedlyCore.PaymentResult
+  @objc public static func paypalCompleted(transactionToken: Swift.String?, orderId: Swift.String, payerId: Swift.String?, fundingSource: Swift.String, state: Swift.String? = "pending") -> SpreedlyCore.PaymentResult
+  @objc public static func paypalCompleted(transactionToken: Swift.String?, orderId: Swift.String, payerId: Swift.String?, fundingSource: Swift.String, state: Swift.String?, paymentMethodType: Swift.String) -> SpreedlyCore.PaymentResult
+  @objc @available(*, deprecated, message: "Use paypalCompleted. Vault identity lives on the merchant backend.")
+  public static func paypalVaultApproved(transactionToken: Swift.String?, vaultId: Swift.String, customerId: Swift.String?, fundingSource: Swift.String, state: Swift.String? = "completed") -> SpreedlyCore.PaymentResult
+  @objc @available(*, deprecated, message: "Use paypalCompleted. Recurring identity lives on the merchant backend.")
+  public static func paypalRecurringCompleted(orderId: Swift.String?, vaultId: Swift.String, customerId: Swift.String?, fundingSource: Swift.String, state: Swift.String? = "completed") -> SpreedlyCore.PaymentResult
   @objc public static func canceled() -> SpreedlyCore.PaymentResult
   @objc public static func failure(details: SpreedlyCore.FailedDetails) -> SpreedlyCore.PaymentResult
   public static func failed(from networkError: SpreedlyCore.NetworkError) -> SpreedlyCore.PaymentResult
@@ -1318,6 +1366,88 @@ public enum TelemetryEvents {
   nonisolated public static var allCases: [SpreedlyCore.SpreedlyApiError] {
     get
   }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class PayPalCheckoutConfig : ObjectiveC.NSObject {
+  @objc final public let clientId: Swift.String
+  @objc final public let environment: SpreedlyCore.PayPalEnvironment
+  @objc final public let returnURL: Foundation.URL
+  @objc final public let merchantDisplayName: Swift.String
+  @objc final public let locale: Swift.String?
+  @objc public init(clientId: Swift.String, environment: SpreedlyCore.PayPalEnvironment, returnURL: Foundation.URL, merchantDisplayName: Swift.String = "", locale: Swift.String? = nil)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalEligibilityDetails : ObjectiveC.NSObject {
+  @objc final public let fundingSource: SpreedlyCore.PayPalFundingSource
+  @objc final public let isEligible: Swift.Bool
+  @objc final public let payLaterProductCode: Swift.String?
+  @objc final public let countryCode: Swift.String?
+  @objc public init(fundingSource: SpreedlyCore.PayPalFundingSource, isEligible: Swift.Bool, payLaterProductCode: Swift.String? = nil, countryCode: Swift.String? = nil)
+  @objc deinit
+}
+@objc @objcMembers public class PayPalEligibilityResult : ObjectiveC.NSObject {
+  @objc public init(details: [SpreedlyCore.PayPalEligibilityDetails])
+  @objc public func isEligible(_ fundingSource: SpreedlyCore.PayPalFundingSource) -> Swift.Bool
+  @objc public func details(for fundingSource: SpreedlyCore.PayPalFundingSource) -> SpreedlyCore.PayPalEligibilityDetails?
+  @objc deinit
+}
+@objc public enum PayPalEnvironment : Swift.Int {
+  case sandbox = 0
+  case production = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public let PayPalErrorDomain: Swift.String
+@objc public enum PayPalErrorCode : Swift.Int {
+  case network = 0
+  case canceled = 1
+  case validation = 2
+  case server = 3
+  case unknown = 4
+  case vaultBrowserSwitchFailed = 5
+  case vaultSessionExpired = 6
+  case vaultSetupTokenMissing = 7
+  case vaultPaymentTokenExchangeFailed = 8
+  case processDeathRecoveryPending = 9
+  case processDeathRecoveryStorageUnavailable = 10
+  case notInitialized = 11
+  case invalidConfig = 12
+  case ineligibleFundingSource = 13
+  case orderCreationFailed = 14
+  case captureFailed = 15
+  case browserSwitchFailed = 16
+  case returnValidationFailed = 17
+  case venmoNotSupported = 18
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PayPalError : Foundation.NSError, @unchecked Swift.Sendable {
+  @objc final public let recoveryHint: Swift.String?
+  @objc public var isCanceled: Swift.Bool {
+    @objc get
+  }
+  @objc public init(code: SpreedlyCore.PayPalErrorCode, message: Swift.String, recoveryHint: Swift.String? = nil, underlying: (any Swift.Error)? = nil)
+  @objc deinit
+}
+@objc public enum PayPalFundingSource : Swift.Int {
+  case paypal = 0
+  case payLater = 1
+  case credit = 2
+  case venmo = 3
+  public var rawValueString: Swift.String {
+    get
+  }
+  public init?(string: Swift.String)
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -2168,6 +2298,15 @@ extension SpreedlyCore.ErrorType : Swift.RawRepresentable {}
 extension SpreedlyCore.SpreedlyApiError : Swift.Equatable {}
 extension SpreedlyCore.SpreedlyApiError : Swift.Hashable {}
 extension SpreedlyCore.SpreedlyApiError : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalEnvironment : Swift.Equatable {}
+extension SpreedlyCore.PayPalEnvironment : Swift.Hashable {}
+extension SpreedlyCore.PayPalEnvironment : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalErrorCode : Swift.Equatable {}
+extension SpreedlyCore.PayPalErrorCode : Swift.Hashable {}
+extension SpreedlyCore.PayPalErrorCode : Swift.RawRepresentable {}
+extension SpreedlyCore.PayPalFundingSource : Swift.Equatable {}
+extension SpreedlyCore.PayPalFundingSource : Swift.Hashable {}
+extension SpreedlyCore.PayPalFundingSource : Swift.RawRepresentable {}
 extension SpreedlyCore.BankAccountType : Swift.Equatable {}
 extension SpreedlyCore.BankAccountType : Swift.Hashable {}
 extension SpreedlyCore.BankAccountType : Swift.RawRepresentable {}

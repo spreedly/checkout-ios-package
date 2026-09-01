@@ -1,0 +1,143 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name CorePayments
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+import AuthenticationServices
+import Foundation
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_documentation(visibility: private) public struct GraphQLHTTPResponse<T> : Swift.Decodable where T : Swift.Decodable {
+  public let data: T?
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_documentation(visibility: private) public struct HTTPResponse {
+}
+@_hasMissingDesignatedInitializers @_documentation(visibility: private) public class UpdateClientConfigAPI {
+  public init(coreConfig: CorePayments.CoreConfig)
+  public func updateClientConfig(token: Swift.String, fundingSource: Swift.String) async throws -> CorePayments.ClientConfigResponse
+  @objc deinit
+}
+@_documentation(visibility: private) public struct HTTPRequest {
+  public init(headers: [CorePayments.HTTPHeader : Swift.String], method: CorePayments.HTTPMethod, url: Foundation.URL, body: Foundation.Data?)
+}
+@_documentation(visibility: private) public struct ClientConfigResponse : Swift.Decodable {
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_documentation(visibility: private) public enum PayPalCoreConstants {
+  public static let payPalSDKVersion: Swift.String
+  public static let callbackURLScheme: Swift.String
+}
+@_documentation(visibility: private) public enum CorePaymentsError {
+  public static let urlEncodingFailed: CorePayments.CoreSDKError
+}
+public struct CoreConfig {
+  public let environment: CorePayments.Environment
+  public let clientID: Swift.String
+  public init(clientID: Swift.String, environment: CorePayments.Environment)
+}
+@_documentation(visibility: private) public enum HTTPMethod : Swift.String {
+  case get
+  case post
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_documentation(visibility: private) public enum HTTPHeader : Swift.String {
+  case accept
+  case acceptLanguage
+  case appName
+  case authorization
+  case contentType
+  case origin
+  case payPalClientContext
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_documentation(visibility: private) public class WebAuthenticationSession : ObjectiveC.NSObject {
+  public func start(url: Foundation.URL, context: any AuthenticationServices.ASWebAuthenticationPresentationContextProviding, sessionDidDisplay: @escaping (Swift.Bool) -> Swift.Void, sessionDidComplete: @escaping (Foundation.URL?, (any Swift.Error)?) -> Swift.Void)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum Environment {
+  case sandbox
+  case live
+  public var graphQLURL: Foundation.URL {
+    get
+  }
+  public var paypalVaultCheckoutURL: Foundation.URL {
+    get
+  }
+  public var toString: Swift.String {
+    get
+  }
+  public static func == (a: CorePayments.Environment, b: CorePayments.Environment) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_documentation(visibility: private) public enum NetworkingError {
+  public static let unknownError: CorePayments.CoreSDKError
+  public static let urlSessionError: CorePayments.CoreSDKError
+  public static let jsonDecodingError: (_ description: Swift.String) -> CorePayments.CoreSDKError
+  public static let invalidURLResponseError: CorePayments.CoreSDKError
+  public static let noResponseDataError: CorePayments.CoreSDKError
+  public static let invalidURLRequestError: CorePayments.CoreSDKError
+  public static let serverResponseError: (_ description: Swift.String) -> CorePayments.CoreSDKError
+  public static let noGraphQLDataKey: CorePayments.CoreSDKError
+}
+@_documentation(visibility: private) public struct AnalyticsService {
+  public init(coreConfig: CorePayments.CoreConfig, orderID: Swift.String)
+  public init(coreConfig: CorePayments.CoreConfig, setupToken: Swift.String)
+  public func sendEvent(_ name: Swift.String, correlationID: Swift.String? = nil, buttonType: Swift.String? = nil)
+}
+extension Foundation.URLSession : CorePayments.URLSessionProtocol {
+  public func performRequest(with urlRequest: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
+}
+@_documentation(visibility: private) public struct RESTRequest {
+  public init(path: Swift.String, method: CorePayments.HTTPMethod, queryParameters: [Swift.String : Swift.String]? = nil, postParameters: (any Swift.Encodable)? = nil)
+}
+@_documentation(visibility: private) public protocol URLSessionProtocol {
+  func performRequest(with urlRequest: Foundation.URLRequest) async throws -> (Foundation.Data, Foundation.URLResponse)
+}
+public struct CoreSDKError : Swift.Error, Foundation.LocalizedError, Swift.Equatable {
+  public let code: Swift.Int?
+  public let domain: Swift.String?
+  public let errorDescription: Swift.String?
+  public init(code: Swift.Int?, domain: Swift.String?, errorDescription: Swift.String?)
+  public static func == (a: CorePayments.CoreSDKError, b: CorePayments.CoreSDKError) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers @_documentation(visibility: private) public class NetworkingClient {
+  public init(coreConfig: CorePayments.CoreConfig)
+  @_documentation(visibility: private) public func fetch(request: CorePayments.RESTRequest) async throws -> CorePayments.HTTPResponse
+  @_documentation(visibility: private) public func fetch(request: CorePayments.GraphQLRequest, clientContext: Swift.String? = nil) async throws -> CorePayments.HTTPResponse
+  @objc deinit
+}
+@_documentation(visibility: private) public class HTTPResponseParser {
+  public init(decoder: Foundation.JSONDecoder = JSONDecoder())
+  public func parseREST<T>(_ httpResponse: CorePayments.HTTPResponse, as type: T.Type) throws -> T where T : Swift.Decodable
+  public func parseGraphQL<T>(_ httpResponse: CorePayments.HTTPResponse, as type: T.Type) throws -> T where T : Swift.Decodable
+  @objc deinit
+}
+extension CorePayments.HTTPResponseParser {
+  @_documentation(visibility: private) public func parseGraphQLDictionary(_ httpResponse: CorePayments.HTTPResponse) throws -> [Swift.String : Any]
+}
+@_documentation(visibility: private) public struct GraphQLRequest {
+  public init(query: Swift.String, variables: any Swift.Encodable, queryNameForURL: Swift.String? = nil)
+}
+extension CorePayments.HTTPMethod : Swift.Equatable {}
+extension CorePayments.HTTPMethod : Swift.Hashable {}
+extension CorePayments.HTTPMethod : Swift.RawRepresentable {}
+extension CorePayments.HTTPHeader : Swift.Equatable {}
+extension CorePayments.HTTPHeader : Swift.Hashable {}
+extension CorePayments.HTTPHeader : Swift.RawRepresentable {}
+extension CorePayments.Environment : Swift.Equatable {}
+extension CorePayments.Environment : Swift.Hashable {}
