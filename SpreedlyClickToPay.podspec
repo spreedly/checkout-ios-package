@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyClickToPay'
-  s.version          = '1.6.1'
+  s.version          = '1.6.1-dev.20260903.1'
   s.summary          = 'Click to Pay (Mastercard SRC) module for the Spreedly iOS SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
