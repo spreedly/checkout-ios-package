@@ -1,0 +1,3 @@
+framework module SpreedlyPayPal {
+  header "SpreedlyPayPal-Swift.h"
+}

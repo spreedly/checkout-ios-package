@@ -480,7 +480,7 @@ SWIFT_CLASS("_TtC18SpreedlyClickToPay18ClickToPayCustomer")
 @property (nonatomic) enum ClickToPayMainLookupMethod mainLookupMethod;
 - (nonnull instancetype)initWithEmail:(NSString * _Nullable)email phoneNumber:(NSString * _Nullable)phoneNumber countryCode:(NSString * _Nullable)countryCode mainLookupMethod:(enum ClickToPayMainLookupMethod)mainLookupMethod OBJC_DESIGNATED_INITIALIZER;
 - (BOOL)hasEmail SWIFT_WARN_UNUSED_RESULT;
-/// Phone lookup requires both number and country code (Android / iframe parity).
+/// Phone lookup requires both number and country code.
 - (BOOL)hasPhoneLookup SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isValidForLookup SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -587,7 +587,7 @@ SWIFT_CLASS("_TtC18SpreedlyClickToPay20ClickToPayMaskedCard")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Native SPL card payload for MC <code>encryptCard</code> → <code>checkoutWithNewCard</code> (Android parity).
+/// Native SPL card payload for MC <code>encryptCard</code> → <code>checkoutWithNewCard</code>.
 SWIFT_CLASS("_TtC18SpreedlyClickToPay23ClickToPayNewCardFields")
 @interface ClickToPayNewCardFields : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull primaryAccountNumber;
@@ -1214,7 +1214,7 @@ SWIFT_CLASS("_TtC18SpreedlyClickToPay18ClickToPayCustomer")
 @property (nonatomic) enum ClickToPayMainLookupMethod mainLookupMethod;
 - (nonnull instancetype)initWithEmail:(NSString * _Nullable)email phoneNumber:(NSString * _Nullable)phoneNumber countryCode:(NSString * _Nullable)countryCode mainLookupMethod:(enum ClickToPayMainLookupMethod)mainLookupMethod OBJC_DESIGNATED_INITIALIZER;
 - (BOOL)hasEmail SWIFT_WARN_UNUSED_RESULT;
-/// Phone lookup requires both number and country code (Android / iframe parity).
+/// Phone lookup requires both number and country code.
 - (BOOL)hasPhoneLookup SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isValidForLookup SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1321,7 +1321,7 @@ SWIFT_CLASS("_TtC18SpreedlyClickToPay20ClickToPayMaskedCard")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Native SPL card payload for MC <code>encryptCard</code> → <code>checkoutWithNewCard</code> (Android parity).
+/// Native SPL card payload for MC <code>encryptCard</code> → <code>checkoutWithNewCard</code>.
 SWIFT_CLASS("_TtC18SpreedlyClickToPay23ClickToPayNewCardFields")
 @interface ClickToPayNewCardFields : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull primaryAccountNumber;
