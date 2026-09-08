@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }
   s.authors          = 'Capillary, Inc.'
   s.source           = { :git => 'https://github.com/spreedly/checkout-ios-package', :tag => s.version }
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '16.0'
   s.swift_version    = '5.10'
 
   s.dependency 'SpreedlyCore'
