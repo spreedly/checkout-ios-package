@@ -1047,6 +1047,9 @@ extension SpreedlyCore.SPLEndpoints {
   public static var spreedlyBaseURL: Swift.String {
     get
   }
+  public static var spreedlyPaymentMethodsPath: Swift.String {
+    get
+  }
   public static var spreedlyTransactionPrefix: Swift.String {
     get
   }
@@ -1054,6 +1057,45 @@ extension SpreedlyCore.SPLEndpoints {
     get
   }
   public static func stripeRedirectURL(transactionToken: Swift.String) -> Swift.String
+  public static var pazeAPIHostSandboxPublic: Swift.String {
+    get
+  }
+  public static var pazeAPIHostSandboxEastPublic: Swift.String {
+    get
+  }
+  public static var pazeAPIHostUATPublic: Swift.String {
+    get
+  }
+  public static var pazeAPIHostProductionPublic: Swift.String {
+    get
+  }
+  public static var pazeAuthHostSandboxPublic: Swift.String {
+    get
+  }
+  public static var pazeAuthHostUATPublic: Swift.String {
+    get
+  }
+  public static var pazeAuthHostProductionPublic: Swift.String {
+    get
+  }
+  public static var pazeTokenPathPublic: Swift.String {
+    get
+  }
+  public static var pazeSessionsCreatePathPublic: Swift.String {
+    get
+  }
+  public static var pazeSessionsReviewPathPublic: Swift.String {
+    get
+  }
+  public static var pazeSessionsCompletePathPublic: Swift.String {
+    get
+  }
+  public static var pazeCheckoutHostSandboxPublic: Swift.String {
+    get
+  }
+  public static var pazeCheckoutHostUATPublic: Swift.String {
+    get
+  }
 }
 @objc public enum CardNumberFormat : Swift.Int, Swift.CaseIterable, Swift.Sendable {
   case pretty = 0
