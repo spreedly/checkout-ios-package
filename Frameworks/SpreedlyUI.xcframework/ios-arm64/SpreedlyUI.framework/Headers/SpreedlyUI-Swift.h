@@ -605,6 +605,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI16HostedFieldState")
 @property (nonatomic, readonly, strong) NSNumber * _Nullable panDisplayPolicyMasked;
 /// Card number only: IIN prefix (6 or 8 digits per scheme); <code>nil</code> when fewer than six digits or on non-PAN fields.
 @property (nonatomic, readonly, copy) NSString * _Nullable iin;
+/// Merchant-visible validation message for non-PCI fields (custom validators). Always <code>nil</code> for PAN/CVV.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -651,6 +653,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 /// When <code>field</code> is the card number type, produces the trailing brand view for the given scheme string (<code>CardType</code>’s <code>rawValue</code>, e.g. <code>"visa"</code>). Use app-bundled artwork.
 @property (nonatomic, copy) UIView * _Nonnull (^ _Nullable trailingIconViewFactory)(NSString * _Nonnull);
 @property (nonatomic) BOOL forceMaskOnLifecycleStop;
+/// When <code>true</code>, runs a registered merchant custom validator when the shopper leaves this field.
+@property (nonatomic) BOOL evaluatesCustomValidationOnBlur;
 /// When <code>false</code>, suppresses credit-card autofill hints (legacy iframe <code>toggleAutoComplete</code> off).
 /// Safe to change after the view loads; the hosted presentation is rebuilt while field values stay in secure storage.
 @property (nonatomic) BOOL enableAutofill;
@@ -658,6 +662,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
 @property (nonatomic, readonly) NSInteger inputLength;
+/// Updates the keyboard return-key label from Objective-C (optional <code>SpreedlySubmitLabel?</code> is not <code>@objc</code>-representable).
+- (void)updateSubmitLabel:(enum SpreedlySubmitLabel)label;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
