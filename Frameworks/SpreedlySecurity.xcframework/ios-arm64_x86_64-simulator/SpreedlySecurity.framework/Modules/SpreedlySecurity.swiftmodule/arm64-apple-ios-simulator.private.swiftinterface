@@ -25,6 +25,26 @@ public enum SPLSecureContainerKey {
   public static let state: Swift.String
   public static let zipCode: Swift.String
   public static let country: Swift.String
+  public static let email: Swift.String
+  public static let phoneNumber: Swift.String
+  public static let company: Swift.String
+  public static let houseNumberOrName: Swift.String
+  public static let street: Swift.String
+  public static let streetLine2: Swift.String
+  public static let phoneNumberCountryCode: Swift.String
+  public static let phoneNumberAreaCode: Swift.String
+  public static let shippingAddress1: Swift.String
+  public static let shippingAddress2: Swift.String
+  public static let shippingCity: Swift.String
+  public static let shippingState: Swift.String
+  public static let shippingZip: Swift.String
+  public static let shippingCountry: Swift.String
+  public static let shippingPhoneNumber: Swift.String
+  public static let shippingHouseNumberOrName: Swift.String
+  public static let shippingStreet: Swift.String
+  public static let shippingStreetLine2: Swift.String
+  public static let shippingPhoneNumberCountryCode: Swift.String
+  public static let shippingPhoneNumberAreaCode: Swift.String
   public static let routingNumber: Swift.String
   public static let accountNumber: Swift.String
   public static let bankName: Swift.String
