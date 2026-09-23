@@ -1,0 +1,10 @@
+{
+  "pkg_tag": "1.6.1-dev.20260923.1",
+  "pkg_branch": "sync/v1.6.1-dev.20260923.1",
+  "version": "1.6.1",
+  "sdk_sha": "796cd301983554ed7a3fea96125d3895514ccc9c",
+  "build_run_url": "https://github.com/spreedly/checkout-ios-sdk/actions/runs/35859420792",
+  "source_branch": "HC-1846-iOS-Add-canonical-address-and-phone-part-fields-to-tokenization-payloads",
+  "prepared_at": "2026-09-23T13:15:42Z",
+  "status": "prepared_awaiting_publish"
+}

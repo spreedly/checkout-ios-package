@@ -6,7 +6,7 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		cx3t3vRM6zHKM6mZOXSDXjQxmKs=
+		u33+NSxn7PtCaqdNk6LVzgSinBA=
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		enuf5LM6eFnLeY1MMur4jYCCSy4=
+		sNS1rXGOfkuxklmPxjhm1P6socQ=
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -22,11 +22,11 @@
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		enuf5LM6eFnLeY1MMur4jYCCSy4=
+		sNS1rXGOfkuxklmPxjhm1P6socQ=
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		X0CBrBD9fD1+fmWcS7m+iSVJd4c=
+		/QQX1frREtucpsvgVue3ni/hka4=
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		RrnMwHlnIaIgI5CbQAIdns/y8nI=
+		wWuEK7bgF/brnxNa38eQ0g3BW10=
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		RrnMwHlnIaIgI5CbQAIdns/y8nI=
+		wWuEK7bgF/brnxNa38eQ0g3BW10=
 		</data>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Wv1ZSbNQEKHrBinCvOGdtryYUuE=
+		CUZad7WSdb+cRuhX4vY5qkGWXk0=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -62,7 +62,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GZ3LQJ05AmM8AIzCVbEG9TQPzlY7bm6FxqRtJRjZvE4=
+			FsL9s38TmzWfNki2PbVPFOTYN3mKDUIohWFaHbEiQhg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -76,14 +76,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GZ3LQJ05AmM8AIzCVbEG9TQPzlY7bm6FxqRtJRjZvE4=
+			FsL9s38TmzWfNki2PbVPFOTYN3mKDUIohWFaHbEiQhg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlySecurity.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			9d2+Zv2BnVEQMjAB/k4kX2efdSTMTuuXeP4PbtrIKuA=
+			cIj6FaCfpi4Fg+hpcbiBgD8LyK1Nz4IRipBDFPO5V+s=
 			</data>
 		</dict>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -97,7 +97,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fij+i2xJaiv99cISOR41iK2KNgDbO36i1mIFVKGJ75o=
+			InQVcDLZLPtbjMyIaABmsgaGFERnzJsfhKzKB19dZe4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -111,14 +111,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fij+i2xJaiv99cISOR41iK2KNgDbO36i1mIFVKGJ75o=
+			InQVcDLZLPtbjMyIaABmsgaGFERnzJsfhKzKB19dZe4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlySecurity.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7p9W90Mpu2A7xRmuMtlosLT8wVn8rqPh08oPi7hiwyY=
+			vm8aseXxezcq5Psh50Idg0uTjDMALvCMPaa0t5eaYIM=
 			</data>
 		</dict>
 	</dict>
