@@ -79,6 +79,8 @@ end
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
 | **Click to Pay** | `SpreedlyClickToPay` | Mastercard Click to Pay (SRC) checkout — requires Core, Security, and UI |
 
+> **PayPal risk dependency (`SpreedlyBraintree` / `SpreedlyPayPal`):** both modules link PayPal's `PPRiskMagnes` fraud-detection framework, distributed as the `PayPalRisk` package. This is resolved and embedded automatically — SPM pulls it in through both products, and CocoaPods resolves it as a normal pod dependency. No merchant action is required; you'll just see `PayPalRisk` (SPM) or the `PayPalRisk` pod (CocoaPods) show up alongside `SpreedlyBraintree`/`SpreedlyPayPal` in your resolved dependency graph — that's expected.
+
 ## Integration Guides
 
 For detailed integration guides, code samples, and the example merchant app, see the [checkout-ios-example](https://github.com/spreedly/checkout-ios-example) repository. It includes step-by-step guides for all payment flows, 3DS, theming, error handling, Objective-C support, and more.
