@@ -4,17 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>LICENSE</key>
-		<data>
-		NDX2AVb1wpjZKZjeqbY8J3FQsew=
-		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Headers/SpreedlyCore-Swift.h</key>
 		<data>
-		tAitO+KO9YQ5hzO2tWmO0VF1r88=
+		WsSj1yMUxrUrlVhWVRBPeDZAqJQ=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Info.plist</key>
 		<data>
-		pX4iY78sdTs8YKe5DkXFaTAE41Y=
+		Uwqdi7Bj1JqeQcHieFHzTS6Mahg=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -22,15 +18,15 @@
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		ZUQsvpToGvYaX/mQDtznZ3/aSRQ=
+		1ZR2PKGhjtpyYtEoZPQkhEuuy/U=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		rRfIokMZeVUV2XUBaSQFRxV/FW0=
+		PZeidxqJuDsMbA/fPEv0q1yI6aY=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		iwPFY/CPW9XO7qg0RbSok1dmUfU=
+		LSHq8dESqyymhUPkPJ5od8gxTmU=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/module.modulemap</key>
 		<data>
@@ -38,11 +34,11 @@
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/SpreedlyCore</key>
 		<data>
-		XsweknPXJA2ODycgnutN84j+LWw=
+		MeRTAsN6XjEdq6yoVHfh+D/H9ws=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		CpyLE76Rkmb7xchhLiY5sAlc+pY=
+		nQdojyKC6/oUHQhoekXY1tNJCII=
 		</data>
 		<key>ios-arm64/SpreedlyCore.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -53,13 +49,29 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		DR7gwe/LY832LSqSVh0OJ2bOflg=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/DWARF/SpreedlyCore</key>
+		<data>
+		f8rhuLZh1zrT7S7JiLNua2dYQ58=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyCore.yml</key>
+		<data>
+		rthzyPHi4n0/56aSsS8wF3lm+Zo=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<data>
+		hGfdeAK9jt9PzWBF8O3B8K9G2UQ=
+		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Headers/SpreedlyCore-Swift.h</key>
 		<data>
-		mLiuWo+MG1/9yt53JUywJ2A6sI4=
+		sQWF+oBuju2C5sgNxSvw9vH4e10=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Info.plist</key>
 		<data>
-		yifyICwiN7zs18x42EL2VR0+SpM=
+		ibT/m8HIw4LqvNTdvOD4JxVEmJE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -67,15 +79,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		JO9kDSQgHbP+e+XWqN0z4VKO5nA=
+		cKcA3VvS7FJb4691lRY4Ra6xtpI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		wXX55/XcMg5lUsoGr+Nr6xLfc/U=
+		Qp0pEvti/7CHq++DGG7Ky9d3oI8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		+2KuubaS0nTPSPyiCA3CalMOYcQ=
+		TRHX2LS+37Dd+iNM9lUbv32ZFfQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -83,15 +95,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		O8wNinte8C3CVUUrlgajOWwRlos=
+		HfuxLXYS5VENjo2FR0goEdVF3JM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		3VL8acVHoaCl9vS3OhGF7JMih4c=
+		k1TGOEp6WSv4M3fE3KKQwELb5oA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		3b3dSk9rReiDrSVKqclPurYDoAw=
+		UV1Abf8MNoF50HPPJFw25haYos0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/module.modulemap</key>
 		<data>
@@ -99,11 +111,11 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/SpreedlyCore</key>
 		<data>
-		TTGIUHEWUjyn04SN/yGkYD9zLc8=
+		qNhHSOHncE8kIYb2O3omjig/NHY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		XuNJGGKKKhuoxQoz6xopmPpiuKM=
+		fFINkIUI6yjQgwX8Z53d4VoMojY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/en.lproj/Localizable.strings</key>
 		<dict>
@@ -114,28 +126,45 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		DR7gwe/LY832LSqSVh0OJ2bOflg=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/DWARF/SpreedlyCore</key>
+		<data>
+		G7isrl3F19DYKoIVMOdhTHdhuNk=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyCore.yml</key>
+		<data>
+		cQHPDjw1FfcnSmLVxwUcuZ504j0=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyCore.yml</key>
+		<data>
+		ONMup7lHR8goyUPGV+bL42WhJ9o=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<data>
+		shRyGmbBssjuvyqfZeBqs1YgTd8=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Swift/x86_64/Forter3DS.swiftinterface</key>
+		<data>
+		LVADfHx6yTWCMd3Iuy8UtFbMlPE=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			2fOb5bs7rjpLv3OJGMGNZ2jbDwkbds/h+KCk+LWD540=
-			</data>
-		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/Headers/SpreedlyCore-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jylKOxRAZ82oO/o5b79x4vZgtUbSYldOgIpV8wXI+mM=
+			WQ0RsSHibDm0RWfNAxz/GtAeswIGpHhMsoMJVxxWAl0=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rrkUYBatrnKPk5mhY7mWE0tbwvrUCZO69L7BJ7k8Lc0=
+			Of8VnV6Hc0WginIFleop++NLahkZt31wR6GvixrykQU=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -149,21 +178,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FWWuhDC9cJ+pFL9PwZkTt7mDvKMpaiJvD2rS9Kqtfyk=
+			3wVutdnqrDA73WT8KR8MUyHannVUAVl+aWZsR2/4BUo=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fVHt3OnQMy3MlOsElrAxIuMi/HQAULDIVbFG4xYd/iQ=
+			jhHgPBl/MfolxpGq5d616iDQEYUXo9O6WAQmSxIpJ/A=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6R3+ALeeYhNBQblF6pBElc5PSUJJt6WH1aHDawLHBP4=
+			XWLd0gmRvWaZQtMq7EaEYislGX59KG1FX4vFIgnGYpI=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/Modules/module.modulemap</key>
@@ -177,14 +206,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt2953Hes8eN70DZfwiC6HLUfnZhsxe4Idwbk09riSk=
+			zSXjjht3TZ/B6Fquwq9oVdDht35VZlOx3O+zdaIuaZs=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Pj4T8nAt6g4U0vRLvFfk/WCLMexJXsiHZ8KbsA2mvkc=
+			J62V3o2cZWQxgfD76E2AFZ0dKSIRU/o30UimZTsBGiM=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyCore.framework/en.lproj/Localizable.strings</key>
@@ -196,18 +225,46 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			du6hxEBg1/kAlcUycj85Jsf5HoF36sXdfy0u5zpTHuY=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/DWARF/SpreedlyCore</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Itj7uVh7HkGhlvOzorgvJDEiO/qTJlbMI57xzbc/WdM=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyCore.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			cdKYWyW4Wkq8z3akmUnKUTkvhtEDunisx127NXRFDCU=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			vqWOXF7G+2sIcmZ2fvv9fyumNxetE3m/bTXgmbA80oE=
+			</data>
+		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Headers/SpreedlyCore-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6LnGCj/DHTbl3ZPxEf26oRNZlgUMFPOu6O2ZcYL2Tg0=
+			2iW6Xa41CWrMgoN08BezxuMD4woB239znLBEtr5w48I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zf2li4LX3kpuYoUOTbBr5BU2fvknfO/6xhrEPtmuddk=
+			jglBezr+pyRXTsVX1s503ZRXKYNdJIz12fAX4t5q//w=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -221,21 +278,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8I+J9WZxP2lLx4ER2mQSlDHNn5MnSvwutT0OOvQrE/s=
+			b1C9+IMOK4xCQtDYdX/3SH8QCwZ3bz6Se0TFwE+C9NA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			8I4Qmu9awKjILr6BWlzYMod6+sKCqjj/P/hCBc0NRRQ=
+			x2t4qRiyU+BdLNITtiSalx+f3cyQmH/qlXFpIhPGfd8=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ga4+eUJOM13NHxh5chmIcoYCPsIRGZ2RVzKw+m1/+g0=
+			Fz1ZtoA6+KxYRiwDUn5z6PbXGIAhvyKm5mHRs/Jnq0k=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -249,21 +306,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nEjXXEms4UM2W6SfniFfw47eIVSRl1El9gVBMvzUUG8=
+			qOtPKAVcGD6TdC3h//80CtRKXF7BqW5rTEypUDkLEQY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ah2ffxmvhc3sQfEP1uNLSCKErtgkAggdVLLjmkAdtZE=
+			nqezngzweMSJBnjSxfuoYMsn761SxBoSmmSlGNDFdOg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/SpreedlyCore.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2ZIC2jKL16CRf6sG3qBfvS9M/iSa31kLcm3JOYlgyY8=
+			ob1JxkRjnq7KpWNjn2GZrWXUgN7PcoeLL/CxkSzDUCQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/Modules/module.modulemap</key>
@@ -277,14 +334,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			v0EHVzM3gkWUruC9BJ2UlDnXND5UIdSLRWn0oyKNouU=
+			nkKIc0NKqKNuQz8MXXklD6rU20zuD2wpn8D3yf37Fls=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tZ2mAlisWUysR0APEvon0yz4NOWtRXVYA/iQovlNBWE=
+			1kvVJTmDlfr0Qei2uFDje1k4l7douGWPMoKHCACNanM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyCore.framework/en.lproj/Localizable.strings</key>
@@ -295,6 +352,48 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			du6hxEBg1/kAlcUycj85Jsf5HoF36sXdfy0u5zpTHuY=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/DWARF/SpreedlyCore</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			0GUqTkI6fLfOp4H6OYesmcjv7e3UdxsTTaVQmqFq35w=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyCore.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Ht1+ya2MSbbMaU0Q2M1Mxc3/puERPbmv/GxEBVvgSQs=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyCore.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ZtD0s40YtQr5csY0MLLyyVaWSnNB0/QaiNO1TjQ5Etw=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2El84uFPLjY7Kyae0md2WUbHxxLiEBiPB4+Q0bgTA88=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyCore.framework.dSYM/Contents/Resources/Swift/x86_64/Forter3DS.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			0YuMxxOOLcearUq7xcjUAL5RNS10QUXTWe1ACbuXet0=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>

@@ -1,0 +1,10 @@
+{
+  "pkg_tag": "1.6.1-dev.20260924.2",
+  "pkg_branch": "sync/v1.6.1-dev.20260924.2",
+  "version": "1.6.1",
+  "sdk_sha": "17037ee2bcbab043c3dbf64ac54811ee600a31d6",
+  "build_run_url": "https://github.com/spreedly/checkout-ios-sdk/actions/runs/36016300129",
+  "source_branch": "HC-1651-IOS-Paze-Digital-Wallet-Integration",
+  "prepared_at": "2026-09-24T16:10:39Z",
+  "status": "prepared_awaiting_publish"
+}

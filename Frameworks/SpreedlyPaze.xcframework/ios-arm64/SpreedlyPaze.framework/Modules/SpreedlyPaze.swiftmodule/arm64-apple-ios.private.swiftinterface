@@ -1,0 +1,970 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyPaze
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+import AuthenticationServices
+import Combine
+import DeveloperToolsSupport
+import Foundation
+import Security
+import SpreedlyCore
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc @objcMembers final public class PazeAbandonedSession : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let sessionId: Swift.String
+  @objc final public let intent: SpreedlyPaze.PazeCheckoutIntent
+  @objc final public let timestamp: Foundation.Date
+  @objc public init(sessionId: Swift.String, intent: SpreedlyPaze.PazeCheckoutIntent, timestamp: Foundation.Date)
+  @objc deinit
+}
+extension SpreedlyPaze.PazeAbandonedSession {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+@objc @objcMembers final public class PazeAddress : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let name: Swift.String?
+  @objc final public let line1: Swift.String?
+  @objc final public let line2: Swift.String?
+  @objc final public let line3: Swift.String?
+  @objc final public let city: Swift.String?
+  @objc final public let state: Swift.String?
+  @objc final public let zip: Swift.String?
+  @objc final public let countryCode: Swift.String?
+  @objc final public let deliveryContactDetails: SpreedlyPaze.PazeDeliveryContactDetails?
+  @objc public init(name: Swift.String? = nil, line1: Swift.String? = nil, line2: Swift.String? = nil, line3: Swift.String? = nil, city: Swift.String? = nil, state: Swift.String? = nil, zip: Swift.String? = nil, countryCode: Swift.String? = nil, deliveryContactDetails: SpreedlyPaze.PazeDeliveryContactDetails? = nil)
+  @objc final public var isEmpty: Swift.Bool {
+    @objc get
+  }
+  @objc final public var displayLines: [Swift.String] {
+    @objc get
+  }
+  @objc deinit
+}
+extension SpreedlyPaze.PazeAddress {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+public protocol PazeAuthorizationProvider {
+  func accessToken(sessionId: Swift.String) async throws -> Swift.String
+}
+@objc public protocol PazeAuthorizationProviderObjC {
+  @objc func accessToken(sessionId: Swift.String, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
+}
+@objc public enum PazeButtonLabel : Swift.Int, Swift.CaseIterable {
+  case checkoutWith = 0
+  case checkout = 1
+  case pazeCheckout = 2
+  case donateWith = 3
+  public var text: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeButtonLabel]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeButtonLabel] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeButtonColor : Swift.Int, Swift.CaseIterable {
+  case auto = -1
+  case pazeBlue = 0
+  case white = 1
+  case whiteWithOutline = 2
+  case midnightBlack = 3
+  public var hasOutline: Swift.Bool {
+    get
+  }
+  public func resolved(isDarkMode: Swift.Bool) -> SpreedlyPaze.PazeButtonColor
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeButtonColor]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeButtonColor] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeButtonShape : Swift.Int, Swift.CaseIterable {
+  case `default` = 0
+  case rectangle = 1
+  case pill = 2
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeButtonShape]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeButtonShape] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension SpreedlyPaze.PazeButtonLabel : Swift.Codable, Swift.Sendable {
+}
+extension SpreedlyPaze.PazeButtonColor : Swift.Codable, Swift.Sendable {
+}
+extension SpreedlyPaze.PazeButtonShape : Swift.Codable, Swift.Sendable {
+}
+public struct PazeButtonStyle : Swift.Hashable, Swift.Codable, Swift.Sendable {
+  public var color: SpreedlyPaze.PazeButtonColor
+  public var shape: SpreedlyPaze.PazeButtonShape
+  public init(color: SpreedlyPaze.PazeButtonColor = .pazeBlue, shape: SpreedlyPaze.PazeButtonShape = .default)
+  public func resolved(isDarkMode: Swift.Bool) -> SpreedlyPaze.PazeButtonStyle
+  public static func == (a: SpreedlyPaze.PazeButtonStyle, b: SpreedlyPaze.PazeButtonStyle) -> Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum PazeButtonStyles {
+  public static let `default`: SpreedlyPaze.PazeButtonStyle
+  public static let pill: SpreedlyPaze.PazeButtonStyle
+  public static let white: SpreedlyPaze.PazeButtonStyle
+  public static let whiteWithOutline: SpreedlyPaze.PazeButtonStyle
+  public static let midnightBlack: SpreedlyPaze.PazeButtonStyle
+}
+public enum PazeCallback : Swift.Equatable {
+  case scheme(Swift.String)
+  case universalLink(host: Swift.String, path: Swift.String)
+  public static func == (a: SpreedlyPaze.PazeCallback, b: SpreedlyPaze.PazeCallback) -> Swift.Bool
+}
+@objc public enum PazeCardType : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case credit = 0
+  case debit = 1
+  case unknown = 2
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeCardType]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeCardType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazePayoutSupport : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case supported = 0
+  case notSupported = 1
+  case unknown = 2
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazePayoutSupport]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazePayoutSupport] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeActionLinkKind : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case changeCard = 0
+  case changeShippingAddress = 1
+  case unknown = 2
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeActionLinkKind]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeActionLinkKind] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class PazeCheckoutController : Combine.ObservableObject {
+  @Combine.Published<SpreedlyPaze.PazeFlowState> @_projectedValueProperty($state) @_Concurrency.MainActor final public var state: SpreedlyPaze.PazeFlowState {
+    get
+  }
+  @_Concurrency.MainActor final public var $state: Combine.Published<SpreedlyPaze.PazeFlowState>.Publisher {
+    get
+  }
+  @_Concurrency.MainActor final public let events: Combine.AnyPublisher<SpreedlyPaze.PazeEvent, Swift.Never>
+  @_Concurrency.MainActor final public func present(from viewController: UIKit.UIViewController? = nil)
+  @_Concurrency.MainActor final public func confirm()
+  @_Concurrency.MainActor final public func cancel()
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+public struct PazeCheckoutFlowSnapshot : Swift.Equatable {
+  public let state: SpreedlyPaze.PazeFlowState
+  public let sessionId: Swift.String?
+  public init(state: SpreedlyPaze.PazeFlowState, sessionId: Swift.String?)
+  public static func == (a: SpreedlyPaze.PazeCheckoutFlowSnapshot, b: SpreedlyPaze.PazeCheckoutFlowSnapshot) -> Swift.Bool
+}
+@objc public enum PazeCheckoutIntent : Swift.Int, Swift.CaseIterable {
+  case expressCheckout
+  case reviewAndPay
+  case addCard
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeCheckoutIntent]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeCheckoutIntent] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeTransactionType : Swift.Int, Swift.CaseIterable {
+  case purchase
+  case cardOnFile
+  case both
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeTransactionType]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeTransactionType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func pazeCheckout(isPresented: SwiftUICore.Binding<Swift.Bool>, request: SpreedlyPaze.PazeCheckoutRequest, onEvent: @escaping (SpreedlyPaze.PazeEvent) -> Swift.Void = { _ in }) -> some SwiftUICore.View
+  
+}
+public struct PazeCheckoutRequest {
+  public let intent: SpreedlyPaze.PazeCheckoutIntent
+  public let emailAddress: Swift.String?
+  public let phoneNumber: Swift.String?
+  public let transactionValue: SpreedlyPaze.PazeTransactionValue?
+  public let billingPreference: SpreedlyPaze.PazeBillingPreference
+  public let transactionType: SpreedlyPaze.PazeTransactionType?
+  public let shippingPreference: SpreedlyPaze.PazeShippingPreference
+  public let merchantCategoryCode: Swift.String?
+  public let payloadType: SpreedlyPaze.PazePayloadType
+  public let pazeOnFile: Swift.Bool
+  public let enhancedTransactionData: SpreedlyPaze.PazeEnhancedTransactionData?
+  public let alwaysEnableCheckout: Swift.Bool
+  public let cobrand: [SpreedlyPaze.PazeCobrandEntry]?
+  public let useCase: SpreedlyPaze.PazeUseCase?
+  public let acceptedShippingCountries: [Swift.String]?
+  public let acceptedPaymentCardNetworks: [SpreedlyPaze.PazePaymentCardNetwork]?
+  public let processingNetwork: SpreedlyPaze.PazeProcessingNetwork?
+  public init(intent: SpreedlyPaze.PazeCheckoutIntent, emailAddress: Swift.String? = nil, phoneNumber: Swift.String? = nil, transactionValue: SpreedlyPaze.PazeTransactionValue? = nil, billingPreference: SpreedlyPaze.PazeBillingPreference = .all, transactionType: SpreedlyPaze.PazeTransactionType? = nil, shippingPreference: SpreedlyPaze.PazeShippingPreference = .all, merchantCategoryCode: Swift.String? = nil, payloadType: SpreedlyPaze.PazePayloadType = .payment, pazeOnFile: Swift.Bool = false, enhancedTransactionData: SpreedlyPaze.PazeEnhancedTransactionData? = nil, alwaysEnableCheckout: Swift.Bool = false, cobrand: [SpreedlyPaze.PazeCobrandEntry]? = nil, useCase: SpreedlyPaze.PazeUseCase? = nil, acceptedShippingCountries: [Swift.String]? = nil, acceptedPaymentCardNetworks: [SpreedlyPaze.PazePaymentCardNetwork]? = nil, processingNetwork: SpreedlyPaze.PazeProcessingNetwork? = nil)
+}
+public struct PazeClientConfig : Swift.Equatable {
+  public let clientId: Swift.String
+  public let clientName: Swift.String
+  public let profileId: Swift.String
+  public let merchantCategoryCode: Swift.String?
+  public init(clientId: Swift.String, clientName: Swift.String, profileId: Swift.String, merchantCategoryCode: Swift.String? = nil)
+  public static func == (a: SpreedlyPaze.PazeClientConfig, b: SpreedlyPaze.PazeClientConfig) -> Swift.Bool
+}
+@objc @objcMembers final public class PazeClientConfigObjC : ObjectiveC.NSObject {
+  @objc final public var clientId: Swift.String
+  @objc final public var clientName: Swift.String
+  @objc final public var profileId: Swift.String
+  @objc final public var merchantCategoryCode: Swift.String?
+  @objc public init(clientId: Swift.String, clientName: Swift.String, profileId: Swift.String, merchantCategoryCode: Swift.String? = nil)
+  @objc(initWithClientId:clientName:profileId:) convenience public init(clientId: Swift.String, clientName: Swift.String, profileId: Swift.String)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeCompleteResult : ObjectiveC.NSObject, @unchecked Swift.Sendable {
+  @objc final public let sessionId: Swift.String
+  @objc final public let payloadId: Swift.String?
+  @objc final public let maskedCard: SpreedlyPaze.PazeMaskedCard
+  @objc final public let completeResponse: Swift.String?
+  @objc final public let pazeOnFileId: Swift.String?
+  @objc final public let pazeOnFileStatus: SpreedlyPaze.PazeOnFileStatus
+  @objc final public let shippingAddress: SpreedlyPaze.PazeAddress?
+  @objc final public let ewSID: Swift.String?
+  @objc public init(sessionId: Swift.String, securedPayload: Swift.String, payloadId: Swift.String?, maskedCard: SpreedlyPaze.PazeMaskedCard, completeResponse: Swift.String? = nil, pazeOnFileId: Swift.String? = nil, pazeOnFileStatus: SpreedlyPaze.PazeOnFileStatus = .notRequested, shippingAddress: SpreedlyPaze.PazeAddress? = nil, ewSID: Swift.String? = nil)
+  @objc final public func consumeSecuredPayload() -> Swift.String?
+  @objc deinit
+}
+extension SpreedlyPaze.PazeCompleteResult {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+public struct PazeConfig {
+  public let client: SpreedlyPaze.PazeClientConfig
+  public let environment: SpreedlyPaze.PazeEnvironment
+  public let callback: SpreedlyPaze.PazeCallback
+  public let authorizationProvider: any SpreedlyPaze.PazeAuthorizationProvider
+  public init(client: SpreedlyPaze.PazeClientConfig, environment: SpreedlyPaze.PazeEnvironment = .sandbox, callback: SpreedlyPaze.PazeCallback, authorizationProvider: any SpreedlyPaze.PazeAuthorizationProvider)
+}
+@objc public enum PazeEventKind : Swift.Int {
+  case canCheckout
+  case reviewReady
+  case walletCancelled
+  case backendPayload
+  case error
+  case stateChanged
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol PazeDelegate {
+  @objc optional func paze(didReceiveEvent kind: SpreedlyPaze.PazeEventKind, userInfo: [Swift.String : Any])
+}
+@objc @objcMembers final public class PazeContactPhoneNumber : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let countryCode: Swift.String
+  @objc final public let phoneNumber: Swift.String
+  @objc public init(countryCode: Swift.String, phoneNumber: Swift.String)
+  @objc final public var e164: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+extension SpreedlyPaze.PazeContactPhoneNumber {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+@objc @objcMembers final public class PazeDeliveryContactDetails : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let contactFullName: Swift.String?
+  @objc final public let contactPhoneNumber: SpreedlyPaze.PazeContactPhoneNumber?
+  @objc public init(contactFullName: Swift.String? = nil, contactPhoneNumber: SpreedlyPaze.PazeContactPhoneNumber? = nil)
+  @objc final public var isEmpty: Swift.Bool {
+    @objc get
+  }
+  @objc deinit
+}
+extension SpreedlyPaze.PazeDeliveryContactDetails {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+@objc @objcMembers final public class PazeDigitalCardData : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let artUri: Swift.String?
+  @objc final public let artWidth: Swift.Int
+  @objc final public let artHeight: Swift.Int
+  @objc public init(artUri: Swift.String? = nil, artWidth: Swift.Int = 0, artHeight: Swift.Int = 0)
+  @objc final public var isEmpty: Swift.Bool {
+    @objc get
+  }
+  @objc deinit
+}
+extension SpreedlyPaze.PazeDigitalCardData {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+@objc @objcMembers final public class PazeActionLink : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let kind: SpreedlyPaze.PazeActionLinkKind
+  @objc final public let rawKind: Swift.String?
+  @objc final public let link: Swift.String
+  @objc public init(kind: SpreedlyPaze.PazeActionLinkKind, rawKind: Swift.String?, link: Swift.String)
+  @objc deinit
+}
+extension SpreedlyPaze.PazeActionLink {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+public struct PazeEnhancedTransactionData : Swift.Equatable {
+  public let ecomData: SpreedlyPaze.PazeEcomData?
+  public let travelData: SpreedlyPaze.PazeTravelData?
+  public init(ecomData: SpreedlyPaze.PazeEcomData? = nil, travelData: SpreedlyPaze.PazeTravelData? = nil)
+  public var isEmpty: Swift.Bool {
+    get
+  }
+  public static func == (a: SpreedlyPaze.PazeEnhancedTransactionData, b: SpreedlyPaze.PazeEnhancedTransactionData) -> Swift.Bool
+}
+public struct PazeEcomData : Swift.Equatable {
+  public let cartContainsGiftCard: Swift.Bool?
+  public let orderForPickup: Swift.Bool?
+  public let orderQuantity: Swift.String?
+  public let orderHighestCost: Swift.String?
+  public let finalShippingAddress: SpreedlyPaze.PazeAddress?
+  public init(cartContainsGiftCard: Swift.Bool? = nil, orderForPickup: Swift.Bool? = nil, orderQuantity: Swift.String? = nil, orderHighestCost: Swift.String? = nil, finalShippingAddress: SpreedlyPaze.PazeAddress? = nil)
+  public var isEmpty: Swift.Bool {
+    get
+  }
+  public static func == (a: SpreedlyPaze.PazeEcomData, b: SpreedlyPaze.PazeEcomData) -> Swift.Bool
+}
+public struct PazeTravelData : Swift.Equatable {
+  public let passengerName: Swift.String?
+  public let roundTrip: Swift.Bool?
+  public let departureDate: Swift.String?
+  public let returnDate: Swift.String?
+  public let departureLocation: SpreedlyPaze.PazeAddress?
+  public let returnLocation: SpreedlyPaze.PazeAddress?
+  public init(passengerName: Swift.String? = nil, roundTrip: Swift.Bool? = nil, departureDate: Swift.String? = nil, returnDate: Swift.String? = nil, departureLocation: SpreedlyPaze.PazeAddress? = nil, returnLocation: SpreedlyPaze.PazeAddress? = nil)
+  public var isEmpty: Swift.Bool {
+    get
+  }
+  public static func == (a: SpreedlyPaze.PazeTravelData, b: SpreedlyPaze.PazeTravelData) -> Swift.Bool
+}
+@objc public enum PazeEnvironment : Swift.Int, Swift.CaseIterable {
+  case sandbox
+  case uat
+  case production
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeEnvironment]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeEnvironment] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeErrorCode : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case notConfigured = 0
+  case callbackNotRegistered = 1
+  case checkoutAlreadyActive = 3
+  case invalidRequest = 4
+  case authorizationFailed = 10
+  case authorizationTimeout = 11
+  case authorizationMalformed = 12
+  case pazeUnauthorized = 20
+  case sessionCreateFailed = 21
+  case checkoutUnavailable = 22
+  case sessionReviewFailed = 23
+  case sessionCompleteFailed = 24
+  case pazeRateLimited = 25
+  case noSecuredPayload = 26
+  case walletCancelled = 30
+  case walletFailed = 31
+  case callbackMalformed = 32
+  case callbackMissingResponse = 33
+  case callbackStale = 34
+  case codeExpired = 35
+  case checkoutIncomplete = 36
+  case network = 41
+  case unknown = 42
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeErrorCode]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeErrorCode] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct PazeError : Swift.Error, Swift.Equatable, Swift.Sendable {
+  public let code: SpreedlyPaze.PazeErrorCode
+  public let detail: Swift.String?
+  public init(code: SpreedlyPaze.PazeErrorCode, detail: Swift.String? = nil)
+  public static func == (a: SpreedlyPaze.PazeError, b: SpreedlyPaze.PazeError) -> Swift.Bool
+}
+extension SpreedlyPaze.PazeError : Foundation.CustomNSError {
+  public static var errorDomain: Swift.String {
+    get
+  }
+  public var errorCode: Swift.Int {
+    get
+  }
+  public var errorUserInfo: [Swift.String : Any] {
+    get
+  }
+}
+extension SpreedlyPaze.PazeError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public enum PazeEvent {
+  case canCheckout(sessionId: Swift.String, Swift.Bool)
+  case reviewReady(sessionId: Swift.String, details: SpreedlyPaze.PazeReviewDetails)
+  case walletCancelled(sessionId: Swift.String)
+  case backendPayload(sessionId: Swift.String, result: SpreedlyPaze.PazeCompleteResult)
+  case error(sessionId: Swift.String?, code: SpreedlyPaze.PazeErrorCode, detail: Swift.String?)
+  case stateChanged(SpreedlyPaze.PazeFlowState)
+}
+extension SpreedlyPaze.PazeEvent : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@objc public enum PazeFlowState : Swift.Int {
+  case idle
+  case authorizing
+  case creatingSession
+  case awaitingWallet
+  case reviewing
+  case awaitingMerchantConfirmation
+  case completing
+  case finished
+  case failed
+  case cancelled
+  case expired
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers final public class PazeMaskedCard : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let lastFour: Swift.String?
+  @objc final public let network: Swift.String?
+  @objc final public let digitalCardId: Swift.String?
+  @objc final public let descriptor: Swift.String?
+  @objc final public let brand: Swift.String?
+  @objc final public let cardType: SpreedlyPaze.PazeCardType
+  @objc final public let paymentAccountReference: Swift.String?
+  @objc final public let expirationMonth: Swift.String?
+  @objc final public let expirationYear: Swift.String?
+  @objc final public let digitalCardData: SpreedlyPaze.PazeDigitalCardData?
+  @objc final public let billingAddress: SpreedlyPaze.PazeAddress?
+  @objc final public let payoutSupported: SpreedlyPaze.PazePayoutSupport
+  @objc public init(lastFour: Swift.String?, network: Swift.String?, digitalCardId: Swift.String? = nil, descriptor: Swift.String? = nil, brand: Swift.String? = nil, cardType: SpreedlyPaze.PazeCardType = .unknown, paymentAccountReference: Swift.String? = nil, expirationMonth: Swift.String? = nil, expirationYear: Swift.String? = nil, digitalCardData: SpreedlyPaze.PazeDigitalCardData? = nil, billingAddress: SpreedlyPaze.PazeAddress? = nil, payoutSupported: SpreedlyPaze.PazePayoutSupport = .unknown)
+  @objc deinit
+}
+extension SpreedlyPaze.PazeMaskedCard {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+@objc public enum PazeMessageStyle : Swift.Int, Swift.CaseIterable {
+  case standard = 0
+  case filled = 1
+  case outlined = 2
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeMessageStyle]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeMessageStyle] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension SpreedlyPaze.PazeMessageStyle {
+  public static let `default`: SpreedlyPaze.PazeMessageStyle
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class PazeCallbackObjC : ObjectiveC.NSObject {
+  @objc public static func scheme(_ scheme: Swift.String) -> SpreedlyPaze.PazeCallbackObjC
+  @objc public static func universalLink(host: Swift.String, path: Swift.String) -> SpreedlyPaze.PazeCallbackObjC
+  @objc deinit
+}
+@objc @objcMembers final public class PazeConfigObjC : ObjectiveC.NSObject {
+  @objc final public let client: SpreedlyPaze.PazeClientConfigObjC
+  @objc final public let environment: SpreedlyPaze.PazeEnvironment
+  @objc final public let callback: SpreedlyPaze.PazeCallbackObjC
+  @objc final public let authorizationProvider: any SpreedlyPaze.PazeAuthorizationProviderObjC
+  @objc public init(client: SpreedlyPaze.PazeClientConfigObjC, environment: SpreedlyPaze.PazeEnvironment, callback: SpreedlyPaze.PazeCallbackObjC, authorizationProvider: any SpreedlyPaze.PazeAuthorizationProviderObjC)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeCheckoutRequestObjC : ObjectiveC.NSObject {
+  @objc final public let intent: SpreedlyPaze.PazeCheckoutIntent
+  @objc final public let emailAddress: Swift.String?
+  @objc final public let phoneNumber: Swift.String?
+  @objc final public let transactionValue: SpreedlyPaze.PazeTransactionValueObjC?
+  @objc final public let billingPreference: SpreedlyPaze.PazeBillingPreference
+  @objc final public let transactionType: SpreedlyPaze.PazeTransactionType
+  @objc final public let usesDerivedTransactionType: Swift.Bool
+  @objc final public let shippingPreference: SpreedlyPaze.PazeShippingPreference
+  @objc final public let merchantCategoryCode: Swift.String?
+  @objc final public let payloadType: SpreedlyPaze.PazePayloadType
+  @objc final public let pazeOnFile: Swift.Bool
+  @objc final public let enhancedTransactionData: SpreedlyPaze.PazeEnhancedTransactionDataObjC?
+  @objc final public let alwaysEnableCheckout: Swift.Bool
+  @objc final public let cobrand: [SpreedlyPaze.PazeCobrandEntryObjC]?
+  @objc final public let useCase: SpreedlyPaze.PazeUseCase
+  @objc final public let hasUseCase: Swift.Bool
+  @objc final public let acceptedShippingCountries: [Swift.String]?
+  @objc final public let acceptedPaymentCardNetworks: [Foundation.NSNumber]?
+  @objc final public let processingNetwork: SpreedlyPaze.PazeProcessingNetwork
+  @objc final public let hasProcessingNetwork: Swift.Bool
+  @objc public init(intent: SpreedlyPaze.PazeCheckoutIntent, emailAddress: Swift.String? = nil, phoneNumber: Swift.String? = nil, transactionValue: SpreedlyPaze.PazeTransactionValueObjC? = nil, billingPreference: SpreedlyPaze.PazeBillingPreference = .all, transactionType: SpreedlyPaze.PazeTransactionType = .purchase, usesDerivedTransactionType: Swift.Bool = true, shippingPreference: SpreedlyPaze.PazeShippingPreference = .all, merchantCategoryCode: Swift.String? = nil, payloadType: SpreedlyPaze.PazePayloadType = .payment, pazeOnFile: Swift.Bool = false, enhancedTransactionData: SpreedlyPaze.PazeEnhancedTransactionDataObjC? = nil, alwaysEnableCheckout: Swift.Bool = false, cobrand: [SpreedlyPaze.PazeCobrandEntryObjC]? = nil, useCase: SpreedlyPaze.PazeUseCase = .rmg, hasUseCase: Swift.Bool = false, acceptedShippingCountries: [Swift.String]? = nil, acceptedPaymentCardNetworks: [Foundation.NSNumber]? = nil, processingNetwork: SpreedlyPaze.PazeProcessingNetwork = .visa, hasProcessingNetwork: Swift.Bool = false)
+  @objc(initWithIntent:emailAddress:transactionValue:transactionType:) convenience public init(intent: SpreedlyPaze.PazeCheckoutIntent, emailAddress: Swift.String?, transactionValue: SpreedlyPaze.PazeTransactionValueObjC?, transactionType: SpreedlyPaze.PazeTransactionType)
+  @objc(initWithIntent:emailAddress:transactionValue:) convenience public init(intent: SpreedlyPaze.PazeCheckoutIntent, emailAddress: Swift.String?, transactionValue: SpreedlyPaze.PazeTransactionValueObjC?)
+  @objc(initWithIntent:phoneNumber:transactionValue:) convenience public init(intent: SpreedlyPaze.PazeCheckoutIntent, phoneNumber: Swift.String?, transactionValue: SpreedlyPaze.PazeTransactionValueObjC?)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeCobrandEntryObjC : ObjectiveC.NSObject {
+  @objc final public let name: Swift.String
+  @objc final public let benefitsOffered: Swift.Bool
+  @objc public init(name: Swift.String, benefitsOffered: Swift.Bool = false)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeEnhancedTransactionDataObjC : ObjectiveC.NSObject {
+  @objc final public let ecomData: SpreedlyPaze.PazeEcomDataObjC?
+  @objc final public let travelData: SpreedlyPaze.PazeTravelDataObjC?
+  @objc public init(ecomData: SpreedlyPaze.PazeEcomDataObjC? = nil, travelData: SpreedlyPaze.PazeTravelDataObjC? = nil)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeEcomDataObjC : ObjectiveC.NSObject {
+  @objc final public let cartContainsGiftCard: Foundation.NSNumber?
+  @objc final public let orderForPickup: Foundation.NSNumber?
+  @objc final public let orderQuantity: Swift.String?
+  @objc final public let orderHighestCost: Swift.String?
+  @objc final public let finalShippingAddress: SpreedlyPaze.PazeAddress?
+  @objc public init(cartContainsGiftCard: Foundation.NSNumber? = nil, orderForPickup: Foundation.NSNumber? = nil, orderQuantity: Swift.String? = nil, orderHighestCost: Swift.String? = nil, finalShippingAddress: SpreedlyPaze.PazeAddress? = nil)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeTravelDataObjC : ObjectiveC.NSObject {
+  @objc final public let passengerName: Swift.String?
+  @objc final public let roundTrip: Foundation.NSNumber?
+  @objc final public let departureDate: Swift.String?
+  @objc final public let returnDate: Swift.String?
+  @objc final public let departureLocation: SpreedlyPaze.PazeAddress?
+  @objc final public let returnLocation: SpreedlyPaze.PazeAddress?
+  @objc public init(passengerName: Swift.String? = nil, roundTrip: Foundation.NSNumber? = nil, departureDate: Swift.String? = nil, returnDate: Swift.String? = nil, departureLocation: SpreedlyPaze.PazeAddress? = nil, returnLocation: SpreedlyPaze.PazeAddress? = nil)
+  @objc deinit
+}
+@objc @objcMembers final public class PazeTransactionValueObjC : ObjectiveC.NSObject {
+  @objc final public let amount: Swift.String
+  @objc final public let currencyCode: Swift.String
+  @objc final public let subtotal: Swift.String?
+  @objc final public let taxAmount: Swift.String?
+  @objc final public let shippingAmount: Swift.String?
+  @objc final public let discountAmount: Swift.String?
+  @objc public init(amount: Swift.String, currencyCode: Swift.String, subtotal: Swift.String? = nil, taxAmount: Swift.String? = nil, shippingAmount: Swift.String? = nil, discountAmount: Swift.String? = nil)
+  @objc(initWithAmount:currencyCode:) convenience public init(amount: Swift.String, currencyCode: Swift.String)
+  @objc deinit
+}
+@objc public enum PazeOnFileStatus : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case notRequested = 0
+  case created = 1
+  case notEnabled = 2
+  case failed = 3
+  case unknown = 4
+  public var identifier: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeOnFileStatus]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeOnFileStatus] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeShippingPreference : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case all = 0
+  case none = 1
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeShippingPreference]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeShippingPreference] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeBillingPreference : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case all = 0
+  case none = 1
+  public var wireValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeBillingPreference]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeBillingPreference] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazePayloadType : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case payment = 0
+  case id = 1
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazePayloadType]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazePayloadType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeUseCase : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case rmg = 0
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeUseCase]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeUseCase] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazePaymentCardNetwork : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case visa = 0
+  case mastercard = 1
+  case discover = 2
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazePaymentCardNetwork]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazePaymentCardNetwork] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum PazeProcessingNetwork : Swift.Int, Swift.Sendable, Swift.CaseIterable {
+  case visa = 0
+  case mastercard = 1
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [SpreedlyPaze.PazeProcessingNetwork]
+  public typealias RawValue = Swift.Int
+  nonisolated public static var allCases: [SpreedlyPaze.PazeProcessingNetwork] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct PazeCobrandEntry : Swift.Equatable {
+  public let name: Swift.String
+  public let benefitsOffered: Swift.Bool
+  public init(name: Swift.String, benefitsOffered: Swift.Bool = false)
+  public static func == (a: SpreedlyPaze.PazeCobrandEntry, b: SpreedlyPaze.PazeCobrandEntry) -> Swift.Bool
+}
+@objc @objcMembers final public class PazeReviewDetails : ObjectiveC.NSObject, Swift.Sendable {
+  @objc final public let sessionId: Swift.String
+  @objc final public let maskedCard: SpreedlyPaze.PazeMaskedCard
+  @objc final public let contactName: Swift.String?
+  @objc final public let contactEmail: Swift.String?
+  @objc final public let shippingName: Swift.String?
+  @objc final public let shippingLine1: Swift.String?
+  @objc final public let shippingLine2: Swift.String?
+  @objc final public let paymentDescriptor: Swift.String?
+  @objc final public let shippingAddress: SpreedlyPaze.PazeAddress?
+  @objc final public let deliveryContactName: Swift.String?
+  @objc final public let deliveryPhoneNumber: Swift.String?
+  @objc final public let consumerPhoneNumber: Swift.String?
+  @objc final public let consumerCountryCode: Swift.String?
+  @objc final public let consumerLanguageCode: Swift.String?
+  @objc final public let links: [SpreedlyPaze.PazeActionLink]
+  @objc final public let ewSID: Swift.String?
+  @objc final public var paymentLabel: Swift.String? {
+    @objc get
+  }
+  @objc public init(sessionId: Swift.String, maskedCard: SpreedlyPaze.PazeMaskedCard, contactName: Swift.String? = nil, contactEmail: Swift.String? = nil, shippingName: Swift.String? = nil, shippingLine1: Swift.String? = nil, shippingLine2: Swift.String? = nil, paymentDescriptor: Swift.String? = nil, shippingAddress: SpreedlyPaze.PazeAddress? = nil, deliveryContactName: Swift.String? = nil, deliveryPhoneNumber: Swift.String? = nil, consumerPhoneNumber: Swift.String? = nil, consumerCountryCode: Swift.String? = nil, consumerLanguageCode: Swift.String? = nil, links: [SpreedlyPaze.PazeActionLink] = [], ewSID: Swift.String? = nil)
+  @objc final public func link(for kind: SpreedlyPaze.PazeActionLinkKind) -> Swift.String?
+  @objc deinit
+}
+extension SpreedlyPaze.PazeReviewDetails {
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+}
+public struct PazeTransactionValue : Swift.Equatable {
+  public let amount: Swift.String
+  public let currencyCode: Swift.String
+  public let subtotal: Swift.String?
+  public let taxAmount: Swift.String?
+  public let shippingAmount: Swift.String?
+  public let discountAmount: Swift.String?
+  public init(amount: Swift.String, currencyCode: Swift.String, subtotal: Swift.String? = nil, taxAmount: Swift.String? = nil, shippingAmount: Swift.String? = nil, discountAmount: Swift.String? = nil)
+  public static func == (a: SpreedlyPaze.PazeTransactionValue, b: SpreedlyPaze.PazeTransactionValue) -> Swift.Bool
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyPazeButton : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(label: SpreedlyPaze.PazeButtonLabel = .checkoutWith, color: SpreedlyPaze.PazeButtonColor = .auto, shape: SpreedlyPaze.PazeButtonShape = .default, action: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public init(label: SpreedlyPaze.PazeButtonLabel = .checkoutWith, style: SpreedlyPaze.PazeButtonStyle, action: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s12SpreedlyPaze0aB6ButtonV4bodyQrvp", 0) __
+}
+@objc @IBDesignable @objcMembers @_Concurrency.MainActor @preconcurrency final public class SpreedlyPazeButtonView : UIKit.UIButton {
+  @objc @_Concurrency.MainActor @preconcurrency final public var label: SpreedlyPaze.PazeButtonLabel {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor @preconcurrency final public var style: SpreedlyPaze.PazeButtonStyle {
+    get
+    set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency final public var color: SpreedlyPaze.PazeButtonColor {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency final public var shape: SpreedlyPaze.PazeButtonShape {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency final public var onTap: (() -> Swift.Void)?
+  @objc @IBInspectable @_Concurrency.MainActor @preconcurrency final public var previewLabel: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor @preconcurrency final public var previewColor: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor @preconcurrency final public var previewShape: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public init(label: SpreedlyPaze.PazeButtonLabel = .checkoutWith, color: SpreedlyPaze.PazeButtonColor = .auto, shape: SpreedlyPaze.PazeButtonShape = .default, onTap: (() -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func awakeFromNib()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func prepareForInterfaceBuilder()
+  @available(iOS, introduced: 16.0, deprecated: 17.0)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previous: UIKit.UITraitCollection?)
+  @_Concurrency.MainActor @preconcurrency @objc override final public func didMoveToWindow()
+  @_Concurrency.MainActor @preconcurrency @objc override final public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+extension UIKit.UIButton.Configuration {
+  public static func paze(label: SpreedlyPaze.PazeButtonLabel = .checkoutWith, color: SpreedlyPaze.PazeButtonColor = .auto, shape: SpreedlyPaze.PazeButtonShape = .default, isDarkMode: Swift.Bool = false) -> UIKit.UIButton.Configuration
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @objcMembers final public class SpreedlyPazeCheckout : ObjectiveC.NSObject {
+  @objc @_Concurrency.MainActor weak public static var delegate: (any SpreedlyPaze.PazeDelegate)?
+  @_Concurrency.MainActor public static var events: Combine.AnyPublisher<SpreedlyPaze.PazeEvent, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor public static var state: Combine.AnyPublisher<SpreedlyPaze.PazeCheckoutFlowSnapshot, Swift.Never> {
+    get
+  }
+  @objc @_Concurrency.MainActor public static var isActive: Swift.Bool {
+    @objc get
+  }
+  @_Concurrency.MainActor public static func configure(_ config: SpreedlyPaze.PazeConfig) throws
+  @objc(configureWithConfig:error:) @_Concurrency.MainActor public static func configureObjC(_ config: SpreedlyPaze.PazeConfigObjC) throws
+  @objc(presentWithRequest:) @_Concurrency.MainActor public static func presentObjC(_ request: SpreedlyPaze.PazeCheckoutRequestObjC)
+  @objc(presentWithRequest:fromViewController:) @_Concurrency.MainActor public static func presentObjC(_ request: SpreedlyPaze.PazeCheckoutRequestObjC, from viewController: UIKit.UIViewController?)
+  @_Concurrency.MainActor public static func present(request: SpreedlyPaze.PazeCheckoutRequest)
+  @_Concurrency.MainActor public static func present(request: SpreedlyPaze.PazeCheckoutRequest, from viewController: UIKit.UIViewController?)
+  @objc @_Concurrency.MainActor public static func confirm()
+  @objc @_Concurrency.MainActor public static func cancel()
+  @discardableResult
+  @objc(consumeAbandonedSession) @_Concurrency.MainActor public static func consumeAbandonedSession() -> SpreedlyPaze.PazeAbandonedSession?
+  @_Concurrency.MainActor public static func makeController(request: SpreedlyPaze.PazeCheckoutRequest) -> SpreedlyPaze.PazeCheckoutController?
+  @_Concurrency.MainActor @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable @objcMembers @_Concurrency.MainActor @preconcurrency final public class SpreedlyPazeMessage : UIKit.UIView {
+  public typealias LinkTapHandler = (Foundation.URL) -> Swift.Void
+  @objc @IBInspectable @_Concurrency.MainActor @preconcurrency final public var previewHtml: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor @preconcurrency final public var previewStyle: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor @preconcurrency final public var previewDark: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor @preconcurrency final public func setMessage(html: Swift.String?, style: SpreedlyPaze.PazeMessageStyle = .default, darkMode: Swift.Bool? = nil, onLinkTap: SpreedlyPaze.SpreedlyPazeMessage.LinkTapHandler? = nil)
+  @objc(setMessageWithHTML:style:darkMode:onLinkTap:) @_Concurrency.MainActor @preconcurrency final public func setMessageObjC(html: Swift.String?, style: SpreedlyPaze.PazeMessageStyle, darkMode: Foundation.NSNumber?, onLinkTap: ((Foundation.URL) -> Swift.Void)?)
+  @objc @_Concurrency.MainActor @preconcurrency final public func getMessage() -> Swift.String?
+  @_Concurrency.MainActor @preconcurrency @objc override final public func awakeFromNib()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func prepareForInterfaceBuilder()
+  @_Concurrency.MainActor @preconcurrency @objc override final public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override final public func layoutSubviews()
+  @objc @_Concurrency.MainActor @preconcurrency final public func measuredHeight(for width: CoreFoundation.CGFloat) -> CoreFoundation.CGFloat
+  @_Concurrency.MainActor @preconcurrency @objc override final public func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  @objc deinit
+}
+extension SpreedlyPaze.SpreedlyPazeMessage : UIKit.UITextViewDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func textView(_ textView: UIKit.UITextView, shouldInteractWith url: Foundation.URL, in characterRange: Foundation.NSRange, interaction: UIKit.UITextItemInteraction) -> Swift.Bool
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyPazeMessageView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(html: Swift.String?, style: SpreedlyPaze.PazeMessageStyle = .standard, darkMode: Swift.Bool? = nil, onLinkTap: SpreedlyPaze.SpreedlyPazeMessage.LinkTapHandler? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s12SpreedlyPaze0aB11MessageViewV4bodyQrvp", 0) __
+}
+extension SpreedlyPaze.PazeButtonLabel : Swift.Equatable {}
+extension SpreedlyPaze.PazeButtonLabel : Swift.Hashable {}
+extension SpreedlyPaze.PazeButtonLabel : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeButtonColor : Swift.Equatable {}
+extension SpreedlyPaze.PazeButtonColor : Swift.Hashable {}
+extension SpreedlyPaze.PazeButtonColor : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeButtonShape : Swift.Equatable {}
+extension SpreedlyPaze.PazeButtonShape : Swift.Hashable {}
+extension SpreedlyPaze.PazeButtonShape : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeCardType : Swift.Equatable {}
+extension SpreedlyPaze.PazeCardType : Swift.Hashable {}
+extension SpreedlyPaze.PazeCardType : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazePayoutSupport : Swift.Equatable {}
+extension SpreedlyPaze.PazePayoutSupport : Swift.Hashable {}
+extension SpreedlyPaze.PazePayoutSupport : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeActionLinkKind : Swift.Equatable {}
+extension SpreedlyPaze.PazeActionLinkKind : Swift.Hashable {}
+extension SpreedlyPaze.PazeActionLinkKind : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeCheckoutController : Swift.Sendable {}
+extension SpreedlyPaze.PazeCheckoutIntent : Swift.Equatable {}
+extension SpreedlyPaze.PazeCheckoutIntent : Swift.Hashable {}
+extension SpreedlyPaze.PazeCheckoutIntent : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeTransactionType : Swift.Equatable {}
+extension SpreedlyPaze.PazeTransactionType : Swift.Hashable {}
+extension SpreedlyPaze.PazeTransactionType : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeFlowState : Swift.Equatable {}
+extension SpreedlyPaze.PazeFlowState : Swift.Hashable {}
+extension SpreedlyPaze.PazeFlowState : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeEventKind : Swift.Equatable {}
+extension SpreedlyPaze.PazeEventKind : Swift.Hashable {}
+extension SpreedlyPaze.PazeEventKind : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeEnvironment : Swift.Equatable {}
+extension SpreedlyPaze.PazeEnvironment : Swift.Hashable {}
+extension SpreedlyPaze.PazeEnvironment : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeErrorCode : Swift.Equatable {}
+extension SpreedlyPaze.PazeErrorCode : Swift.Hashable {}
+extension SpreedlyPaze.PazeErrorCode : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeMessageStyle : Swift.Equatable {}
+extension SpreedlyPaze.PazeMessageStyle : Swift.Hashable {}
+extension SpreedlyPaze.PazeMessageStyle : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeOnFileStatus : Swift.Equatable {}
+extension SpreedlyPaze.PazeOnFileStatus : Swift.Hashable {}
+extension SpreedlyPaze.PazeOnFileStatus : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeShippingPreference : Swift.Equatable {}
+extension SpreedlyPaze.PazeShippingPreference : Swift.Hashable {}
+extension SpreedlyPaze.PazeShippingPreference : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeBillingPreference : Swift.Equatable {}
+extension SpreedlyPaze.PazeBillingPreference : Swift.Hashable {}
+extension SpreedlyPaze.PazeBillingPreference : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazePayloadType : Swift.Equatable {}
+extension SpreedlyPaze.PazePayloadType : Swift.Hashable {}
+extension SpreedlyPaze.PazePayloadType : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeUseCase : Swift.Equatable {}
+extension SpreedlyPaze.PazeUseCase : Swift.Hashable {}
+extension SpreedlyPaze.PazeUseCase : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazePaymentCardNetwork : Swift.Equatable {}
+extension SpreedlyPaze.PazePaymentCardNetwork : Swift.Hashable {}
+extension SpreedlyPaze.PazePaymentCardNetwork : Swift.RawRepresentable {}
+extension SpreedlyPaze.PazeProcessingNetwork : Swift.Equatable {}
+extension SpreedlyPaze.PazeProcessingNetwork : Swift.Hashable {}
+extension SpreedlyPaze.PazeProcessingNetwork : Swift.RawRepresentable {}
+extension SpreedlyPaze.SpreedlyPazeButton : Swift.Sendable {}
+extension SpreedlyPaze.SpreedlyPazeCheckout : Swift.Sendable {}
+extension SpreedlyPaze.SpreedlyPazeMessageView : Swift.Sendable {}
