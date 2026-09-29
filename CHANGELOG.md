@@ -387,7 +387,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html):
 
 ### Support
 
-- **Minimum iOS**: 14.0
+- **Minimum iOS**: 16.0
 - **Swift**: 5.10+
 - **Xcode**: 16.1+
 
