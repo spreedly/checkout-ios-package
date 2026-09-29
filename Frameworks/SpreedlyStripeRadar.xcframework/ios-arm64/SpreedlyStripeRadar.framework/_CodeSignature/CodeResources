@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		fEbUKg3eW2oAVK/G1LSzX5J5B+s=
+		SOf+xPzffu0D6WAl+xT3hlmIXlk=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		C9AIvPjAQZis2vKC9K8+n0DCq9c=
+		mWQr4tgV4rcxopD/qQjn3CBBPa8=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		b2YTCePBTApbmsAH0J+kLVy0WEY=
+		znuW1Qp+phSCGC9s8Cr1U1UdY2s=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		C9AIvPjAQZis2vKC9K8+n0DCq9c=
+		mWQr4tgV4rcxopD/qQjn3CBBPa8=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		b30IPhg4oet62qjKGe/NtozK+4s=
+		em8sT8kp3bYusxMYLV4RYjI9lu8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -57,28 +57,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FbZ/gxx4ZxdC+rCRuT8LdO+t/0sIJEoCljeu3WceHuM=
+			SUaTMLSst2rUYlSyiCV0M9rP2RSjB/COw8TGi56PU5U=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EIfEHE/k0NyCZ0cNBkfaU9YWX2CvJN3c1RgqUQlMBt4=
+			0CLIcgPwi2fieh1UFyeEW8ZTJcAQqUEugtNRrZCZd1A=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FbZ/gxx4ZxdC+rCRuT8LdO+t/0sIJEoCljeu3WceHuM=
+			SUaTMLSst2rUYlSyiCV0M9rP2RSjB/COw8TGi56PU5U=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tJm6NXxWuNLh9XciF4yqS7qwphoqJDZmcN8PEDEs8tM=
+			ARlLu+3M4PZhLmn8AVZ3YbVmYPYmOZ47laoQt8Ld3v0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
