@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "checkout-ios-package",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v16)
     ],
     products: [
         // Core modules (always needed)

@@ -1,7 +1,7 @@
 # Spreedly iOS SDK
 
 [![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.6.1-blue)](https://github.com/spreedly/checkout-ios-package/releases)
-[![iOS](https://img.shields.io/badge/iOS-14.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
+[![iOS](https://img.shields.io/badge/iOS-16.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
 
@@ -132,7 +132,7 @@ All `Spreedly*` frameworks in a single app build must use the **same version**. 
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
-| iOS | 14.0 | 18 |
+| iOS | 16.0 | 18 |
 | Swift | 5.10 | 5.10 |
 | Xcode | 16.1 | 16.4 |
 
