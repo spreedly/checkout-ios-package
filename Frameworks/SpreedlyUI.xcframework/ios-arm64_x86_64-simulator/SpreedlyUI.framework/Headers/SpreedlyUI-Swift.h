@@ -739,7 +739,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Custom submit label enum that maps to SubmitLabel on iOS 15+
+/// Custom submit label enum that maps to SwiftUI <code>SubmitLabel</code>.
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
   SpreedlySubmitLabelDone = 1,
@@ -1624,7 +1624,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Custom submit label enum that maps to SubmitLabel on iOS 15+
+/// Custom submit label enum that maps to SwiftUI <code>SubmitLabel</code>.
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
   SpreedlySubmitLabelDone = 1,

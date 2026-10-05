@@ -1,10 +1,9 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
-// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyCore
+// swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyCore
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
 import AuthenticationServices
 import Combine
-import CoreTelephony
 import Darwin
 import Foundation
 import MachO
@@ -1047,6 +1046,9 @@ extension SpreedlyCore.SPLEndpoints {
   public static var spreedlyBaseURL: Swift.String {
     get
   }
+  public static var spreedlyPaymentMethodsPath: Swift.String {
+    get
+  }
   public static var spreedlyTransactionPrefix: Swift.String {
     get
   }
@@ -1054,6 +1056,48 @@ extension SpreedlyCore.SPLEndpoints {
     get
   }
   public static func stripeRedirectURL(transactionToken: Swift.String) -> Swift.String
+  public static var pazeAPIHostSandboxPublic: Swift.String {
+    get
+  }
+  public static var pazeAPIHostSandboxEastPublic: Swift.String {
+    get
+  }
+  public static var pazeAPIHostUATPublic: Swift.String {
+    get
+  }
+  public static var pazeAPIHostProductionPublic: Swift.String {
+    get
+  }
+  public static var pazeAuthHostSandboxPublic: Swift.String {
+    get
+  }
+  public static var pazeAuthHostUATPublic: Swift.String {
+    get
+  }
+  public static var pazeAuthHostProductionPublic: Swift.String {
+    get
+  }
+  public static var pazeTokenPathPublic: Swift.String {
+    get
+  }
+  public static var pazeSessionsCreatePathPublic: Swift.String {
+    get
+  }
+  public static var pazeSessionsReviewPathPublic: Swift.String {
+    get
+  }
+  public static var pazeSessionsCompletePathPublic: Swift.String {
+    get
+  }
+  public static var pazeCheckoutHostSandboxPublic: Swift.String {
+    get
+  }
+  public static var pazeCheckoutHostUATPublic: Swift.String {
+    get
+  }
+  public static var pazeCheckoutHostProductionPublic: Swift.String {
+    get
+  }
 }
 @objc public enum CardNumberFormat : Swift.Int, Swift.CaseIterable, Swift.Sendable {
   case pretty = 0
@@ -1141,6 +1185,12 @@ public enum TelemetryEvents {
   public static func threedsStarted(flowType: Swift.String, gatewayType: Swift.String? = nil)
   public static func threedsFlowRouted(threedsType: Swift.String, gatewayType: Swift.String? = nil, hasManagedOrderToken: Swift.Bool)
   public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String? = nil, errorCode: Swift.String? = nil)
+  public static func pazeSetupCompleted(success: Swift.Bool, module: Swift.String = "paze")
+  public static func pazeButtonImpression(surface: Swift.String, module: Swift.String = "paze")
+  public static func pazeCheckoutPresented(surface: Swift.String, module: Swift.String = "paze")
+  public static func pazeCheckoutReview(module: Swift.String = "paze")
+  public static func pazeCheckoutCompleted(success: Swift.Bool, durationMs: Swift.Int64, module: Swift.String = "paze")
+  public static func pazeError(errorCode: Swift.String, module: Swift.String = "paze")
   public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
@@ -1174,6 +1224,14 @@ public enum TelemetryEvents {
   @objc public static func threedsFlowRouted(threedsType: Swift.String, gatewayType: Swift.String?, hasManagedOrderToken: Swift.Bool)
   @objc public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String)
   @objc public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String?, errorCode: Swift.String?)
+  @objc public static func pazeSetupCompleted(success: Swift.Bool)
+  @objc public static func pazeCheckoutReview()
+  @objc public static func pazeCheckoutCompleted(success: Swift.Bool, durationMs: Swift.Int64)
+  @objc public static func pazeError(errorCode: Swift.String)
+  @objc public static func pazeButtonImpression(surface: Swift.String)
+  @objc public static func pazeButtonImpression(surface: Swift.String, module: Swift.String)
+  @objc public static func pazeCheckoutPresented(surface: Swift.String)
+  @objc public static func pazeCheckoutPresented(surface: Swift.String, module: Swift.String)
   @objc public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   @objc public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   @objc public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
