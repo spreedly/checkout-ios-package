@@ -4,17 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>LICENSE</key>
-		<data>
-		NDX2AVb1wpjZKZjeqbY8J3FQsew=
-		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Headers/SpreedlyClickToPay-Swift.h</key>
 		<data>
 		F+dB8g5qBYkUgYcCZKq3wY6VfHY=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Info.plist</key>
 		<data>
-		iGJ4fY4pMDadQKVQS1RP7VnaSwg=
+		GnYI1psZuxvNE2WiKwOI5viqosk=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -22,15 +18,15 @@
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		O7FsXfZ/CKWpXsymj+dx8hp/IO4=
+		r/8hBIPbDNLOEzLMjSSInvC8exE=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		/ZlQPLhG9uve9pfAHW/8cao13K8=
+		6FHg45pkKj8QD+RmgLpoHcE8ffw=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		O7FsXfZ/CKWpXsymj+dx8hp/IO4=
+		r/8hBIPbDNLOEzLMjSSInvC8exE=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/module.modulemap</key>
 		<data>
@@ -38,11 +34,11 @@
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/SpreedlyClickToPay</key>
 		<data>
-		l5CmuSBBvlzC4tgSsHQzcQeSP2Y=
+		g+EJq7cmkKQABcM5EiANtJ1Erto=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/_CodeSignature/CodeResources</key>
 		<data>
-		0jD9i+RuV0SycvId+MJTsbPGL4o=
+		QENo4QGbpCGeFtjAOTPLbAEGKJM=
 		</data>
 		<key>ios-arm64/SpreedlyClickToPay.framework/c2p-button-host.html</key>
 		<data>
@@ -61,13 +57,25 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		j4Azd5UqnUUn53F7Z75UJv8Gn44=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/DWARF/SpreedlyClickToPay</key>
+		<data>
+		nnflbHsjHGA+lrLIS6G0xOYCPPM=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyClickToPay.yml</key>
+		<data>
+		u5fEQdsHrtPc8L05IInqbxkt+Uw=
+		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Headers/SpreedlyClickToPay-Swift.h</key>
 		<data>
 		Kfvd8X49naT4a9nyifFCpRmVaC4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Info.plist</key>
 		<data>
-		+BxVAmDF3ApCqS1hpfb2/dRXKrM=
+		V7Wy3gsGT0fheWIyljX/a2syjeY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -75,15 +83,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		OMqShpQcJy2im1zjRiOjzxPlnBI=
+		lZSBGuvdPylDF9uyuTkFbe8Zh58=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		mTLNSq1w1XFqrS+d89EyB2gNJ6A=
+		iet7ibWg+T5Iiy5MgbDv5skUXC4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		OMqShpQcJy2im1zjRiOjzxPlnBI=
+		lZSBGuvdPylDF9uyuTkFbe8Zh58=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -91,15 +99,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		SrsWOdrWvZ6aFbBA0elB24KdP3Y=
+		uGafYkDFfUizd1E6resZTqeFT2g=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Dw6DocpwMVnMEm8LIu3iceERRgo=
+		eFIQWFwAaPSDy8RW23fVhqohWdo=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		SrsWOdrWvZ6aFbBA0elB24KdP3Y=
+		uGafYkDFfUizd1E6resZTqeFT2g=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/module.modulemap</key>
 		<data>
@@ -107,11 +115,11 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/SpreedlyClickToPay</key>
 		<data>
-		oiNiDA9xaiVViOoth+5U6KLeYnM=
+		PZ1rYGq03hXoI4HFIdrXSQx4fjQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/_CodeSignature/CodeResources</key>
 		<data>
-		jPP8bwS5nXDioH2gkO3cymuYArU=
+		H9elIT+owdztW4WMo6hR8wAjGTg=
 		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/c2p-button-host.html</key>
 		<data>
@@ -130,16 +138,25 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		j4Azd5UqnUUn53F7Z75UJv8Gn44=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/DWARF/SpreedlyClickToPay</key>
+		<data>
+		r3oDK5d7sECQRUt6XBJIQkgypQ8=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyClickToPay.yml</key>
+		<data>
+		qPmtYvZY0wHkQ7dUtOUN1i6odCw=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyClickToPay.yml</key>
+		<data>
+		uh16WiYZQSXQtV6XpxAVIIKb3UE=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			2fOb5bs7rjpLv3OJGMGNZ2jbDwkbds/h+KCk+LWD540=
-			</data>
-		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Headers/SpreedlyClickToPay-Swift.h</key>
 		<dict>
 			<key>hash2</key>
@@ -151,7 +168,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			bz3m1+YOuiearsa9v38k+v2Xrs2YigBe0DEhi0Xh6lE=
+			0scwUp3weguqrIYY8j3gdGcG3V+e9AjNXw82NqKGUOw=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -165,21 +182,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			W1WGGJFvcuLPKvgy8cC17yc4VvvhDP2lfcSCrYQPgi0=
+			s3g56SID33WBtN5ugpj8LWrVaCGB6mdn7PNTXr0tpx4=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nFwbtPWd2DiHGumhkd02Hz/dm93o1YuUPCFlrxD+ns8=
+			w29z/Yn0dXtP/V9mjzobQUSrPVweVE++vuSLWC2VPG8=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			W1WGGJFvcuLPKvgy8cC17yc4VvvhDP2lfcSCrYQPgi0=
+			s3g56SID33WBtN5ugpj8LWrVaCGB6mdn7PNTXr0tpx4=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/Modules/module.modulemap</key>
@@ -193,14 +210,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GkazljBfFt1hjrv81XB1hZaZ8WHk4SnLm+yYqHPvB+E=
+			EJ/0aBBecocw/eTx98T1EAY79PR6sXwFKiL5e80rISk=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dkvW0BgRJviwxvGyvGe7ZMFRCAakd4a0PfSBffNkZwE=
+			+o4cLmutraMT+PdMaEDZjDFe0oQxZ1i996i93SAcUXQ=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyClickToPay.framework/c2p-button-host.html</key>
@@ -225,6 +242,27 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			vI4XojFQ/pB68zgJ2pKEE3SjkUTULC7yiN5XubH0Has=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/DWARF/SpreedlyClickToPay</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			/m9ToIyjXdRuGWIKFY17dWIqTPatBUmTTD8JQDmZ5NQ=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyClickToPay.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			UAVma+qvJqm1sAlhDPaJAnDcAqZWQPLNBWKre7MUz+M=
+			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Headers/SpreedlyClickToPay-Swift.h</key>
 		<dict>
@@ -237,7 +275,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LCpgBff0lp/DE813MN5PE/0BJWQ+u7lj6lqvTrHxwes=
+			t7DV+0czhcoNcGY1amG8qqG8+JuavTVdb8iG3fqjyac=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -251,21 +289,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			l2fFkEHdEeVC9Ru17EoLCU8HhcD3FdQPsWf95vrKQ2M=
+			nA/ZM3ZZW9X/Rs7zL4mkc2Zplib7VlJT4YdEbTgB21A=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/dsEFJJkdeJ2tsIleZ5303EE2+k/8dFPP1a2Ob5C1Y8=
+			rnizB4D3UaBxDzA32cxMR5mI8sVycDc/LdVyoMRIp6k=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			l2fFkEHdEeVC9Ru17EoLCU8HhcD3FdQPsWf95vrKQ2M=
+			nA/ZM3ZZW9X/Rs7zL4mkc2Zplib7VlJT4YdEbTgB21A=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -279,21 +317,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			P44Be9SKbTgQbcFc8Detft7humxPi+D9EETd4FNVX54=
+			uv5s+NmveeQyyJaEajPUKIMjbCa+2rqLlPAf+ostQcs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DSws0P0T8ijhtuPQ4dg7buM6EcXKjlHSBtU/h+keXsY=
+			+xn60oLQnLh3weMdmVZr+TmixslQ32gBflno44nZeng=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			P44Be9SKbTgQbcFc8Detft7humxPi+D9EETd4FNVX54=
+			uv5s+NmveeQyyJaEajPUKIMjbCa+2rqLlPAf+ostQcs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/Modules/module.modulemap</key>
@@ -307,14 +345,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FNcje02CQ+nMmoTXoXyMLd/eRCexcxacpHisCQIk/o4=
+			3VBNBG2pro6l+mt1mePAesDlHqXVqwcVHo/2+eaQkfA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ai5cN+ZobAYQDWmZB2LH/4Q/NXB+MyGhX//eBff2jbk=
+			mmdjMKJG/lrs+uHtZqWSxRVK8rC/kU13eLDEkJ8d+2I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyClickToPay.framework/c2p-button-host.html</key>
@@ -339,6 +377,34 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			vI4XojFQ/pB68zgJ2pKEE3SjkUTULC7yiN5XubH0Has=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/DWARF/SpreedlyClickToPay</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7ca84HsQX3QkVcd51yjfYQF/WofZDtAqOxC/Oz6aY/U=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyClickToPay.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			BTxjb4D6rAjw7a0r+/9SrYFFiSMfkxud1V1+JvtOL/I=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyClickToPay.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyClickToPay.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			H4OGQsJxTAHWQiBtlHPZ9BH/cJhTds0CDLNF8wbohHQ=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>

@@ -1,10 +1,9 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
-// swift-module-flags: -target arm64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyCore
+// swift-module-flags: -target arm64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyCore
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
 import AuthenticationServices
 import Combine
-import CoreTelephony
 import Darwin
 import Foundation
 import MachO
@@ -908,6 +907,16 @@ public enum PaymentMethodAPIKeys {
   public static let shippingZipCode: Swift.String
   public static let shippingCountry: Swift.String
   public static let shippingPhoneNumber: Swift.String
+  public static let houseNumberOrName: Swift.String
+  public static let street: Swift.String
+  public static let streetLine2: Swift.String
+  public static let phoneNumberCountryCode: Swift.String
+  public static let phoneNumberAreaCode: Swift.String
+  public static let shippingHouseNumberOrName: Swift.String
+  public static let shippingStreet: Swift.String
+  public static let shippingStreetLine2: Swift.String
+  public static let shippingPhoneNumberCountryCode: Swift.String
+  public static let shippingPhoneNumberAreaCode: Swift.String
   public static let allowBlankName: Swift.String
   public static let allowExpiredDate: Swift.String
   public static let allowBlankDate: Swift.String
@@ -969,6 +978,27 @@ public enum PaymentMethodAPIErrorKeys {
   case routingNumber
   case accountNumber
   case bankName
+  case email
+  case company
+  case country
+  case phoneNumber
+  case houseNumberOrName
+  case street
+  case streetLine2
+  case phoneNumberCountryCode
+  case phoneNumberAreaCode
+  case shippingAddress1
+  case shippingAddress2
+  case shippingCity
+  case shippingState
+  case shippingZip
+  case shippingCountry
+  case shippingPhoneNumber
+  case shippingHouseNumberOrName
+  case shippingStreet
+  case shippingStreetLine2
+  case shippingPhoneNumberCountryCode
+  case shippingPhoneNumberAreaCode
   public var identifier: Swift.String {
     get
   }
@@ -1012,6 +1042,17 @@ public enum AdditionalField : Swift.String, Swift.CaseIterable {
   case shippingZip
   case shippingCountry
   case shippingPhoneNumber
+  case company
+  case houseNumberOrName
+  case street
+  case streetLine2
+  case phoneNumberCountryCode
+  case phoneNumberAreaCode
+  case shippingHouseNumberOrName
+  case shippingStreet
+  case shippingStreetLine2
+  case shippingPhoneNumberCountryCode
+  case shippingPhoneNumberAreaCode
   public var fieldName: Swift.String {
     get
   }
@@ -1138,6 +1179,9 @@ public enum TelemetryEvents {
   public static func paymentSheetDismissed(reason: Swift.String, module: Swift.String = "paymentsheet")
   public static func hostedFieldInteraction(fieldType: Swift.String, action: Swift.String)
   public static func validationFailed(fieldErrors: Swift.String, errorCount: Swift.Int, module: Swift.String = "paymentsheet")
+  public static func customValidatorRegistered(fieldName: Swift.String, replaced: Swift.Bool)
+  public static func customValidatorFailed(fieldName: Swift.String)
+  public static func customValidatorError(fieldName: Swift.String, reason: Swift.String)
   public static func threedsStarted(flowType: Swift.String, gatewayType: Swift.String? = nil)
   public static func threedsFlowRouted(threedsType: Swift.String, gatewayType: Swift.String? = nil, hasManagedOrderToken: Swift.Bool)
   public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String? = nil, errorCode: Swift.String? = nil)
@@ -1168,6 +1212,9 @@ public enum TelemetryEvents {
   @objc public static func hostedFieldInteraction(fieldType: Swift.String, action: Swift.String)
   @objc public static func validationFailed(fieldErrors: Swift.String, errorCount: Swift.Int)
   @objc public static func validationFailed(fieldErrors: Swift.String, errorCount: Swift.Int, module: Swift.String)
+  @objc public static func customValidatorRegistered(fieldName: Swift.String, replaced: Swift.Bool)
+  @objc public static func customValidatorFailed(fieldName: Swift.String)
+  @objc public static func customValidatorError(fieldName: Swift.String, reason: Swift.String)
   @objc public static func threedsStarted(flowType: Swift.String)
   @objc public static func threedsStarted(flowType: Swift.String, gatewayType: Swift.String?)
   @objc public static func threedsFlowRouted(threedsType: Swift.String, hasManagedOrderToken: Swift.Bool)
@@ -1342,7 +1389,77 @@ public protocol CreditCardData : SpreedlyCore.PaymentMethodData {
   var email: Swift.String? { get }
   var company: Swift.String? { get }
   var fullName: Swift.String? { get }
+  var houseNumberOrName: Swift.String? { get }
+  var street: Swift.String? { get }
+  var streetLine2: Swift.String? { get }
+  var phoneNumberCountryCode: Swift.String? { get }
+  var phoneNumberAreaCode: Swift.String? { get }
+  var shippingAddress1: Swift.String? { get }
+  var shippingAddress2: Swift.String? { get }
+  var shippingCity: Swift.String? { get }
+  var shippingState: Swift.String? { get }
+  var shippingZip: Swift.String? { get }
+  var shippingCountry: Swift.String? { get }
+  var shippingPhoneNumber: Swift.String? { get }
+  var shippingHouseNumberOrName: Swift.String? { get }
+  var shippingStreet: Swift.String? { get }
+  var shippingStreetLine2: Swift.String? { get }
+  var shippingPhoneNumberCountryCode: Swift.String? { get }
+  var shippingPhoneNumberAreaCode: Swift.String? { get }
   var metadata: [Swift.String : Swift.String]? { get }
+}
+extension SpreedlyCore.CreditCardData {
+  public var houseNumberOrName: Swift.String? {
+    get
+  }
+  public var street: Swift.String? {
+    get
+  }
+  public var streetLine2: Swift.String? {
+    get
+  }
+  public var phoneNumberCountryCode: Swift.String? {
+    get
+  }
+  public var phoneNumberAreaCode: Swift.String? {
+    get
+  }
+  public var shippingAddress1: Swift.String? {
+    get
+  }
+  public var shippingAddress2: Swift.String? {
+    get
+  }
+  public var shippingCity: Swift.String? {
+    get
+  }
+  public var shippingState: Swift.String? {
+    get
+  }
+  public var shippingZip: Swift.String? {
+    get
+  }
+  public var shippingCountry: Swift.String? {
+    get
+  }
+  public var shippingPhoneNumber: Swift.String? {
+    get
+  }
+  public var shippingHouseNumberOrName: Swift.String? {
+    get
+  }
+  public var shippingStreet: Swift.String? {
+    get
+  }
+  public var shippingStreetLine2: Swift.String? {
+    get
+  }
+  public var shippingPhoneNumberCountryCode: Swift.String? {
+    get
+  }
+  public var shippingPhoneNumberAreaCode: Swift.String? {
+    get
+  }
 }
 public protocol BankAccountData : SpreedlyCore.PaymentMethodData {
   var bankRoutingNumber: Swift.String { get }
@@ -1688,9 +1805,13 @@ public protocol SPLValidatableField : AnyObject {
   func isCurrentYear() -> Swift.Bool
   func isCurrentOrFutureMonth() -> Swift.Bool
   func receiveExpirationAutofill(month: Swift.String, year: Swift.String)
+  var nonSensitiveSnapshotValue: Swift.String? { get }
 }
 extension SpreedlyCore.SPLValidatableField {
   public func receiveExpirationAutofill(month: Swift.String, year: Swift.String)
+  public var nonSensitiveSnapshotValue: Swift.String? {
+    get
+  }
 }
 public protocol SPLAdditionalFieldValidator : AnyObject {
   func validateAdditionalField(_ field: SpreedlyCore.AdditionalField, value: Swift.String, allowBlankName: Swift.Bool?) -> (isValid: Swift.Bool, errorMessage: Swift.String?)
@@ -1727,14 +1848,27 @@ public protocol SPLAdditionalFieldValidator : AnyObject {
   public var $hostedCardDisplayState: Combine.Published<SpreedlyCore.HostedCardDisplayState>.Publisher {
     get
   }
+  @Combine.Published<[SpreedlyCore.FormFieldType : Swift.String]> @_projectedValueProperty($customValidationErrors) public var customValidationErrors: [SpreedlyCore.FormFieldType : Swift.String] {
+    get
+  }
+  public var $customValidationErrors: Combine.Published<[SpreedlyCore.FormFieldType : Swift.String]>.Publisher {
+    get
+  }
+  @objc public var customValidationErrorCount: Swift.Int {
+    @objc get
+  }
   public func registerField(_ field: any SpreedlyCore.SPLValidatableField)
   @objc public func unregisterField(withType type: SpreedlyCore.FormFieldType)
   @objc public func areAllFieldsValid() -> Swift.Bool
   public func areAllFieldsValid(fieldTypes: [SpreedlyCore.FormFieldType]) -> Swift.Bool
   public func getFieldValidationStatus() -> [SpreedlyCore.FormFieldType : Swift.Bool]
   public func getInvalidFieldTypes() -> [SpreedlyCore.FormFieldType]
+  @objc public func nonSensitiveFieldSnapshot() -> [Swift.String : Swift.String]
+  @objc public func setCustomValidationError(_ message: Swift.String?, for fieldType: SpreedlyCore.FormFieldType)
   @objc(getInvalidFieldTypes) public func invalidFieldTypeRawValues() -> [Foundation.NSNumber]
   @objc public func getRegisteredFieldCount() -> Swift.Int
+  public func mountedCardCatalogueFormFieldTypes() -> [SpreedlyCore.FormFieldType]
+  @objc public func hasConflictingExpiryMounts() -> Swift.Bool
   @objc public func applySeparatedExpirationAutofill(month: Swift.String, year: Swift.String, excluding source: SpreedlyCore.FormFieldType)
   @objc public func getDisplayTextLength(for fieldType: SpreedlyCore.FormFieldType) -> Swift.Int
   @objc public func isFieldRegistered(_ fieldType: SpreedlyCore.FormFieldType) -> Swift.Bool
@@ -1744,6 +1878,7 @@ public protocol SPLAdditionalFieldValidator : AnyObject {
   @objc public func setNumberFormat(_ format: SpreedlyCore.CardNumberFormat)
   @objc public func toggleMask()
   @objc public func resetHostedCardDisplayState()
+  @objc public func clearCustomValidationErrors()
   @objc public func notifySpreedlyParamsUpdated()
   @objc public func notifyForceOnValidationChange(for fieldType: SpreedlyCore.FormFieldType)
   public func registerAdditionalFieldValidator(_ validator: any SpreedlyCore.SPLAdditionalFieldValidator)
@@ -1756,6 +1891,144 @@ public enum ViewControllerUtils {
     get
   }
   @_Concurrency.MainActor public static func topmostPresented(from viewController: UIKit.UIViewController) -> UIKit.UIViewController
+}
+@objc @objcMembers public class SpreedlyCustomValidationResult : ObjectiveC.NSObject {
+  @objc final public let isValid: Swift.Bool
+  @objc final public let errorMessage: Swift.String?
+  @objc public init(isValid: Swift.Bool, errorMessage: Swift.String? = nil)
+  @objc public static var valid: SpreedlyCore.SpreedlyCustomValidationResult {
+    @objc get
+  }
+  @objc public static func invalid(_ message: Swift.String? = nil) -> SpreedlyCore.SpreedlyCustomValidationResult
+  @objc deinit
+}
+public typealias SpreedlyCustomFieldValidator = (Swift.String, [SpreedlyCore.CustomValidatableFieldName : Swift.String]) throws -> SpreedlyCore.SpreedlyCustomValidationResult
+public typealias SpreedlyCustomFieldValidatorObjC = (Swift.String, [Swift.String : Swift.String]) -> SpreedlyCore.SpreedlyCustomValidationResult?
+public enum CustomValidatableFieldName : Swift.String, Swift.CaseIterable {
+  case firstName
+  case lastName
+  case fullName
+  case email
+  case company
+  case addressLine1
+  case addressLine2
+  case city
+  case state
+  case zipCode
+  case country
+  case phoneNumber
+  case houseNumberOrName
+  case street
+  case streetLine2
+  case phoneNumberCountryCode
+  case phoneNumberAreaCode
+  case shippingAddressLine1
+  case shippingAddressLine2
+  case shippingCity
+  case shippingState
+  case shippingZipCode
+  case shippingCountry
+  case shippingPhoneNumber
+  case shippingHouseNumberOrName
+  case shippingStreet
+  case shippingStreetLine2
+  case shippingPhoneNumberCountryCode
+  case shippingPhoneNumberAreaCode
+  public static var all: [Swift.String] {
+    get
+  }
+  public static func contains(_ name: Swift.String) -> Swift.Bool
+  public static func dictionary(fromWireSnapshot snapshot: [Swift.String : Swift.String]) -> [SpreedlyCore.CustomValidatableFieldName : Swift.String]
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [SpreedlyCore.CustomValidatableFieldName]
+  public typealias RawValue = Swift.String
+  nonisolated public static var allCases: [SpreedlyCore.CustomValidatableFieldName] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyCustomValidatableField : ObjectiveC.NSObject {
+  @objc public static let firstName: Swift.String
+  @objc public static let lastName: Swift.String
+  @objc public static let fullName: Swift.String
+  @objc public static let email: Swift.String
+  @objc public static let company: Swift.String
+  @objc public static let addressLine1: Swift.String
+  @objc public static let addressLine2: Swift.String
+  @objc public static let city: Swift.String
+  @objc public static let state: Swift.String
+  @objc public static let zipCode: Swift.String
+  @objc public static let country: Swift.String
+  @objc public static let phoneNumber: Swift.String
+  @objc public static let houseNumberOrName: Swift.String
+  @objc public static let street: Swift.String
+  @objc public static let streetLine2: Swift.String
+  @objc public static let phoneNumberCountryCode: Swift.String
+  @objc public static let phoneNumberAreaCode: Swift.String
+  @objc public static let shippingAddressLine1: Swift.String
+  @objc public static let shippingAddressLine2: Swift.String
+  @objc public static let shippingCity: Swift.String
+  @objc public static let shippingState: Swift.String
+  @objc public static let shippingZipCode: Swift.String
+  @objc public static let shippingCountry: Swift.String
+  @objc public static let shippingPhoneNumber: Swift.String
+  @objc public static let shippingHouseNumberOrName: Swift.String
+  @objc public static let shippingStreet: Swift.String
+  @objc public static let shippingStreetLine2: Swift.String
+  @objc public static let shippingPhoneNumberCountryCode: Swift.String
+  @objc public static let shippingPhoneNumberAreaCode: Swift.String
+  @objc deinit
+}
+extension Swift.Dictionary where Key == SpreedlyCore.CustomValidatableFieldName, Value == Swift.String {
+  public var wireKeyed: [Swift.String : Swift.String] {
+    get
+  }
+}
+public enum AdditionalFieldCharLimits {
+  public static let fullName: Swift.Int
+  public static let email: Swift.Int
+  public static let country: Swift.Int
+  public static let zipOrPhone: Swift.Int
+  public static let address: Swift.Int
+  public static func limit(for field: SpreedlyCore.AdditionalField) -> Swift.Int
+}
+public enum AdditionalFieldCombinedNameLimit {
+  public static func failingField(in additionalFields: [SpreedlyCore.AdditionalField : Swift.String]) -> SpreedlyCore.AdditionalField?
+}
+public enum AdditionalFieldDisplayLabel {
+  public static func label(forCanonicalName name: Swift.String) -> Swift.String
+}
+public enum CustomValidationPCIKeys {
+  public static let owned: Swift.Set<Swift.String>
+}
+public func stripPciOwnedKeys(_ values: [Swift.String : Swift.String]) -> [Swift.String : Swift.String]
+public enum AdditionalFieldAPISafety {
+  public static func isEncodableUtf16(_ value: Swift.String) -> Swift.Bool
+  public static func charLimitError(label: Swift.String, limit: Swift.Int) -> Swift.String
+  public static func genericInvalidError(label: Swift.String) -> Swift.String
+  public static func validate(canonicalName: Swift.String, value: Swift.String) -> Swift.String?
+  public static func validateCharLimitOnly(field: SpreedlyCore.AdditionalField, value: Swift.String) -> Swift.String?
+}
+public enum CustomValidationOutcome {
+  case valid
+  case invalid(Swift.String)
+  case malformed(reason: Swift.String)
+}
+public enum CustomFieldValidation {
+  public static let maxFieldsKeyCount: Swift.Int
+  public static let maxFieldsUtf8Bytes: Swift.Int
+  public static func isFieldsSnapshotOversized(_ fields: [Swift.String : Swift.String]) -> Swift.Bool
+  public static func run(validator: @escaping SpreedlyCore.SpreedlyCustomFieldValidator, fieldName: Swift.String, value: Swift.String, fields: [Swift.String : Swift.String]) -> SpreedlyCore.CustomValidationOutcome
+}
+@_hasMissingDesignatedInitializers final public class CustomFieldValidatorRegistry {
+  public static let shared: SpreedlyCore.CustomFieldValidatorRegistry
+  final public var hasAny: Swift.Bool {
+    get
+  }
+  final public func validator(forCanonicalName name: Swift.String) -> SpreedlyCore.SpreedlyCustomFieldValidator?
+  @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers final public class EmailValidator : ObjectiveC.NSObject {
   @objc public static func isValid(_ email: Swift.String) -> Swift.Bool
@@ -1812,6 +2085,12 @@ public enum ViewControllerUtils {
   }
   public static func areAllFieldsValid(fieldTypes: [SpreedlyCore.FormFieldType]) -> Swift.Bool
   @objc public static func areAllFieldsValid(fieldTypeRawValues: [Foundation.NSNumber]) -> Swift.Bool
+  @nonobjc public func addValidation(field: SpreedlyCore.CustomValidatableFieldName, validator: @escaping SpreedlyCore.SpreedlyCustomFieldValidator)
+  @objc(addValidationForField:validator:) public func addValidationForField(_ fieldName: Swift.String, validator: @escaping SpreedlyCore.SpreedlyCustomFieldValidatorObjC)
+  @nonobjc public func removeValidation(field: SpreedlyCore.CustomValidatableFieldName)
+  @objc(removeValidationForField:) public func removeValidationForField(_ fieldName: Swift.String)
+  @nonobjc public func runCustomValidationBeforeSubmit(additionalFields: [SpreedlyCore.AdditionalField : Swift.String] = [:]) -> Swift.Bool
+  @objc(runCustomValidationBeforeSubmitWithAdditionalFields:) public func runCustomValidationBeforeSubmitObjC(_ additionalFields: [Swift.String : Swift.String]) -> Swift.Bool
   public var hostedCardDisplayState: SpreedlyCore.HostedCardDisplayState {
     get
   }
@@ -2180,6 +2459,9 @@ extension SpreedlyCore.SecurityIntegrityLevel : Swift.RawRepresentable {}
 extension SpreedlyCore.StripeAPMType : Swift.Equatable {}
 extension SpreedlyCore.StripeAPMType : Swift.Hashable {}
 extension SpreedlyCore.StripeAPMType : Swift.RawRepresentable {}
+extension SpreedlyCore.CustomValidatableFieldName : Swift.Equatable {}
+extension SpreedlyCore.CustomValidatableFieldName : Swift.Hashable {}
+extension SpreedlyCore.CustomValidatableFieldName : Swift.RawRepresentable {}
 extension SpreedlyCore.SdkPlatform : Swift.Equatable {}
 extension SpreedlyCore.SdkPlatform : Swift.Hashable {}
 extension SpreedlyCore.SdkPlatform : Swift.RawRepresentable {}

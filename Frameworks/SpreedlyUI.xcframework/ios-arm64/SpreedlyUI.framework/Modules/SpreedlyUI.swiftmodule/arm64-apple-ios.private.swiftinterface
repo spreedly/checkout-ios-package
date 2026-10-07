@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
-// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyUI
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyUI
 // swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
 import Combine
 import CoreGraphics
@@ -49,6 +49,7 @@ import _SwiftConcurrencyShims
   }
   public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI20TooltipCardBrandIconV4bodyQrvp", 0) __
 }
+
 
 @_Concurrency.MainActor @preconcurrency public struct ValidatedField<Content> : SwiftUICore.View where Content : SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public let fieldId: Swift.String
@@ -376,6 +377,7 @@ extension SwiftUICore.View {
     get
   }
   @_Concurrency.MainActor @preconcurrency public func reset()
+  @_Concurrency.MainActor @preconcurrency public func enablingCustomValidationOnBlur() -> SpreedlyUI.SPLTextField
   public typealias Body = @_opaqueReturnTypeOf("$s10SpreedlyUI12SPLTextFieldV4bodyQrvp", 0) __
 }
 extension SpreedlyUI.SPLTextField {
@@ -392,7 +394,10 @@ extension SpreedlyUI.SPLTextField {
   @objc @_Concurrency.MainActor @preconcurrency public var textContentType: UIKit.UITextContentType?
   @objc @_Concurrency.MainActor @preconcurrency public var onValidationChange: ((Swift.Bool) -> Swift.Void)?
   @objc @_Concurrency.MainActor @preconcurrency public var onSubmit: (() -> Swift.Void)?
-  @_Concurrency.MainActor @preconcurrency public var submitLabel: SpreedlyUI.SpreedlySubmitLabel?
+  @_Concurrency.MainActor @preconcurrency public var submitLabel: SpreedlyUI.SpreedlySubmitLabel? {
+    get
+    set
+  }
   @objc @_Concurrency.MainActor @preconcurrency public var shouldFocus: Swift.Bool {
     @objc get
     @objc set
@@ -406,6 +411,10 @@ extension SpreedlyUI.SPLTextField {
   @objc @_Concurrency.MainActor @preconcurrency weak public var fieldTextChangeListener: (any SpreedlyUI.FieldTextChangeListener)?
   @objc @_Concurrency.MainActor @preconcurrency public var trailingIconViewFactory: ((Swift.String) -> UIKit.UIView)?
   @objc @_Concurrency.MainActor @preconcurrency public var forceMaskOnLifecycleStop: Swift.Bool
+  @objc @_Concurrency.MainActor @preconcurrency public var evaluatesCustomValidationOnBlur: Swift.Bool {
+    @objc get
+    @objc set
+  }
   @objc @_Concurrency.MainActor @preconcurrency public var enableAutofill: Swift.Bool {
     @objc get
     @objc set
@@ -422,6 +431,7 @@ extension SpreedlyUI.SPLTextField {
   @objc @_Concurrency.MainActor @preconcurrency public var inputLength: Swift.Int {
     @objc get
   }
+  @objc @_Concurrency.MainActor @preconcurrency public func updateSubmitLabel(_ label: SpreedlyUI.SpreedlySubmitLabel)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType)
   @objc @_Concurrency.MainActor @preconcurrency convenience public init(field: SpreedlyCore.FormFieldType, title: Swift.String?, isRequired: Swift.Bool)
@@ -961,7 +971,8 @@ extension SpreedlyCore.FormFieldType {
   @objc final public let panDisplayFormatRawValue: Foundation.NSNumber?
   @objc final public let panDisplayPolicyMasked: Foundation.NSNumber?
   @objc final public let iin: Swift.String?
-  public init(fieldType: SpreedlyCore.FormFieldType, eventType: SpreedlyUI.HostedFieldEventType, isFocused: Swift.Bool, isValid: Swift.Bool, isEmpty: Swift.Bool, cardSchemeRawValue: Swift.String?, numberLength: Swift.Int?, cvvLength: Swift.Int?, isPanMasked: Swift.Bool = true, panDisplayFormat: SpreedlyCore.CardNumberFormat? = nil, panDisplayPolicyMasked: Swift.Bool? = nil, iin: Swift.String? = nil)
+  @objc final public let errorMessage: Swift.String?
+  public init(fieldType: SpreedlyCore.FormFieldType, eventType: SpreedlyUI.HostedFieldEventType, isFocused: Swift.Bool, isValid: Swift.Bool, isEmpty: Swift.Bool, cardSchemeRawValue: Swift.String?, numberLength: Swift.Int?, cvvLength: Swift.Int?, isPanMasked: Swift.Bool = true, panDisplayFormat: SpreedlyCore.CardNumberFormat? = nil, panDisplayPolicyMasked: Swift.Bool? = nil, iin: Swift.String? = nil, errorMessage: Swift.String? = nil)
   @objc override final public var description: Swift.String {
     @objc get
   }
@@ -1052,6 +1063,11 @@ public struct MaxLengthRule : SpreedlyUI.ValidationRule {
   public init(maxLength: Swift.Int, errorMessage: Swift.String? = nil)
   public func validate(_ value: Swift.String) -> SpreedlyUI.ValidationResult
 }
+public struct APISafetyRule : SpreedlyUI.ValidationRule {
+  public let canonicalName: Swift.String
+  public init(canonicalName: Swift.String)
+  public func validate(_ value: Swift.String) -> SpreedlyUI.ValidationResult
+}
 public struct EmailRule : SpreedlyUI.ValidationRule {
   public let errorMessage: Swift.String
   public init(errorMessage: Swift.String = "Please enter a valid email address")
@@ -1090,11 +1106,13 @@ public struct ExpirationDateRule : SpreedlyUI.ValidationRule {
   public init(errorMessage: Swift.String = "Please enter a valid expiration date", allowExpired: Swift.Bool = false, allowBlankDate: Swift.Bool = false, yearFormat: SpreedlyUI.YearFormat = .fourDigit)
   public func validate(_ value: Swift.String) -> SpreedlyUI.ValidationResult
 }
+@available(*, deprecated, message: "Prefer ValidationUtils.zipCodeRules(isRequired:). ZipCodeRule always returns valid.")
 public struct ZipCodeRule : SpreedlyUI.ValidationRule {
   public let errorMessage: Swift.String
   public init(errorMessage: Swift.String = "Please enter a valid ZIP code")
   public func validate(_ value: Swift.String) -> SpreedlyUI.ValidationResult
 }
+@available(*, deprecated, message: "Prefer ValidationUtils.addressLine1Rules(isRequired:). AddressRule only checks non-empty.")
 public struct AddressRule : SpreedlyUI.ValidationRule {
   public let errorMessage: Swift.String
   public init(errorMessage: Swift.String = "Please enter a valid address")
@@ -1136,7 +1154,8 @@ extension SpreedlyUI.ValidationUtils {
   public static func routingNumberRules(isRequired: Swift.Bool = true) -> [any SpreedlyUI.ValidationRule]
   public static func accountNumberRules(isRequired: Swift.Bool = true) -> [any SpreedlyUI.ValidationRule]
   public static func bankNameRules(isRequired: Swift.Bool = false) -> [any SpreedlyUI.ValidationRule]
-  public static func emailRules() -> [any SpreedlyUI.ValidationRule]
+  public static func emailRules(isRequired: Swift.Bool = true) -> [any SpreedlyUI.ValidationRule]
+  public static func genericAdditionalFieldRules(isRequired: Swift.Bool, requiredMessage: Swift.String, canonicalName: Swift.String) -> [any SpreedlyUI.ValidationRule]
   public static func addressLine1Rules(isRequired: Swift.Bool = true) -> [any SpreedlyUI.ValidationRule]
   public static func addressLine2Rules(isRequired: Swift.Bool = true) -> [any SpreedlyUI.ValidationRule]
   public static func cityRules(isRequired: Swift.Bool = true) -> [any SpreedlyUI.ValidationRule]
