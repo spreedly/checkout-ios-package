@@ -513,6 +513,27 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeAccountNumber = 14,
 /// Bank name form field.
   FormFieldTypeBankName = 15,
+  FormFieldTypeEmail = 16,
+  FormFieldTypeCompany = 17,
+  FormFieldTypeCountry = 18,
+  FormFieldTypePhoneNumber = 19,
+  FormFieldTypeHouseNumberOrName = 20,
+  FormFieldTypeStreet = 21,
+  FormFieldTypeStreetLine2 = 22,
+  FormFieldTypePhoneNumberCountryCode = 23,
+  FormFieldTypePhoneNumberAreaCode = 24,
+  FormFieldTypeShippingAddress1 = 25,
+  FormFieldTypeShippingAddress2 = 26,
+  FormFieldTypeShippingCity = 27,
+  FormFieldTypeShippingState = 28,
+  FormFieldTypeShippingZip = 29,
+  FormFieldTypeShippingCountry = 30,
+  FormFieldTypeShippingPhoneNumber = 31,
+  FormFieldTypeShippingHouseNumberOrName = 32,
+  FormFieldTypeShippingStreet = 33,
+  FormFieldTypeShippingStreetLine2 = 34,
+  FormFieldTypeShippingPhoneNumberCountryCode = 35,
+  FormFieldTypeShippingPhoneNumberAreaCode = 36,
 };
 
 /// Manages the complete gateway-specific 3DS lifecycle
@@ -839,6 +860,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityMana
 - (NSString * _Nonnull)secureClearedString:(NSString * _Nonnull)string SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class SpreedlyCustomValidationResult;
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyRecacheDelegate;
@@ -874,6 +896,16 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isInitialized;)
 + (BOOL)isInitialized SWIFT_WARN_UNUSED_RESULT;
 /// Objective-C entry point for [areAllFieldsValid(fieldTypes:)] — pass <code>NSNumber</code> values of <code>FormFieldType</code> raw values.
 + (BOOL)areAllFieldsValidWithFieldTypeRawValues:(NSArray<NSNumber *> * _Nonnull)fieldTypeRawValues SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C: register a custom validator. A <code>nil</code> block result fails closed (generic invalid).
+/// Pass a canonical wire key (e.g. <code>"zip"</code>, <code>"first_name"</code>). See <code>CustomValidatableFieldName</code>.
+/// In the <code>fields</code> dictionary, prefer <code>SpreedlyCustomValidatableField</code> constants as keys.
+- (void)addValidationForField:(NSString * _Nonnull)fieldName validator:(SpreedlyCustomValidationResult * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSDictionary<NSString *, NSString *> * _Nonnull))validator;
+/// Objective-C: remove a custom validator by wire-key string (or alias). Prefer <code>removeValidation(field:)</code> in Swift.
+- (void)removeValidationForField:(NSString * _Nonnull)fieldName;
+/// Objective-C: run registered custom validators before submit.
+/// Pass the same dictionary you pass to <code>createCreditCardObjC…</code>. Keys may be <code>SpreedlyCustomValidatableField</code>
+/// wire keys (<code>first_name</code>) or <code>AdditionalField</code> raw values (<code>firstName</code>). Returns <code>YES</code> when every validator passed.
+- (BOOL)runCustomValidationBeforeSubmitWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields SWIFT_WARN_UNUSED_RESULT;
 /// Objective-C: <code>hostedCardDisplayState.cardNumberFormat</code> as <code>CardNumberFormat</code> raw value.
 @property (nonatomic, readonly) NSInteger hostedCardDisplayCardNumberFormatRawValue;
 /// Manager for custom parameters sent with payment method creation requests.
@@ -1174,6 +1206,97 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Objective-C constants for custom-validator <code>fields</code> dictionary keys (canonical wire values).
+/// Prefer these over string literals so typos fail at compile time.
+SWIFT_CLASS("_TtC12SpreedlyCore30SpreedlyCustomValidatableField")
+@interface SpreedlyCustomValidatableField : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull firstName;)
++ (NSString * _Nonnull)firstName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull lastName;)
++ (NSString * _Nonnull)lastName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull fullName;)
++ (NSString * _Nonnull)fullName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull email;)
++ (NSString * _Nonnull)email SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull company;)
++ (NSString * _Nonnull)company SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull addressLine1;)
++ (NSString * _Nonnull)addressLine1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull addressLine2;)
++ (NSString * _Nonnull)addressLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull city;)
++ (NSString * _Nonnull)city SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull state;)
++ (NSString * _Nonnull)state SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull zipCode;)
++ (NSString * _Nonnull)zipCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull country;)
++ (NSString * _Nonnull)country SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumber;)
++ (NSString * _Nonnull)phoneNumber SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull houseNumberOrName;)
++ (NSString * _Nonnull)houseNumberOrName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull street;)
++ (NSString * _Nonnull)street SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull streetLine2;)
++ (NSString * _Nonnull)streetLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumberCountryCode;)
++ (NSString * _Nonnull)phoneNumberCountryCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumberAreaCode;)
++ (NSString * _Nonnull)phoneNumberAreaCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingAddressLine1;)
++ (NSString * _Nonnull)shippingAddressLine1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingAddressLine2;)
++ (NSString * _Nonnull)shippingAddressLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingCity;)
++ (NSString * _Nonnull)shippingCity SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingState;)
++ (NSString * _Nonnull)shippingState SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingZipCode;)
++ (NSString * _Nonnull)shippingZipCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingCountry;)
++ (NSString * _Nonnull)shippingCountry SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumber;)
++ (NSString * _Nonnull)shippingPhoneNumber SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingHouseNumberOrName;)
++ (NSString * _Nonnull)shippingHouseNumberOrName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingStreet;)
++ (NSString * _Nonnull)shippingStreet SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingStreetLine2;)
++ (NSString * _Nonnull)shippingStreetLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumberCountryCode;)
++ (NSString * _Nonnull)shippingPhoneNumberCountryCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumberAreaCode;)
++ (NSString * _Nonnull)shippingPhoneNumberAreaCode SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// Verdict returned by a merchant custom field validator.
+/// <ul>
+///   <li>
+///     <code>valid</code>: the extra rule passed (<code>errorMessage</code> is ignored)
+///   </li>
+///   <li>
+///     <code>invalid</code>: the field fails; a non-empty <code>errorMessage</code> is shown in field chrome
+///     and tokenize/preflight failures. Nil or blank falls back to the SDK generic
+///     <code>"{label} is invalid"</code>. Telemetry never includes merchant message text.
+///   </li>
+/// </ul>
+SWIFT_CLASS("_TtC12SpreedlyCore30SpreedlyCustomValidationResult")
+@interface SpreedlyCustomValidationResult : NSObject
+@property (nonatomic, readonly) BOOL isValid;
+/// Shown in UI when non-empty. Nil/blank uses the SDK generic invalid label.
+/// Never written to telemetry or SDK logs.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
+- (nonnull instancetype)initWithIsValid:(BOOL)isValid errorMessage:(NSString * _Nullable)errorMessage OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyCustomValidationResult * _Nonnull valid;)
++ (SpreedlyCustomValidationResult * _Nonnull)valid SWIFT_WARN_UNUSED_RESULT;
++ (SpreedlyCustomValidationResult * _Nonnull)invalid:(NSString * _Nullable)message SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Preset logging configurations for common environments.
 /// Use with <code>Spreedly.configureLogging(_:)</code>. Fluent builders return new copies.
 /// seealso:
@@ -1271,6 +1394,9 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)hostedFieldInteractionWithFieldType:(NSString * _Nonnull)fieldType action:(NSString * _Nonnull)action;
 + (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount;
 + (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount module:(NSString * _Nonnull)module_;
++ (void)customValidatorRegisteredWithFieldName:(NSString * _Nonnull)fieldName replaced:(BOOL)replaced;
++ (void)customValidatorFailedWithFieldName:(NSString * _Nonnull)fieldName;
++ (void)customValidatorErrorWithFieldName:(NSString * _Nonnull)fieldName reason:(NSString * _Nonnull)reason;
 + (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType;
 + (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType gatewayType:(NSString * _Nullable)gatewayType;
 + (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
@@ -1304,15 +1430,32 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 @property (nonatomic, readonly) BOOL resetFields;
 @property (nonatomic, readonly) BOOL forceFieldErrorDisplay;
 @property (nonatomic, readonly) BOOL spreedlyParamsUpdated;
+/// Number of fields currently showing a custom-validator message.
+/// Exposed for Objective-C, which cannot see <code>customValidationErrors</code> because a Swift
+/// dictionary keyed by an enum does not bridge. Reads the lock-protected mirror, so it is
+/// safe from any thread and never observes a value that has not landed on the published
+/// property yet.
+@property (nonatomic, readonly) NSInteger customValidationErrorCount;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-/// Unregister a field from tracking
+/// Unregister a field from tracking.
+/// Also drops any recorded custom-validation message for the field: the aggregate
+/// checks read that record, and a stale entry would otherwise resurface as red text
+/// when the field remounts.
 - (void)unregisterFieldWithType:(enum FormFieldType)type;
-/// Check if all registered SPLTextField instances are valid
+/// Check if all registered SPLTextField instances are valid.
+/// Built-in rules plus the <em>last recorded</em> custom-validator verdict. This does not
+/// invoke merchant validator closures — call
+/// <code>Spreedly/runCustomValidationBeforeSubmit(additionalFields:)</code> first when you need
+/// them re-evaluated. Card tokenize runs its own pass regardless.
 ///
 /// returns:
 /// True if all registered fields are valid, false otherwise
 - (BOOL)areAllFieldsValid SWIFT_WARN_UNUSED_RESULT;
+/// Non-PCI field values keyed by Spreedly param name. Empty strings are included so
+/// optional fields can still run a custom validator (conditional required).
+- (NSDictionary<NSString *, NSString *> * _Nonnull)nonSensitiveFieldSnapshot SWIFT_WARN_UNUSED_RESULT;
+- (void)setCustomValidationError:(NSString * _Nullable)message for:(enum FormFieldType)fieldType;
 /// Objective-C: invalid registered fields as <code>FormFieldType</code> raw values (<code>NSNumber</code>).
 - (NSArray<NSNumber *> * _Nonnull)getInvalidFieldTypes SWIFT_WARN_UNUSED_RESULT;
 /// Get count of registered fields
@@ -1350,6 +1493,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 - (void)toggleMask;
 /// Restores default hosted-field display state.
 - (void)resetHostedCardDisplayState;
+/// Clears custom-validator chrome errors (sheet dismiss / remount / session reset).
+- (void)clearCustomValidationErrors;
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
