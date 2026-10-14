@@ -10,7 +10,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		1qOkJu86T6hnckMXN/727r7hLGo=
+		OQXajP9r8tmXYHDnJuEl0B1aFPs=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		VXlDBCH7Ta+J3mVfy05AQ8c1V/E=
+		BZ4K+n2/x0fQlnLgPqRcdcI1HAw=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		UPLPaY0az4bz7j49VMq2+gctY5Q=
+		LqIM32uoydpfM6NgLbXDpBRGo3g=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		VXlDBCH7Ta+J3mVfy05AQ8c1V/E=
+		BZ4K+n2/x0fQlnLgPqRcdcI1HAw=
 		</data>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		bv+98Goi4qJgQbUEQ/BJNooF7wk=
+		PqBgDulxMXrt8GXfllXq+memNU8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -66,28 +66,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qa2JK1pNwqpxDamPCFlS9MNwh9HoV9FeGg6jdkoYSJk=
+			3ez9RVhtg/WVZuPcywvhiJH1kPQQBaCbD8f7KL1TAD4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ldFjxAMEPLp2DFtFFSLdF0s3X2EM7oOvfBAGflQNSTo=
+			/TBi5neUDFPtEyO6//JXSeyPRt9Ugen2+9fJWYYWb30=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qa2JK1pNwqpxDamPCFlS9MNwh9HoV9FeGg6jdkoYSJk=
+			3ez9RVhtg/WVZuPcywvhiJH1kPQQBaCbD8f7KL1TAD4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeAPM.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UOrT6uz7PGFrCjqPoFBd3pR8QlXBWQDS6qgj07Bizr4=
+			LiMwRPpNlFFuRtAa5889Th3pqJvoCGtBJxmdl1QwrRI=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
