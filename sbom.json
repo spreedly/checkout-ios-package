@@ -3,29 +3,29 @@
   "specVersion": "1.4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-18T16:18:24Z",
+    "timestamp": "2026-10-16T11:08:30Z",
     "component": {
       "type": "library",
       "name": "Spreedly iOS SDK",
-      "version": "1.6.1",
-      "purl": "pkg:swift/spreedly/checkout-ios-sdk@1.6.1"
+      "version": "1.7.0-rc.1",
+      "purl": "pkg:swift/spreedly/checkout-ios-sdk@1.7.0-rc.1"
     },
     "tools": [{ "name": "tag-release.yml", "version": "1.0" }]
   },
   "components": [
-    { "type": "framework", "name": "SpreedlyBraintree", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "3b152b43bc14d5366178ad4bffde90ccbfeb2af21f3edf73e1cdc2bf09061343" }] }
+    { "type": "framework", "name": "SpreedlyBraintree", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "02c9a91b019b45b3e5a13217ec2cc9a54e9db9a557bba78d5bddd49ac0037886" }] }
 ,
-    { "type": "framework", "name": "SpreedlyClickToPay", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "b876b30a6de2c56c120a83ff53da9f3714515426aeaae4d8525db1dad42b382e" }] }
+    { "type": "framework", "name": "SpreedlyClickToPay", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "2809c6bf423d28885c9c69798cac57feffe2fe5a8a77b1a41ad61af2de0a33fa" }] }
 ,
-    { "type": "framework", "name": "SpreedlyCore", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "8226fa4092e78a05387a8bd4ebcdff22b60fcd1ca8b0bbd0bfcf375abe6b3f1f" }] }
+    { "type": "framework", "name": "SpreedlyCore", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "5753e5a1b918839ec8470b1b830a379670caf2c153d9c6abc06a589f4d5bbeff" }] }
 ,
-    { "type": "framework", "name": "SpreedlySecurity", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "b02759fd19f7ae5dbd4dfd23e9eb399f3a4930d7ea20982bcea3b41ab38d485b" }] }
+    { "type": "framework", "name": "SpreedlySecurity", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "5850fe3f3c9bb291eb57b009f174f735544c6858452b225dc14fcb75d1d0219f" }] }
 ,
-    { "type": "framework", "name": "SpreedlyStripeAPM", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "a33311276f862c28f8029c21c750ed2c53a75561920648276dc212f269ce6e9d" }] }
+    { "type": "framework", "name": "SpreedlyStripeAPM", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "f2ac4a67d697d35919f41658bf422eee4f083db01fd7488a11a7473107041453" }] }
 ,
-    { "type": "framework", "name": "SpreedlyStripeRadar", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "55820f7fd5ff8154bffe2e8b04404c212783f607c079e7a5910769a0bf388dc6" }] }
+    { "type": "framework", "name": "SpreedlyStripeRadar", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "30530ebe8ac5452096b87bfbcf57ecdb9c08baefb4014ffc4213e9685b4f93e2" }] }
 ,
-    { "type": "framework", "name": "SpreedlyUI", "version": "1.6.1", "hashes": [{ "alg": "SHA-256", "content": "3fe1904a64f83f8c611ab791fb3a3fa526633ddcba5487394cad76123c373933" }] }
+    { "type": "framework", "name": "SpreedlyUI", "version": "1.7.0-rc.1", "hashes": [{ "alg": "SHA-256", "content": "0341f4ef76b59693776e6c979dd3faa572db1b0253952d73b8222bc1e563b85f" }] }
   ],
   "dependencies": {
   "identity": "checkout-ios-sdk",

@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.6.1-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.7.0-rc.1-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-16.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-6.0-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -27,7 +27,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.6.1")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.7.0-rc.1")
 ]
 ```
 
@@ -129,7 +129,7 @@ The following changes are considered breaking and will only ship in a **major** 
 
 All `Spreedly*` frameworks in a single app build must use the **same version**. Pin explicitly:
 
-- **SPM:** `from: "1.6.1"` (accepts compatible minor/patch updates)
+- **SPM:** `from: "1.7.0-rc.1"` (accepts compatible minor/patch updates)
   - To stay within one minor line (for example 1.6.x for iOS 14 or 15 apps), use a range: `"1.6.1"..<"1.7.0"`
 - **CocoaPods:** `~> X.Y` (accepts minor and patch updates within the major); use `~> X.Y.Z` to accept patch updates only
 
