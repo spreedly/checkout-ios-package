@@ -2,13 +2,15 @@
 
 [![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.6.1-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-16.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
-[![Swift](https://img.shields.io/badge/Swift-5.10-blue.svg?style=flat&logo=swift)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-6.0-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
 
 A modern iOS SDK for integrating Spreedly payment processing into iOS applications. Built
 with Swift, SwiftUI, and following iOS best practices.
 
 ## Installation
+
+> **iOS 14 or 15 apps:** 1.7.0 and later require iOS 16.0. To stay on 1.6.x, pin `"1.6.1"..<"1.7.0"` in Swift Package Manager (in Xcode: **Up to Next Minor Version** from 1.6.1) or `'~> 1.6.0'` in CocoaPods.
 
 ### Swift Package Manager (Recommended)
 
@@ -46,15 +48,15 @@ Then add the products to your target:
 
 ```ruby
 # Podfile
-pod 'SpreedlyCore', '~> 1.4'
-pod 'SpreedlySecurity', '~> 1.4'
-pod 'SpreedlyUI', '~> 1.4'
+pod 'SpreedlyCore', '~> 1.7'
+pod 'SpreedlySecurity', '~> 1.7'
+pod 'SpreedlyUI', '~> 1.7'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', '~> 1.4'
-# pod 'SpreedlyStripeRadar', '~> 1.4'
-# pod 'SpreedlyBraintree', '~> 1.4'
-# pod 'SpreedlyClickToPay', '~> 1.4'
+# pod 'SpreedlyStripeAPM', '~> 1.7'
+# pod 'SpreedlyStripeRadar', '~> 1.7'
+# pod 'SpreedlyBraintree', '~> 1.7'
+# pod 'SpreedlyClickToPay', '~> 1.7'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
@@ -109,6 +111,8 @@ The following changes are considered breaking and will only ship in a **major** 
 - Raising the minimum iOS deployment target
 - Removing support for a dependency manager (SPM or CocoaPods)
 
+> **Exception — 1.7.0:** 1.7.0 is a minor release that raises the minimum iOS deployment target from 14.0 to 16.0 and loosens some client-side field validation. See the [CHANGELOG](CHANGELOG.md) for details. Apps that support iOS 14 or 15 should pin to 1.6.x (see [Installation](#installation) above).
+
 ### Deprecation Policy
 
 - Deprecated API is annotated with `@available(*, deprecated, message:)` and documented in the [CHANGELOG](CHANGELOG.md).
@@ -126,15 +130,16 @@ The following changes are considered breaking and will only ship in a **major** 
 All `Spreedly*` frameworks in a single app build must use the **same version**. Pin explicitly:
 
 - **SPM:** `from: "1.6.1"` (accepts compatible minor/patch updates)
-- **CocoaPods:** `~> X.Y` (accepts compatible patch updates within the minor)
+  - To stay within one minor line (for example 1.6.x for iOS 14 or 15 apps), use a range: `"1.6.1"..<"1.7.0"`
+- **CocoaPods:** `~> X.Y` (accepts minor and patch updates within the major); use `~> X.Y.Z` to accept patch updates only
 
 ## Compatibility
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
 | iOS | 16.0 | 18 |
-| Swift | 5.10 | 5.10 |
-| Xcode | 16.1 | 16.4 |
+| Swift | 6.0 | 6.3 |
+| Xcode | 26.0 | 26.5 |
 
 ### Architecture Support
 
