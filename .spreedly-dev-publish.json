@@ -1,0 +1,10 @@
+{
+  "pkg_tag": "1.7.0-dev.20261022.1",
+  "pkg_branch": "sync/v1.7.0-dev.20261022.1",
+  "version": "1.7.0",
+  "sdk_sha": "731a541b25c4e79193590c9c77b6746cb0aaecff",
+  "build_run_url": "https://github.com/spreedly/checkout-ios-sdk/actions/runs/39778642554",
+  "source_branch": "HC-1586-iOS-Paypal-Integration",
+  "prepared_at": "2026-10-22T13:21:06Z",
+  "status": "prepared_awaiting_publish"
+}

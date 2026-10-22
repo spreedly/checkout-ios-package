@@ -605,6 +605,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI16HostedFieldState")
 @property (nonatomic, readonly, strong) NSNumber * _Nullable panDisplayPolicyMasked;
 /// Card number only: IIN prefix (6 or 8 digits per scheme); <code>nil</code> when fewer than six digits or on non-PAN fields.
 @property (nonatomic, readonly, copy) NSString * _Nullable iin;
+/// Merchant-visible validation message for non-PCI fields (custom validators). Always <code>nil</code> for PAN/CVV.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -651,6 +653,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 /// When <code>field</code> is the card number type, produces the trailing brand view for the given scheme string (<code>CardType</code>’s <code>rawValue</code>, e.g. <code>"visa"</code>). Use app-bundled artwork.
 @property (nonatomic, copy) UIView * _Nonnull (^ _Nullable trailingIconViewFactory)(NSString * _Nonnull);
 @property (nonatomic) BOOL forceMaskOnLifecycleStop;
+/// When <code>true</code>, runs a registered merchant custom validator when the shopper leaves this field.
+@property (nonatomic) BOOL evaluatesCustomValidationOnBlur;
 /// When <code>false</code>, suppresses credit-card autofill hints (legacy iframe <code>toggleAutoComplete</code> off).
 /// Safe to change after the view loads; the hosted presentation is rebuilt while field values stay in secure storage.
 @property (nonatomic) BOOL enableAutofill;
@@ -658,6 +662,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
 @property (nonatomic, readonly) NSInteger inputLength;
+/// Updates the keyboard return-key label from Objective-C (optional <code>SpreedlySubmitLabel?</code> is not <code>@objc</code>-representable).
+- (void)updateSubmitLabel:(enum SpreedlySubmitLabel)label;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
@@ -695,7 +701,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic) CGFloat borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor surfaceColor:(UIColor * _Nullable)surfaceColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
-/// Convenience initializer using Android-style configuration
+/// Convenience initializer using hex color configuration
 /// \param primaryColorHex Primary brand color used for buttons and highlights (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color used for accents and borders (e.g., “#AFB4B5”)
@@ -739,7 +745,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Custom submit label enum that maps to SubmitLabel on iOS 15+
+/// Custom submit label enum that maps to SwiftUI <code>SubmitLabel</code>.
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
   SpreedlySubmitLabelDone = 1,
@@ -766,7 +772,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param themeConfig The theme configuration to set as global (used for both light and dark modes)
 ///
 + (void)setGlobalThemeWithConfig:(SPLThemeConfig * _Nonnull)themeConfig;
-/// Set global theme with separate light and dark themes using Android-style hex color configuration
+/// Set global theme with separate light and dark themes using hex color configuration
 /// \param lightPrimaryColorHex Primary brand color for light mode (e.g., “#0077C8”)
 ///
 /// \param lightSecondaryColorHex Secondary brand color for light mode (e.g., “#AFB4B5”)
@@ -794,7 +800,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param borderRadius Corner radius for form elements (default: 8.0)
 ///
 + (void)setGlobalThemeWithLightHexColorsWithLightPrimaryColorHex:(NSString * _Nonnull)lightPrimaryColorHex lightSecondaryColorHex:(NSString * _Nullable)lightSecondaryColorHex lightFormBorderColorHex:(NSString * _Nullable)lightFormBorderColorHex lightFormBackgroundColorHex:(NSString * _Nullable)lightFormBackgroundColorHex lightFieldBackgroundColorHex:(NSString * _Nullable)lightFieldBackgroundColorHex lightFieldLabelColorHex:(NSString * _Nullable)lightFieldLabelColorHex darkPrimaryColorHex:(NSString * _Nonnull)darkPrimaryColorHex darkSecondaryColorHex:(NSString * _Nullable)darkSecondaryColorHex darkFormBorderColorHex:(NSString * _Nullable)darkFormBorderColorHex darkFormBackgroundColorHex:(NSString * _Nullable)darkFormBackgroundColorHex darkFieldBackgroundColorHex:(NSString * _Nullable)darkFieldBackgroundColorHex darkFieldLabelColorHex:(NSString * _Nullable)darkFieldLabelColorHex borderRadius:(CGFloat)borderRadius;
-/// Set global theme using Android-style hex color configuration (backward compatibility - uses same theme for both modes)
+/// Set global theme using hex color configuration (backward compatibility - uses same theme for both modes)
 /// \param primaryColorHex Primary brand color (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color (e.g., “#AFB4B5”)
@@ -1490,6 +1496,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI16HostedFieldState")
 @property (nonatomic, readonly, strong) NSNumber * _Nullable panDisplayPolicyMasked;
 /// Card number only: IIN prefix (6 or 8 digits per scheme); <code>nil</code> when fewer than six digits or on non-PAN fields.
 @property (nonatomic, readonly, copy) NSString * _Nullable iin;
+/// Merchant-visible validation message for non-PCI fields (custom validators). Always <code>nil</code> for PAN/CVV.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -1536,6 +1544,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 /// When <code>field</code> is the card number type, produces the trailing brand view for the given scheme string (<code>CardType</code>’s <code>rawValue</code>, e.g. <code>"visa"</code>). Use app-bundled artwork.
 @property (nonatomic, copy) UIView * _Nonnull (^ _Nullable trailingIconViewFactory)(NSString * _Nonnull);
 @property (nonatomic) BOOL forceMaskOnLifecycleStop;
+/// When <code>true</code>, runs a registered merchant custom validator when the shopper leaves this field.
+@property (nonatomic) BOOL evaluatesCustomValidationOnBlur;
 /// When <code>false</code>, suppresses credit-card autofill hints (legacy iframe <code>toggleAutoComplete</code> off).
 /// Safe to change after the view loads; the hosted presentation is rebuilt while field values stay in secure storage.
 @property (nonatomic) BOOL enableAutofill;
@@ -1543,6 +1553,8 @@ SWIFT_CLASS("_TtC10SpreedlyUI26SPLTextFieldViewController")
 @property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
 @property (nonatomic, readonly) BOOL hasValue;
 @property (nonatomic, readonly) NSInteger inputLength;
+/// Updates the keyboard return-key label from Objective-C (optional <code>SpreedlySubmitLabel?</code> is not <code>@objc</code>-representable).
+- (void)updateSubmitLabel:(enum SpreedlySubmitLabel)label;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field;
 - (nonnull instancetype)initWithField:(enum FormFieldType)field title:(NSString * _Nullable)title isRequired:(BOOL)isRequired;
@@ -1580,7 +1592,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI14SPLThemeConfig")
 @property (nonatomic) CGFloat borderRadius;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithPrimaryColor:(UIColor * _Nullable)primaryColor secondaryColor:(UIColor * _Nullable)secondaryColor backgroundColor:(UIColor * _Nullable)backgroundColor surfaceColor:(UIColor * _Nullable)surfaceColor borderColor:(UIColor * _Nullable)borderColor borderFocusedColor:(UIColor * _Nullable)borderFocusedColor textColor:(UIColor * _Nullable)textColor textSecondaryColor:(UIColor * _Nullable)textSecondaryColor errorColor:(UIColor * _Nullable)errorColor placeholderColor:(UIColor * _Nullable)placeholderColor borderRadius:(CGFloat)borderRadius;
-/// Convenience initializer using Android-style configuration
+/// Convenience initializer using hex color configuration
 /// \param primaryColorHex Primary brand color used for buttons and highlights (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color used for accents and borders (e.g., “#AFB4B5”)
@@ -1624,7 +1636,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI23SpreedlyOffsiteCheckout")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// Custom submit label enum that maps to SubmitLabel on iOS 15+
+/// Custom submit label enum that maps to SwiftUI <code>SubmitLabel</code>.
 typedef SWIFT_ENUM(NSInteger, SpreedlySubmitLabel, open) {
   SpreedlySubmitLabelReturn = 0,
   SpreedlySubmitLabelDone = 1,
@@ -1651,7 +1663,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param themeConfig The theme configuration to set as global (used for both light and dark modes)
 ///
 + (void)setGlobalThemeWithConfig:(SPLThemeConfig * _Nonnull)themeConfig;
-/// Set global theme with separate light and dark themes using Android-style hex color configuration
+/// Set global theme with separate light and dark themes using hex color configuration
 /// \param lightPrimaryColorHex Primary brand color for light mode (e.g., “#0077C8”)
 ///
 /// \param lightSecondaryColorHex Secondary brand color for light mode (e.g., “#AFB4B5”)
@@ -1679,7 +1691,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// \param borderRadius Corner radius for form elements (default: 8.0)
 ///
 + (void)setGlobalThemeWithLightHexColorsWithLightPrimaryColorHex:(NSString * _Nonnull)lightPrimaryColorHex lightSecondaryColorHex:(NSString * _Nullable)lightSecondaryColorHex lightFormBorderColorHex:(NSString * _Nullable)lightFormBorderColorHex lightFormBackgroundColorHex:(NSString * _Nullable)lightFormBackgroundColorHex lightFieldBackgroundColorHex:(NSString * _Nullable)lightFieldBackgroundColorHex lightFieldLabelColorHex:(NSString * _Nullable)lightFieldLabelColorHex darkPrimaryColorHex:(NSString * _Nonnull)darkPrimaryColorHex darkSecondaryColorHex:(NSString * _Nullable)darkSecondaryColorHex darkFormBorderColorHex:(NSString * _Nullable)darkFormBorderColorHex darkFormBackgroundColorHex:(NSString * _Nullable)darkFormBackgroundColorHex darkFieldBackgroundColorHex:(NSString * _Nullable)darkFieldBackgroundColorHex darkFieldLabelColorHex:(NSString * _Nullable)darkFieldLabelColorHex borderRadius:(CGFloat)borderRadius;
-/// Set global theme using Android-style hex color configuration (backward compatibility - uses same theme for both modes)
+/// Set global theme using hex color configuration (backward compatibility - uses same theme for both modes)
 /// \param primaryColorHex Primary brand color (e.g., “#0077C8”)
 ///
 /// \param secondaryColorHex Secondary brand color (e.g., “#AFB4B5”)
