@@ -735,12 +735,26 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @property (nonatomic, readonly) BOOL isCanceled;
 /// Indicates if the payment failed.
 @property (nonatomic, readonly) BOOL isFailure;
+/// Apple Pay with <code>processPayment</code> only: the Apple Pay sheet closed (timeout or shopper) while
+/// your <code>processPayment</code> step was still running. Show a “Confirming your payment…” state; a
+/// final success or failure result follows on the same channel.
+@property (nonatomic, readonly) BOOL isPending;
+/// Apple Pay with <code>processPayment</code> only: set on a failure when <code>processPayment</code> did not answer
+/// within <code>processPaymentTimeout</code>. The charge may or may not have happened — check the order
+/// on your server before telling the shopper it failed.
+@property (nonatomic, readonly) BOOL isStatusUnknown;
 /// The payment method token (only available for successful payments).
 @property (nonatomic, readonly, copy) NSString * _Nullable token;
 /// The <code>updated_at</code> timestamp from the payment method on the recache response (ISO-8601).
 /// Non-nil on successful recache; nil for card tokenization, Braintree nonce, and failure results.
 /// Useful for tracking which CVV-cache cycle a payment method is on after recaching.
 @property (nonatomic, readonly, copy) NSString * _Nullable paymentMethodUpdatedAt;
+/// Apple Pay merchant token (MPAN) identifier, when Apple issued a merchant token.
+/// Merchant tokens can be charged for merchant-initiated recurring payments; device tokens
+/// cannot. <code>nil</code> for device tokens, non-Apple Pay results, and failures.
+@property (nonatomic, readonly, copy) NSString * _Nullable applePayMerchantTokenIdentifier;
+/// <code>true</code> when this Apple Pay result carries a merchant token usable for recurring renewals.
+@property (nonatomic, readonly) BOOL isApplePayMerchantToken;
 /// ObjC-friendly nested dictionary of the tokenize API response (camelCase keys).
 /// Shape: <code>{ transaction: { …, paymentMethod: { lastFourDigits, … } }, errors?: […] }</code>.
 /// <code>nil</code> when there is no <code>paymentResponse</code> (e.g. Braintree nonce-only success).
@@ -781,6 +795,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 + (PaymentResult * _Nonnull)completedWithToken:(NSString * _Nonnull)token nonce:(NSString * _Nonnull)nonce deviceData:(NSString * _Nullable)deviceData state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// SDK-internal: Apple Pay sheet closed before the merchant’s <code>processPayment</code> answered.
++ (PaymentResult * _Nonnull)pending SWIFT_WARN_UNUSED_RESULT;
+/// SDK-internal: the merchant’s <code>processPayment</code> did not answer in time; outcome unknown.
++ (PaymentResult * _Nonnull)statusUnknownWithMessage:(NSString * _Nonnull)message SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.
 + (PaymentResult * _Nonnull)failureWithDetails:(FailedDetails * _Nonnull)details SWIFT_WARN_UNUSED_RESULT;
 /// Creates a Failed result from a generic Error.
@@ -1012,6 +1030,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// representation fails tokenization with an error naming the key path.
 ///
 - (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C entry for Apple Pay vault. Pass <code>paymentMethod</code> as the network raw value
+/// (e.g. <code>"visa"</code>); unknown strings map to <code>.unknown</code>. To include billing/shipping contacts,
+/// use <code>SpreedlyApplePayVault</code> (SpreedlyApplePay), which takes the <code>PKPayment</code> directly.
+- (PaymentProcessingResult * _Nonnull)createApplePayObjCWithPaymentData:(NSData * _Nonnull)paymentData paymentMethod:(NSString * _Nonnull)paymentMethod metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).
@@ -2344,12 +2366,26 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 @property (nonatomic, readonly) BOOL isCanceled;
 /// Indicates if the payment failed.
 @property (nonatomic, readonly) BOOL isFailure;
+/// Apple Pay with <code>processPayment</code> only: the Apple Pay sheet closed (timeout or shopper) while
+/// your <code>processPayment</code> step was still running. Show a “Confirming your payment…” state; a
+/// final success or failure result follows on the same channel.
+@property (nonatomic, readonly) BOOL isPending;
+/// Apple Pay with <code>processPayment</code> only: set on a failure when <code>processPayment</code> did not answer
+/// within <code>processPaymentTimeout</code>. The charge may or may not have happened — check the order
+/// on your server before telling the shopper it failed.
+@property (nonatomic, readonly) BOOL isStatusUnknown;
 /// The payment method token (only available for successful payments).
 @property (nonatomic, readonly, copy) NSString * _Nullable token;
 /// The <code>updated_at</code> timestamp from the payment method on the recache response (ISO-8601).
 /// Non-nil on successful recache; nil for card tokenization, Braintree nonce, and failure results.
 /// Useful for tracking which CVV-cache cycle a payment method is on after recaching.
 @property (nonatomic, readonly, copy) NSString * _Nullable paymentMethodUpdatedAt;
+/// Apple Pay merchant token (MPAN) identifier, when Apple issued a merchant token.
+/// Merchant tokens can be charged for merchant-initiated recurring payments; device tokens
+/// cannot. <code>nil</code> for device tokens, non-Apple Pay results, and failures.
+@property (nonatomic, readonly, copy) NSString * _Nullable applePayMerchantTokenIdentifier;
+/// <code>true</code> when this Apple Pay result carries a merchant token usable for recurring renewals.
+@property (nonatomic, readonly) BOOL isApplePayMerchantToken;
 /// ObjC-friendly nested dictionary of the tokenize API response (camelCase keys).
 /// Shape: <code>{ transaction: { …, paymentMethod: { lastFourDigits, … } }, errors?: […] }</code>.
 /// <code>nil</code> when there is no <code>paymentResponse</code> (e.g. Braintree nonce-only success).
@@ -2390,6 +2426,10 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 + (PaymentResult * _Nonnull)completedWithToken:(NSString * _Nonnull)token nonce:(NSString * _Nonnull)nonce deviceData:(NSString * _Nullable)deviceData state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// SDK-internal: Apple Pay sheet closed before the merchant’s <code>processPayment</code> answered.
++ (PaymentResult * _Nonnull)pending SWIFT_WARN_UNUSED_RESULT;
+/// SDK-internal: the merchant’s <code>processPayment</code> did not answer in time; outcome unknown.
++ (PaymentResult * _Nonnull)statusUnknownWithMessage:(NSString * _Nonnull)message SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.
 + (PaymentResult * _Nonnull)failureWithDetails:(FailedDetails * _Nonnull)details SWIFT_WARN_UNUSED_RESULT;
 /// Creates a Failed result from a generic Error.
@@ -2621,6 +2661,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// representation fails tokenization with an error naming the key path.
 ///
 - (PaymentProcessingResult * _Nonnull)createBankAccountObjCWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields bankAccountType:(NSString * _Nonnull)bankAccountType bankAccountHolderType:(NSString * _Nonnull)bankAccountHolderType bankName:(NSString * _Nullable)bankName metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata allowBlankName:(NSNumber * _Nullable)allowBlankName shouldRetain:(NSNumber * _Nullable)shouldRetain mandate:(NSDictionary<NSString *, id> * _Nullable)mandate SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C entry for Apple Pay vault. Pass <code>paymentMethod</code> as the network raw value
+/// (e.g. <code>"visa"</code>); unknown strings map to <code>.unknown</code>. To include billing/shipping contacts,
+/// use <code>SpreedlyApplePayVault</code> (SpreedlyApplePay), which takes the <code>PKPayment</code> directly.
+- (PaymentProcessingResult * _Nonnull)createApplePayObjCWithPaymentData:(NSData * _Nonnull)paymentData paymentMethod:(NSString * _Nonnull)paymentMethod metadata:(NSDictionary<NSString *, NSString *> * _Nullable)metadata SWIFT_WARN_UNUSED_RESULT;
 - (PaymentProcessingResult * _Nonnull)submitOffsitePaymentWithConfig:(OffsitePaymentConfig * _Nonnull)config;
 /// Public method to recache payment method with updated CVV.
 /// CVV is retrieved from SecureValueContainer (collected via SDK UI components).

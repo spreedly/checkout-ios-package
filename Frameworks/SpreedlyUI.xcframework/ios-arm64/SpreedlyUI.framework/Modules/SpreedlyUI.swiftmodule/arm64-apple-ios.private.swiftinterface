@@ -171,7 +171,7 @@ import _SwiftConcurrencyShims
   @_Concurrency.MainActor @preconcurrency public let darkTheme: (any SpreedlyUI.SpreedlyTheme)?
   @_Concurrency.MainActor @preconcurrency public var onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?
   @_Concurrency.MainActor @preconcurrency public let displayConfig: SpreedlyUI.CardFormDropInDisplayConfig
-  @_Concurrency.MainActor @preconcurrency public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, coreFieldLabels: SpreedlyUI.DropInCoreFieldLabels? = nil, displayConfig: SpreedlyUI.CardFormDropInDisplayConfig = .default, mandate: SpreedlyCore.SpreedlyMandate? = nil, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor @preconcurrency public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, theme: (any SpreedlyUI.SpreedlyTheme)? = nil, darkTheme: (any SpreedlyUI.SpreedlyTheme)? = nil, coreFieldLabels: SpreedlyUI.DropInCoreFieldLabels? = nil, displayConfig: SpreedlyUI.CardFormDropInDisplayConfig = .default, mandate: SpreedlyCore.SpreedlyMandate? = nil, walletButtons: [any SpreedlyUI.WalletButtonProvider] = [], walletButtonDividerText: Swift.String? = nil, dismissOnWalletButtonSuccess: Swift.Bool = true, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)? = nil)
   @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
     get
   }
@@ -189,6 +189,9 @@ import _SwiftConcurrencyShims
   @objc @_Concurrency.MainActor @preconcurrency public var cardNumberFormatRawValue: Swift.Int
   @objc @_Concurrency.MainActor @preconcurrency public var enableAutofill: Swift.Bool
   @objc @_Concurrency.MainActor @preconcurrency public var mandate: [Swift.String : Any]?
+  @objc @_Concurrency.MainActor @preconcurrency public var walletButtons: [any SpreedlyUI.WalletButtonProvider]
+  @objc @_Concurrency.MainActor @preconcurrency public var walletButtonDividerText: Swift.String?
+  @objc @_Concurrency.MainActor @preconcurrency public var dismissOnWalletButtonSuccess: Swift.Bool
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
   @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [])
   @objc @_Concurrency.MainActor @preconcurrency convenience public init(otherFields: [SpreedlyUI.FormField] = [], yearFormat: SpreedlyUI.YearFormat = .fourDigit, nameDisplayMode: SpreedlyUI.DropInNameDisplayMode = .separateFields, onProcessingResult: ((SpreedlyCore.PaymentProcessingResult) -> Swift.Void)?)
@@ -335,6 +338,15 @@ extension SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency @objc public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
   @objc deinit
+}
+@objc(SPLWalletButtonProvider) public protocol WalletButtonProvider : ObjectiveC.NSObjectProtocol {
+  @objc var walletType: Swift.String { get }
+  @objc var isWalletAvailable: Swift.Bool { get }
+  @objc func makeButtonView() -> UIKit.UIView
+}
+@_spi(SpreedlySDKInternal) public protocol WalletCheckoutReporting : AnyObject {
+  @_spi(SpreedlySDKInternal) var onCheckoutFinished: ((SpreedlyCore.PaymentResult) -> Swift.Void)? { get set }
+  @_spi(SpreedlySDKInternal) var onCheckoutPending: (() -> Swift.Void)? { get set }
 }
 @_Concurrency.MainActor @preconcurrency public struct SPLTextField : SwiftUICore.View {
   @_Concurrency.MainActor @preconcurrency public let type: SpreedlyCore.FormFieldType
@@ -620,6 +632,9 @@ public enum SPLAccessibilityIdentifiers {
     public static let errorMessage: Swift.String
     public static let submitButton: Swift.String
     public static let footer: Swift.String
+    public static let walletButtons: Swift.String
+    public static let walletButtonDivider: Swift.String
+    public static let walletPaymentConfirming: Swift.String
   }
   public enum BankAccountFormDropIn {
     public static let header: Swift.String

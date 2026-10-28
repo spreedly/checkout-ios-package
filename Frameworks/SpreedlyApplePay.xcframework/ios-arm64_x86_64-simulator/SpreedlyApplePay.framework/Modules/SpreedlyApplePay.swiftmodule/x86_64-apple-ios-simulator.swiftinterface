@@ -1,0 +1,167 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyApplePay
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+import Contacts
+import Foundation
+import PassKit
+import SpreedlyCore
+import SpreedlyUI
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _PassKit_SwiftUI
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc public enum ApplePayEmptyWalletBehavior : Swift.Int {
+  case showPayButton
+  case showSetUpButton
+  case hide
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers final public class ApplePayConfiguration : ObjectiveC.NSObject {
+  @objc public static let defaultSupportedNetworks: [PassKit.PKPaymentNetwork]
+  @objc final public let merchantIdentifier: Swift.String
+  @objc final public let countryCode: Swift.String
+  @objc final public let currencyCode: Swift.String
+  @objc final public var supportedNetworks: [PassKit.PKPaymentNetwork]
+  @objc final public var merchantCapabilities: PassKit.PKMerchantCapability
+  @objc final public var requiredBillingContactFields: Swift.Set<PassKit.PKContactField>
+  @objc final public var requiredShippingContactFields: Swift.Set<PassKit.PKContactField>
+  @objc final public var buttonType: PassKit.PKPaymentButtonType
+  @objc final public var buttonStyle: PassKit.PKPaymentButtonStyle
+  @objc final public var cornerRadius: CoreFoundation.CGFloat
+  @objc final public var emptyWalletBehavior: SpreedlyApplePay.ApplePayEmptyWalletBehavior
+  @objc final public var metadata: [Swift.String : Swift.String]?
+  @objc final public var supportedCountries: Swift.Set<Swift.String>?
+  @objc final public var merchantCategoryCode: Swift.Int
+  @objc final public var processPaymentTimeout: Foundation.TimeInterval
+  @objc public static let defaultProcessPaymentTimeout: Swift.Double
+  @objc public static let minimumProcessPaymentTimeout: Swift.Double
+  @objc public init(merchantIdentifier: Swift.String, countryCode: Swift.String, currencyCode: Swift.String)
+  @objc deinit
+}
+@objc @objcMembers final public class ApplePayOrder : ObjectiveC.NSObject {
+  @objc final public let summaryItems: [PassKit.PKPaymentSummaryItem]
+  @objc public init(summaryItems: [PassKit.PKPaymentSummaryItem])
+  @objc convenience public init(label: Swift.String, amount: Foundation.NSDecimalNumber)
+  @objc @available(iOS 16.0, *)
+  final public var recurringPaymentRequest: PassKit.PKRecurringPaymentRequest? {
+    @objc get
+    @objc set
+  }
+  @objc final public var isRecurring: Swift.Bool {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class ApplePayPaymentAuthorization : ObjectiveC.NSObject, @unchecked Swift.Sendable {
+  @objc final public let paymentMethodToken: Swift.String
+  @objc final public let isRecurring: Swift.Bool
+  @objc final public let isMerchantToken: Swift.Bool
+  @objc final public let merchantTokenIdentifier: Swift.String?
+  @objc final public let vaultResult: SpreedlyCore.PaymentResult
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers final public class ApplePayPaymentDecision : ObjectiveC.NSObject, @unchecked Swift.Sendable {
+  @objc final public let isApproved: Swift.Bool
+  @objc final public let message: Swift.String?
+  @objc public static let approved: SpreedlyApplePay.ApplePayPaymentDecision
+  @objc public static func declined(message: Swift.String?) -> SpreedlyApplePay.ApplePayPaymentDecision
+  @objc deinit
+}
+public typealias ApplePayProcessPayment = (SpreedlyApplePay.ApplePayPaymentAuthorization) async throws -> SpreedlyApplePay.ApplePayPaymentDecision
+public typealias ApplePayProcessPaymentHandler = (SpreedlyApplePay.ApplePayPaymentAuthorization, @escaping (SpreedlyApplePay.ApplePayPaymentDecision) -> Swift.Void) -> Swift.Void
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyApplePayButton : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(configuration: SpreedlyApplePay.ApplePayConfiguration, order: SpreedlyApplePay.ApplePayOrder, prepareForPresentation: (() async -> Swift.Bool)? = nil, processPayment: SpreedlyApplePay.ApplePayProcessPayment? = nil)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s16SpreedlyApplePay0abC6ButtonV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct SpreedlyApplePaySetUpButton : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(supportedNetworks: [PassKit.PKPaymentNetwork] = ApplePayConfiguration.defaultSupportedNetworks, buttonStyle: PassKit.PKPaymentButtonStyle = .automatic)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s16SpreedlyApplePay0abC11SetUpButtonV4bodyQrvp", 0) __
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency final public class SpreedlyApplePayButtonView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency final public let configuration: SpreedlyApplePay.ApplePayConfiguration
+  @objc @_Concurrency.MainActor @preconcurrency final public var order: SpreedlyApplePay.ApplePayOrder
+  @_Concurrency.MainActor @preconcurrency final public var prepareForPresentation: (() async -> Swift.Bool)?
+  @_Concurrency.MainActor @preconcurrency final public var processPayment: SpreedlyApplePay.ApplePayProcessPayment?
+  @objc @_Concurrency.MainActor @preconcurrency final public var availability: SpreedlyApplePay.ApplePayAvailability {
+    get
+  }
+  @objc @_Concurrency.MainActor @preconcurrency public init(configuration: SpreedlyApplePay.ApplePayConfiguration, order: SpreedlyApplePay.ApplePayOrder)
+  @objc deinit
+  @objc @_Concurrency.MainActor @preconcurrency final public func setPrepareForPresentationHandler(_ handler: ((@escaping (Swift.Bool) -> Swift.Void) -> Swift.Void)?)
+  @objc @_Concurrency.MainActor @preconcurrency final public func setProcessPaymentHandler(_ handler: SpreedlyApplePay.ApplePayProcessPaymentHandler?)
+  @objc @_Concurrency.MainActor @preconcurrency final public func refreshAvailability()
+  @_Concurrency.MainActor @preconcurrency @objc override final public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override final public func layoutSubviews()
+  @_Concurrency.MainActor @preconcurrency @objc override final public func didMoveToWindow()
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor @preconcurrency final public class SpreedlyApplePaySetUpButtonView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency final public let supportedNetworks: [PassKit.PKPaymentNetwork]
+  @objc @_Concurrency.MainActor @preconcurrency public init(supportedNetworks: [PassKit.PKPaymentNetwork], buttonStyle: PassKit.PKPaymentButtonStyle)
+  @_Concurrency.MainActor @preconcurrency @objc convenience dynamic public init()
+  @objc deinit
+  @objc @_Concurrency.MainActor @preconcurrency final public func refreshAvailability()
+  @_Concurrency.MainActor @preconcurrency @objc override final public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @_Concurrency.MainActor @preconcurrency @objc override final public func layoutSubviews()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class SpreedlyApplePayVault : ObjectiveC.NSObject {
+  @nonobjc public static func vault(payment: PassKit.PKPayment, metadata: [Swift.String : Swift.String]? = nil) async -> SpreedlyCore.PaymentResult
+  @objc(vaultPayment:metadata:completion:) public static func vault(payment: PassKit.PKPayment, metadata: [Swift.String : Swift.String]?, completion: @escaping (SpreedlyCore.PaymentResult) -> Swift.Void)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum ApplePayAvailability : Swift.Int {
+  case unsupported
+  case needsSetup
+  case ready
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers final public class SpreedlyApplePayWallet : ObjectiveC.NSObject, SpreedlyUI.WalletButtonProvider {
+  @objc final public let configuration: SpreedlyApplePay.ApplePayConfiguration
+  @objc final public var order: SpreedlyApplePay.ApplePayOrder
+  final public var prepareForPresentation: (() async -> Swift.Bool)?
+  final public var processPayment: SpreedlyApplePay.ApplePayProcessPayment?
+  @objc public init(configuration: SpreedlyApplePay.ApplePayConfiguration, order: SpreedlyApplePay.ApplePayOrder)
+  @objc final public func setPrepareForPresentationHandler(_ handler: ((@escaping (Swift.Bool) -> Swift.Void) -> Swift.Void)?)
+  @objc final public func setProcessPaymentHandler(_ handler: SpreedlyApplePay.ApplePayProcessPaymentHandler?)
+  @objc final public var walletType: Swift.String {
+    @objc get
+  }
+  @objc final public var isWalletAvailable: Swift.Bool {
+    @objc get
+  }
+  @objc final public func makeButtonView() -> UIKit.UIView
+  @objc(availabilityForConfiguration:) public static func availability(for configuration: SpreedlyApplePay.ApplePayConfiguration) -> SpreedlyApplePay.ApplePayAvailability
+  @objc public static func availability(networks: [PassKit.PKPaymentNetwork] = ApplePayConfiguration.defaultSupportedNetworks, capabilities: PassKit.PKMerchantCapability = .threeDSecure) -> SpreedlyApplePay.ApplePayAvailability
+  @objc public static func openWalletSetup()
+  @objc deinit
+}
+extension SpreedlyApplePay.ApplePayEmptyWalletBehavior : Swift.Equatable {}
+extension SpreedlyApplePay.ApplePayEmptyWalletBehavior : Swift.Hashable {}
+extension SpreedlyApplePay.ApplePayEmptyWalletBehavior : Swift.RawRepresentable {}
+extension SpreedlyApplePay.SpreedlyApplePayButton : Swift.Sendable {}
+extension SpreedlyApplePay.SpreedlyApplePaySetUpButton : Swift.Sendable {}
+extension SpreedlyApplePay.ApplePayAvailability : Swift.Equatable {}
+extension SpreedlyApplePay.ApplePayAvailability : Swift.Hashable {}
+extension SpreedlyApplePay.ApplePayAvailability : Swift.RawRepresentable {}

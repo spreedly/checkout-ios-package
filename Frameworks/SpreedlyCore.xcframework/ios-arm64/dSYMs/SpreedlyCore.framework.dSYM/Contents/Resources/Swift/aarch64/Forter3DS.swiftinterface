@@ -1,0 +1,172 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.2 effective-5.10 (swiftlang-6.0.2.1.2 clang-1600.0.26.4)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name Forter3DS
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import FTR3DSCommon
+@_exported import Forter3DS
+import Foundation
+import Swift
+import ThreeDS_SDK
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc @_inheritsConvenienceInitializers @objcMembers public class FTR3DSCustomization : ObjectiveC.NSObject {
+  @objc public var toolbarCustomization: FTR3DSToolbarCustomization?
+  @objc public var labelCustomization: FTR3DSLabelCustomization?
+  @objc public var textBoxCustomization: FTR3DSTextBoxCustomization?
+  @objc public var buttonCustomizations: [FTR3DSButtonCustomization]
+  @objc public init(toolbarCustomization: FTR3DSToolbarCustomization? = nil, labelCustomization: FTR3DSLabelCustomization? = nil, textBoxCustomization: FTR3DSTextBoxCustomization? = nil, buttonCustomizations: [FTR3DSButtonCustomization]? = nil)
+  @objc @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  public func setButton(_ buttonCustomization: FTR3DSButtonCustomization, with buttonType: FTR3DSButtonType)
+  @objc @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  public func setToolbar(_ toolbarCustomization: FTR3DSToolbarCustomization)
+  @objc @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  public func setLabel(_ labelCustomization: FTR3DSLabelCustomization)
+  @objc @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  public func setTextBox(_ textBoxCustomization: FTR3DSTextBoxCustomization)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class FTR3DSToolbarCustomization : ObjectiveC.NSObject, Swift.Encodable {
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setBackgroundColor(_ hexColorCode: Swift.String)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setHeaderText(_ text: Swift.String)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setButtonText(_ text: Swift.String)
+  @available(*, deprecated, renamed: "init(backgroundColor:headerText:buttonText:)", message: "in Forter3DS 2.1.0")
+  @objc convenience override dynamic public init()
+  @objc public init(backgroundColor: Swift.String, headerText: Swift.String, buttonText: Swift.String)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@_inheritsConvenienceInitializers @objc public class FTR3DSLabelCustomization : ObjectiveC.NSObject, Swift.Encodable {
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setHeadingTextColor(_ hexColorCode: Swift.String)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setHeadingTextFontName(_ fontName: Swift.String)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setHeadingTextFontSize(_ fontSize: Swift.Int)
+  @available(*, deprecated, renamed: "init(headingTextColor:headingTextFontName:headingTextFontSize:)", message: "in Forter3DS 2.1.0")
+  @objc convenience override dynamic public init()
+  @objc public init(headingTextColor: Swift.String, headingTextFontName: Swift.String, headingTextFontSize: Swift.Int)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@_inheritsConvenienceInitializers @objc public class FTR3DSTextBoxCustomization : ObjectiveC.NSObject, Swift.Encodable {
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setBorderWidth(_ width: Swift.Int)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setBorderColor(_ hexColorCode: Swift.String)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setCornerRadius(_ cornerRadius: Swift.Int)
+  @available(*, deprecated, renamed: "init(borderWidth:borderColorCode:cornerRadius:)", message: "in Forter3DS 2.1.0")
+  @objc convenience override dynamic public init()
+  @objc public init(borderWidth: Swift.Int, borderColorCode: Swift.String, cornerRadius: Swift.Int)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@_inheritsConvenienceInitializers @objc public class FTR3DSButtonCustomization : ObjectiveC.NSObject {
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setBackgroundColor(_ hexColorCode: Swift.String)
+  @available(*, deprecated, message: "in Forter3DS 2.1.0")
+  @objc public func setCornerRadius(_ cornerRadius: Swift.Int)
+  @available(*, deprecated, renamed: "init(type:backgroundColor:cornerRadius:)", message: "in Forter3DS 2.1.0")
+  @objc convenience override dynamic public init()
+  @objc public init(type: FTR3DSButtonType, backgroundColor: Swift.String, cornerRadius: Swift.Int)
+  @objc deinit
+}
+@objc public enum FTR3DSButtonType : Swift.Int {
+  case verify
+  case `continue`
+  case next
+  case cancel
+  case resend
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension FTR3DSCustomization : Swift.Encodable {
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension FTR3DSButtonCustomization : Swift.Encodable {
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@objc public protocol Forter3DSProtocol {
+  @objc static func setup()
+  @objc static func setup(with customization: FTR3DSCustomization)
+  @objc static func setup(siteID: Swift.String, customization: FTR3DSCustomization?)
+  @objc static func createTransaction(withDsId dsId: Swift.String?, version: Swift.String) -> FTRTransaction?
+  @objc static func doChallenge(withVersion: Swift.String, merchantId: Swift.String?, withACSUrl: Swift.String?, creq: Swift.String?, ftrTransaction: FTRTransaction?, acsRefNumber: Swift.String?, acsSignedContent: Swift.String?, acsTransId: Swift.String?, threeDSServerTransId: Swift.String, currentVC: UIKit.UIViewController, callbacks: any Forter3DSDelegate)
+  @objc static func enableDevLogs(_ enabled: Swift.Bool)
+  @objc static func doChallengeIfNeeded(token: Swift.String, vc: UIKit.UIViewController, delegate: any FTR3DSManagedOrderDelegate)
+  @objc static func observeLogs(observer: Any, selector: ObjectiveC.Selector, notificationCenter: Foundation.NotificationCenter)
+  @objc static func removeLogsObserver(observer: Any)
+  @objc static func loadTestServers()
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class Forter3DS : ObjectiveC.NSObject, Forter3DSProtocol {
+  @objc public static func loadTestServers()
+  @objc deinit
+}
+extension Forter3DS {
+  @objc public static func enableDevLogs(_ enabled: Swift.Bool)
+  @objc public static func setup(siteID: Swift.String, customization: FTR3DSCustomization?)
+  @objc public static func createTransaction(withDsId dsId: Swift.String?, version: Swift.String) -> FTRTransaction?
+  @objc public static func doChallenge(withVersion: Swift.String, merchantId: Swift.String?, withACSUrl: Swift.String?, creq: Swift.String?, ftrTransaction: FTRTransaction?, acsRefNumber: Swift.String?, acsSignedContent: Swift.String?, acsTransId: Swift.String?, threeDSServerTransId: Swift.String, currentVC: UIKit.UIViewController, callbacks: any Forter3DSDelegate)
+  @available(*, deprecated, renamed: "setup(siteID:customization:)", message: "in Forter3DS 2.1.0")
+  @objc public static func setup()
+  @available(*, deprecated, renamed: "setup(siteID:customization:)", message: "in Forter3DS 2.1.0")
+  @objc public static func setup(with customization: FTR3DSCustomization)
+}
+extension Forter3DS {
+  @objc public static func doChallengeIfNeeded(token: Swift.String, vc: UIKit.UIViewController, delegate: any FTR3DSManagedOrderDelegate)
+  @objc public static func observeLogs(observer: Any, selector: ObjectiveC.Selector, notificationCenter: Foundation.NotificationCenter)
+  @objc public static func removeLogsObserver(observer: Any)
+}
+@objc public protocol Forter3DSDelegate {
+  @objc func onChallengeFinish(_ dictionary: [Swift.AnyHashable : Any]?)
+  @objc func onChallengeFailed(_ dictionary: [Swift.AnyHashable : Any]?)
+}
+@objc public protocol FTR3DSManagedOrderDelegate {
+  @objc func challengeCompleted(error: (any Swift.Error)?)
+}
+public enum FTR3DSError : Swift.Error {
+  case createOrderFailed(Swift.String)
+  case challengeFailed(Swift.String)
+  case missingTokenError
+  case missingCresError
+  case canceledTransactionError
+  case timedOutError
+  case tokenDataFailedToDecode
+  case createTransactionFailed
+  case missingCustomization
+  case toolbarCustomizationError
+  case labelCustomizationError
+  case buttonCustomization
+  case textBoxCustomization
+  public var errorDescription: Swift.String {
+    get
+  }
+  public var localizedDescription: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class FTRTransaction : ObjectiveC.NSObject {
+  public var deviceData: Swift.String?
+  public var sdkAppID: Swift.String?
+  public var sdkEphemeralPubKey: [Swift.String : Swift.String]?
+  public var sdkTransID: Swift.String?
+  public var sdkReferenceNumber: Swift.String?
+  public var encodedData: Swift.String?
+  public var internalTransaction: (any ThreeDS_SDK.Transaction)?
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension FTR3DSButtonType : Swift.Equatable {}
+extension FTR3DSButtonType : Swift.Hashable {}
+extension FTR3DSButtonType : Swift.RawRepresentable {}

@@ -470,6 +470,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @class DropInCoreFieldLabels;
 SWIFT_ENUM_FWD_DECL(NSInteger, YearFormat)
 SWIFT_ENUM_FWD_DECL(NSInteger, CardNumberFormat)
+@protocol SPLWalletButtonProvider;
 @class FormField;
 @protocol UIViewControllerTransitionCoordinator;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
@@ -490,6 +491,14 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 /// tokenization with an error naming the key. Set before the view loads.
 /// Never put cardholder data in it.
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable mandate;
+/// Wallet buttons (e.g. <code>SpreedlyApplePayWallet</code>) shown above the card fields with a
+/// divider. Unavailable wallets are skipped; with none visible the divider is hidden. Set before
+/// the view loads.
+@property (nonatomic, copy) NSArray<id <SPLWalletButtonProvider>> * _Nonnull walletButtons;
+/// Divider label between wallets and card fields. <code>nil</code> uses the localized “or pay with card”.
+@property (nonatomic, copy) NSString * _Nullable walletButtonDividerText;
+/// Close this controller after a successful wallet checkout. Defaults to <code>true</code>.
+@property (nonatomic) BOOL dismissOnWalletButtonSuccess;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -873,6 +882,19 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// returns:
 /// A container view controller with secure protection applied
 - (UIViewController * _Nonnull)wrapInSecureViewControllerWithPlaceholderText:(NSString * _Nonnull)placeholderText SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// A wallet that can render its own button on a merchant screen or card drop-in.
+/// <code>SpreedlyApplePayWallet</code> is the built-in implementation. Results from any provider are
+/// delivered on <code>Spreedly.subscribeToPaymentResults</code> / <code>paymentDelegate</code>, same as card checkout.
+SWIFT_PROTOCOL_NAMED("WalletButtonProvider")
+@protocol SPLWalletButtonProvider <NSObject>
+/// Stable wallet identifier, e.g. <code>"apple_pay"</code>.
+@property (nonatomic, readonly, copy) NSString * _Nonnull walletType;
+/// <code>true</code> when the wallet button should be shown on this device right now.
+@property (nonatomic, readonly) BOOL isWalletAvailable;
+/// Builds the wallet’s button view. Call on the main thread.
+- (UIView * _Nonnull)makeButtonView SWIFT_WARN_UNUSED_RESULT;
 @end
 
 /// Whether the expiration year field shows 2-digit (YY) or 4-digit (YYYY) format.
@@ -1361,6 +1383,7 @@ SWIFT_CLASS("_TtC10SpreedlyUI26CVVRecachingViewController")
 @class DropInCoreFieldLabels;
 SWIFT_ENUM_FWD_DECL(NSInteger, YearFormat)
 SWIFT_ENUM_FWD_DECL(NSInteger, CardNumberFormat)
+@protocol SPLWalletButtonProvider;
 @class FormField;
 @protocol UIViewControllerTransitionCoordinator;
 SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
@@ -1381,6 +1404,14 @@ SWIFT_CLASS("_TtC10SpreedlyUI28CardFormDropInViewController")
 /// tokenization with an error naming the key. Set before the view loads.
 /// Never put cardholder data in it.
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nullable mandate;
+/// Wallet buttons (e.g. <code>SpreedlyApplePayWallet</code>) shown above the card fields with a
+/// divider. Unavailable wallets are skipped; with none visible the divider is hidden. Set before
+/// the view loads.
+@property (nonatomic, copy) NSArray<id <SPLWalletButtonProvider>> * _Nonnull walletButtons;
+/// Divider label between wallets and card fields. <code>nil</code> uses the localized “or pay with card”.
+@property (nonatomic, copy) NSString * _Nullable walletButtonDividerText;
+/// Close this controller after a successful wallet checkout. Defaults to <code>true</code>.
+@property (nonatomic) BOOL dismissOnWalletButtonSuccess;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
 - (nonnull instancetype)initWithOtherFields:(NSArray<FormField *> * _Nonnull)otherFields yearFormat:(enum YearFormat)yearFormat nameDisplayMode:(enum DropInNameDisplayMode)nameDisplayMode themeConfig:(SPLThemeConfig * _Nullable)themeConfig onProcessingResult:(void (^ _Nullable)(PaymentProcessingResult * _Nonnull))onProcessingResult;
@@ -1764,6 +1795,19 @@ SWIFT_CLASS("_TtC10SpreedlyUI24SpreedlyThemeManagerObjC")
 /// returns:
 /// A container view controller with secure protection applied
 - (UIViewController * _Nonnull)wrapInSecureViewControllerWithPlaceholderText:(NSString * _Nonnull)placeholderText SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// A wallet that can render its own button on a merchant screen or card drop-in.
+/// <code>SpreedlyApplePayWallet</code> is the built-in implementation. Results from any provider are
+/// delivered on <code>Spreedly.subscribeToPaymentResults</code> / <code>paymentDelegate</code>, same as card checkout.
+SWIFT_PROTOCOL_NAMED("WalletButtonProvider")
+@protocol SPLWalletButtonProvider <NSObject>
+/// Stable wallet identifier, e.g. <code>"apple_pay"</code>.
+@property (nonatomic, readonly, copy) NSString * _Nonnull walletType;
+/// <code>true</code> when the wallet button should be shown on this device right now.
+@property (nonatomic, readonly) BOOL isWalletAvailable;
+/// Builds the wallet’s button view. Call on the main thread.
+- (UIView * _Nonnull)makeButtonView SWIFT_WARN_UNUSED_RESULT;
 @end
 
 /// Whether the expiration year field shows 2-digit (YY) or 4-digit (YYYY) format.
