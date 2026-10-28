@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreedlyPayPal'
-  s.version          = '1.6.1'
+  s.version          = '1.7.0-dev.20261028.2'
   s.summary          = 'Native PPCP (PayPal / Pay Later / Credit / Venmo) module for the Spreedly iOS SDK.'
   s.homepage         = 'https://github.com/spreedly/checkout-ios-package'
   s.license          = { :type => 'Apache-2.0', :file => 'LICENSE' }

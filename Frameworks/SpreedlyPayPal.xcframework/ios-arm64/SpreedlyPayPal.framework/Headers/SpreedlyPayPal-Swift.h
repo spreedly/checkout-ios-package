@@ -349,6 +349,7 @@ extern "C" {
 @import CoreFoundation;
 @import Foundation;
 @import ObjectiveC;
+@import SpreedlyCore;
 @import UIKit;
 #endif
 
@@ -422,6 +423,10 @@ SWIFT_ENUM_FWD_DECL(NSInteger, PayPalFundingSource)
 /// Merchant mental model: this is <em>not</em> a network call — it wraps PayPal’s local <code>PaymentButton</code>,
 /// applies Spreedly appearance, and fires <code>onTap</code> so the app can start checkout.
 /// Subclasses implement <code>makeButton(appearance:)</code> to pick the concrete PayPal product button.
+/// Public only because the concrete button views inherit from it — Swift requires a superclass
+/// to be at least as visible as its subclasses. Not intended for direct use or subclassing by
+/// merchants; use <code>SpreedlyPayPalButtonView</code>, <code>SpreedlyPayPalPayLaterButtonView</code>,
+/// <code>SpreedlyPayPalCreditButtonView</code>, or the container.
 SWIFT_CLASS("_TtC14SpreedlyPayPal20PayPalButtonBaseView")
 @interface PayPalButtonBaseView : UIView
 /// Side length for the PayPal-wallet <code>.mini</code> monogram circle (matches PayPal demo visual).
@@ -430,10 +435,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) CGFloat miniMonogram
 /// Merchant / app handler — typically calls <code>SpreedlyPayPalCheckout.startCheckout</code>.
 @property (nonatomic, copy) void (^ _Nullable onTap)(void);
 /// Funding source represented by this button; used for telemetry when tapped.
+/// Read-only to merchants. Each concrete button view fixes its own funding source, so
+/// letting it be reassigned from outside would let a Credit button present as Venmo and
+/// slip past the container’s fail-closed Venmo gate.
 /// Subclasses set this after <code>super.init</code>. That assignment must rebuild — <code>super.init</code>
 /// runs <code>rebuild()</code> while this is still the default <code>.paypal</code>, which would otherwise
 /// lock Pay Later / Credit mini into the 36×36 circle path.
-@property (nonatomic) enum PayPalFundingSource fundingSource;
+@property (nonatomic, readonly) enum PayPalFundingSource fundingSource;
 /// Merchant styling. Changing this rebuilds the underlying PayPal <code>PaymentButton</code>.
 @property (nonatomic, strong) PayPalButtonAppearance * _Nonnull appearance;
 /// Enables or disables the wrapped button.
@@ -510,6 +518,37 @@ typedef SWIFT_ENUM(NSInteger, PayPalButtonSize, open) {
 };
 
 @class NSString;
+/// Optional buyer email and phone for PayPal shopper session creation.
+/// Pass on <code>PayPalCheckoutSessionOptions</code> / <code>PayPalVaultSessionOptions</code>. Empty fields are
+/// treated as omitted. Venmo ignores buyer identity.
+SWIFT_CLASS("_TtC14SpreedlyPayPal19PayPalBuyerIdentity")
+@interface PayPalBuyerIdentity : NSObject
+/// Buyer email, or <code>nil</code> when omitted.
+@property (nonatomic, readonly, copy) NSString * _Nullable email;
+/// Phone country calling code digits only (no <code>+</code>), e.g. <code>"1"</code>.
+@property (nonatomic, readonly, copy) NSString * _Nullable phoneCountryCode;
+/// Phone national number digits only.
+@property (nonatomic, readonly, copy) NSString * _Nullable phoneNationalNumber;
+/// Creates a buyer identity. Empty strings are stored as <code>nil</code>.
+/// \param email Optional email.
+///
+/// \param phoneCountryCode Optional country code (digits; leading <code>+</code> is stripped).
+///
+/// \param phoneNationalNumber Optional national number (digits only kept).
+///
+- (nonnull instancetype)initWithEmail:(NSString * _Nullable)email phoneCountryCode:(NSString * _Nullable)phoneCountryCode phoneNationalNumber:(NSString * _Nullable)phoneNationalNumber OBJC_DESIGNATED_INITIALIZER;
+/// <code>true</code> when every field is empty (treat as no identity).
+@property (nonatomic, readonly) BOOL isEmpty;
+/// Validates optional email / phone pair. Empty identity is valid.
+///
+/// returns:
+/// Localized error message, or <code>nil</code> when valid.
+- (NSString * _Nullable)validationErrorMessage SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class NSURL;
 /// Payload delivered when the buyer cancels the PPCP web checkout.
 SWIFT_CLASS("_TtC14SpreedlyPayPal16PayPalCancelData")
 @interface PayPalCancelData : NSObject
@@ -519,8 +558,44 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal16PayPalCancelData")
 @property (nonatomic, readonly, strong) NSNumber * _Nullable fundingSourceRaw;
 /// Short cancel reason, if known.
 @property (nonatomic, readonly, copy) NSString * _Nullable message;
-/// Convenience matching the original <code>orderId</code>-only initializer.
-- (nonnull instancetype)initWithOrderId:(NSString * _Nullable)orderId;
+/// Raw return URL the SDK received from PayPal, when the outcome arrived via an app-switch
+/// return (Universal Link or custom scheme). <code>nil</code> when checkout completed in the in-app
+/// browser, where the return never reaches the merchant’s app.
+@property (nonatomic, readonly, copy) NSURL * _Nullable returnURL;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+SWIFT_ENUM_FWD_DECL(NSInteger, PayPalEnvironment)
+@class PayPalReturnURLConfig;
+/// Configuration for native PayPal Commerce Platform (PPCP) checkout.
+/// Merchants obtain a PayPal Client ID and merchant account ID from the PayPal developer dashboard.
+/// Order creation and capture remain on the merchant backend; the SDK never holds a client secret.
+/// <h2>Return URLs</h2>
+/// The return links are built first as a <code>PayPalReturnURLConfig</code>, which validates them. PayPal
+/// loads the primary return URL in a webview during the app-switch handoff, so it has to be an
+/// https Universal Link; the custom scheme is the fallback for when that link fails to open the
+/// app.
+/// Spreedly hosts nothing on the merchant’s behalf: the Associated Domain, the
+/// <code>apple-app-site-association</code> file, and the URL scheme are all registered by the merchant.
+/// These URLs are forwarded to PayPal unchanged.
+SWIFT_CLASS("_TtC14SpreedlyPayPal20PayPalCheckoutConfig")
+@interface PayPalCheckoutConfig : NSObject
+/// PayPal REST application Client ID (sandbox or live).
+@property (nonatomic, readonly, copy) NSString * _Nonnull clientId;
+/// PayPal merchant account identifier required by PayPal’s iOS SDK (<code>CoreConfig</code>).
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantId;
+/// Sandbox or production PayPal environment.
+@property (nonatomic, readonly) enum PayPalEnvironment environment;
+/// Validated return, cancel and fallback links.
+@property (nonatomic, readonly, strong) PayPalReturnURLConfig * _Nonnull returnURLs;
+/// Optional merchant name shown in checkout chrome.
+@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
+/// Optional BCP-47 locale (e.g. <code>en_US</code>).
+@property (nonatomic, readonly, copy) NSString * _Nullable locale;
+/// \param returnURLs Return links, already validated by <code>PayPalReturnURLConfig</code>.
+///
+- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId merchantId:(NSString * _Nonnull)merchantId environment:(enum PayPalEnvironment)environment returnURLs:(PayPalReturnURLConfig * _Nonnull)returnURLs merchantDisplayName:(NSString * _Nonnull)merchantDisplayName locale:(NSString * _Nullable)locale OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -534,14 +609,17 @@ SWIFT_PROTOCOL("_TtP14SpreedlyPayPal22PayPalCheckoutDelegate_")
 - (void)payPalCheckoutDidApprove:(PayPalCheckoutResult * _Nonnull)result;
 /// Called when the buyer cancels the checkout.
 - (void)payPalCheckoutDidCancel:(PayPalCancelData * _Nonnull)data;
-/// Called when the checkout fails. <code>error</code> is a <code>SpreedlyCore.PayPalError</code>.
+/// Called when the checkout fails. <code>error</code> is a <code>PayPalError</code>.
 - (void)payPalCheckoutDidFailWithError:(NSError * _Nonnull)error;
 @end
 
-/// Errors thrown while initializing PPCP checkout.
+/// Errors thrown while initializing PPCP checkout. Codes are scoped to
+/// <code>PayPalInitializationErrorDomain</code>, not <code>PayPalErrorDomain</code>.
+/// Raw values 1 and 5 are retired: return-link problems are now raised by
+/// <code>PayPalReturnURLConfig</code> in <code>PayPalReturnURLErrorDomain</code>, before a config exists. The gaps are
+/// deliberate — renumbering would change what an existing integer check means.
 typedef SWIFT_ENUM(NSInteger, PayPalCheckoutInitializationErrorCode, open) {
   PayPalCheckoutInitializationErrorCodeMissingClientId = 0,
-  PayPalCheckoutInitializationErrorCodeInvalidReturnURL = 1,
   PayPalCheckoutInitializationErrorCodeAlreadyInitialized = 2,
   PayPalCheckoutInitializationErrorCodeDeviceBlocked = 3,
   PayPalCheckoutInitializationErrorCodeMissingMerchantId = 4,
@@ -559,13 +637,16 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal20PayPalCheckoutResult")
 @interface PayPalCheckoutResult : NSObject
 /// Approved PayPal order id.
 @property (nonatomic, readonly, copy) NSString * _Nonnull orderId;
-/// PayPal payer id from the approval.
-@property (nonatomic, readonly, copy) NSString * _Nonnull payerId;
+/// PayPal payer id from the approval, when PayPal returned one.
+@property (nonatomic, readonly, copy) NSString * _Nullable payerId;
 /// Funding source used for the order.
 @property (nonatomic, readonly) enum PayPalFundingSource fundingSource;
 /// Transaction state after capture (typically “pending” until the backend settles).
 @property (nonatomic, readonly, copy) NSString * _Nonnull state;
-- (nonnull instancetype)initWithOrderId:(NSString * _Nonnull)orderId payerId:(NSString * _Nonnull)payerId fundingSource:(enum PayPalFundingSource)fundingSource state:(NSString * _Nonnull)state OBJC_DESIGNATED_INITIALIZER;
+/// Raw return URL the SDK received from PayPal, when the outcome arrived via an app-switch
+/// return (Universal Link or custom scheme). <code>nil</code> when checkout completed in the in-app
+/// browser, where the return never reaches the merchant’s app.
+@property (nonatomic, readonly, copy) NSURL * _Nullable returnURL;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -579,6 +660,9 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal20PayPalCheckoutResult")
 ///   <li>
 ///     <code>commit: false</code> → SDK skips capture; your <code>createOrder(..., intent: .authorize)</code> must support AUTHORIZE.
 ///   </li>
+///   <li>
+///     <code>buyerIdentity</code> → optional email/phone hint for PayPal App Switch (ignored for Venmo).
+///   </li>
 /// </ul>
 SWIFT_CLASS("_TtC14SpreedlyPayPal28PayPalCheckoutSessionOptions")
 @interface PayPalCheckoutSessionOptions : NSObject
@@ -588,28 +672,122 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal28PayPalCheckoutSessionOptions")
 @property (nonatomic, readonly) BOOL commit;
 /// Optional Spreedly transaction token to correlate this checkout with a pending purchase.
 @property (nonatomic, readonly, copy) NSString * _Nullable transactionToken;
-- (nonnull instancetype)initWithCommit:(BOOL)commit transactionToken:(NSString * _Nullable)transactionToken OBJC_DESIGNATED_INITIALIZER;
-/// Default options: commit enabled, no transaction token.
+/// Optional buyer email/phone for PayPal shopper session. Ignored for Venmo.
+@property (nonatomic, readonly, strong) PayPalBuyerIdentity * _Nullable buyerIdentity;
+/// Designated initializer. ObjC: <code>initWithCommit:transactionToken:buyerIdentity:</code>.
+- (nonnull instancetype)initWithCommit:(BOOL)commit transactionToken:(NSString * _Nullable)transactionToken buyerIdentity:(PayPalBuyerIdentity * _Nullable)buyerIdentity OBJC_DESIGNATED_INITIALIZER;
+/// Objective-C initializer without buyer identity (existing selector).
+- (nonnull instancetype)initWithCommit:(BOOL)commit transactionToken:(NSString * _Nullable)transactionToken;
+/// Default options: commit enabled, no transaction token, no buyer identity.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong, getter=default) PayPalCheckoutSessionOptions * _Nonnull default_;)
 + (PayPalCheckoutSessionOptions * _Nonnull)default SWIFT_WARN_UNUSED_RESULT;
+/// Approval-only options (<code>commit: false</code>) — the SDK never captures and publishes no
+/// terminal <code>PaymentResult</code>. Required shape for <code>start(orderId:)</code>.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PayPalCheckoutSessionOptions * _Nonnull approvalOnly;)
++ (PayPalCheckoutSessionOptions * _Nonnull)approvalOnly SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// PayPal REST environment for PPCP checkout.
+typedef SWIFT_ENUM(NSInteger, PayPalEnvironment, open) {
+  PayPalEnvironmentSandbox = 0,
+  PayPalEnvironmentProduction = 1,
+};
+
+SWIFT_ENUM_FWD_DECL(NSInteger, PayPalErrorCode)
+/// Typed PPCP error surfaced to merchants. Bridges to <code>NSError</code> for Objective-C.
+/// <code>recoveryHint</code> carries an actionable, non-sensitive suggestion (retry, choose another
+/// method, etc.). <code>isCanceled</code> lets callers branch on buyer cancellation without matching codes.
+SWIFT_CLASS("_TtC14SpreedlyPayPal11PayPalError")
+@interface PayPalError : NSError
+/// Actionable, user-safe recovery suggestion, when one applies.
+@property (nonatomic, readonly, copy) NSString * _Nullable recoveryHint;
+/// <code>true</code> when the failure is a buyer cancellation rather than an error.
+@property (nonatomic, readonly) BOOL isCanceled;
+/// Creates a typed PPCP error.
+/// \param code The failure category.
+///
+/// \param message User-safe description stored under <code>NSLocalizedDescriptionKey</code>.
+///
+/// \param recoveryHint Optional actionable suggestion for the buyer/merchant.
+///
+/// \param underlying Optional underlying error stored under <code>NSUnderlyingErrorKey</code>.
+///
+- (nonnull instancetype)initWithCode:(enum PayPalErrorCode)code message:(NSString * _Nonnull)message recoveryHint:(NSString * _Nullable)recoveryHint underlying:(NSError * _Nullable)underlying OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithDomain:(NSString * _Nonnull)domain code:(NSInteger)code userInfo:(NSDictionary<NSString *, id> * _Nullable)dict SWIFT_UNAVAILABLE;
+@end
+
+/// Categorizes a PPCP checkout failure for merchant handling and recovery.
+typedef SWIFT_ENUM(NSInteger, PayPalErrorCode, open) {
+/// Connectivity or transport failure reaching PayPal or the merchant backend.
+  PayPalErrorCodeNetwork = 0,
+/// Buyer dismissed the PayPal web checkout.
+  PayPalErrorCodeCanceled = 1,
+/// Invalid input or configuration (e.g. missing order id, bad return URL).
+  PayPalErrorCodeValidation = 2,
+/// PayPal or backend returned a server-side failure.
+  PayPalErrorCodeServer = 3,
+/// Unclassified failure.
+  PayPalErrorCodeUnknown = 4,
+/// Vault browser / web-sheet presentation failed (ASWebAuthenticationSession / web session).
+/// Produced by vault-flow mapping of PayPal <code>webSessionError</code> and presentation failures.
+  PayPalErrorCodeVaultBrowserSwitchFailed = 5,
+/// Vault session timed out before payment-token exchange completed.
+/// Produced by vault-flow mapping of <code>URLError.timedOut</code>.
+  PayPalErrorCodeVaultSessionExpired = 6,
+/// Merchant provider returned an empty or missing setup token id.
+  PayPalErrorCodeVaultSetupTokenMissing = 7,
+/// Merchant provider failed to exchange setup token for a payment token.
+  PayPalErrorCodeVaultPaymentTokenExchangeFailed = 8,
+/// A previous PayPal session was interrupted (process death). Reconcile server-side before retrying.
+  PayPalErrorCodeProcessDeathRecoveryPending = 9,
+/// Process-death recovery storage could not be read or written.
+  PayPalErrorCodeProcessDeathRecoveryStorageUnavailable = 10,
+/// <code>initialize(config:)</code> was not called before starting a session.
+  PayPalErrorCodeNotInitialized = 11,
+/// PayPal checkout config failed validation.
+  PayPalErrorCodeInvalidConfig = 12,
+/// Selected funding source is not eligible for this cart.
+  PayPalErrorCodeIneligibleFundingSource = 13,
+/// Merchant <code>createOrder</code> failed or returned an empty order id.
+  PayPalErrorCodeOrderCreationFailed = 14,
+/// Merchant <code>captureOrder</code> failed.
+  PayPalErrorCodeCaptureFailed = 15,
+/// PayPal web-sheet / browser presentation failed.
+  PayPalErrorCodeBrowserSwitchFailed = 16,
+/// Return URL / callback validation failed.
+  PayPalErrorCodeReturnValidationFailed = 17,
+/// Venmo is not available for this session.
+  PayPalErrorCodeVenmoNotSupported = 18,
+/// PayPal <code>createPayPalSession()</code> was not called, or session creation failed, before <code>start</code>/<code>vault</code>.
+  PayPalErrorCodeSessionNotStarted = 19,
+/// PayPal app-switch return failed before buyer approval could complete.
+  PayPalErrorCodeAppSwitchFailed = 20,
+};
+
+/// Funding source that drives which PPCP checkout experience and button a merchant presents.
+typedef SWIFT_ENUM(NSInteger, PayPalFundingSource, open) {
+  PayPalFundingSourcePaypal = 0,
+  PayPalFundingSourcePayLater = 1,
+  PayPalFundingSourceCredit = 2,
+  PayPalFundingSourceVenmo = 3,
+};
+
 /// Merchant-controlled visibility inputs for <code>findEligibleMethods(visibility:)</code>.
-/// Step (merchant): build from cart currency / amount / country → pass to eligibility
+/// Step (merchant): build from cart currency / country → pass to eligibility
 /// and/or <code>SpreedlyPayPalButtonContainer(visibilityConfig:)</code>.
 /// <em>Decides which buttons to draw, nothing more</em> — it does not ask PayPal what the buyer
 /// is entitled to, so a shown button can still fail at approval time.
 SWIFT_CLASS("_TtC14SpreedlyPayPal29PayPalFundingVisibilityConfig")
 @interface PayPalFundingVisibilityConfig : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull currencyCode;
-@property (nonatomic, readonly, strong) NSNumber * _Nullable amountCents;
 @property (nonatomic, readonly, copy) NSString * _Nullable countryCode;
 @property (nonatomic, readonly, copy) NSString * _Nullable locale;
 - (nonnull instancetype)init;
 /// Objective-C initializer without <code>disabledFundingSources</code> (Swift array of enum is not ObjC-visible).
-- (nonnull instancetype)initWithCurrencyCode:(NSString * _Nonnull)currencyCode amountCents:(NSNumber * _Nullable)amountCents countryCode:(NSString * _Nullable)countryCode;
+- (nonnull instancetype)initWithCurrencyCode:(NSString * _Nonnull)currencyCode countryCode:(NSString * _Nullable)countryCode;
 @end
 
 /// Objective-C-friendly, block-based counterpart to <code>PayPalOrderProvider</code>.
@@ -624,6 +802,54 @@ SWIFT_PROTOCOL("_TtP14SpreedlyPayPal23PayPalOrderProviderObjC_")
 @optional
 /// Optional. When implemented, the SDK passes <code>intent</code> from <code>PayPalCheckoutSessionOptions.commit</code>.
 - (void)createOrderWithFundingSource:(enum PayPalFundingSource)fundingSource intent:(enum PayPalCheckoutIntent)intent completion:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))completion;
+/// Optional. Prefer this when available so the SDK can pass Client Metadata ID.
+- (void)createOrderWithFundingSource:(enum PayPalFundingSource)fundingSource intent:(enum PayPalCheckoutIntent)intent clientMetadataId:(NSString * _Nullable)clientMetadataId completion:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))completion;
+@end
+
+@class PaymentResult;
+/// PayPal PPCP data on a successful checkout, vault, or recurring result, attached to
+/// <code>PaymentResult/providerDetails</code>.
+/// <ul>
+///   <li>
+///     Checkout (<code>paypal_ppcp</code>): <code>orderId</code> is the PayPal order id; <code>payerId</code> may be nil.
+///   </li>
+///   <li>
+///     Vault (<code>paypal_vault</code>): <code>orderId</code> is the setup token id (correlation only); <code>payerId</code> is nil.
+///   </li>
+///   <li>
+///     Recurring (<code>paypal_vault_recurring</code>): <code>orderId</code> is the charge order id; <code>payerId</code> is nil.
+///   </li>
+/// </ul>
+/// <code>PaymentResult/token</code> remains the optional Spreedly correlation id (<code>transactionToken</code>),
+/// not the PayPal order id.
+SWIFT_CLASS("_TtC14SpreedlyPayPal20PayPalPaymentDetails")
+@interface PayPalPaymentDetails : NSObject <ProviderPaymentDetails>
+/// <code>paymentMethodType</code> for one-time PPCP checkout after SDK capture.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull paymentMethodTypeCheckout;)
++ (NSString * _Nonnull)paymentMethodTypeCheckout SWIFT_WARN_UNUSED_RESULT;
+/// <code>paymentMethodType</code> for purchase-later vault approval.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull paymentMethodTypeVault;)
++ (NSString * _Nonnull)paymentMethodTypeVault SWIFT_WARN_UNUSED_RESULT;
+/// <code>paymentMethodType</code> for merchant-reported recurring charge outcomes.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull paymentMethodTypeRecurring;)
++ (NSString * _Nonnull)paymentMethodTypeRecurring SWIFT_WARN_UNUSED_RESULT;
+/// PayPal order id, setup token id, or charge order id depending on the flow.
+@property (nonatomic, readonly, copy) NSString * _Nonnull orderId;
+/// PayPal payer id from approval, when returned.
+@property (nonatomic, readonly, copy) NSString * _Nullable payerId;
+/// Boxed <code>PayPalFundingSource</code> raw value for Objective-C. <code>nil</code> when the flow has none.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable fundingSourceRaw;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+/// Successful one-time checkout after the SDK captured (<code>commit: true</code>).
+/// Merchants that finalize <code>commit: false</code> / <code>start(orderId:)</code> on their backend can call
+/// this and then <code>Spreedly.shared().publishPaymentResult(...)</code>.
++ (PaymentResult * _Nonnull)checkoutSucceededWithTransactionToken:(NSString * _Nullable)transactionToken orderId:(NSString * _Nonnull)orderId payerId:(NSString * _Nullable)payerId fundingSource:(enum PayPalFundingSource)fundingSource SWIFT_WARN_UNUSED_RESULT;
+/// Successful vault session after setup-token approval and payment-token exchange.
++ (PaymentResult * _Nonnull)vaultSucceededWithTransactionToken:(NSString * _Nullable)transactionToken setupTokenId:(NSString * _Nonnull)setupTokenId SWIFT_WARN_UNUSED_RESULT;
+/// Merchant-reported recurring charge outcome (<code>publishRecurringResult</code>).
++ (PaymentResult * _Nonnull)recurringSucceededWithOrderId:(NSString * _Nonnull)orderId SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 /// Result of exchanging an approved setup token on the merchant backend.
@@ -634,8 +860,6 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal24PayPalPaymentTokenResult")
 @interface PayPalPaymentTokenResult : NSObject
 /// Optional merchant-backend display hint. Not a chargeable vault id.
 @property (nonatomic, readonly, copy) NSString * _Nullable label;
-/// Always <code>nil</code>. Retained so existing call sites still compile — read <code>label</code> instead.
-@property (nonatomic, readonly, copy) NSString * _Nullable customerId;
 - (nonnull instancetype)initWithLabel:(NSString * _Nullable)label OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -652,8 +876,9 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal26PayPalProcessDeathRecovery")
 @interface PayPalProcessDeathRecovery : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull sessionBindId;
 @property (nonatomic, readonly) enum PayPalProcessDeathMode mode;
+/// Boxed <code>PayPalFundingSource</code> raw value for Objective-C. <code>nil</code> when unknown.
+@property (nonatomic, readonly, strong) NSNumber * _Nullable fundingSourceRaw;
 @property (nonatomic, readonly, copy) NSString * _Nonnull message;
-- (nonnull instancetype)initWithSessionBindId:(NSString * _Nonnull)sessionBindId mode:(enum PayPalProcessDeathMode)mode message:(NSString * _Nonnull)message OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -665,14 +890,63 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal21PayPalRecurringResult")
 @property (nonatomic, readonly, copy) NSString * _Nonnull orderId;
 @property (nonatomic, readonly) BOOL success;
 @property (nonatomic, readonly, copy) NSString * _Nullable message;
-/// Always empty. Retained so existing call sites still compile.
-@property (nonatomic, readonly, copy) NSString * _Nonnull vaultId;
-/// Always <code>nil</code>. Retained so existing call sites still compile — read <code>label</code> instead.
-@property (nonatomic, readonly, copy) NSString * _Nullable customerId;
 - (nonnull instancetype)initWithOrderId:(NSString * _Nonnull)orderId success:(BOOL)success message:(NSString * _Nullable)message OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+/// The three return links PPCP checkout needs, proven valid at construction.
+/// \code
+/// let urls = try PayPalReturnURLConfig(
+///     returnURL:      URL(string: "https://shop.example.com/paypal/return")!,
+///     cancelURL:      URL(string: "https://shop.example.com/paypal/cancel")!,
+///     fallbackScheme: "com.shop.example.paypal"
+/// )
+///
+/// \endcodeThe merchant owns all three: the Associated Domain and its
+/// <code>apple-app-site-association</code> file for the Universal Links, and the <code>CFBundleURLTypes</code>
+/// entry for the scheme. Spreedly hosts nothing on their behalf.
+SWIFT_CLASS("_TtC14SpreedlyPayPal21PayPalReturnURLConfig")
+@interface PayPalReturnURLConfig : NSObject
+/// Universal Link the buyer returns to on approval.
+@property (nonatomic, readonly, copy) NSURL * _Nonnull returnURL;
+/// Universal Link the buyer returns to on cancel. Same host as <code>returnURL</code>.
+@property (nonatomic, readonly, copy) NSURL * _Nonnull cancelURL;
+/// Custom-scheme fallback, lowercased. A bare scheme such as <code>shopapp</code>, never a URL —
+/// which is what makes an <code>https</code> “fallback scheme” unrepresentable.
+/// Namespacing it to the bundle identifier (<code>com.shop.example.paypal</code>) is recommended but
+/// not enforced: it guarantees no other app on the device claims the same scheme.
+@property (nonatomic, readonly, copy) NSString * _Nonnull fallbackScheme;
+/// Builds and validates the return links.
+///
+/// throws:
+/// <code>NSError</code> in <code>PayPalReturnURLErrorDomain</code> with a <code>PayPalReturnURLErrorCode</code>.
+- (nullable instancetype)initWithReturnURL:(NSURL * _Nonnull)returnURL cancelURL:(NSURL * _Nonnull)cancelURL fallbackScheme:(NSString * _Nonnull)fallbackScheme error:(NSError * _Nullable * _Nullable)error OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Why a <code>PayPalReturnURLConfig</code> could not be built. Each case names the offending field, so a
+/// merchant debugs the value that is actually wrong rather than the one next to it.
+typedef SWIFT_ENUM(NSInteger, PayPalReturnURLErrorCode, open) {
+/// <code>returnURL</code> is not <code>https</code>. Universal Links require it, and PayPal loads this URL in a webview.
+  PayPalReturnURLErrorCodeReturnURLNotHTTPS = 0,
+/// <code>cancelURL</code> is not <code>https</code>.
+  PayPalReturnURLErrorCodeCancelURLNotHTTPS = 1,
+/// <code>returnURL</code> and <code>cancelURL</code> are on different hosts, so one AASA file cannot cover both.
+  PayPalReturnURLErrorCodeHostMismatch = 2,
+/// One of the URLs has no path, or only <code>/</code>.
+  PayPalReturnURLErrorCodeMissingPath = 3,
+/// <code>returnURL</code>’s path contains “cancel”, which would make every approval read as a cancel.
+  PayPalReturnURLErrorCodeReturnPathLooksLikeCancel = 4,
+/// <code>cancelURL</code>’s path does not contain “cancel”, so cancels would not be recognised.
+  PayPalReturnURLErrorCodeCancelPathMissingCancel = 5,
+/// <code>fallbackScheme</code> is empty, is a full URL, or is <code>http</code>/<code>https</code>.
+  PayPalReturnURLErrorCodeInvalidFallbackScheme = 6,
+/// <code>fallbackScheme</code> is not declared under <code>CFBundleURLTypes</code>, so iOS would never route it
+/// to this app. Raised in debug builds only.
+  PayPalReturnURLErrorCodeFallbackSchemeNotRegistered = 7,
+};
 
 /// Result of merchant-backend setup-token creation.
 SWIFT_CLASS("_TtC14SpreedlyPayPal22PayPalSetupTokenResult")
@@ -684,12 +958,16 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal22PayPalSetupTokenResult")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class NSURL;
+@class NSUserActivity;
 /// Objective-C compatible wrapper for PayPal URL handling.
 SWIFT_CLASS("_TtC14SpreedlyPayPal20PayPalURLHandlerObjC")
 @interface PayPalURLHandlerObjC : NSObject
-/// Forwards a URL to the PayPal SDK for app-switch handling.
+/// Forwards a custom-scheme URL to the PayPal SDK for app-switch handling.
+/// Call from <code>application:openURL:options:</code> or <code>scene:openURLContexts:</code>.
 + (BOOL)handleOpenWithUrl:(NSURL * _Nonnull)url SWIFT_WARN_UNUSED_RESULT;
+/// Forwards a Universal Link activity to the PayPal SDK for app-switch handling.
+/// Call from <code>application:continueUserActivity:restorationHandler:</code> or <code>scene:continueUserActivity:</code>.
++ (BOOL)handleUserActivity:(NSUserActivity * _Nonnull)userActivity SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -700,9 +978,10 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal22PayPalVaultApproveData")
 @interface PayPalVaultApproveData : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nullable label;
 @property (nonatomic, readonly, copy) NSString * _Nonnull setupTokenId;
-/// Always <code>nil</code>. Retained so existing call sites still compile — read <code>label</code> instead.
-@property (nonatomic, readonly, copy) NSString * _Nullable customerId;
-- (nonnull instancetype)initWithLabel:(NSString * _Nullable)label setupTokenId:(NSString * _Nonnull)setupTokenId OBJC_DESIGNATED_INITIALIZER;
+/// Raw return URL the SDK received from PayPal, when the outcome arrived via an app-switch
+/// return (Universal Link or custom scheme). <code>nil</code> when checkout completed in the in-app
+/// browser, where the return never reaches the merchant’s app.
+@property (nonatomic, readonly, copy) NSURL * _Nullable returnURL;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -712,29 +991,20 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal21PayPalVaultCancelData")
 @interface PayPalVaultCancelData : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nullable setupTokenId;
 @property (nonatomic, readonly, copy) NSString * _Nullable message;
-- (nonnull instancetype)initWithSetupTokenId:(NSString * _Nullable)setupTokenId message:(NSString * _Nullable)message OBJC_DESIGNATED_INITIALIZER;
+/// Raw return URL the SDK received from PayPal, when the outcome arrived via an app-switch
+/// return (Universal Link or custom scheme). <code>nil</code> when checkout completed in the in-app
+/// browser, where the return never reaches the merchant’s app.
+@property (nonatomic, readonly, copy) NSURL * _Nullable returnURL;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class PaymentResult;
 /// Spreedly merchant delegate for vault outcomes (Objective-C).
 SWIFT_PROTOCOL("_TtP14SpreedlyPayPal19PayPalVaultDelegate_")
 @protocol PayPalVaultDelegate
 - (void)payPalVaultDidApprove:(PayPalVaultApproveData * _Nonnull)result;
-@optional
-/// Same outcome as <code>payPalVaultDidApprove:</code> plus the published <code>PaymentResult</code> (Swift closure parity).
-- (void)payPalVaultDidApprove:(PayPalVaultApproveData * _Nonnull)result paymentResult:(PaymentResult * _Nonnull)paymentResult;
-@required
 - (void)payPalVaultDidCancel:(PayPalVaultCancelData * _Nonnull)data;
 - (void)payPalVaultDidFailWithError:(NSError * _Nonnull)error;
-@optional
-/// Late payment-token exchange after cancel/supersede — do not treat as vault success.
-/// \param setupTokenId Session correlation only.
-///
-/// \param label Optional backend display hint.
-///
-- (void)payPalVaultDidOrphanSetupTokenId:(NSString * _Nonnull)setupTokenId label:(NSString * _Nullable)label;
 @end
 
 SWIFT_ENUM_FWD_DECL(NSInteger, PayPalVaultUsageType)
@@ -749,8 +1019,12 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal25PayPalVaultSessionOptions")
 @property (nonatomic, readonly, copy) NSString * _Nullable customerId;
 /// Optional Spreedly transaction token to correlate this vault with a pending purchase.
 @property (nonatomic, readonly, copy) NSString * _Nullable transactionToken;
-/// Objective-C initializer — <code>usagePattern</code> is passed as an optional <code>NSNumber</code> of <code>PayPalVaultUsagePattern</code> raw values.
-- (nonnull instancetype)initWithUsageType:(enum PayPalVaultUsageType)usageType usagePatternNumber:(NSNumber * _Nullable)usagePatternNumber consentDescription:(NSString * _Nullable)consentDescription customerId:(NSString * _Nullable)customerId transactionToken:(NSString * _Nullable)transactionToken OBJC_DESIGNATED_INITIALIZER;
+/// Optional buyer email/phone for PayPal shopper session.
+@property (nonatomic, readonly, strong) PayPalBuyerIdentity * _Nullable buyerIdentity;
+/// Objective-C initializer — existing selector without buyer identity.
+- (nonnull instancetype)initWithUsageType:(enum PayPalVaultUsageType)usageType usagePatternNumber:(NSNumber * _Nullable)usagePatternNumber consentDescription:(NSString * _Nullable)consentDescription customerId:(NSString * _Nullable)customerId transactionToken:(NSString * _Nullable)transactionToken;
+/// Objective-C initializer including optional buyer identity.
+- (nonnull instancetype)initWithUsageType:(enum PayPalVaultUsageType)usageType usagePatternNumber:(NSNumber * _Nullable)usagePatternNumber consentDescription:(NSString * _Nullable)consentDescription customerId:(NSString * _Nullable)customerId transactionToken:(NSString * _Nullable)transactionToken buyerIdentity:(PayPalBuyerIdentity * _Nullable)buyerIdentity;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong, getter=default) PayPalVaultSessionOptions * _Nonnull default_;)
 + (PayPalVaultSessionOptions * _Nonnull)default SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -789,17 +1063,17 @@ typedef SWIFT_ENUM(NSInteger, PayPalVaultUsageType, open) {
   PayPalVaultUsageTypePlatform = 1,
 };
 
-@class PayPalEligibilityResult;
+@interface PaymentResult (SWIFT_EXTENSION(SpreedlyPayPal))
+/// <code>providerDetails</code> as <code>PayPalPaymentDetails</code>, or nil for any other flow.
+@property (nonatomic, readonly, strong) PayPalPaymentDetails * _Nullable paypalDetails;
+@end
+
 /// Vertical stack of eligible PPCP buttons (PayPal, Pay Later, Credit, Venmo).
 /// Merchant path (KT): pass <code>visibilityConfig</code> + one <code>appearance</code> → buyer sees all eligible
 /// funding sources at once; tap delivers <code>onFundingSourceSelected</code> for <code>startCheckout</code>.
 /// Prefer this over standalone buttons so Venmo stays fail-closed.
-/// When both <code>visibilityConfig</code> and <code>eligibility</code> are set, <code>visibilityConfig</code> wins.
 SWIFT_CLASS("_TtC14SpreedlyPayPal33SpreedlyPayPalButtonContainerView")
 @interface SpreedlyPayPalButtonContainerView : UIView
-/// Eligibility from <code>findEligibleMethods</code>. Ignored when <code>visibilityConfig</code> is set.
-/// <code>nil</code> fail-closes Venmo unless <code>visibilityConfig</code> is used.
-@property (nonatomic, strong) PayPalEligibilityResult * _Nullable eligibility;
 /// Preferred way to drive button visibility. When set, the stack calls
 /// <code>findEligibleMethods(visibility:)</code> (no extra eligible event) and hides every
 /// button if the SDK is not initialized.
@@ -831,8 +1105,6 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal24SpreedlyPayPalButtonView")
 - (nonnull instancetype)initWithAppearance:(PayPalButtonAppearance * _Nonnull)appearance OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class PayPalCheckoutConfig;
-@class PayPalError;
 /// PPCP checkout entry point (native PayPal buttons + web checkout).
 /// Merchant integration steps (read aloud in KT):
 /// <ul>
@@ -863,6 +1135,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isActive;)
 + (BOOL)isActive SWIFT_WARN_UNUSED_RESULT;
 /// PayPal order id or vault setup token of the active session, if any.
 + (NSString * _Nullable)currentOrderId SWIFT_WARN_UNUSED_RESULT;
+/// Whether the buyer was handed to the PayPal app and has come back without the checkout
+/// finishing.
+/// PayPal chooses app switch or an in-app browser per device and does not report which, so
+/// this is the only way to tell “waiting in PayPal” from “the browser sheet is up” —
+/// <code>isActive</code> is true for both.
+/// Use it when your app returns to the foreground to prompt the buyer to finish in PayPal,
+/// with <code>cancel()</code> as the way out. False for in-app-browser checkout, and false again once
+/// the session reaches any terminal result.
+/// note:
+/// App switch returns need a Universal Link <code>returnURL</code>; with a custom-scheme return
+/// URL the buyer never gets back and this stays true until you call <code>cancel()</code>.
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL hasPendingAppSwitch;)
++ (BOOL)hasPendingAppSwitch SWIFT_WARN_UNUSED_RESULT;
 /// Cancels the active checkout or vault session and publishes a cancel result.
 + (void)cancel;
 /// Optional hook to call when your app returns to the foreground.
@@ -883,11 +1168,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isActive;)
 /// \param config Merchant-supplied Client ID, merchant ID, environment, and return URL.
 ///
 + (BOOL)initializeWithConfig:(PayPalCheckoutConfig * _Nonnull)config error:(NSError * _Nullable * _Nullable)error;
-/// Step (merchant): call after <code>initialize</code> to decide which buttons to show.
-/// Runs locally on-device. It does <em>not</em> ask PayPal what the buyer is entitled to, so treat
-/// the result as a rendering hint only — approval can still fail at checkout time.
-/// Venmo is fail-closed (explicit US + USD). Pay Later / Credit use amount bands above.
-+ (void)findEligibleMethodsWithCurrency:(NSString * _Nonnull)currency locale:(NSString * _Nonnull)locale country:(NSString * _Nonnull)country amount:(NSString * _Nonnull)amount completionHandler:(void (^ _Nonnull)(PayPalEligibilityResult * _Nullable, NSError * _Nullable))completionHandler;
 /// Objective-C wrapper for <code>findEligibleMethods(visibility:)</code>.
 /// Swift callers use <code>findEligibleMethods(visibility:)</code> (<code>[PayPalFundingSource]</code>). This
 /// companion exists so the ObjC selector is not overloaded on the same Swift name.
@@ -904,15 +1184,17 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSURL * _Nulla
 /// Opens PayPal’s sign-out page so you can switch buyer accounts between sandbox runs.
 /// No-op when <code>initialize(config:)</code> has not been called.
 + (void)signOutOfPayPal;
-/// Objective-C wrapper for <code>findEligibleMethods</code>.
-+ (void)findEligibleMethodsWithCurrency:(NSString * _Nonnull)currency locale:(NSString * _Nonnull)locale country:(NSString * _Nonnull)country amount:(NSString * _Nonnull)amount completion:(void (^ _Nonnull)(PayPalEligibilityResult * _Nullable, NSError * _Nullable))completion;
 /// Runs PayPal approval for an order the merchant already created. The SDK does not capture;
 /// the merchant authorizes/captures <code>orderId</code> on their backend after <code>onApprove</code>.
+/// No terminal <code>PaymentResult</code> is published — the SDK only fires <code>onApprove</code> and the
+/// <code>.approved</code> event. Publish your own result once your capture confirms.
+/// Because this entry point never captures, <code>options.commit</code> must be <code>false</code>; a <code>commit: true</code>
+/// request is rejected through <code>onError</code> rather than silently ignored.
 /// \param orderId A PayPal order id created by the merchant backend.
 ///
 /// \param fundingSource Funding source the buyer selected.
 ///
-/// \param options Per-session overrides (defaults to <code>.default</code>).
+/// \param options Per-session overrides (defaults to <code>.approvalOnly</code>).
 ///
 /// \param onApprove Called after the buyer approves.
 ///
@@ -923,7 +1205,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSURL * _Nulla
 + (void)startWithOrderId:(NSString * _Nonnull)orderId fundingSource:(enum PayPalFundingSource)fundingSource options:(PayPalCheckoutSessionOptions * _Nonnull)options onApprove:(void (^ _Nonnull)(PayPalCheckoutResult * _Nonnull))onApprove onCancel:(void (^ _Nonnull)(PayPalCancelData * _Nonnull))onCancel onError:(void (^ _Nonnull)(PayPalError * _Nonnull))onError;
 /// Objective-C entry point for a full PPCP checkout using a block-based order provider and delegate.
 + (void)startCheckoutWithFundingSource:(enum PayPalFundingSource)fundingSource options:(PayPalCheckoutSessionOptions * _Nonnull)options orderProvider:(id <PayPalOrderProviderObjC> _Nonnull)orderProvider delegate:(id <PayPalCheckoutDelegate> _Nonnull)delegate;
-/// Objective-C entry point for approving a merchant-created order. Capture is merchant-side.
+/// Objective-C entry point for approving a merchant-created order. Capture is merchant-side,
+/// so <code>options</code> must carry <code>commit: false</code> and no terminal <code>PaymentResult</code> is published.
 + (void)startWithOrderId:(NSString * _Nonnull)orderId fundingSource:(enum PayPalFundingSource)fundingSource options:(PayPalCheckoutSessionOptions * _Nonnull)options delegate:(id <PayPalCheckoutDelegate> _Nonnull)delegate;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -954,6 +1237,9 @@ SWIFT_CLASS("_TtC14SpreedlyPayPal32SpreedlyPayPalPayLaterButtonView")
 /// Custom Venmo PPCP button — PayPal PaymentButtons has no Venmo product, so Spreedly draws it.
 /// Merchant note: color stays Venmo blue; size / edges / insets mirror the PayPal buttons beside it.
 /// Prefer showing this via <code>SpreedlyPayPalButtonContainer</code> (eligibility gate) rather than alone.
+/// Public only because the concrete button views inherit from it — Swift requires a superclass
+/// to be at least as visible as its subclasses. Not intended for direct use or subclassing by
+/// merchants; use <code>SpreedlyVenmoButtonView</code> or the container.
 SWIFT_CLASS("_TtC14SpreedlyPayPal19VenmoButtonBaseView")
 @interface VenmoButtonBaseView : UIView
 /// Same contract as PayPal hosts — typically starts Venmo checkout.

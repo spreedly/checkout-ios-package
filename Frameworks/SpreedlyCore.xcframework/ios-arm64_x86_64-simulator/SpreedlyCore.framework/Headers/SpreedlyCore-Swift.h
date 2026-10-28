@@ -513,6 +513,27 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeAccountNumber = 14,
 /// Bank name form field.
   FormFieldTypeBankName = 15,
+  FormFieldTypeEmail = 16,
+  FormFieldTypeCompany = 17,
+  FormFieldTypeCountry = 18,
+  FormFieldTypePhoneNumber = 19,
+  FormFieldTypeHouseNumberOrName = 20,
+  FormFieldTypeStreet = 21,
+  FormFieldTypeStreetLine2 = 22,
+  FormFieldTypePhoneNumberCountryCode = 23,
+  FormFieldTypePhoneNumberAreaCode = 24,
+  FormFieldTypeShippingAddress1 = 25,
+  FormFieldTypeShippingAddress2 = 26,
+  FormFieldTypeShippingCity = 27,
+  FormFieldTypeShippingState = 28,
+  FormFieldTypeShippingZip = 29,
+  FormFieldTypeShippingCountry = 30,
+  FormFieldTypeShippingPhoneNumber = 31,
+  FormFieldTypeShippingHouseNumberOrName = 32,
+  FormFieldTypeShippingStreet = 33,
+  FormFieldTypeShippingStreetLine2 = 34,
+  FormFieldTypeShippingPhoneNumberCountryCode = 35,
+  FormFieldTypeShippingPhoneNumberAreaCode = 36,
 };
 
 /// Manages the complete gateway-specific 3DS lifecycle
@@ -584,148 +605,6 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypeSprel = 5,
 };
 
-SWIFT_ENUM_FWD_DECL(NSInteger, PayPalEnvironment)
-@class NSURL;
-/// Configuration for native PayPal Commerce Platform (PPCP) checkout.
-/// Merchants obtain a PayPal Client ID and merchant account ID from the PayPal developer dashboard.
-/// Order creation and capture remain on the merchant backend; the SDK never holds a client secret.
-SWIFT_CLASS("_TtC12SpreedlyCore20PayPalCheckoutConfig")
-@interface PayPalCheckoutConfig : NSObject
-/// PayPal REST application Client ID (sandbox or live).
-@property (nonatomic, readonly, copy) NSString * _Nonnull clientId;
-/// PayPal merchant account identifier required by PayPal’s iOS SDK (<code>CoreConfig</code>).
-@property (nonatomic, readonly, copy) NSString * _Nonnull merchantId;
-/// Sandbox or production PayPal environment.
-@property (nonatomic, readonly) enum PayPalEnvironment environment;
-/// Return URL registered for app-switch / Universal Link return after PayPal checkout.
-@property (nonatomic, readonly, copy) NSURL * _Nonnull returnURL;
-/// Optional merchant name shown in checkout chrome.
-@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
-/// Optional BCP-47 locale (e.g. <code>en_US</code>).
-@property (nonatomic, readonly, copy) NSString * _Nullable locale;
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId merchantId:(NSString * _Nonnull)merchantId environment:(enum PayPalEnvironment)environment returnURL:(NSURL * _Nonnull)returnURL merchantDisplayName:(NSString * _Nonnull)merchantDisplayName locale:(NSString * _Nullable)locale OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-SWIFT_ENUM_FWD_DECL(NSInteger, PayPalFundingSource)
-/// Per–funding-source eligibility details returned by <code>findEligibleMethods</code>.
-SWIFT_CLASS("_TtC12SpreedlyCore24PayPalEligibilityDetails")
-@interface PayPalEligibilityDetails : NSObject
-/// Funding source these details describe.
-@property (nonatomic, readonly) enum PayPalFundingSource fundingSource;
-/// Whether the funding source is eligible for the supplied currency, amount, and (Venmo) country.
-@property (nonatomic, readonly) BOOL isEligible;
-/// Pay Later product code hint when eligible (e.g. <code>"PAY_LATER_US"</code>); nil otherwise.
-@property (nonatomic, readonly, copy) NSString * _Nullable payLaterProductCode;
-/// Normalized ISO 3166-1 alpha-2 country code used for the evaluation.
-@property (nonatomic, readonly, copy) NSString * _Nullable countryCode;
-- (nonnull instancetype)initWithFundingSource:(enum PayPalFundingSource)fundingSource isEligible:(BOOL)isEligible payLaterProductCode:(NSString * _Nullable)payLaterProductCode countryCode:(NSString * _Nullable)countryCode OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-/// Which PPCP funding sources to offer for a given cart.
-/// Computed on-device from currency, country, and amount — PayPal’s iOS SDK has no eligibility
-/// endpoint to ask. Use it to decide which buttons to draw; approval can still fail at checkout.
-SWIFT_CLASS("_TtC12SpreedlyCore23PayPalEligibilityResult")
-@interface PayPalEligibilityResult : NSObject
-- (nonnull instancetype)initWithDetails:(NSArray<PayPalEligibilityDetails *> * _Nonnull)details OBJC_DESIGNATED_INITIALIZER;
-/// Returns whether the given funding source is eligible.
-- (BOOL)isEligible:(enum PayPalFundingSource)fundingSource SWIFT_WARN_UNUSED_RESULT;
-/// Returns eligibility details for a funding source, if evaluated.
-- (PayPalEligibilityDetails * _Nullable)detailsFor:(enum PayPalFundingSource)fundingSource SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-/// PayPal REST environment for PPCP checkout.
-typedef SWIFT_ENUM(NSInteger, PayPalEnvironment, open) {
-  PayPalEnvironmentSandbox = 0,
-  PayPalEnvironmentProduction = 1,
-};
-
-SWIFT_ENUM_FWD_DECL(NSInteger, PayPalErrorCode)
-@class NSCoder;
-/// Typed PPCP error surfaced to merchants. Bridges to <code>NSError</code> for Objective-C.
-/// <code>recoveryHint</code> carries an actionable, non-sensitive suggestion (retry, choose another
-/// method, etc.). <code>isCanceled</code> lets callers branch on buyer cancellation without matching codes.
-SWIFT_CLASS("_TtC12SpreedlyCore11PayPalError")
-@interface PayPalError : NSError
-/// Actionable, user-safe recovery suggestion, when one applies.
-@property (nonatomic, readonly, copy) NSString * _Nullable recoveryHint;
-/// <code>true</code> when the failure is a buyer cancellation rather than an error.
-@property (nonatomic, readonly) BOOL isCanceled;
-/// Creates a typed PPCP error.
-/// \param code The failure category.
-///
-/// \param message User-safe description stored under <code>NSLocalizedDescriptionKey</code>.
-///
-/// \param recoveryHint Optional actionable suggestion for the buyer/merchant.
-///
-/// \param underlying Optional underlying error stored under <code>NSUnderlyingErrorKey</code>.
-///
-- (nonnull instancetype)initWithCode:(enum PayPalErrorCode)code message:(NSString * _Nonnull)message recoveryHint:(NSString * _Nullable)recoveryHint underlying:(NSError * _Nullable)underlying OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithDomain:(NSString * _Nonnull)domain code:(NSInteger)code userInfo:(NSDictionary<NSString *, id> * _Nullable)dict SWIFT_UNAVAILABLE;
-@end
-
-/// Categorizes a PPCP checkout failure for merchant handling and recovery.
-typedef SWIFT_ENUM(NSInteger, PayPalErrorCode, open) {
-/// Connectivity or transport failure reaching PayPal or the merchant backend.
-  PayPalErrorCodeNetwork = 0,
-/// Buyer dismissed the PayPal web checkout.
-  PayPalErrorCodeCanceled = 1,
-/// Invalid input or configuration (e.g. missing order id, bad return URL).
-  PayPalErrorCodeValidation = 2,
-/// PayPal or backend returned a server-side failure.
-  PayPalErrorCodeServer = 3,
-/// Unclassified failure.
-  PayPalErrorCodeUnknown = 4,
-/// Vault browser / web-sheet presentation failed (ASWebAuthenticationSession / web session).
-/// Produced by vault-flow mapping of PayPal <code>webSessionError</code> and presentation failures.
-  PayPalErrorCodeVaultBrowserSwitchFailed = 5,
-/// Vault session timed out before payment-token exchange completed.
-/// Produced by vault-flow mapping of <code>URLError.timedOut</code>.
-  PayPalErrorCodeVaultSessionExpired = 6,
-/// Merchant provider returned an empty or missing setup token id.
-  PayPalErrorCodeVaultSetupTokenMissing = 7,
-/// Merchant provider failed to exchange setup token for a payment token.
-  PayPalErrorCodeVaultPaymentTokenExchangeFailed = 8,
-/// A previous PayPal session was interrupted (process death). Reconcile server-side before retrying.
-  PayPalErrorCodeProcessDeathRecoveryPending = 9,
-/// Process-death recovery storage could not be read or written.
-  PayPalErrorCodeProcessDeathRecoveryStorageUnavailable = 10,
-/// <code>initialize(config:)</code> was not called before starting a session.
-  PayPalErrorCodeNotInitialized = 11,
-/// PayPal checkout config failed validation.
-  PayPalErrorCodeInvalidConfig = 12,
-/// Selected funding source is not eligible for this cart.
-  PayPalErrorCodeIneligibleFundingSource = 13,
-/// Merchant <code>createOrder</code> failed or returned an empty order id.
-  PayPalErrorCodeOrderCreationFailed = 14,
-/// Merchant <code>captureOrder</code> failed.
-  PayPalErrorCodeCaptureFailed = 15,
-/// PayPal web-sheet / browser presentation failed.
-  PayPalErrorCodeBrowserSwitchFailed = 16,
-/// Return URL / callback validation failed.
-  PayPalErrorCodeReturnValidationFailed = 17,
-/// Venmo is not available for this session.
-  PayPalErrorCodeVenmoNotSupported = 18,
-/// PayPal <code>createPayPalSession()</code> was not called, or session creation failed, before <code>start</code>/<code>vault</code>.
-  PayPalErrorCodeSessionNotStarted = 19,
-/// PayPal app-switch return failed before buyer approval could complete.
-  PayPalErrorCodeAppSwitchFailed = 20,
-};
-
-/// Funding source that drives which PPCP checkout experience and button a merchant presents.
-typedef SWIFT_ENUM(NSInteger, PayPalFundingSource, open) {
-  PayPalFundingSourcePaypal = 0,
-  PayPalFundingSourcePayLater = 1,
-  PayPalFundingSourceCredit = 2,
-  PayPalFundingSourceVenmo = 3,
-};
-
 /// Represents the immediate result of a payment processing attempt.
 /// Returned synchronously from processPayment().
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
@@ -790,6 +669,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 - (NSString * _Nonnull)getDescription SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class NSDictionary;
+@protocol ProviderPaymentDetails;
 /// Represents the various states and outcomes of a payment process.
 /// This class works with both Swift and Objective-C, providing
 /// a unified API for payment result handling.
@@ -881,25 +762,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// May be nil if device data collection failed (non-fatal).
 /// Only present for Braintree payment flows.
 @property (nonatomic, readonly, copy) NSString * _Nullable deviceData;
-/// PayPal order id approved by the buyer during native PPCP checkout.
-/// The merchant backend uses this to authorize or capture the order.
-/// Only present for native PayPal (PPCP) payment flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable orderId;
-/// PayPal payer id returned when the buyer approves a native PPCP order.
-/// Only present for native PayPal (PPCP) payment flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable payerId;
-/// Funding source (<code>paypal</code>, <code>paylater</code>, <code>credit</code>, <code>venmo</code>) used for a native PPCP order.
-/// Only present for native PayPal (PPCP) payment flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable fundingSource;
-/// PayPal payment token id (<code>vault_id</code>) from a purchase-later vault session or recurring report.
-/// Only present for native PayPal (PPCP) vault / recurring flows — never log the raw value.
-@property (nonatomic, readonly, copy) NSString * _Nullable vaultId;
-/// PayPal customer id associated with a vaulted payment token, when returned.
-/// Only present for native PayPal (PPCP) vault / recurring flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable customerId;
-/// Spreedly payment-method type for native PayPal flows:
-/// <code>paypal_ppcp</code>, <code>paypal_vault</code>, or <code>paypal_vault_recurring</code>.
+/// Stable payment-method type for provider flows that publish through the generic
+/// <code>success(token:state:paymentMethodType:providerDetails:)</code> overload
+/// (for example <code>paypal_ppcp</code>). Nil for card tokenization and Braintree nonce results.
 @property (nonatomic, readonly, copy) NSString * _Nullable paymentMethodType;
+/// Provider-specific data for the flow that produced this result, or nil when the flow
+/// has none. Each optional module ships its own <code>ProviderPaymentDetails</code> implementation
+/// (for example <code>PayPalPaymentDetails</code> in SpreedlyPayPal); check its type before reading fields.
+@property (nonatomic, readonly, strong) id <ProviderPaymentDetails> _Nullable providerDetails;
 /// Detailed failure information (only available for failed payments).
 @property (nonatomic, readonly, strong) FailedDetails * _Nullable failureDetails;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -918,32 +788,30 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// \param state Transaction state (typically “pending” for Braintree flows)
 ///
 + (PaymentResult * _Nonnull)completedWithToken:(NSString * _Nonnull)token nonce:(NSString * _Nonnull)nonce deviceData:(NSString * _Nullable)deviceData state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
-/// Creates a successful payment result for native PayPal (PPCP) checkout.
-/// The order is approved by the buyer; the merchant backend authorizes or captures it.
-/// \param transactionToken Spreedly transaction token correlating the checkout, when available
+/// Creates a successful payment result for an optional provider module.
+/// Use this when success carries a <code>paymentMethodType</code> and optional
+/// <code>providerDetails</code>. Card tokenization continues to use
+/// <code>success(token:paymentResponse:shouldRetain:)</code>. Braintree continues to use
+/// <code>completed(token:nonce:deviceData:state:)</code>.
+/// \param token Optional correlation token (for example a Spreedly transaction token). May be nil.
 ///
-/// \param orderId PayPal order id approved by the buyer
+/// \param state Transaction state the publisher knows (for example <code>"succeeded"</code>).
 ///
-/// \param payerId PayPal payer id from the approval
+/// \param paymentMethodType Stable type string owned by the publishing module.
 ///
-/// \param fundingSource Funding source identifier (<code>paypal</code>, <code>paylater</code>, <code>credit</code>, <code>venmo</code>)
+/// \param providerDetails Module-owned payload, or nil when the flow has none.
 ///
-/// \param state Transaction state (typically “pending” until the backend captures)
-///
-+ (PaymentResult * _Nonnull)paypalCompletedWithTransactionToken:(NSString * _Nullable)transactionToken orderId:(NSString * _Nonnull)orderId payerId:(NSString * _Nullable)payerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
-/// Same as <code>paypalCompleted</code> with an explicit <code>paymentMethodType</code>
-/// (<code>paypal_ppcp</code>, <code>paypal_vault</code>, or <code>paypal_vault_recurring</code>).
-+ (PaymentResult * _Nonnull)paypalCompletedWithTransactionToken:(NSString * _Nullable)transactionToken orderId:(NSString * _Nonnull)orderId payerId:(NSString * _Nullable)payerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state paymentMethodType:(NSString * _Nonnull)paymentMethodType SWIFT_WARN_UNUSED_RESULT;
-/// Creates a successful payment result after purchase-later vault consent and payment-token exchange.
-/// warning:
-/// Deprecated. Vault PPCP outcomes use <code>paypalCompleted</code> with <code>vaultId</code> / <code>customerId</code> left nil.
-+ (PaymentResult * _Nonnull)paypalVaultApprovedWithTransactionToken:(NSString * _Nullable)transactionToken vaultId:(NSString * _Nonnull)vaultId customerId:(NSString * _Nullable)customerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("Use paypalCompleted. Vault identity lives on the merchant backend.");
-/// Creates a payment result for a merchant-reported native PayPal (PPCP) recurring charge outcome.
-/// warning:
-/// Deprecated. Recurring PPCP outcomes use <code>paypalCompleted</code> with <code>vaultId</code> left nil.
-+ (PaymentResult * _Nonnull)paypalRecurringCompletedWithOrderId:(NSString * _Nullable)orderId vaultId:(NSString * _Nonnull)vaultId customerId:(NSString * _Nullable)customerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("Use paypalCompleted. Recurring identity lives on the merchant backend.");
++ (PaymentResult * _Nonnull)successWithToken:(NSString * _Nullable)token state:(NSString * _Nullable)state paymentMethodType:(NSString * _Nullable)paymentMethodType providerDetails:(id <ProviderPaymentDetails> _Nullable)providerDetails SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// Creates a canceled payment result that records which flow the buyer abandoned.
+/// Subscribers on the shared result stream see cancels from every module, so a publisher that
+/// knows its flow should say so; without it a merchant cannot tell a card cancel from a
+/// PPCP vault cancel.
+/// \param paymentMethodType Stable type string owned by the publishing module
+/// (for example <code>paypal_ppcp</code>), or nil when the publisher has none.
+///
++ (PaymentResult * _Nonnull)canceledWithPaymentMethodType:(NSString * _Nullable)paymentMethodType SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.
 + (PaymentResult * _Nonnull)failureWithDetails:(FailedDetails * _Nonnull)details SWIFT_WARN_UNUSED_RESULT;
 /// Creates a Failed result from a generic Error.
@@ -960,6 +828,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 - (nonnull instancetype)initWithFieldName:(NSString * _Nonnull)fieldName errorKey:(NSString * _Nullable)errorKey errorMessage:(NSString * _Nullable)errorMessage OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Provider-specific data attached to <code>PaymentResult/providerDetails</code>.
+/// Optional modules implement this with their own type so SpreedlyCore never has to know
+/// about a specific provider. Implementations must keep identifiers out of <code>description</code>.
+SWIFT_PROTOCOL("_TtP12SpreedlyCore22ProviderPaymentDetails_")
+@protocol ProviderPaymentDetails <NSObject>
 @end
 
 /// Identifies the integration surface using the Spreedly checkout SDK.
@@ -1023,6 +898,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityMana
 - (NSString * _Nonnull)secureClearedString:(NSString * _Nonnull)string SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class SpreedlyCustomValidationResult;
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyRecacheDelegate;
@@ -1030,6 +906,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityMana
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 SWIFT_ENUM_FWD_DECL(NSInteger, ValidationParam)
+@class NSURL;
 @class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
@@ -1057,6 +934,16 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isInitialized;)
 + (BOOL)isInitialized SWIFT_WARN_UNUSED_RESULT;
 /// Objective-C entry point for [areAllFieldsValid(fieldTypes:)] — pass <code>NSNumber</code> values of <code>FormFieldType</code> raw values.
 + (BOOL)areAllFieldsValidWithFieldTypeRawValues:(NSArray<NSNumber *> * _Nonnull)fieldTypeRawValues SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C: register a custom validator. A <code>nil</code> block result fails closed (generic invalid).
+/// Pass a canonical wire key (e.g. <code>"zip"</code>, <code>"first_name"</code>). See <code>CustomValidatableFieldName</code>.
+/// In the <code>fields</code> dictionary, prefer <code>SpreedlyCustomValidatableField</code> constants as keys.
+- (void)addValidationForField:(NSString * _Nonnull)fieldName validator:(SpreedlyCustomValidationResult * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSDictionary<NSString *, NSString *> * _Nonnull))validator;
+/// Objective-C: remove a custom validator by wire-key string (or alias). Prefer <code>removeValidation(field:)</code> in Swift.
+- (void)removeValidationForField:(NSString * _Nonnull)fieldName;
+/// Objective-C: run registered custom validators before submit.
+/// Pass the same dictionary you pass to <code>createCreditCardObjC…</code>. Keys may be <code>SpreedlyCustomValidatableField</code>
+/// wire keys (<code>first_name</code>) or <code>AdditionalField</code> raw values (<code>firstName</code>). Returns <code>YES</code> when every validator passed.
+- (BOOL)runCustomValidationBeforeSubmitWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields SWIFT_WARN_UNUSED_RESULT;
 /// Objective-C: <code>hostedCardDisplayState.cardNumberFormat</code> as <code>CardNumberFormat</code> raw value.
 @property (nonatomic, readonly) NSInteger hostedCardDisplayCardNumberFormatRawValue;
 /// Manager for custom parameters sent with payment method creation requests.
@@ -1357,6 +1244,97 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Objective-C constants for custom-validator <code>fields</code> dictionary keys (canonical wire values).
+/// Prefer these over string literals so typos fail at compile time.
+SWIFT_CLASS("_TtC12SpreedlyCore30SpreedlyCustomValidatableField")
+@interface SpreedlyCustomValidatableField : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull firstName;)
++ (NSString * _Nonnull)firstName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull lastName;)
++ (NSString * _Nonnull)lastName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull fullName;)
++ (NSString * _Nonnull)fullName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull email;)
++ (NSString * _Nonnull)email SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull company;)
++ (NSString * _Nonnull)company SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull addressLine1;)
++ (NSString * _Nonnull)addressLine1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull addressLine2;)
++ (NSString * _Nonnull)addressLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull city;)
++ (NSString * _Nonnull)city SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull state;)
++ (NSString * _Nonnull)state SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull zipCode;)
++ (NSString * _Nonnull)zipCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull country;)
++ (NSString * _Nonnull)country SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumber;)
++ (NSString * _Nonnull)phoneNumber SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull houseNumberOrName;)
++ (NSString * _Nonnull)houseNumberOrName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull street;)
++ (NSString * _Nonnull)street SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull streetLine2;)
++ (NSString * _Nonnull)streetLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumberCountryCode;)
++ (NSString * _Nonnull)phoneNumberCountryCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumberAreaCode;)
++ (NSString * _Nonnull)phoneNumberAreaCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingAddressLine1;)
++ (NSString * _Nonnull)shippingAddressLine1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingAddressLine2;)
++ (NSString * _Nonnull)shippingAddressLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingCity;)
++ (NSString * _Nonnull)shippingCity SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingState;)
++ (NSString * _Nonnull)shippingState SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingZipCode;)
++ (NSString * _Nonnull)shippingZipCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingCountry;)
++ (NSString * _Nonnull)shippingCountry SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumber;)
++ (NSString * _Nonnull)shippingPhoneNumber SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingHouseNumberOrName;)
++ (NSString * _Nonnull)shippingHouseNumberOrName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingStreet;)
++ (NSString * _Nonnull)shippingStreet SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingStreetLine2;)
++ (NSString * _Nonnull)shippingStreetLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumberCountryCode;)
++ (NSString * _Nonnull)shippingPhoneNumberCountryCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumberAreaCode;)
++ (NSString * _Nonnull)shippingPhoneNumberAreaCode SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// Verdict returned by a merchant custom field validator.
+/// <ul>
+///   <li>
+///     <code>valid</code>: the extra rule passed (<code>errorMessage</code> is ignored)
+///   </li>
+///   <li>
+///     <code>invalid</code>: the field fails; a non-empty <code>errorMessage</code> is shown in field chrome
+///     and tokenize/preflight failures. Nil or blank falls back to the SDK generic
+///     <code>"{label} is invalid"</code>. Telemetry never includes merchant message text.
+///   </li>
+/// </ul>
+SWIFT_CLASS("_TtC12SpreedlyCore30SpreedlyCustomValidationResult")
+@interface SpreedlyCustomValidationResult : NSObject
+@property (nonatomic, readonly) BOOL isValid;
+/// Shown in UI when non-empty. Nil/blank uses the SDK generic invalid label.
+/// Never written to telemetry or SDK logs.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
+- (nonnull instancetype)initWithIsValid:(BOOL)isValid errorMessage:(NSString * _Nullable)errorMessage OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyCustomValidationResult * _Nonnull valid;)
++ (SpreedlyCustomValidationResult * _Nonnull)valid SWIFT_WARN_UNUSED_RESULT;
++ (SpreedlyCustomValidationResult * _Nonnull)invalid:(NSString * _Nullable)message SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Preset logging configurations for common environments.
 /// Use with <code>Spreedly.configureLogging(_:)</code>. Fluent builders return new copies.
 /// seealso:
@@ -1454,6 +1432,9 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)hostedFieldInteractionWithFieldType:(NSString * _Nonnull)fieldType action:(NSString * _Nonnull)action;
 + (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount;
 + (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount module:(NSString * _Nonnull)module_;
++ (void)customValidatorRegisteredWithFieldName:(NSString * _Nonnull)fieldName replaced:(BOOL)replaced;
++ (void)customValidatorFailedWithFieldName:(NSString * _Nonnull)fieldName;
++ (void)customValidatorErrorWithFieldName:(NSString * _Nonnull)fieldName reason:(NSString * _Nonnull)reason;
 + (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType;
 + (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType gatewayType:(NSString * _Nullable)gatewayType;
 + (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
@@ -1499,15 +1480,32 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 @property (nonatomic, readonly) BOOL resetFields;
 @property (nonatomic, readonly) BOOL forceFieldErrorDisplay;
 @property (nonatomic, readonly) BOOL spreedlyParamsUpdated;
+/// Number of fields currently showing a custom-validator message.
+/// Exposed for Objective-C, which cannot see <code>customValidationErrors</code> because a Swift
+/// dictionary keyed by an enum does not bridge. Reads the lock-protected mirror, so it is
+/// safe from any thread and never observes a value that has not landed on the published
+/// property yet.
+@property (nonatomic, readonly) NSInteger customValidationErrorCount;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-/// Unregister a field from tracking
+/// Unregister a field from tracking.
+/// Also drops any recorded custom-validation message for the field: the aggregate
+/// checks read that record, and a stale entry would otherwise resurface as red text
+/// when the field remounts.
 - (void)unregisterFieldWithType:(enum FormFieldType)type;
-/// Check if all registered SPLTextField instances are valid
+/// Check if all registered SPLTextField instances are valid.
+/// Built-in rules plus the <em>last recorded</em> custom-validator verdict. This does not
+/// invoke merchant validator closures — call
+/// <code>Spreedly/runCustomValidationBeforeSubmit(additionalFields:)</code> first when you need
+/// them re-evaluated. Card tokenize runs its own pass regardless.
 ///
 /// returns:
 /// True if all registered fields are valid, false otherwise
 - (BOOL)areAllFieldsValid SWIFT_WARN_UNUSED_RESULT;
+/// Non-PCI field values keyed by Spreedly param name. Empty strings are included so
+/// optional fields can still run a custom validator (conditional required).
+- (NSDictionary<NSString *, NSString *> * _Nonnull)nonSensitiveFieldSnapshot SWIFT_WARN_UNUSED_RESULT;
+- (void)setCustomValidationError:(NSString * _Nullable)message for:(enum FormFieldType)fieldType;
 /// Objective-C: invalid registered fields as <code>FormFieldType</code> raw values (<code>NSNumber</code>).
 - (NSArray<NSNumber *> * _Nonnull)getInvalidFieldTypes SWIFT_WARN_UNUSED_RESULT;
 /// Get count of registered fields
@@ -1545,6 +1543,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 - (void)toggleMask;
 /// Restores default hosted-field display state.
 - (void)resetHostedCardDisplayState;
+/// Clears custom-validator chrome errors (sheet dismiss / remount / session reset).
+- (void)clearCustomValidationErrors;
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
@@ -2172,6 +2172,27 @@ typedef SWIFT_ENUM(NSInteger, FormFieldType, open) {
   FormFieldTypeAccountNumber = 14,
 /// Bank name form field.
   FormFieldTypeBankName = 15,
+  FormFieldTypeEmail = 16,
+  FormFieldTypeCompany = 17,
+  FormFieldTypeCountry = 18,
+  FormFieldTypePhoneNumber = 19,
+  FormFieldTypeHouseNumberOrName = 20,
+  FormFieldTypeStreet = 21,
+  FormFieldTypeStreetLine2 = 22,
+  FormFieldTypePhoneNumberCountryCode = 23,
+  FormFieldTypePhoneNumberAreaCode = 24,
+  FormFieldTypeShippingAddress1 = 25,
+  FormFieldTypeShippingAddress2 = 26,
+  FormFieldTypeShippingCity = 27,
+  FormFieldTypeShippingState = 28,
+  FormFieldTypeShippingZip = 29,
+  FormFieldTypeShippingCountry = 30,
+  FormFieldTypeShippingPhoneNumber = 31,
+  FormFieldTypeShippingHouseNumberOrName = 32,
+  FormFieldTypeShippingStreet = 33,
+  FormFieldTypeShippingStreetLine2 = 34,
+  FormFieldTypeShippingPhoneNumberCountryCode = 35,
+  FormFieldTypeShippingPhoneNumberAreaCode = 36,
 };
 
 /// Manages the complete gateway-specific 3DS lifecycle
@@ -2243,148 +2264,6 @@ typedef SWIFT_ENUM(NSInteger, OffsitePaymentMethodType, open) {
   OffsitePaymentMethodTypeSprel = 5,
 };
 
-SWIFT_ENUM_FWD_DECL(NSInteger, PayPalEnvironment)
-@class NSURL;
-/// Configuration for native PayPal Commerce Platform (PPCP) checkout.
-/// Merchants obtain a PayPal Client ID and merchant account ID from the PayPal developer dashboard.
-/// Order creation and capture remain on the merchant backend; the SDK never holds a client secret.
-SWIFT_CLASS("_TtC12SpreedlyCore20PayPalCheckoutConfig")
-@interface PayPalCheckoutConfig : NSObject
-/// PayPal REST application Client ID (sandbox or live).
-@property (nonatomic, readonly, copy) NSString * _Nonnull clientId;
-/// PayPal merchant account identifier required by PayPal’s iOS SDK (<code>CoreConfig</code>).
-@property (nonatomic, readonly, copy) NSString * _Nonnull merchantId;
-/// Sandbox or production PayPal environment.
-@property (nonatomic, readonly) enum PayPalEnvironment environment;
-/// Return URL registered for app-switch / Universal Link return after PayPal checkout.
-@property (nonatomic, readonly, copy) NSURL * _Nonnull returnURL;
-/// Optional merchant name shown in checkout chrome.
-@property (nonatomic, readonly, copy) NSString * _Nonnull merchantDisplayName;
-/// Optional BCP-47 locale (e.g. <code>en_US</code>).
-@property (nonatomic, readonly, copy) NSString * _Nullable locale;
-- (nonnull instancetype)initWithClientId:(NSString * _Nonnull)clientId merchantId:(NSString * _Nonnull)merchantId environment:(enum PayPalEnvironment)environment returnURL:(NSURL * _Nonnull)returnURL merchantDisplayName:(NSString * _Nonnull)merchantDisplayName locale:(NSString * _Nullable)locale OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-SWIFT_ENUM_FWD_DECL(NSInteger, PayPalFundingSource)
-/// Per–funding-source eligibility details returned by <code>findEligibleMethods</code>.
-SWIFT_CLASS("_TtC12SpreedlyCore24PayPalEligibilityDetails")
-@interface PayPalEligibilityDetails : NSObject
-/// Funding source these details describe.
-@property (nonatomic, readonly) enum PayPalFundingSource fundingSource;
-/// Whether the funding source is eligible for the supplied currency, amount, and (Venmo) country.
-@property (nonatomic, readonly) BOOL isEligible;
-/// Pay Later product code hint when eligible (e.g. <code>"PAY_LATER_US"</code>); nil otherwise.
-@property (nonatomic, readonly, copy) NSString * _Nullable payLaterProductCode;
-/// Normalized ISO 3166-1 alpha-2 country code used for the evaluation.
-@property (nonatomic, readonly, copy) NSString * _Nullable countryCode;
-- (nonnull instancetype)initWithFundingSource:(enum PayPalFundingSource)fundingSource isEligible:(BOOL)isEligible payLaterProductCode:(NSString * _Nullable)payLaterProductCode countryCode:(NSString * _Nullable)countryCode OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-/// Which PPCP funding sources to offer for a given cart.
-/// Computed on-device from currency, country, and amount — PayPal’s iOS SDK has no eligibility
-/// endpoint to ask. Use it to decide which buttons to draw; approval can still fail at checkout.
-SWIFT_CLASS("_TtC12SpreedlyCore23PayPalEligibilityResult")
-@interface PayPalEligibilityResult : NSObject
-- (nonnull instancetype)initWithDetails:(NSArray<PayPalEligibilityDetails *> * _Nonnull)details OBJC_DESIGNATED_INITIALIZER;
-/// Returns whether the given funding source is eligible.
-- (BOOL)isEligible:(enum PayPalFundingSource)fundingSource SWIFT_WARN_UNUSED_RESULT;
-/// Returns eligibility details for a funding source, if evaluated.
-- (PayPalEligibilityDetails * _Nullable)detailsFor:(enum PayPalFundingSource)fundingSource SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-/// PayPal REST environment for PPCP checkout.
-typedef SWIFT_ENUM(NSInteger, PayPalEnvironment, open) {
-  PayPalEnvironmentSandbox = 0,
-  PayPalEnvironmentProduction = 1,
-};
-
-SWIFT_ENUM_FWD_DECL(NSInteger, PayPalErrorCode)
-@class NSCoder;
-/// Typed PPCP error surfaced to merchants. Bridges to <code>NSError</code> for Objective-C.
-/// <code>recoveryHint</code> carries an actionable, non-sensitive suggestion (retry, choose another
-/// method, etc.). <code>isCanceled</code> lets callers branch on buyer cancellation without matching codes.
-SWIFT_CLASS("_TtC12SpreedlyCore11PayPalError")
-@interface PayPalError : NSError
-/// Actionable, user-safe recovery suggestion, when one applies.
-@property (nonatomic, readonly, copy) NSString * _Nullable recoveryHint;
-/// <code>true</code> when the failure is a buyer cancellation rather than an error.
-@property (nonatomic, readonly) BOOL isCanceled;
-/// Creates a typed PPCP error.
-/// \param code The failure category.
-///
-/// \param message User-safe description stored under <code>NSLocalizedDescriptionKey</code>.
-///
-/// \param recoveryHint Optional actionable suggestion for the buyer/merchant.
-///
-/// \param underlying Optional underlying error stored under <code>NSUnderlyingErrorKey</code>.
-///
-- (nonnull instancetype)initWithCode:(enum PayPalErrorCode)code message:(NSString * _Nonnull)message recoveryHint:(NSString * _Nullable)recoveryHint underlying:(NSError * _Nullable)underlying OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithDomain:(NSString * _Nonnull)domain code:(NSInteger)code userInfo:(NSDictionary<NSString *, id> * _Nullable)dict SWIFT_UNAVAILABLE;
-@end
-
-/// Categorizes a PPCP checkout failure for merchant handling and recovery.
-typedef SWIFT_ENUM(NSInteger, PayPalErrorCode, open) {
-/// Connectivity or transport failure reaching PayPal or the merchant backend.
-  PayPalErrorCodeNetwork = 0,
-/// Buyer dismissed the PayPal web checkout.
-  PayPalErrorCodeCanceled = 1,
-/// Invalid input or configuration (e.g. missing order id, bad return URL).
-  PayPalErrorCodeValidation = 2,
-/// PayPal or backend returned a server-side failure.
-  PayPalErrorCodeServer = 3,
-/// Unclassified failure.
-  PayPalErrorCodeUnknown = 4,
-/// Vault browser / web-sheet presentation failed (ASWebAuthenticationSession / web session).
-/// Produced by vault-flow mapping of PayPal <code>webSessionError</code> and presentation failures.
-  PayPalErrorCodeVaultBrowserSwitchFailed = 5,
-/// Vault session timed out before payment-token exchange completed.
-/// Produced by vault-flow mapping of <code>URLError.timedOut</code>.
-  PayPalErrorCodeVaultSessionExpired = 6,
-/// Merchant provider returned an empty or missing setup token id.
-  PayPalErrorCodeVaultSetupTokenMissing = 7,
-/// Merchant provider failed to exchange setup token for a payment token.
-  PayPalErrorCodeVaultPaymentTokenExchangeFailed = 8,
-/// A previous PayPal session was interrupted (process death). Reconcile server-side before retrying.
-  PayPalErrorCodeProcessDeathRecoveryPending = 9,
-/// Process-death recovery storage could not be read or written.
-  PayPalErrorCodeProcessDeathRecoveryStorageUnavailable = 10,
-/// <code>initialize(config:)</code> was not called before starting a session.
-  PayPalErrorCodeNotInitialized = 11,
-/// PayPal checkout config failed validation.
-  PayPalErrorCodeInvalidConfig = 12,
-/// Selected funding source is not eligible for this cart.
-  PayPalErrorCodeIneligibleFundingSource = 13,
-/// Merchant <code>createOrder</code> failed or returned an empty order id.
-  PayPalErrorCodeOrderCreationFailed = 14,
-/// Merchant <code>captureOrder</code> failed.
-  PayPalErrorCodeCaptureFailed = 15,
-/// PayPal web-sheet / browser presentation failed.
-  PayPalErrorCodeBrowserSwitchFailed = 16,
-/// Return URL / callback validation failed.
-  PayPalErrorCodeReturnValidationFailed = 17,
-/// Venmo is not available for this session.
-  PayPalErrorCodeVenmoNotSupported = 18,
-/// PayPal <code>createPayPalSession()</code> was not called, or session creation failed, before <code>start</code>/<code>vault</code>.
-  PayPalErrorCodeSessionNotStarted = 19,
-/// PayPal app-switch return failed before buyer approval could complete.
-  PayPalErrorCodeAppSwitchFailed = 20,
-};
-
-/// Funding source that drives which PPCP checkout experience and button a merchant presents.
-typedef SWIFT_ENUM(NSInteger, PayPalFundingSource, open) {
-  PayPalFundingSourcePaypal = 0,
-  PayPalFundingSourcePayLater = 1,
-  PayPalFundingSourceCredit = 2,
-  PayPalFundingSourceVenmo = 3,
-};
-
 /// Represents the immediate result of a payment processing attempt.
 /// Returned synchronously from processPayment().
 /// while the actual payment completion, failure, or cancellation is communicated asynchronously
@@ -2449,6 +2328,8 @@ SWIFT_CLASS("_TtC12SpreedlyCore23PaymentProcessingResult")
 - (NSString * _Nonnull)getDescription SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class NSDictionary;
+@protocol ProviderPaymentDetails;
 /// Represents the various states and outcomes of a payment process.
 /// This class works with both Swift and Objective-C, providing
 /// a unified API for payment result handling.
@@ -2540,25 +2421,14 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// May be nil if device data collection failed (non-fatal).
 /// Only present for Braintree payment flows.
 @property (nonatomic, readonly, copy) NSString * _Nullable deviceData;
-/// PayPal order id approved by the buyer during native PPCP checkout.
-/// The merchant backend uses this to authorize or capture the order.
-/// Only present for native PayPal (PPCP) payment flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable orderId;
-/// PayPal payer id returned when the buyer approves a native PPCP order.
-/// Only present for native PayPal (PPCP) payment flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable payerId;
-/// Funding source (<code>paypal</code>, <code>paylater</code>, <code>credit</code>, <code>venmo</code>) used for a native PPCP order.
-/// Only present for native PayPal (PPCP) payment flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable fundingSource;
-/// PayPal payment token id (<code>vault_id</code>) from a purchase-later vault session or recurring report.
-/// Only present for native PayPal (PPCP) vault / recurring flows — never log the raw value.
-@property (nonatomic, readonly, copy) NSString * _Nullable vaultId;
-/// PayPal customer id associated with a vaulted payment token, when returned.
-/// Only present for native PayPal (PPCP) vault / recurring flows.
-@property (nonatomic, readonly, copy) NSString * _Nullable customerId;
-/// Spreedly payment-method type for native PayPal flows:
-/// <code>paypal_ppcp</code>, <code>paypal_vault</code>, or <code>paypal_vault_recurring</code>.
+/// Stable payment-method type for provider flows that publish through the generic
+/// <code>success(token:state:paymentMethodType:providerDetails:)</code> overload
+/// (for example <code>paypal_ppcp</code>). Nil for card tokenization and Braintree nonce results.
 @property (nonatomic, readonly, copy) NSString * _Nullable paymentMethodType;
+/// Provider-specific data for the flow that produced this result, or nil when the flow
+/// has none. Each optional module ships its own <code>ProviderPaymentDetails</code> implementation
+/// (for example <code>PayPalPaymentDetails</code> in SpreedlyPayPal); check its type before reading fields.
+@property (nonatomic, readonly, strong) id <ProviderPaymentDetails> _Nullable providerDetails;
 /// Detailed failure information (only available for failed payments).
 @property (nonatomic, readonly, strong) FailedDetails * _Nullable failureDetails;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -2577,32 +2447,30 @@ SWIFT_CLASS("_TtC12SpreedlyCore13PaymentResult")
 /// \param state Transaction state (typically “pending” for Braintree flows)
 ///
 + (PaymentResult * _Nonnull)completedWithToken:(NSString * _Nonnull)token nonce:(NSString * _Nonnull)nonce deviceData:(NSString * _Nullable)deviceData state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
-/// Creates a successful payment result for native PayPal (PPCP) checkout.
-/// The order is approved by the buyer; the merchant backend authorizes or captures it.
-/// \param transactionToken Spreedly transaction token correlating the checkout, when available
+/// Creates a successful payment result for an optional provider module.
+/// Use this when success carries a <code>paymentMethodType</code> and optional
+/// <code>providerDetails</code>. Card tokenization continues to use
+/// <code>success(token:paymentResponse:shouldRetain:)</code>. Braintree continues to use
+/// <code>completed(token:nonce:deviceData:state:)</code>.
+/// \param token Optional correlation token (for example a Spreedly transaction token). May be nil.
 ///
-/// \param orderId PayPal order id approved by the buyer
+/// \param state Transaction state the publisher knows (for example <code>"succeeded"</code>).
 ///
-/// \param payerId PayPal payer id from the approval
+/// \param paymentMethodType Stable type string owned by the publishing module.
 ///
-/// \param fundingSource Funding source identifier (<code>paypal</code>, <code>paylater</code>, <code>credit</code>, <code>venmo</code>)
+/// \param providerDetails Module-owned payload, or nil when the flow has none.
 ///
-/// \param state Transaction state (typically “pending” until the backend captures)
-///
-+ (PaymentResult * _Nonnull)paypalCompletedWithTransactionToken:(NSString * _Nullable)transactionToken orderId:(NSString * _Nonnull)orderId payerId:(NSString * _Nullable)payerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT;
-/// Same as <code>paypalCompleted</code> with an explicit <code>paymentMethodType</code>
-/// (<code>paypal_ppcp</code>, <code>paypal_vault</code>, or <code>paypal_vault_recurring</code>).
-+ (PaymentResult * _Nonnull)paypalCompletedWithTransactionToken:(NSString * _Nullable)transactionToken orderId:(NSString * _Nonnull)orderId payerId:(NSString * _Nullable)payerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state paymentMethodType:(NSString * _Nonnull)paymentMethodType SWIFT_WARN_UNUSED_RESULT;
-/// Creates a successful payment result after purchase-later vault consent and payment-token exchange.
-/// warning:
-/// Deprecated. Vault PPCP outcomes use <code>paypalCompleted</code> with <code>vaultId</code> / <code>customerId</code> left nil.
-+ (PaymentResult * _Nonnull)paypalVaultApprovedWithTransactionToken:(NSString * _Nullable)transactionToken vaultId:(NSString * _Nonnull)vaultId customerId:(NSString * _Nullable)customerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("Use paypalCompleted. Vault identity lives on the merchant backend.");
-/// Creates a payment result for a merchant-reported native PayPal (PPCP) recurring charge outcome.
-/// warning:
-/// Deprecated. Recurring PPCP outcomes use <code>paypalCompleted</code> with <code>vaultId</code> left nil.
-+ (PaymentResult * _Nonnull)paypalRecurringCompletedWithOrderId:(NSString * _Nullable)orderId vaultId:(NSString * _Nonnull)vaultId customerId:(NSString * _Nullable)customerId fundingSource:(NSString * _Nonnull)fundingSource state:(NSString * _Nullable)state SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("Use paypalCompleted. Recurring identity lives on the merchant backend.");
++ (PaymentResult * _Nonnull)successWithToken:(NSString * _Nullable)token state:(NSString * _Nullable)state paymentMethodType:(NSString * _Nullable)paymentMethodType providerDetails:(id <ProviderPaymentDetails> _Nullable)providerDetails SWIFT_WARN_UNUSED_RESULT;
 /// Creates a canceled payment result.
 + (PaymentResult * _Nonnull)canceled SWIFT_WARN_UNUSED_RESULT;
+/// Creates a canceled payment result that records which flow the buyer abandoned.
+/// Subscribers on the shared result stream see cancels from every module, so a publisher that
+/// knows its flow should say so; without it a merchant cannot tell a card cancel from a
+/// PPCP vault cancel.
+/// \param paymentMethodType Stable type string owned by the publishing module
+/// (for example <code>paypal_ppcp</code>), or nil when the publisher has none.
+///
++ (PaymentResult * _Nonnull)canceledWithPaymentMethodType:(NSString * _Nullable)paymentMethodType SWIFT_WARN_UNUSED_RESULT;
 /// Creates a failed payment result.
 + (PaymentResult * _Nonnull)failureWithDetails:(FailedDetails * _Nonnull)details SWIFT_WARN_UNUSED_RESULT;
 /// Creates a Failed result from a generic Error.
@@ -2619,6 +2487,13 @@ SWIFT_CLASS("_TtC12SpreedlyCore22PaymentValidationError")
 - (nonnull instancetype)initWithFieldName:(NSString * _Nonnull)fieldName errorKey:(NSString * _Nullable)errorKey errorMessage:(NSString * _Nullable)errorMessage OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Provider-specific data attached to <code>PaymentResult/providerDetails</code>.
+/// Optional modules implement this with their own type so SpreedlyCore never has to know
+/// about a specific provider. Implementations must keep identifiers out of <code>description</code>.
+SWIFT_PROTOCOL("_TtP12SpreedlyCore22ProviderPaymentDetails_")
+@protocol ProviderPaymentDetails <NSObject>
 @end
 
 /// Identifies the integration surface using the Spreedly checkout SDK.
@@ -2682,6 +2557,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityMana
 - (NSString * _Nonnull)secureClearedString:(NSString * _Nonnull)string SWIFT_WARN_UNUSED_RESULT;
 @end
 
+@class SpreedlyCustomValidationResult;
 @class SpreedlyParamsManager;
 @protocol SpreedlyPaymentDelegate;
 @protocol SpreedlyRecacheDelegate;
@@ -2689,6 +2565,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SecurityMana
 @class SpreedlyConfig;
 @protocol SpreedlyConfigGenerator;
 SWIFT_ENUM_FWD_DECL(NSInteger, ValidationParam)
+@class NSURL;
 @class ThreeDSChallengeResult;
 SWIFT_CLASS("_TtC12SpreedlyCore8Spreedly")
 @interface Spreedly : NSObject
@@ -2716,6 +2593,16 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL isInitialized;)
 + (BOOL)isInitialized SWIFT_WARN_UNUSED_RESULT;
 /// Objective-C entry point for [areAllFieldsValid(fieldTypes:)] — pass <code>NSNumber</code> values of <code>FormFieldType</code> raw values.
 + (BOOL)areAllFieldsValidWithFieldTypeRawValues:(NSArray<NSNumber *> * _Nonnull)fieldTypeRawValues SWIFT_WARN_UNUSED_RESULT;
+/// Objective-C: register a custom validator. A <code>nil</code> block result fails closed (generic invalid).
+/// Pass a canonical wire key (e.g. <code>"zip"</code>, <code>"first_name"</code>). See <code>CustomValidatableFieldName</code>.
+/// In the <code>fields</code> dictionary, prefer <code>SpreedlyCustomValidatableField</code> constants as keys.
+- (void)addValidationForField:(NSString * _Nonnull)fieldName validator:(SpreedlyCustomValidationResult * _Nullable (^ _Nonnull)(NSString * _Nonnull, NSDictionary<NSString *, NSString *> * _Nonnull))validator;
+/// Objective-C: remove a custom validator by wire-key string (or alias). Prefer <code>removeValidation(field:)</code> in Swift.
+- (void)removeValidationForField:(NSString * _Nonnull)fieldName;
+/// Objective-C: run registered custom validators before submit.
+/// Pass the same dictionary you pass to <code>createCreditCardObjC…</code>. Keys may be <code>SpreedlyCustomValidatableField</code>
+/// wire keys (<code>first_name</code>) or <code>AdditionalField</code> raw values (<code>firstName</code>). Returns <code>YES</code> when every validator passed.
+- (BOOL)runCustomValidationBeforeSubmitWithAdditionalFields:(NSDictionary<NSString *, NSString *> * _Nonnull)additionalFields SWIFT_WARN_UNUSED_RESULT;
 /// Objective-C: <code>hostedCardDisplayState.cardNumberFormat</code> as <code>CardNumberFormat</code> raw value.
 @property (nonatomic, readonly) NSInteger hostedCardDisplayCardNumberFormatRawValue;
 /// Manager for custom parameters sent with payment method creation requests.
@@ -3016,6 +2903,97 @@ SWIFT_CLASS("_TtC12SpreedlyCore14SpreedlyConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Objective-C constants for custom-validator <code>fields</code> dictionary keys (canonical wire values).
+/// Prefer these over string literals so typos fail at compile time.
+SWIFT_CLASS("_TtC12SpreedlyCore30SpreedlyCustomValidatableField")
+@interface SpreedlyCustomValidatableField : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull firstName;)
++ (NSString * _Nonnull)firstName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull lastName;)
++ (NSString * _Nonnull)lastName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull fullName;)
++ (NSString * _Nonnull)fullName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull email;)
++ (NSString * _Nonnull)email SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull company;)
++ (NSString * _Nonnull)company SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull addressLine1;)
++ (NSString * _Nonnull)addressLine1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull addressLine2;)
++ (NSString * _Nonnull)addressLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull city;)
++ (NSString * _Nonnull)city SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull state;)
++ (NSString * _Nonnull)state SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull zipCode;)
++ (NSString * _Nonnull)zipCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull country;)
++ (NSString * _Nonnull)country SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumber;)
++ (NSString * _Nonnull)phoneNumber SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull houseNumberOrName;)
++ (NSString * _Nonnull)houseNumberOrName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull street;)
++ (NSString * _Nonnull)street SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull streetLine2;)
++ (NSString * _Nonnull)streetLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumberCountryCode;)
++ (NSString * _Nonnull)phoneNumberCountryCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull phoneNumberAreaCode;)
++ (NSString * _Nonnull)phoneNumberAreaCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingAddressLine1;)
++ (NSString * _Nonnull)shippingAddressLine1 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingAddressLine2;)
++ (NSString * _Nonnull)shippingAddressLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingCity;)
++ (NSString * _Nonnull)shippingCity SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingState;)
++ (NSString * _Nonnull)shippingState SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingZipCode;)
++ (NSString * _Nonnull)shippingZipCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingCountry;)
++ (NSString * _Nonnull)shippingCountry SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumber;)
++ (NSString * _Nonnull)shippingPhoneNumber SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingHouseNumberOrName;)
++ (NSString * _Nonnull)shippingHouseNumberOrName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingStreet;)
++ (NSString * _Nonnull)shippingStreet SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingStreetLine2;)
++ (NSString * _Nonnull)shippingStreetLine2 SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumberCountryCode;)
++ (NSString * _Nonnull)shippingPhoneNumberCountryCode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull shippingPhoneNumberAreaCode;)
++ (NSString * _Nonnull)shippingPhoneNumberAreaCode SWIFT_WARN_UNUSED_RESULT;
+@end
+
+/// Verdict returned by a merchant custom field validator.
+/// <ul>
+///   <li>
+///     <code>valid</code>: the extra rule passed (<code>errorMessage</code> is ignored)
+///   </li>
+///   <li>
+///     <code>invalid</code>: the field fails; a non-empty <code>errorMessage</code> is shown in field chrome
+///     and tokenize/preflight failures. Nil or blank falls back to the SDK generic
+///     <code>"{label} is invalid"</code>. Telemetry never includes merchant message text.
+///   </li>
+/// </ul>
+SWIFT_CLASS("_TtC12SpreedlyCore30SpreedlyCustomValidationResult")
+@interface SpreedlyCustomValidationResult : NSObject
+@property (nonatomic, readonly) BOOL isValid;
+/// Shown in UI when non-empty. Nil/blank uses the SDK generic invalid label.
+/// Never written to telemetry or SDK logs.
+@property (nonatomic, readonly, copy) NSString * _Nullable errorMessage;
+- (nonnull instancetype)initWithIsValid:(BOOL)isValid errorMessage:(NSString * _Nullable)errorMessage OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyCustomValidationResult * _Nonnull valid;)
++ (SpreedlyCustomValidationResult * _Nonnull)valid SWIFT_WARN_UNUSED_RESULT;
++ (SpreedlyCustomValidationResult * _Nonnull)invalid:(NSString * _Nullable)message SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Preset logging configurations for common environments.
 /// Use with <code>Spreedly.configureLogging(_:)</code>. Fluent builders return new copies.
 /// seealso:
@@ -3113,6 +3091,9 @@ SWIFT_CLASS("_TtC12SpreedlyCore27SpreedlyTelemetryObjCBridge")
 + (void)hostedFieldInteractionWithFieldType:(NSString * _Nonnull)fieldType action:(NSString * _Nonnull)action;
 + (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount;
 + (void)validationFailedWithFieldErrors:(NSString * _Nonnull)fieldErrors errorCount:(NSInteger)errorCount module:(NSString * _Nonnull)module_;
++ (void)customValidatorRegisteredWithFieldName:(NSString * _Nonnull)fieldName replaced:(BOOL)replaced;
++ (void)customValidatorFailedWithFieldName:(NSString * _Nonnull)fieldName;
++ (void)customValidatorErrorWithFieldName:(NSString * _Nonnull)fieldName reason:(NSString * _Nonnull)reason;
 + (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType;
 + (void)threedsStartedWithFlowType:(NSString * _Nonnull)flowType gatewayType:(NSString * _Nullable)gatewayType;
 + (void)threedsFlowRoutedWithThreedsType:(NSString * _Nonnull)threedsType hasManagedOrderToken:(BOOL)hasManagedOrderToken;
@@ -3158,15 +3139,32 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 @property (nonatomic, readonly) BOOL resetFields;
 @property (nonatomic, readonly) BOOL forceFieldErrorDisplay;
 @property (nonatomic, readonly) BOOL spreedlyParamsUpdated;
+/// Number of fields currently showing a custom-validator message.
+/// Exposed for Objective-C, which cannot see <code>customValidationErrors</code> because a Swift
+/// dictionary keyed by an enum does not bridge. Reads the lock-protected mirror, so it is
+/// safe from any thread and never observes a value that has not landed on the published
+/// property yet.
+@property (nonatomic, readonly) NSInteger customValidationErrorCount;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-/// Unregister a field from tracking
+/// Unregister a field from tracking.
+/// Also drops any recorded custom-validation message for the field: the aggregate
+/// checks read that record, and a stale entry would otherwise resurface as red text
+/// when the field remounts.
 - (void)unregisterFieldWithType:(enum FormFieldType)type;
-/// Check if all registered SPLTextField instances are valid
+/// Check if all registered SPLTextField instances are valid.
+/// Built-in rules plus the <em>last recorded</em> custom-validator verdict. This does not
+/// invoke merchant validator closures — call
+/// <code>Spreedly/runCustomValidationBeforeSubmit(additionalFields:)</code> first when you need
+/// them re-evaluated. Card tokenize runs its own pass regardless.
 ///
 /// returns:
 /// True if all registered fields are valid, false otherwise
 - (BOOL)areAllFieldsValid SWIFT_WARN_UNUSED_RESULT;
+/// Non-PCI field values keyed by Spreedly param name. Empty strings are included so
+/// optional fields can still run a custom validator (conditional required).
+- (NSDictionary<NSString *, NSString *> * _Nonnull)nonSensitiveFieldSnapshot SWIFT_WARN_UNUSED_RESULT;
+- (void)setCustomValidationError:(NSString * _Nullable)message for:(enum FormFieldType)fieldType;
 /// Objective-C: invalid registered fields as <code>FormFieldType</code> raw values (<code>NSNumber</code>).
 - (NSArray<NSNumber *> * _Nonnull)getInvalidFieldTypes SWIFT_WARN_UNUSED_RESULT;
 /// Get count of registered fields
@@ -3204,6 +3202,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SpreedlyUIMa
 - (void)toggleMask;
 /// Restores default hosted-field display state.
 - (void)resetHostedCardDisplayState;
+/// Clears custom-validator chrome errors (sheet dismiss / remount / session reset).
+- (void)clearCustomValidationErrors;
 /// Triggers validation rules update for all registered fields
 /// This should be called when SpreedlyParamsManager parameters change
 - (void)notifySpreedlyParamsUpdated;
