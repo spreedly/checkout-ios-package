@@ -1,424 +1,133 @@
 {
   "bomFormat": "CycloneDX",
-  "specVersion": "1.5",
-  "serialNumber": "urn:uuid:a4a8ec96-4eb4-4ef3-bfb5-f9e1599529d6",
+  "specVersion": "1.4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-26T12:54:53Z",
-    "tools": {
-      "components": [
-        {
-          "type": "application",
-          "name": "tag-release.yml",
-          "version": "2.0"
-        }
-      ]
-    },
+    "timestamp": "2026-10-29T13:29:22Z",
     "component": {
       "type": "library",
-      "bom-ref": "spreedly-ios-sdk",
       "name": "Spreedly iOS SDK",
-      "version": "1.7.0",
-      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ]
-    }
+      "version": "1.6.1-dev.20261029.1",
+      "purl": "pkg:swift/spreedly/checkout-ios-sdk@1.6.1-dev.20261029.1"
+    },
+    "tools": [{ "name": "sync-package-publish.sh", "version": "1.0" }]
   },
   "components": [
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlyBraintree",
-      "name": "SpreedlyBraintree",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "c0cd0b6344b84a4ad70e50a49a6cc9c43dbda4e4e99a298934b49de3c25d23e0"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlyClickToPay",
-      "name": "SpreedlyClickToPay",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "974e0d9d3c4eb7bfb93d8a1fa817b80fd0d8cd5b257e45938ac7ab771aaf2214"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlyCore",
-      "name": "SpreedlyCore",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "60b877fb85c15f4f23737be5ff6009b2181887d7d3afe156d97d8867e9843c55"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlySecurity",
-      "name": "SpreedlySecurity",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "1f666ad9b90426145bc2370262e57b7d6e3a207000e58778cb5c78607cabc48a"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlyStripeAPM",
-      "name": "SpreedlyStripeAPM",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "510bb3aac9e80be10178143b00c51175e63b5a3b790c34ae6a9060150f8ae18c"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlyStripeRadar",
-      "name": "SpreedlyStripeRadar",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "9dbe7ec0756bd0d6c7c9aa755b3b0e8bb631c957a7ebc79bdb039e13d3e01033"
-        }
-      ]
-    },
-    {
-      "type": "framework",
-      "bom-ref": "framework:SpreedlyUI",
-      "name": "SpreedlyUI",
-      "version": "1.7.0",
-      "supplier": {
-        "name": "Spreedly"
-      },
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "8b8874ee2430e703674ba844881f7ae261cb63cff6be22cdd3a784661b982ca4"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:swift/github.com/braintree/braintree_ios@7.4.0",
-      "name": "Braintree",
-      "version": "7.4.0",
-      "purl": "pkg:swift/github.com/braintree/braintree_ios@7.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "copyright": "Copyright (c) 2014-2016 Braintree, a division of PayPal, Inc.",
-      "externalReferences": [
-        {
-          "type": "vcs",
-          "url": "https://github.com/braintree/braintree_ios.git"
-        }
-      ],
-      "properties": [
-        {
-          "name": "spreedly:git-revision",
-          "value": "f0130c77eccc9a030f1d73ac4ced3a24f19d98e5"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "bom-ref": "pkg:swift/github.com/braintree/braintree_ios@7.4.0#PPRiskMagnes",
-          "name": "PPRiskMagnes",
-          "description": "PayPal fraud-detection library distributed as a binary in braintree_ios."
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
-      "name": "Datadog",
-      "version": "3.7.0",
-      "purl": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "copyright": "Copyright 2019 Datadog, Inc.",
-      "externalReferences": [
-        {
-          "type": "vcs",
-          "url": "https://github.com/DataDog/dd-sdk-ios.git"
-        }
-      ],
-      "properties": [
-        {
-          "name": "spreedly:git-revision",
-          "value": "4b9d2c543dec767b181b18a6ba016ca1fa297027"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0#Kronos",
-          "name": "Kronos",
-          "description": "Vendored by Datadog; listed in Datadog's LICENSE-3rdparty.csv.",
-          "licenses": [
-            {
-              "license": {
-                "id": "Apache-2.0"
-              }
-            }
-          ],
-          "copyright": "Copyright (C) 2016 Lyft Inc. and MobileNativeFoundation"
-        },
-        {
-          "type": "library",
-          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0#AnyCodable",
-          "name": "AnyCodable",
-          "description": "Vendored by Datadog; listed in Datadog's LICENSE-3rdparty.csv.",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "copyright": "Copyright 2018 Read Evaluate Press, LLC"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:swift/github.com/stripe/stripe-ios-spm@25.17.0",
-      "name": "Stripe",
-      "version": "25.17.0",
-      "purl": "pkg:swift/github.com/stripe/stripe-ios-spm@25.17.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "copyright": "Copyright (c) 2011- Stripe, Inc. (https://stripe.com)",
-      "externalReferences": [
-        {
-          "type": "vcs",
-          "url": "https://github.com/stripe/stripe-ios-spm.git"
-        }
-      ],
-      "properties": [
-        {
-          "name": "spreedly:git-revision",
-          "value": "d91001846fb3e2fa751abbaaa9339950426b381c"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0",
-      "name": "Forter3DS",
-      "version": "2.1.0",
-      "purl": "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0",
-      "scope": "required",
-      "description": "Not included in the package; the app must include it (strongly linked by SpreedlyCore; weakly linked by SpreedlyUI).",
-      "licenses": [
-        {
-          "license": {
-            "name": "Commercial"
-          }
-        }
-      ],
-      "copyright": "Forter LTD Copyright 2016-2025",
-      "externalReferences": [
-        {
-          "type": "vcs",
-          "url": "https://bitbucket.org/forter-mobile/forter-ios.git"
-        }
-      ],
-      "properties": [
-        {
-          "name": "spreedly:supplied-by",
-          "value": "merchant"
-        },
-        {
-          "name": "spreedly:git-revision",
-          "value": "1a195a32b1f4b8ed729e098ebbce9810a237607c"
-        }
-      ]
-    }
+    { "type": "framework", "name": "SpreedlyBraintree", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "2fe6766ed0f44c27de6912acc4249adb5ed6496a8171967ceee1318a41f52645" }] }
+,
+    { "type": "framework", "name": "SpreedlyClickToPay", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "29c6a1761ee4e838102d82c537686c72e2d0732635d31d4af4fc0262733d670b" }] }
+,
+    { "type": "framework", "name": "SpreedlyCore", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "6a719affe3f0cc1c6cb68cad4b12c7722d5bb3a902342fcbd0299011be738cec" }] }
+,
+    { "type": "framework", "name": "SpreedlyPaze", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "b66822aa76528c824cbf28d906fc426cd3ef9317f0ece735c9de65e94436f787" }] }
+,
+    { "type": "framework", "name": "SpreedlySecurity", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "4985b8513955302cc30e08e3bf8d936cf9475b83ca70f8cdeebc8abed1dfdad4" }] }
+,
+    { "type": "framework", "name": "SpreedlyStripeAPM", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "464f4de595779f4dfae8cd124d1545d93ae2be2eeb61f0e8085767a18d2c66c1" }] }
+,
+    { "type": "framework", "name": "SpreedlyStripeRadar", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "ddca954e8b4a59ec7a1fa4908942954a99d61209c712b90aa610eab1e6b20729" }] }
+,
+    { "type": "framework", "name": "SpreedlyUI", "version": "1.6.1-dev.20261029.1", "hashes": [{ "alg": "SHA-256", "content": "b0bd4577498439e1cbca576bd6196dc015ae69a39f3a30dd4d8e7742aac3ff43" }] }
+  ],
+  "dependencies": {
+  "identity": "checkout-ios-sdk",
+  "name": "SpreedlySDK",
+  "url": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk",
+  "version": "unspecified",
+  "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk",
+  "traits": [
+    "default"
   ],
   "dependencies": [
     {
-      "ref": "spreedly-ios-sdk",
-      "dependsOn": [
-        "framework:SpreedlyBraintree",
-        "framework:SpreedlyClickToPay",
-        "framework:SpreedlyCore",
-        "framework:SpreedlySecurity",
-        "framework:SpreedlyStripeAPM",
-        "framework:SpreedlyStripeRadar",
-        "framework:SpreedlyUI"
+      "identity": "dd-sdk-ios",
+      "name": "Datadog",
+      "url": "https://github.com/DataDog/dd-sdk-ios.git",
+      "version": "3.18.0",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/dd-sdk-ios",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+        {
+          "identity": "kscrash",
+          "name": "KSCrash",
+          "url": "https://github.com/kstenerud/KSCrash.git",
+          "version": "2.5.1",
+          "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/KSCrash",
+          "traits": [
+            "default"
+          ],
+          "dependencies": [
+
+          ]
+        },
+        {
+          "identity": "opentelemetry-swift-core",
+          "name": "opentelemetry-swift-core",
+          "url": "https://github.com/open-telemetry/opentelemetry-swift-core",
+          "version": "2.5.1",
+          "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/opentelemetry-swift-core",
+          "traits": [
+            "default"
+          ],
+          "dependencies": [
+            {
+              "identity": "swift-atomics",
+              "name": "swift-atomics",
+              "url": "https://github.com/apple/swift-atomics.git",
+              "version": "1.3.0",
+              "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/swift-atomics",
+              "traits": [
+                "default"
+              ],
+              "dependencies": [
+
+              ]
+            }
+          ]
+        }
       ]
     },
     {
-      "ref": "framework:SpreedlyBraintree",
-      "dependsOn": [
-        "framework:SpreedlyCore",
-        "framework:SpreedlySecurity",
-        "pkg:swift/github.com/braintree/braintree_ios@7.4.0"
+      "identity": "forter-ios",
+      "name": "Forter3DS",
+      "url": "https://bitbucket.org/forter-mobile/forter-ios.git",
+      "version": "2.1.0",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/forter-ios",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
       ]
     },
     {
-      "ref": "framework:SpreedlyClickToPay",
-      "dependsOn": [
-        "framework:SpreedlyCore",
-        "framework:SpreedlySecurity",
-        "framework:SpreedlyUI"
+      "identity": "stripe-ios-spm",
+      "name": "Stripe",
+      "url": "https://github.com/stripe/stripe-ios-spm.git",
+      "version": "25.11.0",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/stripe-ios-spm",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
       ]
     },
     {
-      "ref": "framework:SpreedlyCore",
-      "dependsOn": [
-        "framework:SpreedlySecurity",
-        "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
-        "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0"
+      "identity": "braintree_ios",
+      "name": "Braintree",
+      "url": "https://github.com/braintree/braintree_ios.git",
+      "version": "7.5.0",
+      "path": "/Users/runner/work/checkout-ios-sdk/checkout-ios-sdk/.build/checkouts/braintree_ios",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
       ]
-    },
-    {
-      "ref": "framework:SpreedlySecurity",
-      "dependsOn": []
-    },
-    {
-      "ref": "framework:SpreedlyStripeAPM",
-      "dependsOn": [
-        "framework:SpreedlyCore",
-        "framework:SpreedlySecurity",
-        "pkg:swift/github.com/stripe/stripe-ios-spm@25.17.0"
-      ]
-    },
-    {
-      "ref": "framework:SpreedlyStripeRadar",
-      "dependsOn": [
-        "framework:SpreedlyCore",
-        "pkg:swift/github.com/stripe/stripe-ios-spm@25.17.0"
-      ]
-    },
-    {
-      "ref": "framework:SpreedlyUI",
-      "dependsOn": [
-        "framework:SpreedlyCore",
-        "framework:SpreedlySecurity",
-        "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0"
-      ]
-    },
-    {
-      "ref": "pkg:swift/github.com/braintree/braintree_ios@7.4.0",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:swift/github.com/stripe/stripe-ios-spm@25.17.0",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0",
-      "dependsOn": []
     }
   ]
+}
 }

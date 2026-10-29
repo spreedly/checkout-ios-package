@@ -1,0 +1,454 @@
+--- /Users/ybhatt/Desktop/Phase 3 work/Paze Sample Apps/merchant-samples-native-main/PazeMerchantUI/Button/PazeButton.swift	2026-04-11 00:57:20
++++ /Users/ybhatt/Desktop/Phase 3 work/Phase 3 iOS SDK repo /Paze integration/checkout-ios-sdk/SpreedlyPaze/SpreedlyPaze/Vendor/Paze/Button/PazeButton.swift	2026-08-25 15:39:35
+@@ -17,12 +17,13 @@
+ ///   - shape: The typed button shape.
+ ///   - isDarkMode: Whether colors should resolve for dark mode.
+ /// - Returns: A configured `UIButton.Configuration`.
+-public extension UIButton.Configuration {
++@available(iOS 15.0, *)
++internal extension UIButton.Configuration {
+ 
+     static func paze(
+-        label: PazeButtonLabel = .checkoutWith,
+-        color: PazeButtonColor = PazeButtonStyles.default.color,
+-        shape: PazeButtonShape = PazeButtonStyles.default.shape,
++        label: PazeVendorButtonLabel = .checkoutWith,
++        color: PazeVendorButtonColor = PazeButtonStyles.default.color,
++        shape: PazeVendorButtonShape = PazeButtonStyles.default.shape,
+         isDarkMode: Bool = false
+     ) -> UIButton.Configuration {
+ 
+@@ -104,24 +105,25 @@
+ /// }
+ /// ```
+ @IBDesignable
+-public final class PazeButton: UIButton {
++@available(iOS 15.0, *)
++internal final class PazeButton: UIButton {
+ 
+     /// The typed visual style of the button.
+     ///
+     /// This is part of the primary runtime API.
+-    public var style: PazeButtonStyle {
++    internal var style: PazeButtonStyle {
+         didSet { updateAppearance() }
+     }
+ 
+     /// The typed label/content variant displayed by the button.
+     ///
+     /// This is part of the primary runtime API.
+-    public var label: PazeButtonLabel {
++    internal var label: PazeVendorButtonLabel {
+         didSet { updateAppearance() }
+     }
+ 
+     /// The action invoked when the button is tapped.
+-    public var action: (() -> Void)?
++    internal var action: (() -> Void)?
+ 
+     // MARK: - Interface Builder Preview API
+ 
+@@ -138,7 +140,7 @@
+     ///
+     /// This property is intended only for storyboard and XIB previews.
+     /// Use the typed ``label`` property in production code.
+-    @IBInspectable public var previewLabel: String = "checkoutWith" {
++    @IBInspectable internal var previewLabel: String = "checkoutWith" {
+         didSet {
+             label = resolvedPreviewLabelName
+         }
+@@ -155,7 +157,7 @@
+     ///
+     /// This property is intended only for storyboard and XIB previews.
+     /// Use the typed ``style`` property in production code.
+-    @IBInspectable public var previewColor: String = "auto" {
++    @IBInspectable internal var previewColor: String = "auto" {
+         didSet {
+             style = PazeButtonStyle(color: resolvedPreviewColorName, shape: style.shape)
+         }
+@@ -171,7 +173,7 @@
+     ///
+     /// This property is intended only for storyboard and XIB previews.
+     /// Use the typed ``style`` property in production code.
+-    @IBInspectable public var previewShape: String = "default" {
++    @IBInspectable internal var previewShape: String = "default" {
+         didSet {
+             style = PazeButtonStyle(color: style.color, shape: resolvedPreviewShapeName)
+         }
+@@ -186,10 +188,10 @@
+     ///   - color: The button color.
+     ///   - shape: The button shape.
+     ///   - action: The closure invoked when the button is tapped.
+-    public init(
+-        label: PazeButtonLabel = .checkoutWith,
+-        color: PazeButtonColor = PazeButtonStyles.default.color,
+-        shape: PazeButtonShape = PazeButtonStyles.default.shape,
++    internal init(
++        label: PazeVendorButtonLabel = .checkoutWith,
++        color: PazeVendorButtonColor = PazeButtonStyles.default.color,
++        shape: PazeVendorButtonShape = PazeButtonStyles.default.shape,
+         action: @escaping () -> Void
+     ) {
+         self.label = label
+@@ -200,7 +202,7 @@
+     }
+ 
+     /// Creates a Paze button from a storyboard or XIB.
+-    public required init?(coder: NSCoder) {
++    internal required init?(coder: NSCoder) {
+         self.label = .checkoutWith
+         self.style = PazeButtonStyle(
+             color: PazeButtonStyles.default.color,
+@@ -231,20 +233,20 @@
+ 
+     // MARK: - Lifecycle
+ 
+-    public override func awakeFromNib() {
++    internal override func awakeFromNib() {
+         super.awakeFromNib()
+         syncInspectableValuesIntoModel()
+         updateAppearance()
+     }
+ 
+-    public override func prepareForInterfaceBuilder() {
++    internal override func prepareForInterfaceBuilder() {
+         super.prepareForInterfaceBuilder()
+         syncInspectableValuesIntoModel()
+         updateAppearance()
+     }
+ 
+-    @available(iOS, introduced: 8.0, deprecated: 17.0)
+-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
++    @available(iOS, introduced: 15.0, deprecated: 17.0)
++    internal override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+         super.traitCollectionDidChange(previousTraitCollection)
+ 
+         if #available(iOS 17.0, *) {
+@@ -257,7 +259,7 @@
+     /// The intrinsic content size of the button.
+     ///
+     /// The button enforces a minimum width and a fixed default height.
+-    public override var intrinsicContentSize: CGSize {
++    internal override var intrinsicContentSize: CGSize {
+         let size = super.intrinsicContentSize
+         let width = max(size.width, 140)
+         return CGSize(width: width, height: PazeDimens.buttonDefaultHeight)
+@@ -353,7 +355,7 @@
+         layer.masksToBounds = true
+     }
+ 
+-    private func cornerRadius(for shape: PazeButtonShape) -> CGFloat {
++    private func cornerRadius(for shape: PazeVendorButtonShape) -> CGFloat {
+         switch shape {
+         case .pill:
+             return PazeDimens.buttonDefaultHeight / 2
+@@ -380,7 +382,7 @@
+ 
+     // MARK: - Inspectable Mapping
+ 
+-    private var resolvedPreviewLabelName: PazeButtonLabel {
++    private var resolvedPreviewLabelName: PazeVendorButtonLabel {
+         switch normalized(previewLabel) {
+         case "checkoutwith", "checkoutwithpaze":
+             return .checkoutWith
+@@ -395,7 +397,7 @@
+         }
+     }
+ 
+-    private var resolvedPreviewColorName: PazeButtonColor {
++    private var resolvedPreviewColorName: PazeVendorButtonColor {
+         switch normalized(previewColor) {
+         case "auto":
+             return .auto
+@@ -412,7 +414,7 @@
+         }
+     }
+ 
+-    private var resolvedPreviewShapeName: PazeButtonShape {
++    private var resolvedPreviewShapeName: PazeVendorButtonShape {
+         switch normalized(previewShape) {
+         case "pill":
+             return .pill
+@@ -433,7 +435,7 @@
+             .lowercased()
+     }
+ 
+-    private func fallbackPreviewTitle(for label: PazeButtonLabel) -> String {
++    private func fallbackPreviewTitle(for label: PazeVendorButtonLabel) -> String {
+         switch label {
+         case .checkoutWith:
+             return "Checkout With"
+@@ -451,19 +453,20 @@
+ 
+ // MARK: - SwiftUI Wrapper
+ 
+-public extension PazeButton {
++@available(iOS 15.0, *)
++internal extension PazeButton {
+     /// A SwiftUI wrapper around ``PazeButton``.
+     ///
+     /// This wrapper preserves the UIKit implementation while exposing a SwiftUI-friendly API.
+     struct View: UIViewRepresentable {
+         /// The typed style applied to the button.
+-        public var style: PazeButtonStyle = PazeButtonStyle()
++        internal var style: PazeButtonStyle = PazeButtonStyle()
+ 
+         /// The typed label/content variant displayed by the button.
+-        public var label: PazeButtonLabel = .checkoutWith
++        internal var label: PazeVendorButtonLabel = .checkoutWith
+ 
+         /// The closure invoked when the button is tapped.
+-        public var action: () -> Void
++        internal var action: () -> Void
+ 
+         /// Creates a SwiftUI Paze button.
+         ///
+@@ -472,10 +475,10 @@
+         ///   - color: The button color.
+         ///   - shape: The button shape.
+         ///   - action: The closure invoked when the button is tapped.
+-        public init(
+-            label: PazeButtonLabel = .checkoutWith,
+-            color: PazeButtonColor = PazeButtonStyles.default.color,
+-            shape: PazeButtonShape = PazeButtonStyles.default.shape,
++        internal init(
++            label: PazeVendorButtonLabel = .checkoutWith,
++            color: PazeVendorButtonColor = PazeButtonStyles.default.color,
++            shape: PazeVendorButtonShape = PazeButtonStyles.default.shape,
+             action: @escaping () -> Void
+         ) {
+             self.style = PazeButtonStyle(color: color, shape: shape)
+@@ -483,7 +486,7 @@
+             self.action = action
+         }
+ 
+-        public func makeUIView(context: Context) -> PazeButton {
++        internal func makeUIView(context: Context) -> PazeButton {
+             PazeButton(
+                 label: label,
+                 color: style.color,
+@@ -492,7 +495,7 @@
+             )
+         }
+ 
+-        public func updateUIView(_ uiView: PazeButton, context: Context) {
++        internal func updateUIView(_ uiView: PazeButton, context: Context) {
+             uiView.style = style
+             uiView.label = label
+             uiView.action = action
+--- /Users/ybhatt/Desktop/Phase 3 work/Paze Sample Apps/merchant-samples-native-main/PazeMerchantUI/Button/PazeButtonStyle.swift	2026-04-11 00:57:20
++++ /Users/ybhatt/Desktop/Phase 3 work/Phase 3 iOS SDK repo /Paze integration/checkout-ios-sdk/SpreedlyPaze/SpreedlyPaze/Vendor/Paze/Button/PazeVendorButtonStyle.swift	2026-08-25 15:39:10
+@@ -17,47 +17,48 @@
+ 
+ // MARK: - PazeButtonStyle
+ 
+-public struct PazeButtonStyle: Hashable, Codable {
++@available(iOS 15.0, *)
++internal struct PazeButtonStyle: Hashable, Codable {
+ 
+     /// The color configuration for this style.
+-    public var color: PazeButtonColor
++    internal var color: PazeVendorButtonColor
+ 
+     /// The shape configuration for this style.
+-    public var shape: PazeButtonShape
++    internal var shape: PazeVendorButtonShape
+ 
+-    public init() {
++    internal init() {
+         self.color = PazeButtonStyles.default.color
+         self.shape = PazeButtonStyles.default.shape
+     }
+     
+-    public init(color: PazeButtonColor, shape: PazeButtonShape) {
++    internal init(color: PazeVendorButtonColor, shape: PazeVendorButtonShape) {
+         self.color = color
+         self.shape = shape
+     }
+ 
+     /// The background color for the button.
+-    public var backgroundColor: UIColor {
++    internal var backgroundColor: UIColor {
+         switch color {
+         case .auto:
+             preconditionFailure("PazeButtonStyle should receive resolved colors, not .auto")
+         case .pazeBlue:
+-            return .pazePrimary
++            return PazeVendorColors.primary
+         case .white, .whiteWithOutline:
+             return .white
+         case .midnightBlack:
+-            return .pazeMidnight
++            return PazeVendorColors.midnight
+         }
+     }
+ 
+     /// The foreground (text and logo tint) color for the button.
+-    public var foregroundColor: UIColor {
++    internal var foregroundColor: UIColor {
+         switch color {
+         case .auto:
+             preconditionFailure("PazeButtonStyle should receive resolved colors, not .auto")
+         case .pazeBlue, .midnightBlack:
+             return .white
+         case .white, .whiteWithOutline:
+-            return .pazePrimary
++            return PazeVendorColors.primary
+         }
+     }
+ 
+@@ -76,7 +77,7 @@
+ 
+     /// The border color. Only applicable when `hasOutline` is true.
+     var borderColor: UIColor {
+-        .pazeMidnight
++        PazeVendorColors.midnight
+     }
+ 
+     /// The border width. Returns 0 if `hasOutline` is false.
+@@ -99,14 +100,15 @@
+ /// // Use a preset
+ /// let style = PazeButtonStyles.default
+ /// ```
+-public enum PazeButtonStyles {
++@available(iOS 15.0, *)
++internal enum PazeButtonStyles {
+ 
+     /// All 12 possible style combinations (4 colors × 3 shapes).
+     /// Useful for showcase displays or iterating through all options.
+     static let allStyles: [PazeButtonStyle] = {
+         var styles: [PazeButtonStyle] = []
+-        for color in PazeButtonColor.allCases {
+-            for shape in PazeButtonShape.allCases {
++        for color in PazeVendorButtonColor.allCases {
++            for shape in PazeVendorButtonShape.allCases {
+                 styles.append(PazeButtonStyle(color: color, shape: shape))
+             }
+         }
+@@ -115,10 +117,10 @@
+ 
+     /// Styles grouped by color for showcase display.
+     /// Each color maps to an array of 3 styles (one per shape).
+-    static let stylesByColor: [PazeButtonColor: [PazeButtonStyle]] = {
+-        var grouped: [PazeButtonColor: [PazeButtonStyle]] = [:]
+-        for color in PazeButtonColor.allCases {
+-            grouped[color] = PazeButtonShape.allCases.map { shape in
++    static let stylesByColor: [PazeVendorButtonColor: [PazeButtonStyle]] = {
++        var grouped: [PazeVendorButtonColor: [PazeButtonStyle]] = [:]
++        for color in PazeVendorButtonColor.allCases {
++            grouped[color] = PazeVendorButtonShape.allCases.map { shape in
+                 PazeButtonStyle(color: color, shape: shape)
+             }
+         }
+@@ -128,7 +130,7 @@
+     // MARK: Presets
+ 
+     /// Default style: Paze Blue with default corners.
+-    public static let `default` = PazeButtonStyle(color: .pazeBlue, shape: .default)
++    internal static let `default` = PazeButtonStyle(color: .pazeBlue, shape: .default)
+ 
+     /// Paze Blue with pill shape.
+     static let pill = PazeButtonStyle(color: .pazeBlue, shape: .pill)
+@@ -144,7 +146,7 @@
+ }
+ 
+ 
+-// MARK: - PazeButtonShape
++// MARK: - PazeVendorButtonShape
+ 
+ /// Defines the corner radius shape options for PazeButton.
+ ///
+@@ -157,7 +159,7 @@
+ /// ```swift
+ /// PazeButton(label: .checkoutWith, shape: .pill, action: startCheckout)
+ /// ```
+-public enum PazeButtonShape: Int, CaseIterable, Codable {
++internal enum PazeVendorButtonShape: Int, CaseIterable, Codable {
+ 
+     /// Default rounded corners (4pt radius).
+     case `default` = 0
+@@ -181,7 +183,7 @@
+     }
+ }
+ 
+-// MARK: - PazeButtonColor
++// MARK: - PazeVendorButtonColor
+ 
+ /// Defines the background color options for PazeButton.
+ ///
+@@ -192,7 +194,7 @@
+ /// - Whether a border is displayed
+ ///
+ 
+-public enum PazeButtonColor: Int, CaseIterable, Codable {
++internal enum PazeVendorButtonColor: Int, CaseIterable, Codable {
+ 
+     // MARK: Cases
+ 
+@@ -223,7 +225,7 @@
+ 
+     /// Resolves automatic color based on whether dark mode is active.
+     /// For explicit colors, returns self unchanged.
+-    func resolved(isDarkMode: Bool) -> PazeButtonColor {
++    func resolved(isDarkMode: Bool) -> PazeVendorButtonColor {
+         guard self == .auto else { return self }
+         return isDarkMode ? .white : .pazeBlue
+     }
+@@ -231,7 +233,7 @@
+     // MARK: Defaults
+ 
+     /// The default button color (Paze Blue).
+-    public static let `default` = PazeButtonColor.pazeBlue
++    internal static let `default` = PazeVendorButtonColor.pazeBlue
+ }
+ 
+ // MARK: - Label
+@@ -246,7 +248,7 @@
+ ///
+ /// - Important: Never use "Pay with Paze" - this is not an approved label per Paze brand guidelines.
+ 
+-public enum PazeButtonLabel: Int, CaseIterable, Codable {
++internal enum PazeVendorButtonLabel: Int, CaseIterable, Codable {
+ 
+     /// "Check out with [logo]"
+     case checkoutWith = 0
+@@ -294,30 +296,30 @@
+ 
+ // MARK: - Dimens
+ 
+-public enum PazeDimens {
++internal enum PazeDimens {
+ 
+     /// Small spacing.
+-    public static let spacingS: CGFloat = 8
++    internal static let spacingS: CGFloat = 8
+ 
+     /// Button horizontal padding.
+-    public static let buttonPaddingHorizontal: CGFloat = 24
++    internal static let buttonPaddingHorizontal: CGFloat = 24
+ 
+     /// Button vertical padding.
+-    public static let buttonPaddingVertical: CGFloat = 8
++    internal static let buttonPaddingVertical: CGFloat = 8
+ 
+     /// Default corner radius.
+-    public static let cornerRadiusDefault: CGFloat = 4
++    internal static let cornerRadiusDefault: CGFloat = 4
+ 
+     /// No corner radius (rectangle shape).
+-    public static let cornerRadiusNone: CGFloat = 0
++    internal static let cornerRadiusNone: CGFloat = 0
+ 
+     /// Pill corner radius (use height / 2 at runtime).
+     /// This value is a placeholder - actual pill radius is calculated dynamically.
+-    public static let cornerRadiusPill: CGFloat = 999
++    internal static let cornerRadiusPill: CGFloat = 999
+     
+     /// Border width for outlined button styles.
+-    public static let buttonBorderWidth: CGFloat = 0.5
++    internal static let buttonBorderWidth: CGFloat = 0.5
+ 
+     /// Default button height.
+-    public static let buttonDefaultHeight: CGFloat = 48
++    internal static let buttonDefaultHeight: CGFloat = 48
+ }
