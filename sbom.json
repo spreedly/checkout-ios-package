@@ -1,15 +1,15 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:a4a8ec96-4eb4-4ef3-bfb5-f9e1599529d6",
+  "serialNumber": "urn:uuid:5a06fdd0-0375-4e3a-bf36-6edf38523fa1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-26T12:54:53Z",
+    "timestamp": "2026-10-30T10:05:01Z",
     "tools": {
       "components": [
         {
           "type": "application",
-          "name": "tag-release.yml",
+          "name": "sync-package-publish.sh",
           "version": "2.0"
         }
       ]
@@ -18,8 +18,8 @@
       "type": "library",
       "bom-ref": "spreedly-ios-sdk",
       "name": "Spreedly iOS SDK",
-      "version": "1.7.0",
-      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.7.0",
+      "version": "1.7.0-dev.20261030.1",
+      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -37,7 +37,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyBraintree",
       "name": "SpreedlyBraintree",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -51,7 +51,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "c0cd0b6344b84a4ad70e50a49a6cc9c43dbda4e4e99a298934b49de3c25d23e0"
+          "content": "6da86f9d8dc12227225a4c57a50eb2803476711bd215bb355c989d06c33da747"
         }
       ]
     },
@@ -59,7 +59,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyClickToPay",
       "name": "SpreedlyClickToPay",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -73,7 +73,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "974e0d9d3c4eb7bfb93d8a1fa817b80fd0d8cd5b257e45938ac7ab771aaf2214"
+          "content": "8d44e37eb20c0af951e49224107000b3c65cf846f05dac13471db0462b916b24"
         }
       ]
     },
@@ -81,7 +81,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyCore",
       "name": "SpreedlyCore",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -95,7 +95,29 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "60b877fb85c15f4f23737be5ff6009b2181887d7d3afe156d97d8867e9843c55"
+          "content": "79a32ef9795c851ff70308cfda8c1afacfdb05a571279bc3d92dc03260ca4783"
+        }
+      ]
+    },
+    {
+      "type": "framework",
+      "bom-ref": "framework:SpreedlyPaze",
+      "name": "SpreedlyPaze",
+      "version": "1.7.0-dev.20261030.1",
+      "supplier": {
+        "name": "Spreedly"
+      },
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b3df876496be10ea5a309732476e882f3e1c234c160797cf889e6f1f13be7679"
         }
       ]
     },
@@ -103,7 +125,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlySecurity",
       "name": "SpreedlySecurity",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -117,7 +139,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "1f666ad9b90426145bc2370262e57b7d6e3a207000e58778cb5c78607cabc48a"
+          "content": "afe33222c05a69b486d1dd3bf16afa4de84b241f4a57c75840e713be8cb87246"
         }
       ]
     },
@@ -125,7 +147,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyStripeAPM",
       "name": "SpreedlyStripeAPM",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -139,7 +161,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "510bb3aac9e80be10178143b00c51175e63b5a3b790c34ae6a9060150f8ae18c"
+          "content": "4ee9c5bd8c7f6aa4301ab592deb8a51df78ed0e25157ef6a00f0d7f64a2930da"
         }
       ]
     },
@@ -147,7 +169,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyStripeRadar",
       "name": "SpreedlyStripeRadar",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -161,7 +183,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "9dbe7ec0756bd0d6c7c9aa755b3b0e8bb631c957a7ebc79bdb039e13d3e01033"
+          "content": "6e5dd8eb75a085e6ae31679cbbe2e3a65b8415042b5836a1aee63610dc3e2376"
         }
       ]
     },
@@ -169,7 +191,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyUI",
       "name": "SpreedlyUI",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261030.1",
       "supplier": {
         "name": "Spreedly"
       },
@@ -183,7 +205,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "8b8874ee2430e703674ba844881f7ae261cb63cff6be22cdd3a784661b982ca4"
+          "content": "382f492b398bad930331389177f9aaf584943918e033e5e4d09122b47acd4211"
         }
       ]
     },
@@ -224,10 +246,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+      "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
       "name": "Datadog",
-      "version": "3.7.0",
-      "purl": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+      "version": "3.18.0",
+      "purl": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
       "licenses": [
         {
           "license": {
@@ -245,13 +267,13 @@
       "properties": [
         {
           "name": "spreedly:git-revision",
-          "value": "4b9d2c543dec767b181b18a6ba016ca1fa297027"
+          "value": "d1bda393a7be7af0fec1f113eb1f81febf58b0c0"
         }
       ],
       "components": [
         {
           "type": "library",
-          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0#Kronos",
+          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0#Kronos",
           "name": "Kronos",
           "description": "Vendored by Datadog; listed in Datadog's LICENSE-3rdparty.csv.",
           "licenses": [
@@ -265,7 +287,7 @@
         },
         {
           "type": "library",
-          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0#AnyCodable",
+          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0#AnyCodable",
           "name": "AnyCodable",
           "description": "Vendored by Datadog; listed in Datadog's LICENSE-3rdparty.csv.",
           "licenses": [
@@ -347,6 +369,7 @@
         "framework:SpreedlyBraintree",
         "framework:SpreedlyClickToPay",
         "framework:SpreedlyCore",
+        "framework:SpreedlyPaze",
         "framework:SpreedlySecurity",
         "framework:SpreedlyStripeAPM",
         "framework:SpreedlyStripeRadar",
@@ -373,8 +396,14 @@
       "ref": "framework:SpreedlyCore",
       "dependsOn": [
         "framework:SpreedlySecurity",
-        "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+        "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
         "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0"
+      ]
+    },
+    {
+      "ref": "framework:SpreedlyPaze",
+      "dependsOn": [
+        "framework:SpreedlyCore"
       ]
     },
     {
@@ -409,7 +438,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+      "ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
       "dependsOn": []
     },
     {

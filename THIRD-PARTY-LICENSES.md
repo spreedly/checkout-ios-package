@@ -9,7 +9,7 @@ with it. Not included, because your app adds them itself: Forter3DS.
 | Library | Version | Included in | License |
 |---|---|---|---|
 | [Braintree](#braintree) | 7.4.0 | SpreedlyBraintree | MIT |
-| [Datadog](#datadog) | 3.7.0 | SpreedlyCore | Apache-2.0 |
+| [Datadog](#datadog) | 3.18.0 | SpreedlyCore | Apache-2.0 |
 | [Stripe](#stripe) | 25.17.0 | SpreedlyStripeAPM, SpreedlyStripeRadar | MIT |
 
 ## Braintree
@@ -50,8 +50,8 @@ THE SOFTWARE.
 
 ## Datadog
 
-<!-- third-party: dd-sdk-ios 3.7.0 sha256:1abb02b47516c08029da8e289fb2b27f3300f9fdf9ed0f55e4c993105d46fb58 -->
-- Version: 3.7.0
+<!-- third-party: dd-sdk-ios 3.18.0 sha256:5e19b681296c4447e61d024e75e74f1d80652ba9c309f3541a610b28e5e8b088 -->
+- Version: 3.18.0
 - Source: https://github.com/DataDog/dd-sdk-ios
 - Included in: SpreedlyCore
 - License: Apache-2.0

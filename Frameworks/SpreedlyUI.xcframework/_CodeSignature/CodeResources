@@ -4,14 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>LICENSE</key>
-		<data>
-		NDX2AVb1wpjZKZjeqbY8J3FQsew=
-		</data>
-		<key>THIRD-PARTY-LICENSES.md</key>
-		<data>
-		g89o7yQw6YGhIIBdg8KRrjDWf7Q=
-		</data>
 		<key>ios-arm64/SpreedlyUI.framework/Headers/SpreedlyUI-Swift.h</key>
 		<data>
 		bpYG9hMNdc4f4GgMOZZTn+f63N8=
@@ -42,7 +34,7 @@
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/SpreedlyUI</key>
 		<data>
-		fCqBkY92kTHRX8lYSeg8g8PaQCI=
+		gTHfupl1+srcjbuJfIpNMcQpfC0=
 		</data>
 		<key>ios-arm64/SpreedlyUI.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -57,6 +49,22 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		tAdT4wjJWpOBn/rTdhhlwnVDKGE=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/DWARF/SpreedlyUI</key>
+		<data>
+		BOPw4/5jJ4TFG3ABMC+Nq2DKVTE=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyUI.yml</key>
+		<data>
+		Kv+d5L/sQ1pUmlAtzN5nG+eX0A8=
+		</data>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<data>
+		hGfdeAK9jt9PzWBF8O3B8K9G2UQ=
+		</data>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Headers/SpreedlyUI-Swift.h</key>
 		<data>
 		j9cdL1Gd3JJmezJ6BVSr93sWew8=
@@ -118,23 +126,33 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Info.plist</key>
+		<data>
+		tAdT4wjJWpOBn/rTdhhlwnVDKGE=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/DWARF/SpreedlyUI</key>
+		<data>
+		vqnavxtUNtMpo5QFo69rov849N4=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyUI.yml</key>
+		<data>
+		1IbE8ipHViZgwEcR2bW8A2vy2zw=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyUI.yml</key>
+		<data>
+		EEntYpDZP3GDVM1fNtTBnldz50k=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<data>
+		shRyGmbBssjuvyqfZeBqs1YgTd8=
+		</data>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Swift/x86_64/Forter3DS.swiftinterface</key>
+		<data>
+		LVADfHx6yTWCMd3Iuy8UtFbMlPE=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>LICENSE</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			2fOb5bs7rjpLv3OJGMGNZ2jbDwkbds/h+KCk+LWD540=
-			</data>
-		</dict>
-		<key>THIRD-PARTY-LICENSES.md</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			OXpOnJ6GPPV9ElfZM7VoXdqPLvUCLd8zqd9Ft3PLj7w=
-			</data>
-		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/Headers/SpreedlyUI-Swift.h</key>
 		<dict>
 			<key>hash2</key>
@@ -188,7 +206,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			T6y6uMKVP1kSip+HdozKG5W8lfZnzoPA7EbW8vS2VMI=
+			O2haPJ3+URL+C4D6z75l8hlUaoe6LeqScUDyKEYgKEQ=
 			</data>
 		</dict>
 		<key>ios-arm64/SpreedlyUI.framework/_CodeSignature/CodeResources</key>
@@ -206,6 +224,34 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JKA+PfEIFwMpYCJPTuOndnQIvf0+PcMOj91rbAdFiyE=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/DWARF/SpreedlyUI</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			qCPJWbNuvDEWk3G1xCmW9XGAvHU+Bff/RtnCaJ8gvss=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyUI.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			qBdR2ApolJHN1byd7wjxCmzHWEe9zygHoPfSWVSOGhk=
+			</data>
+		</dict>
+		<key>ios-arm64/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			vqWOXF7G+2sIcmZ2fvv9fyumNxetE3m/bTXgmbA80oE=
+			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/SpreedlyUI.framework/Headers/SpreedlyUI-Swift.h</key>
 		<dict>
@@ -306,6 +352,48 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JKA+PfEIFwMpYCJPTuOndnQIvf0+PcMOj91rbAdFiyE=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/DWARF/SpreedlyUI</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			HyW7NsGeYLzObxe6ZAUn3hzlGeJEldeZE/k8fw6LKN4=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Relocations/aarch64/SpreedlyUI.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			6VtlRHIbU5zQvFxvEmCGIF0psVvzMPGYIKkndMupQRY=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Relocations/x86_64/SpreedlyUI.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AshNj56rYzSb2THVHKPPpAKUx4+XZf0oHT+Dp3EbKws=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Swift/aarch64/Forter3DS.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			2El84uFPLjY7Kyae0md2WUbHxxLiEBiPB4+Q0bgTA88=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/dSYMs/SpreedlyUI.framework.dSYM/Contents/Resources/Swift/x86_64/Forter3DS.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			0YuMxxOOLcearUq7xcjUAL5RNS10QUXTWe1ACbuXet0=
+			</data>
 		</dict>
 	</dict>
 	<key>rules</key>
