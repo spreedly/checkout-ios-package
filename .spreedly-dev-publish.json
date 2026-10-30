@@ -1,0 +1,10 @@
+{
+  "pkg_tag": "1.7.0-dev.20261030.2",
+  "pkg_branch": "sync/v1.7.0-dev.20261030.2",
+  "version": "1.7.0",
+  "sdk_sha": "7c492f416c70c880822337527002caf896f98612",
+  "build_run_url": "https://github.com/spreedly/checkout-ios-sdk/actions/runs/41050892582",
+  "source_branch": "HC-1738-Apple-Pay-iOS-SDK-Phase-1",
+  "prepared_at": "2026-10-30T12:55:11Z",
+  "status": "prepared_awaiting_publish"
+}

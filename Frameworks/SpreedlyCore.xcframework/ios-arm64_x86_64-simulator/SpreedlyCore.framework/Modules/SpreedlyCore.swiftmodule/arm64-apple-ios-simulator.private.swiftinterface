@@ -177,6 +177,15 @@ public struct BankAccountRequest : SpreedlyCore.PaymentMethodRequestProtocol {
     get
   }
 }
+public struct ApplePayRequest : SpreedlyCore.PaymentMethodRequestProtocol {
+  public init(applePayData: any SpreedlyCore.ApplePayData, metadata: [Swift.String : Swift.String]? = nil) throws
+  public var type: SpreedlyCore.PaymentMethodType {
+    get
+  }
+  public var body: Foundation.Data? {
+    get
+  }
+}
 public struct PaymentMethodResponse : Swift.Decodable {
   public let transaction: SpreedlyCore.Transaction?
   public let errors: [SpreedlyCore.SpreedlyAPIError]?
@@ -266,6 +275,11 @@ public struct PaymentMethod : Swift.Decodable {
   public let accountNumber: Swift.String?
   public let documentId: Swift.String?
   public let bic: Swift.String?
+  public let mpanMetadata: SpreedlyCore.MPANMetadata?
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MPANMetadata : Swift.Decodable {
+  public let merchantTokenIdentifier: Swift.String?
   public init(from decoder: any Swift.Decoder) throws
 }
 @objc public enum OffsitePaymentMethodType : Swift.Int {
@@ -1186,6 +1200,7 @@ public enum TelemetryEvents {
   public static func threedsFlowRouted(threedsType: Swift.String, gatewayType: Swift.String? = nil, hasManagedOrderToken: Swift.Bool)
   public static func threedsCompleted(flowType: Swift.String, durationMs: Swift.Int64, success: Swift.Bool, outcome: Swift.String, gatewayType: Swift.String? = nil, errorCode: Swift.String? = nil)
   public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
+  public static func apmCheckoutCompleted(provider: Swift.String, paymentType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64, merchantToken: Swift.Bool?, merchantProcessing: Swift.String? = nil, closedWhileProcessing: Swift.Bool? = nil)
   public static func offsitePaymentCompleted(paymentMethodType: Swift.String, success: Swift.Bool, durationMs: Swift.Int64)
   public static func securityCheckCompleted(isCompromised: Swift.Bool, signals: Swift.String, durationMs: Swift.Int64)
   public static func sdkInitBlocked(reason: Swift.String, signals: Swift.String)
@@ -1306,6 +1321,12 @@ public enum TelemetryEvents {
   @objc public var isFailure: Swift.Bool {
     get
   }
+  @objc public var isPending: Swift.Bool {
+    get
+  }
+  @objc public var isStatusUnknown: Swift.Bool {
+    get
+  }
   @objc public var token: Swift.String? {
     get
   }
@@ -1313,6 +1334,12 @@ public enum TelemetryEvents {
     get
   }
   @objc public var paymentMethodUpdatedAt: Swift.String? {
+    @objc get
+  }
+  @objc public var applePayMerchantTokenIdentifier: Swift.String? {
+    @objc get
+  }
+  @objc public var isApplePayMerchantToken: Swift.Bool {
     @objc get
   }
   @objc public var paymentResponseDictionary: Foundation.NSDictionary? {
@@ -1337,6 +1364,8 @@ public enum TelemetryEvents {
   public static func success(token: Swift.String, paymentResponse: SpreedlyCore.PaymentMethodResponse?, shouldRetain: Swift.Bool? = false) -> SpreedlyCore.PaymentResult
   @objc public static func completed(token: Swift.String, nonce: Swift.String, deviceData: Swift.String?, state: Swift.String? = "pending") -> SpreedlyCore.PaymentResult
   @objc public static func canceled() -> SpreedlyCore.PaymentResult
+  @_spi(SpreedlySDKInternal) @objc public static func pending() -> SpreedlyCore.PaymentResult
+  @_spi(SpreedlySDKInternal) @objc public static func statusUnknown(message: Swift.String) -> SpreedlyCore.PaymentResult
   @objc public static func failure(details: SpreedlyCore.FailedDetails) -> SpreedlyCore.PaymentResult
   public static func failed(from networkError: SpreedlyCore.NetworkError) -> SpreedlyCore.PaymentResult
   @objc public static func failed(from error: any Swift.Error) -> SpreedlyCore.PaymentResult
@@ -1534,6 +1563,8 @@ public enum ApplePayPaymentMethod : Swift.String, Swift.CaseIterable {
   case bancontact
   case mir
   case vPay
+  case dankort
+  case verve
   case unknown
   public init?(rawValue: Swift.String)
   public typealias AllCases = [SpreedlyCore.ApplePayPaymentMethod]
@@ -2136,6 +2167,10 @@ public enum AdditionalFieldAPISafety {
   public func createBankAccount(additionalFields: [SpreedlyCore.AdditionalField : Swift.String] = [:], bankAccountType: SpreedlyCore.BankAccountType? = nil, bankAccountHolderType: SpreedlyCore.BankAccountHolderType? = nil, bankName: Swift.String? = nil, metadata: [Swift.String : Swift.String]? = nil, allowBlankName: Swift.Bool? = nil, shouldRetain: Swift.Bool? = false, mandate: SpreedlyCore.SpreedlyMandate? = nil) -> SpreedlyCore.PaymentProcessingResult
   @objc public func createBankAccountObjC(additionalFields: [Swift.String : Swift.String], bankAccountType: Swift.String, bankAccountHolderType: Swift.String, bankName: Swift.String?, metadata: [Swift.String : Swift.String]?, allowBlankName: Foundation.NSNumber?, shouldRetain: Foundation.NSNumber?) -> SpreedlyCore.PaymentProcessingResult
   @objc(createBankAccountObjCWithAdditionalFields:bankAccountType:bankAccountHolderType:bankName:metadata:allowBlankName:shouldRetain:mandate:) public func createBankAccountObjCWithMandate(additionalFields: [Swift.String : Swift.String], bankAccountType: Swift.String, bankAccountHolderType: Swift.String, bankName: Swift.String?, metadata: [Swift.String : Swift.String]?, allowBlankName: Foundation.NSNumber?, shouldRetain: Foundation.NSNumber?, mandate: [Swift.String : Any]?) -> SpreedlyCore.PaymentProcessingResult
+  @discardableResult
+  public func createApplePay(paymentData: Foundation.Data, paymentMethod: SpreedlyCore.ApplePayPaymentMethod, billingContact: SpreedlyCore.ApplePayContact? = nil, shippingContact: SpreedlyCore.ApplePayContact? = nil, metadata: [Swift.String : Swift.String]? = nil) -> SpreedlyCore.PaymentProcessingResult
+  @objc public func createApplePayObjC(paymentData: Foundation.Data, paymentMethod: Swift.String, metadata: [Swift.String : Swift.String]?) -> SpreedlyCore.PaymentProcessingResult
+  @_spi(SpreedlySDKInternal) public func createApplePayForPaymentSheet(paymentData: Foundation.Data, paymentMethod: SpreedlyCore.ApplePayPaymentMethod, billingContact: SpreedlyCore.ApplePayContact?, shippingContact: SpreedlyCore.ApplePayContact?, metadata: [Swift.String : Swift.String]?, publishResult: Swift.Bool) async -> SpreedlyCore.PaymentResult
   @discardableResult
   @objc public func submitOffsitePayment(config: SpreedlyCore.OffsitePaymentConfig) -> SpreedlyCore.PaymentProcessingResult
   public func checkTransactionStatus(transactionToken: Swift.String) async throws -> SpreedlyCore.TransactionStatusResponse
