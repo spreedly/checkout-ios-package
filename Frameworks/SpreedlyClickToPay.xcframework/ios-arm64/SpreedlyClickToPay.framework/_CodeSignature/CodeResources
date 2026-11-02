@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyClickToPay-Swift.h</key>
 		<data>
-		F+dB8g5qBYkUgYcCZKq3wY6VfHY=
+		6fr5sfj+eSofjFCc/3VFJuZNoMY=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		XA/iJB7o0a3QMwvE1m5EsWs0XqY=
+		O50s3yM2pdc08+R139pVN+dFVVU=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		r/8hBIPbDNLOEzLMjSSInvC8exE=
+		n4iSuBsSjn/VJ0qu33ltbr4FnsA=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		6FHg45pkKj8QD+RmgLpoHcE8ffw=
+		2RzMUVtq/Bbd0kn6qD6kbvfpyAg=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		r/8hBIPbDNLOEzLMjSSInvC8exE=
+		n4iSuBsSjn/VJ0qu33ltbr4FnsA=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		XjsxdJVGJlfYd4ln+MsaGC3pJWk=
+		966n23qM3HT3uFC/QqiCH7A30To=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -60,7 +60,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			RjS7BNfZbdnd0o5u3DDX9AcCL4tPEn/mzc3TIAF/D2E=
+			9zrn3Vq9OkGzatDJXB+ib6GWQICZB2fj6IX/RvdN4xk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -74,28 +74,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			s3g56SID33WBtN5ugpj8LWrVaCGB6mdn7PNTXr0tpx4=
+			Q6S4Zs0ZR3jnsaNOwxUb2qxqfWScg3G24SQSQvT2GVk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			w29z/Yn0dXtP/V9mjzobQUSrPVweVE++vuSLWC2VPG8=
+			VTYRoR9qmQY3LSKdG5p9BQmGmRn23HXtuaNrD/hXRKE=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			s3g56SID33WBtN5ugpj8LWrVaCGB6mdn7PNTXr0tpx4=
+			Q6S4Zs0ZR3jnsaNOwxUb2qxqfWScg3G24SQSQvT2GVk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qb+U+AftzNQ2G/LEXus/OnIiSB9JQvHWkB4IHd0P010=
+			MCLM2uX4W+JRW8Aruz4nb9YP3EzuTWeWSVkN9ajXbdE=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
