@@ -1,15 +1,15 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:a4a8ec96-4eb4-4ef3-bfb5-f9e1599529d6",
+  "serialNumber": "urn:uuid:abff444f-a154-4534-a547-b0eeaa174dd0",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-26T12:54:53Z",
+    "timestamp": "2026-11-02T09:05:43Z",
     "tools": {
       "components": [
         {
           "type": "application",
-          "name": "tag-release.yml",
+          "name": "sync-package-publish.sh",
           "version": "2.0"
         }
       ]
@@ -18,8 +18,8 @@
       "type": "library",
       "bom-ref": "spreedly-ios-sdk",
       "name": "Spreedly iOS SDK",
-      "version": "1.7.0",
-      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.7.0",
+      "version": "1.7.0-dev.20261102.2",
+      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -37,7 +37,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyBraintree",
       "name": "SpreedlyBraintree",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -51,7 +51,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "c0cd0b6344b84a4ad70e50a49a6cc9c43dbda4e4e99a298934b49de3c25d23e0"
+          "content": "813b407f1da2f2324caae5f17a0be1352344051f2e1677ac7f6f594dd1d62190"
         }
       ]
     },
@@ -59,7 +59,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyClickToPay",
       "name": "SpreedlyClickToPay",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -73,7 +73,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "974e0d9d3c4eb7bfb93d8a1fa817b80fd0d8cd5b257e45938ac7ab771aaf2214"
+          "content": "0b27fc670686a882a73ccfe5a9254923157b9383c3e4c5b987ebcb69835817de"
         }
       ]
     },
@@ -81,7 +81,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyCore",
       "name": "SpreedlyCore",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -95,7 +95,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "60b877fb85c15f4f23737be5ff6009b2181887d7d3afe156d97d8867e9843c55"
+          "content": "de723e761e50dd9b7dd8b0f25571bde1f4c4f37e635ebf836e54cc7ea1b845b2"
         }
       ]
     },
@@ -103,7 +103,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlySecurity",
       "name": "SpreedlySecurity",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -117,7 +117,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "1f666ad9b90426145bc2370262e57b7d6e3a207000e58778cb5c78607cabc48a"
+          "content": "227b6f07d9d697db738e8185f4789d41033b8ffff5b6e607db6c315b7b7b14ca"
         }
       ]
     },
@@ -125,7 +125,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyStripeAPM",
       "name": "SpreedlyStripeAPM",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -139,7 +139,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "510bb3aac9e80be10178143b00c51175e63b5a3b790c34ae6a9060150f8ae18c"
+          "content": "7934db5f08d7d29891871ee18158854a05615f5316678a8f614583f388a4cafc"
         }
       ]
     },
@@ -147,7 +147,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyStripeRadar",
       "name": "SpreedlyStripeRadar",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -161,7 +161,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "9dbe7ec0756bd0d6c7c9aa755b3b0e8bb631c957a7ebc79bdb039e13d3e01033"
+          "content": "9ab78a2e34d95ec73f3902129236ae199bcfab9e293ad23e57e3e2e05767d5fa"
         }
       ]
     },
@@ -169,7 +169,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyUI",
       "name": "SpreedlyUI",
-      "version": "1.7.0",
+      "version": "1.7.0-dev.20261102.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -183,7 +183,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "8b8874ee2430e703674ba844881f7ae261cb63cff6be22cdd3a784661b982ca4"
+          "content": "3344a1074855c60c385d5c39f96895a8fcdcd69fe354a8140a9edb5b99959187"
         }
       ]
     },

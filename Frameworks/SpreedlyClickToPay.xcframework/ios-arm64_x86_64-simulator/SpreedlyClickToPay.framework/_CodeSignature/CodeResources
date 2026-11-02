@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyClickToPay-Swift.h</key>
 		<data>
-		Kfvd8X49naT4a9nyifFCpRmVaC4=
+		wuUxK0bGtxOWyPPopXnw84jpLGE=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		4uc/CSCdJi/E3ru0+BQLvgR0Pgo=
+		/RsAMB8gE13vpij6JXl5Y01Wx08=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		lZSBGuvdPylDF9uyuTkFbe8Zh58=
+		IG5O8ltMK/ftOI4UHpZPYcrfaXo=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		iet7ibWg+T5Iiy5MgbDv5skUXC4=
+		dIEcRgQINjxYIbrrqzok0jJJZ/A=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		lZSBGuvdPylDF9uyuTkFbe8Zh58=
+		IG5O8ltMK/ftOI4UHpZPYcrfaXo=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		2gNVCDGRRIYPei3ET+6wGtxQDyo=
+		ItzOwsB3gHsyitjuH+4segvkZCw=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,19 +38,19 @@
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		uGafYkDFfUizd1E6resZTqeFT2g=
+		6h+cRRFxrBxoDH1T6A0gi+Xk3h4=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		eFIQWFwAaPSDy8RW23fVhqohWdo=
+		7HRtCUq3TUqD8SFiWiCte9pkbLM=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		uGafYkDFfUizd1E6resZTqeFT2g=
+		6h+cRRFxrBxoDH1T6A0gi+Xk3h4=
 		</data>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		g9beUUN2nQrabj8M4wfx6FRhMpw=
+		9SPLtUwSRnRPgx7ilKssmYn6SOA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -80,7 +80,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			aTclz+PRsM22R4Xz2DzVk8lwUIvxn/lQmBV+d+e1yH8=
+			qHxsCUxMncQ7uYAzCabdnft93D/lHUnujx8A3fft/aA=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -94,28 +94,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nA/ZM3ZZW9X/Rs7zL4mkc2Zplib7VlJT4YdEbTgB21A=
+			IGIE3nPJnaG8IyosqxyWdh33174A6AnpwqYBi/PDs0s=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rnizB4D3UaBxDzA32cxMR5mI8sVycDc/LdVyoMRIp6k=
+			dEzfYrlgmxSR3l5CQZA09lkt5j5v3Viun5xbrJNJyrM=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nA/ZM3ZZW9X/Rs7zL4mkc2Zplib7VlJT4YdEbTgB21A=
+			IGIE3nPJnaG8IyosqxyWdh33174A6AnpwqYBi/PDs0s=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			L4a7m577a5vLpP67cP0objH0WQlugVTYCfqtsdcYU/g=
+			Xkfx1ZbFaavEcPgmrApodSn33cqjZM2fkjR6L+uRG1E=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -129,28 +129,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			uv5s+NmveeQyyJaEajPUKIMjbCa+2rqLlPAf+ostQcs=
+			7rxntl70J8fmejrwLS3UhqIL03LU887wg6jh/mExqH4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+xn60oLQnLh3weMdmVZr+TmixslQ32gBflno44nZeng=
+			1tq3L6gtRUH5PRzkB3GIJPLGjaVqOyNIeqT7m3wdpgY=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uv5s+NmveeQyyJaEajPUKIMjbCa+2rqLlPAf+ostQcs=
+			7rxntl70J8fmejrwLS3UhqIL03LU887wg6jh/mExqH4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyClickToPay.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bcKFbeJic6w5Q0Gr0N7ypIrYwsq7katdxZMtAv46Eww=
+			NBcAO7HxAq/HEk0RWMShaiMHJwv0F/jeTdt53BNSQbo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
