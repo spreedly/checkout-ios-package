@@ -1,15 +1,15 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:a4a8ec96-4eb4-4ef3-bfb5-f9e1599529d6",
+  "serialNumber": "urn:uuid:f7715193-20a2-4af0-bb10-c1ab8ff631db",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-26T12:54:53Z",
+    "timestamp": "2026-11-04T15:34:33Z",
     "tools": {
       "components": [
         {
           "type": "application",
-          "name": "tag-release.yml",
+          "name": "sync-package-publish.sh",
           "version": "2.0"
         }
       ]
@@ -18,8 +18,8 @@
       "type": "library",
       "bom-ref": "spreedly-ios-sdk",
       "name": "Spreedly iOS SDK",
-      "version": "1.7.0",
-      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.7.0",
+      "version": "1.8.0-dev.20261104.2",
+      "purl": "pkg:swift/github.com/spreedly/checkout-ios-package@1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -37,7 +37,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyBraintree",
       "name": "SpreedlyBraintree",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -51,7 +51,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "c0cd0b6344b84a4ad70e50a49a6cc9c43dbda4e4e99a298934b49de3c25d23e0"
+          "content": "349054d3d69eee833057b849b43bfee6db8535d14006e829b8ec23afd2c0561a"
         }
       ]
     },
@@ -59,7 +59,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyClickToPay",
       "name": "SpreedlyClickToPay",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -73,7 +73,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "974e0d9d3c4eb7bfb93d8a1fa817b80fd0d8cd5b257e45938ac7ab771aaf2214"
+          "content": "562f4967e3cf7dc764820c2030197d82877db6c5949406ea251f89315ae34708"
         }
       ]
     },
@@ -81,7 +81,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyCore",
       "name": "SpreedlyCore",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -95,7 +95,29 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "60b877fb85c15f4f23737be5ff6009b2181887d7d3afe156d97d8867e9843c55"
+          "content": "1007169224d5bbafdc36604ddd893478858f85058fad3ca79075d0613683efb4"
+        }
+      ]
+    },
+    {
+      "type": "framework",
+      "bom-ref": "framework:SpreedlyPaze",
+      "name": "SpreedlyPaze",
+      "version": "1.8.0-dev.20261104.2",
+      "supplier": {
+        "name": "Spreedly"
+      },
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a4a405a7690c8e691dda000241dbf9655c6362dc27f46fe573f4a16ed47eecb8"
         }
       ]
     },
@@ -103,7 +125,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlySecurity",
       "name": "SpreedlySecurity",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -117,7 +139,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "1f666ad9b90426145bc2370262e57b7d6e3a207000e58778cb5c78607cabc48a"
+          "content": "f236d7f08630696242f40625131664a239badd6c4a1288b29ab2b7068836b9f7"
         }
       ]
     },
@@ -125,7 +147,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyStripeAPM",
       "name": "SpreedlyStripeAPM",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -139,7 +161,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "510bb3aac9e80be10178143b00c51175e63b5a3b790c34ae6a9060150f8ae18c"
+          "content": "282ff83b7d4df43acee8d489216bf0e580b3bfe88c268c7f1437d659594816bf"
         }
       ]
     },
@@ -147,7 +169,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyStripeRadar",
       "name": "SpreedlyStripeRadar",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -161,7 +183,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "9dbe7ec0756bd0d6c7c9aa755b3b0e8bb631c957a7ebc79bdb039e13d3e01033"
+          "content": "fa1f8ee1c047790e506aa6650339be9968b15e8e7e7e00266c90ca11648965cf"
         }
       ]
     },
@@ -169,7 +191,7 @@
       "type": "framework",
       "bom-ref": "framework:SpreedlyUI",
       "name": "SpreedlyUI",
-      "version": "1.7.0",
+      "version": "1.8.0-dev.20261104.2",
       "supplier": {
         "name": "Spreedly"
       },
@@ -183,7 +205,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "8b8874ee2430e703674ba844881f7ae261cb63cff6be22cdd3a784661b982ca4"
+          "content": "04bd56837f6e1e1963569305105ce4ce6ff389275f53e89dbd65185aaac07bf9"
         }
       ]
     },
@@ -224,10 +246,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+      "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
       "name": "Datadog",
-      "version": "3.7.0",
-      "purl": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+      "version": "3.18.0",
+      "purl": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
       "licenses": [
         {
           "license": {
@@ -245,13 +267,13 @@
       "properties": [
         {
           "name": "spreedly:git-revision",
-          "value": "4b9d2c543dec767b181b18a6ba016ca1fa297027"
+          "value": "d1bda393a7be7af0fec1f113eb1f81febf58b0c0"
         }
       ],
       "components": [
         {
           "type": "library",
-          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0#Kronos",
+          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0#Kronos",
           "name": "Kronos",
           "description": "Vendored by Datadog; listed in Datadog's LICENSE-3rdparty.csv.",
           "licenses": [
@@ -265,7 +287,7 @@
         },
         {
           "type": "library",
-          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0#AnyCodable",
+          "bom-ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0#AnyCodable",
           "name": "AnyCodable",
           "description": "Vendored by Datadog; listed in Datadog's LICENSE-3rdparty.csv.",
           "licenses": [
@@ -312,8 +334,8 @@
       "name": "Forter3DS",
       "version": "2.1.0",
       "purl": "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0",
-      "scope": "required",
-      "description": "Not included in the package; the app must include it (strongly linked by SpreedlyCore; weakly linked by SpreedlyUI).",
+      "scope": "optional",
+      "description": "Not included in the package; the app includes it when used (weakly linked by SpreedlyCore, SpreedlyUI).",
       "licenses": [
         {
           "license": {
@@ -338,6 +360,286 @@
           "value": "1a195a32b1f4b8ed729e098ebbce9810a237607c"
         }
       ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "vendored:ews-paze-ui",
+      "name": "Paze UI",
+      "version": "2026-08-04",
+      "supplier": {
+        "name": "Early Warning Services, LLC"
+      },
+      "licenses": [
+        {
+          "license": {
+            "name": "Proprietary - embed and redistribute granted to Spreedly"
+          }
+        }
+      ],
+      "copyright": "Copyright Early Warning Services, LLC",
+      "description": "Early Warning Services confirmed in writing that Spreedly may embed the Paze production component source in this SDK and ship it to merchant customers. The grant covers this source drop; a new drop is requested each time rather than tracking a versioned package.",
+      "properties": [
+        {
+          "name": "spreedly:supplied-by",
+          "value": "vendored-source"
+        },
+        {
+          "name": "spreedly:received-on",
+          "value": "2026-08-04"
+        },
+        {
+          "name": "spreedly:source-record",
+          "value": "SpreedlyPaze/SpreedlyPaze/Vendor/UPSTREAM.md"
+        },
+        {
+          "name": "spreedly:vendored-on",
+          "value": "2026-08-25"
+        }
+      ],
+      "components": [
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeButton.swift",
+          "name": "PazeButton.swift",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "4b0b418d802403b47965357a778358bc9586026be1d59ff8ec046aa85c567333"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeButtonStyle.swift",
+          "name": "PazeButtonStyle.swift",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "f809ba35731db5b829c760a44dc5278cf2fb0ce9ea64f02c080ddefa1d2a6a7f"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazeLogo.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazeLogo.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "c21fd20a2f7d88e805275dfef4d92f1c5ec62039328b9693fc9263b39b4bce3f"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazeMessageFilled.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazeMessageFilled.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "1df7a42788b3af91c69fd7d36515c8d7d42b05b75da3a58dffe42cd66a21d549"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazeMessageOutline.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazeMessageOutline.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "daa13a64622689f4f1172bde9683292720e96489157481be998867d1c3ad4c74"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazeMessageOutlineContainer.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazeMessageOutlineContainer.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "d0828c53dec72d97618fb2eeff398a70be9e1927e0a23d9e3842b84603a8f8eb"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazeMessageText.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazeMessageText.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "ed497210fdd8e5afd173eb9f0c35ad6d37062115c8a10eb858e9570c161dea97"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazeMidnight.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazeMidnight.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "480974b0a65b20da710ba24e0aebfd246785ebfa396649e302f388edeec5a270"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Colors/PazePrimary.colorset/Contents.json",
+          "name": "PazeAssets.xcassets/Colors/PazePrimary.colorset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "89d1bab156386afc52b4f5e5b044f50ccacd3a15bfe88fceba3136b01d415280"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Contents.json",
+          "name": "PazeAssets.xcassets/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/Contents.json",
+          "name": "PazeAssets.xcassets/Images/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelCheckout.imageset/Contents.json",
+          "name": "PazeAssets.xcassets/Images/PazeLabelCheckout.imageset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "724e434b05beece97da7170d529b036d0a7d823a67f7fdb095de9f6994459ee4"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelCheckout.imageset/PazeLabelCheckout.pdf",
+          "name": "PazeAssets.xcassets/Images/PazeLabelCheckout.imageset/PazeLabelCheckout.pdf",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "7cf86d336a54590c1acf5dcb9d4497ff3fcd3ab7661ebca1eb46644b9a425441"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelCheckoutWith.imageset/Contents.json",
+          "name": "PazeAssets.xcassets/Images/PazeLabelCheckoutWith.imageset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "fdac7040052eeb18c940d27ea7a8d65042dc2194f22d6c3b5f07267e72dafa9f"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelCheckoutWith.imageset/PazeLabelCheckoutWith.pdf",
+          "name": "PazeAssets.xcassets/Images/PazeLabelCheckoutWith.imageset/PazeLabelCheckoutWith.pdf",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "673180eac8d10293f9fe19c5853d850a189c29d1e3fb456efe6296d48b358b08"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelDonateWith.imageset/Contents.json",
+          "name": "PazeAssets.xcassets/Images/PazeLabelDonateWith.imageset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "d033b33307cc0d87989bceee9b745a9822f3c9c787efe7d38cc2e484ac77a0f3"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelDonateWith.imageset/PazeLabelDonateWith.pdf",
+          "name": "PazeAssets.xcassets/Images/PazeLabelDonateWith.imageset/PazeLabelDonateWith.pdf",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "80131038d40d3e2365a60a90f350ab942bbd54a54c35ec1853e1e09970b41078"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelPazeCheckout.imageset/Contents.json",
+          "name": "PazeAssets.xcassets/Images/PazeLabelPazeCheckout.imageset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "7e856ad450976f2feb11bb5a06d8c5041f68769189992222c3a30447fca9f78f"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLabelPazeCheckout.imageset/PazeLabelPazeCheckout.pdf",
+          "name": "PazeAssets.xcassets/Images/PazeLabelPazeCheckout.imageset/PazeLabelPazeCheckout.pdf",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "cd0a550c217d2801d10616edbd7bba2601af0c8411f81e15da8855de638542de"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLogo.imageset/Contents.json",
+          "name": "PazeAssets.xcassets/Images/PazeLogo.imageset/Contents.json",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "1cf052ca72221fdcb27f75f21bb1020fa31b149e3670ec1ef649235237afca2a"
+            }
+          ]
+        },
+        {
+          "type": "file",
+          "bom-ref": "vendored:ews-paze-ui#PazeAssets.xcassets/Images/PazeLogo.imageset/PazeLogo.pdf",
+          "name": "PazeAssets.xcassets/Images/PazeLogo.imageset/PazeLogo.pdf",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "48f0f0f41d74213885027b1013f4262d88a5edc94a7926f7a05ec185ce0d82f1"
+            }
+          ]
+        }
+      ]
     }
   ],
   "dependencies": [
@@ -347,6 +649,7 @@
         "framework:SpreedlyBraintree",
         "framework:SpreedlyClickToPay",
         "framework:SpreedlyCore",
+        "framework:SpreedlyPaze",
         "framework:SpreedlySecurity",
         "framework:SpreedlyStripeAPM",
         "framework:SpreedlyStripeRadar",
@@ -373,8 +676,15 @@
       "ref": "framework:SpreedlyCore",
       "dependsOn": [
         "framework:SpreedlySecurity",
-        "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+        "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
         "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0"
+      ]
+    },
+    {
+      "ref": "framework:SpreedlyPaze",
+      "dependsOn": [
+        "framework:SpreedlyCore",
+        "vendored:ews-paze-ui"
       ]
     },
     {
@@ -409,7 +719,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.7.0",
+      "ref": "pkg:swift/github.com/DataDog/dd-sdk-ios@3.18.0",
       "dependsOn": []
     },
     {
@@ -418,6 +728,10 @@
     },
     {
       "ref": "pkg:swift/bitbucket.org/forter-mobile/forter-ios@2.1.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "vendored:ews-paze-ui",
       "dependsOn": []
     }
   ]
