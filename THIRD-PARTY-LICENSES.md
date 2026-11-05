@@ -9,8 +9,9 @@ with it. Not included, because your app adds them itself: Forter3DS.
 | Library | Version | Included in | License |
 |---|---|---|---|
 | [Braintree](#braintree) | 7.4.0 | SpreedlyBraintree | MIT |
-| [Datadog](#datadog) | 3.7.0 | SpreedlyCore | Apache-2.0 |
+| [Datadog](#datadog) | 3.18.0 | SpreedlyCore | Apache-2.0 |
 | [Stripe](#stripe) | 25.17.0 | SpreedlyStripeAPM, SpreedlyStripeRadar | MIT |
+| [Paze UI](#paze-ui) | 2026-08-04 | SpreedlyPaze | Proprietary - embed and redistribute granted to Spreedly |
 
 ## Braintree
 
@@ -50,8 +51,8 @@ THE SOFTWARE.
 
 ## Datadog
 
-<!-- third-party: dd-sdk-ios 3.7.0 sha256:1abb02b47516c08029da8e289fb2b27f3300f9fdf9ed0f55e4c993105d46fb58 -->
-- Version: 3.7.0
+<!-- third-party: dd-sdk-ios 3.18.0 sha256:5e19b681296c4447e61d024e75e74f1d80652ba9c309f3541a610b28e5e8b088 -->
+- Version: 3.18.0
 - Source: https://github.com/DataDog/dd-sdk-ios
 - Included in: SpreedlyCore
 - License: Apache-2.0
@@ -332,3 +333,45 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+## Paze UI
+
+<!-- third-party: ews-paze-ui 2026-08-04 sha256:8a36df77a3e1b55bc5207e2efe43df7a2d62ce6aa57af75a0818b5462856407e -->
+- Supplier: Early Warning Services, LLC
+- Received: 2026-08-04 (source drop)
+- Added to this repository: 2026-08-25
+- Included in: SpreedlyPaze
+- License: Proprietary - embed and redistribute granted to Spreedly
+- Copyright: Copyright Early Warning Services, LLC
+- Provenance record: `SpreedlyPaze/SpreedlyPaze/Vendor/UPSTREAM.md`
+
+### Terms granted
+
+Early Warning Services confirmed in writing that Spreedly may embed the Paze production component source in this SDK and ship it to merchant customers. The grant covers this source drop; a new drop is requested each time rather than tracking a versioned package.
+
+### Files as received
+
+| File | SHA-256 |
+|---|---|
+| `PazeButton.swift` | `4b0b418d802403b47965357a778358bc9586026be1d59ff8ec046aa85c567333` |
+| `PazeButtonStyle.swift` | `f809ba35731db5b829c760a44dc5278cf2fb0ce9ea64f02c080ddefa1d2a6a7f` |
+| `PazeAssets.xcassets/Colors/Contents.json` | `0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b` |
+| `PazeAssets.xcassets/Colors/PazeLogo.colorset/Contents.json` | `c21fd20a2f7d88e805275dfef4d92f1c5ec62039328b9693fc9263b39b4bce3f` |
+| `PazeAssets.xcassets/Colors/PazeMessageFilled.colorset/Contents.json` | `1df7a42788b3af91c69fd7d36515c8d7d42b05b75da3a58dffe42cd66a21d549` |
+| `PazeAssets.xcassets/Colors/PazeMessageOutline.colorset/Contents.json` | `daa13a64622689f4f1172bde9683292720e96489157481be998867d1c3ad4c74` |
+| `PazeAssets.xcassets/Colors/PazeMessageOutlineContainer.colorset/Contents.json` | `d0828c53dec72d97618fb2eeff398a70be9e1927e0a23d9e3842b84603a8f8eb` |
+| `PazeAssets.xcassets/Colors/PazeMessageText.colorset/Contents.json` | `ed497210fdd8e5afd173eb9f0c35ad6d37062115c8a10eb858e9570c161dea97` |
+| `PazeAssets.xcassets/Colors/PazeMidnight.colorset/Contents.json` | `480974b0a65b20da710ba24e0aebfd246785ebfa396649e302f388edeec5a270` |
+| `PazeAssets.xcassets/Colors/PazePrimary.colorset/Contents.json` | `89d1bab156386afc52b4f5e5b044f50ccacd3a15bfe88fceba3136b01d415280` |
+| `PazeAssets.xcassets/Contents.json` | `0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b` |
+| `PazeAssets.xcassets/Images/Contents.json` | `0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b` |
+| `PazeAssets.xcassets/Images/PazeLabelCheckout.imageset/Contents.json` | `724e434b05beece97da7170d529b036d0a7d823a67f7fdb095de9f6994459ee4` |
+| `PazeAssets.xcassets/Images/PazeLabelCheckout.imageset/PazeLabelCheckout.pdf` | `7cf86d336a54590c1acf5dcb9d4497ff3fcd3ab7661ebca1eb46644b9a425441` |
+| `PazeAssets.xcassets/Images/PazeLabelCheckoutWith.imageset/Contents.json` | `fdac7040052eeb18c940d27ea7a8d65042dc2194f22d6c3b5f07267e72dafa9f` |
+| `PazeAssets.xcassets/Images/PazeLabelCheckoutWith.imageset/PazeLabelCheckoutWith.pdf` | `673180eac8d10293f9fe19c5853d850a189c29d1e3fb456efe6296d48b358b08` |
+| `PazeAssets.xcassets/Images/PazeLabelDonateWith.imageset/Contents.json` | `d033b33307cc0d87989bceee9b745a9822f3c9c787efe7d38cc2e484ac77a0f3` |
+| `PazeAssets.xcassets/Images/PazeLabelDonateWith.imageset/PazeLabelDonateWith.pdf` | `80131038d40d3e2365a60a90f350ab942bbd54a54c35ec1853e1e09970b41078` |
+| `PazeAssets.xcassets/Images/PazeLabelPazeCheckout.imageset/Contents.json` | `7e856ad450976f2feb11bb5a06d8c5041f68769189992222c3a30447fca9f78f` |
+| `PazeAssets.xcassets/Images/PazeLabelPazeCheckout.imageset/PazeLabelPazeCheckout.pdf` | `cd0a550c217d2801d10616edbd7bba2601af0c8411f81e15da8855de638542de` |
+| `PazeAssets.xcassets/Images/PazeLogo.imageset/Contents.json` | `1cf052ca72221fdcb27f75f21bb1020fa31b149e3670ec1ef649235237afca2a` |
+| `PazeAssets.xcassets/Images/PazeLogo.imageset/PazeLogo.pdf` | `48f0f0f41d74213885027b1013f4262d88a5edc94a7926f7a05ec185ce0d82f1` |
