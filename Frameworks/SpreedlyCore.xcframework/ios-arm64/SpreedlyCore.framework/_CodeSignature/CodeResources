@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyCore-Swift.h</key>
 		<data>
-		MPSwdEg8cihVeJSTq2KDzPpR8jA=
+		PDVyXet1tq5m6D2t2uXs8RdxvpI=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		IJrC1UrF2DBnADwmfgEx1kQ8gLw=
+		wQi0Nrxzt9irOIYJ+WgQThEv4Cs=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		aeAqTvIsPRR6kiv9jDucyvce/Mw=
+		GxviU4FrL4lvfLw4J4mvd64HRQ0=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		+VHNVSD37rXwjtArpr6aOFmf8bw=
+		2y2efS1vlxSQHME51cNi/TDxPEk=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		1XiivpFScRt7Vw1HnPNPdyTQ6UM=
+		eQ5kZvQ0XGtlzaD4m2FuJZlNcTw=
 		</data>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		p9eDsDQUjo1kjcpJPPoxSg21GB8=
+		MIshPYTAFkkb4z3xgOhOaDUPCq0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -52,7 +52,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			is7SJrYEHYjFbfgXVrkF4NxmhUui5H3b9Q5oFNy4BKk=
+			rSSZGk+FAqAp4z/37C3JNCdSs6f+Cqry53Z7/GG2gxk=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -66,28 +66,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/3iacq/sxBKNMWYhshCDy+WpiLS/1yX0qQuy4XcLyiA=
+			G1m2bY4uW0n9WpkIEekhNCUq6VOBfDoMbXNdkIfd0u0=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/aaBGUaETmajO/NhS81smqkz7WQpEExiNeR3ZyBJ0Zo=
+			NV+CsaXQMJVQUGM7ojJp1zP1UjkTMH2RwQq36y1sHVI=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			59LsFLQdWyCkTUVvFH7HWi79FnHhvEA2xHQeLvu8tRA=
+			AtqnENGQbWv+UqukADcTN/pJhgNUswGZhpjTudSEsW4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyCore.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rrlSUIu3z70lJtkC0PaHYSHd+MwId0tl1OeoqjsOfYY=
+			2mDwKnSD/JXNORf1RNCRGc4PPjKNNLwhusF70JnkYF8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
