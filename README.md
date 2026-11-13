@@ -57,7 +57,6 @@ pod 'SpreedlyUI', '~> 1.7'
 # pod 'SpreedlyStripeRadar', '~> 1.7'
 # pod 'SpreedlyBraintree', '~> 1.7'
 # pod 'SpreedlyClickToPay', '~> 1.7'
-# pod 'SpreedlyPaze', '~> 1.7'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
@@ -81,7 +80,6 @@ end
 | **Stripe Radar** | `SpreedlyStripeRadar` | Session ID only — headless Radar device data for Stripe Payment Intents. Independent of `SpreedlyStripeAPM`. |
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
 | **Click to Pay** | `SpreedlyClickToPay` | Mastercard Click to Pay (SRC) checkout — requires Core, Security, and UI |
-| **Paze** | `SpreedlyPaze` | Paze wallet checkout — requires Core |
 
 ## Integration Guides
 
