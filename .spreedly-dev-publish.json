@@ -1,0 +1,10 @@
+{
+  "pkg_tag": "1.8.0-dev.20261118.2",
+  "pkg_branch": "sync/v1.8.0-dev.20261118.2",
+  "version": "1.8.0",
+  "sdk_sha": "c923018b9d16edf25ffc03633a885912571a914c",
+  "build_run_url": "https://github.com/spreedly/checkout-ios-sdk/actions/runs/44272114510",
+  "source_branch": "HC-1738-Implement-Apple-Pay-PassKit-Integration-feature",
+  "prepared_at": "2026-11-18T10:18:18Z",
+  "status": "prepared_awaiting_publish"
+}
