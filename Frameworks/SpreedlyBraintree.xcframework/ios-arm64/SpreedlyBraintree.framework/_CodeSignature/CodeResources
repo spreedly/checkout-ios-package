@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyBraintree-Swift.h</key>
 		<data>
-		XAXgVX+vhBE1VSymvUMJi1QPoaY=
+		vKFGvvcSmrD7LjYbPxOIGsMckU4=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		W9lkmkoGHAYEipbJXgWzY/D9rlM=
+		1ASdctW63irbOQ+4dAtqvaNavV0=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -18,23 +18,27 @@
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		SB+y/2vw7D0zqe3AE6md349rEeM=
+		vPFwUktYMnCtVGqDevGcA58ne7E=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		CDb+uUpslCudmP2bLABB4IKQ/SM=
+		BNKAV9QYzphXWL/X70Xtj/sOwEQ=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		SB+y/2vw7D0zqe3AE6md349rEeM=
+		vPFwUktYMnCtVGqDevGcA58ne7E=
 		</data>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		kHYPQduM7IuG42+jGqt4C8q/MkI=
+		nDIkPCGfJzLqWnS1sitbpGhaBbA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		JJWUkhoVK/t9oFnUO7k5HzMFX94=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		/qT38Od2lJpqCK4/sO3LZ7jYuXM=
 		</data>
 		<key>en.lproj/Localizable.strings</key>
 		<dict>
@@ -52,7 +56,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8dUOHtHQwyfGbkeb/mQ+QxDsar6VMsv1/TEQNRvNCAc=
+			A8amyO33xUbTS6BueKXP0Qy02WP5M7ldCIWWJRtusoA=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -66,28 +70,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			jKxoKwsn4Eisqbn9EhYXtGzsz7tC52xa2E7ALR1OQy0=
+			HW4HGqJcdS0CsRmdla4c/w9wG5Vys6V/r8WMHMnuur4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			a7AFbnHD7rEoBMrmqEST9gXeurhf1m0c9Vk+UOjBoKI=
+			5DM0Wgzlb51iwMHl8QJOxnrTKcL6KXZ5VQpTcb6o5rU=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jKxoKwsn4Eisqbn9EhYXtGzsz7tC52xa2E7ALR1OQy0=
+			HW4HGqJcdS0CsRmdla4c/w9wG5Vys6V/r8WMHMnuur4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyBraintree.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CqavEf8mdO0t1EspG6fsx2DzLQR4QRs2ILzGvTDlVJE=
+			oAhi8Ad/z7+Q32uwl5hW6z+o0Ft2/6vxGHypaGIZ0vc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -95,6 +99,13 @@
 			<key>hash2</key>
 			<data>
 			BT3XnEGags5ZV2qrWZniCEb25dIQO3HV2yIaoVHdy88=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			sPBDE8ozzO6E6CFJhwcqx61hLRECSAhi0r+Dlt707Ik=
 			</data>
 		</dict>
 		<key>en.lproj/Localizable.strings</key>
