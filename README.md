@@ -46,17 +46,19 @@ Then add the products to your target:
 
 ### CocoaPods
 
+> **CocoaPods Trunk:** New versions are not published to the CocoaPods Trunk registry, so version-only lines like `pod 'SpreedlyCore', '~> 1.7'` stay on 1.7.0. Point each pod at a release tag of this repository as shown below (no token needed), or use Swift Package Manager (recommended). `SpreedlyApplePay` is available through Swift Package Manager only.
+
 ```ruby
-# Podfile
-pod 'SpreedlyCore', '~> 1.7'
-pod 'SpreedlySecurity', '~> 1.7'
-pod 'SpreedlyUI', '~> 1.7'
+# Podfile — replace the tag with the release you want
+pod 'SpreedlyCore',      :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+pod 'SpreedlySecurity',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+pod 'SpreedlyUI',        :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM', '~> 1.7'
-# pod 'SpreedlyStripeRadar', '~> 1.7'
-# pod 'SpreedlyBraintree', '~> 1.7'
-# pod 'SpreedlyClickToPay', '~> 1.7'
+# pod 'SpreedlyStripeAPM',   :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+# pod 'SpreedlyStripeRadar', :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+# pod 'SpreedlyBraintree',   :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+# pod 'SpreedlyClickToPay',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
