@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/SpreedlyStripeRadar-Swift.h</key>
 		<data>
-		b8/kU8qsel49Ix6tfHMjlS0AygQ=
+		Wmc2Pd6L6u25xQV7l6uAYp7CJHk=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Cyqh0HYHVcIx6H6La2sbdSSSWzo=
+		6bmhBc4CHmP0YckYoDYe3dUgxdo=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -18,19 +18,19 @@
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		pgzHTxftF0uNL3wbn20mADyqvBM=
+		w8dr5i6fqDicqAh10BtWnSCHloo=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		xMPwBVE0QfQ96669OCUtzAKA8WY=
+		ILihOAg9E9wMETUpf18T5gp8ZW0=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		pgzHTxftF0uNL3wbn20mADyqvBM=
+		w8dr5i6fqDicqAh10BtWnSCHloo=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		lRc+0OtVcizDYjLXdeAIcmEQPQU=
+		XSqzt2OacuGtUXD+/bE6kQHayPE=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,23 +38,27 @@
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		ljwOMaqzojhCn49dX1WWr7/qgOw=
+		nF3SWy9YgFgRYn55tRRAvxmuNOo=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		4TyG6jytiSB9xbqAQ+lnjXnoKJc=
+		lGLmuSOE3AEM+SwjvXuW74sv4R0=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		ljwOMaqzojhCn49dX1WWr7/qgOw=
+		nF3SWy9YgFgRYn55tRRAvxmuNOo=
 		</data>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		wf8HV0LQFz//raM7cg3Udh+j/m4=
+		XI/KhnKs85mkLfJmi49w8q5RlFA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		Hi5LzYxSFo0aQKi/pjFyfM6/gsw=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		rfKcVmpWjNurCp7fH25bjMFLiTA=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -63,7 +67,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7sQUHrXMlawzw2wIavZCibWXPXacb/vO5Gp7OtdZ2k8=
+			rTx5NVxthUCB8IMrwnne2ihXC2bsdojcwglQzAu/c48=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -77,28 +81,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0VgLu75cWPefNoEa5frWTnzPKfj/B8QhkPES+OFlfN8=
+			w8tPEjIeDMss7OdbfiRIYGy0bwUcwCzumSGoD/QAujg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			I1z0mZSvZhkTIMqDs5IPeU8IduLMdJtls+L1pUrxR4Y=
+			mWSQXLl6shaFFFvv1mD+9iFxNt0gPrhuCcJNuVY5V78=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0VgLu75cWPefNoEa5frWTnzPKfj/B8QhkPES+OFlfN8=
+			w8tPEjIeDMss7OdbfiRIYGy0bwUcwCzumSGoD/QAujg=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mfSYvgmx0pQTN2mi9sE6hyascnk50L3rdXBJROjxeCk=
+			OhVKjZ61ie49ejOrh1OxJWLNej8TRxuoVYGHna7L0to=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -112,28 +116,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VP2BntfQM1etdEeCjWzkeTgDiWDitzqbIw77hORqt5w=
+			uwzkvnmjMoeK8jcir0WqzgwxRjwMGtt5lDsVKCijrF4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/NwGCtRVtqJuYYOeQnPyq+Xqs8tmq6vtRnLsffSzzMA=
+			9NiqefLGjP1PiZzJypIUNvBIVyjyhI0qkoB3MN8aT2s=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VP2BntfQM1etdEeCjWzkeTgDiWDitzqbIw77hORqt5w=
+			uwzkvnmjMoeK8jcir0WqzgwxRjwMGtt5lDsVKCijrF4=
 			</data>
 		</dict>
 		<key>Modules/SpreedlyStripeRadar.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wm0bMmLIkXJNuQJZhmCwDHGzEXsCa5TeH/ldfEcrk0E=
+			fOZEVYJ5TxxZS1EqS7QmzmVKd9PzF4iIxWDNWrDvr0Q=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -141,6 +145,13 @@
 			<key>hash2</key>
 			<data>
 			MkTL9cFYvFBk4kfxVv8+JoGHsDgYPGtjrHFoAnzt9iY=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			KcJgvqZHe9wEsMoGeLBj7EUQmrmA2nkIPkc/vWvT/y0=
 			</data>
 		</dict>
 	</dict>

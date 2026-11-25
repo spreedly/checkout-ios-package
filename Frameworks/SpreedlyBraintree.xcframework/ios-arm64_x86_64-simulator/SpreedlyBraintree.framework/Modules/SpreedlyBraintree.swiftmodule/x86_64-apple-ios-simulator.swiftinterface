@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.3.2 effective-5.10 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
-// swift-module-flags: -target x86_64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyBraintree
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.2
+// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)
+// swift-module-flags: -target x86_64-apple-ios16.0-simulator -enable-objc-interop -enable-library-evolution -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SpreedlyBraintree
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4
 import Foundation
 import SpreedlyCore
 import Swift
@@ -10,26 +10,26 @@ import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
 public enum BraintreeURLHandler {
-  public static let schemeSuffix: Swift.String
+  public static let schemeSuffix: Swift::String
   @discardableResult
-  public static func handleOpen(url: Foundation.URL) -> Swift.Bool
+  public static func handleOpen(url: Foundation::URL) -> Swift::Bool
 }
-@objc @_inheritsConvenienceInitializers @objcMembers public class BraintreeURLHandlerObjC : ObjectiveC.NSObject {
-  @objc(handleOpenWithUrl:) public static func handleOpen(url: Foundation.URL) -> Swift.Bool
+@objc @_inheritsConvenienceInitializers @objcMembers public class BraintreeURLHandlerObjC : ObjectiveC::NSObject {
+  @objc(handleOpenWithUrl:) public static func handleOpen(url: Foundation::URL) -> Swift::Bool
   @objc override dynamic public init()
   @objc deinit
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyBraintreeCheckout : ObjectiveC.NSObject {
-  @objc public static var isAvailable: Swift.Bool {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SpreedlyBraintreeCheckout : ObjectiveC::NSObject {
+  @objc public static var isAvailable: Swift::Bool {
     @objc get
   }
-  @objc public static var isActive: Swift.Bool {
+  @objc public static var isActive: Swift::Bool {
     @objc get
   }
-  @objc public static var currentTransactionToken: Swift.String? {
+  @objc public static var currentTransactionToken: Swift::String? {
     @objc get
   }
-  @objc(presentWithConfig:) public static func present(config: SpreedlyCore.BraintreeCheckoutConfig)
-  @objc(presentWithConfig:from:) public static func present(config: SpreedlyCore.BraintreeCheckoutConfig, from viewController: UIKit.UIViewController)
+  @objc(presentWithConfig:) public static func present(config: SpreedlyCore::BraintreeCheckoutConfig)
+  @objc(presentWithConfig:from:) public static func present(config: SpreedlyCore::BraintreeCheckoutConfig, from viewController: UIKit::UIViewController)
   @objc deinit
 }
