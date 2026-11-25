@@ -80,6 +80,7 @@ end
 | **Stripe Radar** | `SpreedlyStripeRadar` | Session ID only — headless Radar device data for Stripe Payment Intents. Independent of `SpreedlyStripeAPM`. |
 | **Braintree** | `SpreedlyBraintree` | Braintree PayPal and Venmo payments |
 | **Click to Pay** | `SpreedlyClickToPay` | Mastercard Click to Pay (SRC) checkout — requires Core, Security, and UI |
+| **Apple Pay** | `SpreedlyApplePay` | Apple Pay button, sheet and card drop-in wallet — requires Core, Security, and UI. Swift Package Manager only (no CocoaPods pod) |
 
 ## Integration Guides
 
