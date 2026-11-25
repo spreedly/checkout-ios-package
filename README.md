@@ -1,6 +1,6 @@
 # Spreedly iOS SDK
 
-[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.7.0-blue)](https://github.com/spreedly/checkout-ios-package/releases)
+[![GitHub Package](https://img.shields.io/badge/GitHub%20Package-1.8.0-rc.2-blue)](https://github.com/spreedly/checkout-ios-package/releases)
 [![iOS](https://img.shields.io/badge/iOS-16.0%2B-brightgreen.svg?style=flat)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-6.0-blue.svg?style=flat&logo=swift)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-Compatible-blue)](https://developer.apple.com/xcode/swiftui/)
@@ -27,7 +27,7 @@ with Swift, SwiftUI, and following iOS best practices.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.7.0")
+    .package(url: "https://github.com/spreedly/checkout-ios-package", from: "1.8.0-rc.2")
 ]
 ```
 
@@ -50,15 +50,15 @@ Then add the products to your target:
 
 ```ruby
 # Podfile — replace the tag with the release you want
-pod 'SpreedlyCore',      :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
-pod 'SpreedlySecurity',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
-pod 'SpreedlyUI',        :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+pod 'SpreedlyCore',      :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
+pod 'SpreedlySecurity',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
+pod 'SpreedlyUI',        :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
 
 # Optional — add as needed
-# pod 'SpreedlyStripeAPM',   :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
-# pod 'SpreedlyStripeRadar', :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
-# pod 'SpreedlyBraintree',   :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
-# pod 'SpreedlyClickToPay',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.7.0'
+# pod 'SpreedlyStripeAPM',   :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
+# pod 'SpreedlyStripeRadar', :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
+# pod 'SpreedlyBraintree',   :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
+# pod 'SpreedlyClickToPay',  :git => 'https://github.com/spreedly/checkout-ios-package.git', :tag => '1.8.0-rc.2'
 ```
 
 If you use **SpreedlyStripeAPM** with CocoaPods, you **must** add this `post_install` block. Without it the app crashes at runtime: `Fatal error: unable to find bundle named Stripe_StripePaymentSheet`. The script is shipped inside the pod; no manual file copy needed.
@@ -132,7 +132,7 @@ The following changes are considered breaking and will only ship in a **major** 
 
 All `Spreedly*` frameworks in a single app build must use the **same version**. Pin explicitly:
 
-- **SPM:** `from: "1.7.0"` (accepts compatible minor/patch updates)
+- **SPM:** `from: "1.8.0-rc.2"` (accepts compatible minor/patch updates)
   - To stay within one minor line (for example 1.6.x for iOS 14 or 15 apps), use a range: `"1.6.1"..<"1.7.0"`
 - **CocoaPods:** `~> X.Y` (accepts minor and patch updates within the major); use `~> X.Y.Z` to accept patch updates only
 
